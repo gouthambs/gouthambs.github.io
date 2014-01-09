@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <link rel="stylesheet/less" type="text/css" href="./theme/css/style.less">
+  <script src="./theme/js/less-1.5.0.min.js" type="text/javascript"></script>
+  <!-- <link rel="stylesheet" type="text/css" href="./theme/css/style.css"> -->
+
+  <link rel="stylesheet" type="text/css" href="./theme/css/pygments.css">
+  <!--link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=PT+Sans|PT+Serif|PT+Mono"-->
+  <link href='http://fonts.googleapis.com/css?family=Open+Sans:800,400,300|Inconsolata' rel='stylesheet' type='text/css'>
+
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="generator" content="." />
+  <meta name="author" content="Gouthaman Balaraman">
+  <meta name="description" content="Posts and writings by Gouthaman Balaraman">
+
+
+<meta name="keywords" content="python, programming">
+
+  <title>
+Python Multiprocessing as a Task Queue  </title>
+
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-46714334-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+</head>
+
+<body>
+  <aside>
+    <div id="user_meta">
+	<center>
+      <a href=".">
+        <img src="./theme/images/logo.png" alt="logo">
+      </a>
+      <h2><a href=".">Karuth</a></h2>
+	  
+      <p></p>
+      <ul>
+        <li><a href="./pages/about.html">About</a></li>
+      </ul>
+	  </center>
+    </div>
+  </aside>
+
+  <main>
+    <header>
+      <p>
+      <a href=".">Index</a> &#124; <a href="./archives.html">Archives</a>
+      </p>
+    </header>
+
+<article>
+  <div class="article_title">
+    <h3><a href="./python-multiprocessing-as-a-task-queue.html">Python Multiprocessing as a Task Queue</a></h3>
+  </div>
+  <div class="article_credits">
+     Published January 07, 2014 By Gouthaman Balaraman
+  </div>
+  <div class="article_text">
+    <p>When you have computationally intensive tasks in your website (or scripts),
+it is conventional to use a task queue such as <a class="reference external" href="http://www.celeryproject.org/">Celery</a>. Using Celery requires
+some amount of setup and if you want to avoid, try using the following task
+queue based on the multiprocessing.
+Depending on the application at hand, Celery might be an overkill. An alternate approach
+is to use multiprocessing as a task queue.</p>
+<p>Here is a simple introduction to multiprocessing:</p>
+<pre class="code python literal-block">
+<span class="kn">from</span> <span class="nn">multiprocessing</span> <span class="kn">import</span> <span class="n">Pool</span>
+<span class="k">def</span> <span class="nf">expensive_function</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+        <span class="c"># do your expensive time consuming process</span>
+        <span class="k">return</span> <span class="n">x</span><span class="o">*</span><span class="n">x</span>
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">'__main__'</span><span class="p">:</span>
+        <span class="c"># start 4 worker processes</span>
+        <span class="n">pool</span> <span class="o">=</span> <span class="n">Pool</span><span class="p">(</span><span class="n">processes</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+        <span class="c"># evaluate &quot;f(10)&quot; asynchronously</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">pool</span><span class="o">.</span><span class="n">apply_async</span><span class="p">(</span><span class="n">expensive_function</span><span class="p">,</span> <span class="p">[</span><span class="mi">10</span><span class="p">])</span>
+        <span class="k">print</span> <span class="n">result</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">timeout</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</pre>
+<p>The above snippet is copied from the multiprocessing documentation, and is fairly self
+explanatory. In the main block we start a pool of 4 processes. Then we asynchronously
+evaluate the <tt class="docutils literal">expensive_function</tt>.</p>
+<p>One can use the same idea for a website as shown below in the Flask app example:</p>
+<pre class="code python literal-block">
+<span class="kn">from</span> <span class="nn">multiprocessing</span> <span class="kn">import</span> <span class="n">Pool</span>
+<span class="kn">from</span> <span class="nn">flask</span> <span class="kn">import</span> <span class="n">Flask</span>
+
+<span class="n">app</span> <span class="o">=</span> <span class="n">Flask</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
+<span class="n">_pool</span> <span class="o">=</span> <span class="bp">None</span>
+
+<span class="k">def</span> <span class="nf">expensive_function</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+        <span class="c"># import packages that is used in this function</span>
+        <span class="c"># do your expensive time consuming process</span>
+        <span class="k">return</span> <span class="n">x</span><span class="o">*</span><span class="n">x</span>
+
+<span class="nd">&#64;app.route</span><span class="p">(</span><span class="s">'/expensive_calc/&lt;int:x&gt;'</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">route_expcalc</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+        <span class="n">f</span> <span class="o">=</span> <span class="n">_pool</span><span class="o">.</span><span class="n">apply_async</span><span class="p">(</span><span class="n">expensive_function</span><span class="p">,[</span><span class="n">x</span><span class="p">])</span>
+        <span class="n">r</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">timeout</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+        <span class="k">return</span> <span class="s">'Result is </span><span class="si">%d</span><span class="s">'</span><span class="o">%</span><span class="n">r</span>
+
+<span class="k">if</span> <span class="n">__name__</span><span class="o">==</span><span class="s">'__main__'</span><span class="p">:</span>
+        <span class="n">_pool</span> <span class="o">=</span> <span class="n">Pool</span><span class="p">(</span><span class="n">processes</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+                <span class="c"># insert production server deployment code</span>
+                <span class="n">app</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+        <span class="k">except</span> <span class="ne">KeyboardInterrupt</span><span class="p">:</span>
+                <span class="n">_pool</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre>
+
+  </div>
+  <div class="article_meta">
+    <p>
+	<div style="float:left;width=50%">
+		<span class="key">Category:</span> 
+		<a href="./category/articles.html">
+			<span class="value">articles</span>
+		</a>
+	</div>
+	<div style="float:right;width=50%">
+	  <span class="key">Tags:</span>
+        <a href="./tag/python.html">
+	      <span class="value">python</span>
+		</a>
+,        <a href="./tag/programming.html">
+	      <span class="value">programming</span>
+		</a>
+	</div>
+	<div style="clear: both;"></div>
+	</p>
+	<hr></hr>
+  <div>
+
+    <div id="article_comments" style="display:block">
+        <div id="disqus_thread"></div>
+        <script type="text/javascript">
+           var disqus_identifier = "python-multiprocessing-as-a-task-queue.html";
+           (function() {
+           var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+           dsq.src = 'http://karuth.disqus.com/embed.js';
+           (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+          })();
+        </script>
+    </div>
+
+</article>
+
+    <footer>
+<p><a href="./" class="button_accent">&larr; Back to Index</a></p>
+<script language="javascript">
+    function toggleComments() {
+        var commentDiv = document.getElementById("article_comments");
+        (commentDiv.style.display == "none") ? commentDiv.style.display = "block" : commentDiv.style.display = "none";
+        return false;
+    }
+</script>
+    </footer>
+
+    <div id="ending_message">
+      <p>&copy; Gouthaman Balaraman. Built using <a href="http://getpelican.com" target="_blank">Pelican</a>. Theme by Giulio Fidente on <a href="https://github.com/giulivo/pelican-svbhack" target="_blank">github</a>. .</p>
+    </div>
+  </main>
+</body>
+</html>
