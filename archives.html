@@ -1,92 +1,46 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
+    <head>
+        <title>Archives</title>
+        <meta charset="utf-8" />
+        <!--link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'-->
+        <link href="http://bootswatch.com/journal/bootstrap.min.css" rel="stylesheet"/>
+        <link href="http://karuth.com/theme/static/css/style.css" rel="stylesheet" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    </head>
 
-<head>
-  <link rel="stylesheet/less" type="text/css" href="./theme/css/style.less">
-  <script src="./theme/js/less-1.5.0.min.js" type="text/javascript"></script>
-  <!-- <link rel="stylesheet" type="text/css" href="./theme/css/style.css"> -->
+    <body id="index" class="archive">
+        <div class="container">
+            <div class="header">
+                <ul class="nav nav-pills pull-right">
+                    <li class=""><a href="http://karuth.com">Home</a></li>
+                    <li><a href="http://karuth.com/pages/about.html">About</a></li>
+                    <li class="active"><a href="http://karuth.com/archives.html">Archives</a></li>
+                </ul>
+                <h3 class="text-muted"><a href="http://karuth.com">Karuth</a></h3>
+             </div>
 
-  <link rel="stylesheet" type="text/css" href="./theme/css/pygments.css">
-  <!--link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=PT+Sans|PT+Serif|PT+Mono"-->
-  <link href='http://fonts.googleapis.com/css?family=Open+Sans:800,400,300|Inconsolata' rel='stylesheet' type='text/css'>
-
-  <!-- meta tags -->
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="robots" content="index,follow" />
-  <meta name="generator" content="." />
-  <meta name="author" content="Gouthaman Balaraman">
-  <meta name="description" content="Posts and writings by Gouthaman Balaraman ">
-  <meta property="og:locale" content="en_US" />
-  <meta property="og:type" content="website" />
-  <meta property="og:title" content="Karuth" />
-  <meta property="og:description" content= "Karuth - Truth in Numbers" />
-  <meta property="og:site_name" content=" Karuth" />
-  <meta property="og:url" content= "." />
-
-  <meta property="og:locale" content="en_US" />
-
-  <title>
-Archives  </title>
-
-<script type="text/javascript">
-  var _gaq = _gaq || [];
-  _gaq.push(['_setAccount', 'UA-46714334-1']);
-  _gaq.push(['_trackPageview']);
-
-  (function() {
-    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-  })();
-</script>
-</head>
-
-<body>
-  <aside>
-    <div id="user_meta">
-	<center>
-      <a href=".">
-        <img src="./theme/images/logo.png" alt="logo">
-      </a>
-      <h2><a href=".">Karuth</a></h2>
-	  
-      <p></p>
-      <ul>
-        <li><a href="./pages/about.html">About</a></li>
-        <a href="https://twitter.com/quantspeak" class="twitter-follow-button" data-show-count="false" data-show-screen-name="false">Follow @quantspeak</a>
-        <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
-      </ul>
-	  </center>
-    </div>
-  </aside>
-
-  <main>
-    <header>
-      <p>
-      <a href=".">Index</a> &#124; <a href="./archives.html">Archives</a>
-      </p>
-    </header>
-
-<article>
-  <div class="article_text">
-    <dl>
-      <dt>January 09, 2014</dt>
-      <dd><a href="./calculating-stock-beta.html">Stock Time Series Analytics</a></dd>
-      <dt>January 07, 2014</dt>
-      <dd><a href="./python-multiprocessing-as-a-task-queue.html">Python Multiprocessing as a Task Queue</a></dd>
-      <dt>December 24, 2013</dt>
-      <dd><a href="./hello-world.html">Hello World!</a></dd>
-    </dl>
-  </div>
-</article>
-
-    <footer>
-    </footer>
-
-    <div id="ending_message">
-      <p>&copy; Gouthaman Balaraman. Built using <a href="http://getpelican.com" target="_blank">Pelican</a>. Theme by Giulio Fidente on <a href="https://github.com/giulivo/pelican-svbhack" target="_blank">github</a>. .</p>
-    </div>
-  </main>
-</body>
+<dl>
+  
+            <h3><a href="http://karuth.com/2014"  class="text">Archive for 2014</a></h3>
+            <ul class="archive-list">
+                <li><span class="text-muted">January 09, 2014 &raquo; </span><a href="http://karuth.com/calculating-stock-beta.html">Stock Time Series Analytics</a></li>   
+                <li><span class="text-muted">January 07, 2014 &raquo; </span><a href="http://karuth.com/python-multiprocessing-as-a-task-queue.html">Python Multiprocessing as a Task Queue</a></li>   
+     </ul>
+  
+            <h3><a href="http://karuth.com/2013"  class="text">Archive for 2013</a></h3>
+            <ul class="archive-list">
+                <li><span class="text-muted">December 24, 2013 &raquo; </span><a href="http://karuth.com/hello-world.html">Hello World!</a></li>   
+     </ul>
+</dl>
+            <footer id="contentinfo" class="footer">
+                    <nav class="pull-right bottom-nav">
+                        <a href="http://karuth.com/None">RSS</a>
+                    </nav>
+                    <address id="about" class="vcard body">
+                    &copy; <a href="http://karuth.com">Karuth</a> Proudly powered by <a href="http://getpelican.com/">Pelican</a>
+                    </address><!-- /#about -->
+            </footer><!-- /#contentinfo -->
+        </div><!-- container -->
+    </body>
 </html>

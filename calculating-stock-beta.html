@@ -1,83 +1,35 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
+    <head>
+        <title>Stock Time Series Analytics - Karuth</title>
+        <meta charset="utf-8" />
+        <!--link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'-->
+        <link href="http://bootswatch.com/journal/bootstrap.min.css" rel="stylesheet"/>
+        <link href="http://karuth.com/theme/static/css/style.css" rel="stylesheet" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    </head>
 
-<head>
-  <link rel="stylesheet/less" type="text/css" href="./theme/css/style.less">
-  <script src="./theme/js/less-1.5.0.min.js" type="text/javascript"></script>
-  <!-- <link rel="stylesheet" type="text/css" href="./theme/css/style.css"> -->
+    <body id="index" class="archive">
+        <div class="container">
+            <div class="header">
+                <ul class="nav nav-pills pull-right">
+                    <li class=""><a href="http://karuth.com">Home</a></li>
+                    <li><a href="http://karuth.com/pages/about.html">About</a></li>
+                    <li><a href="http://karuth.com/archives.html">Archives</a></li>
+                </ul>
+                <h3 class="text-muted"><a href="http://karuth.com">Karuth</a></h3>
+             </div>
 
-  <link rel="stylesheet" type="text/css" href="./theme/css/pygments.css">
-  <!--link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=PT+Sans|PT+Serif|PT+Mono"-->
-  <link href='http://fonts.googleapis.com/css?family=Open+Sans:800,400,300|Inconsolata' rel='stylesheet' type='text/css'>
-
-  <!-- meta tags -->
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="robots" content="index,follow" />
-  <meta name="generator" content="." />
-  <meta name="author" content="Gouthaman Balaraman">
-  <meta name="description" content="Introduction to calculating Beta, Alpha and R-squared for a stock. This article
-will also include a python code snippet to calculate these measures.">
-  <meta property="og:locale" content="en_US" />
-  <meta property="og:type" content="article" />
-  <meta property="og:title" content="Stock Time Series Analytics" />
-  <meta property="og:description" content= "Introduction to calculating Beta, Alpha and R-squared for a stock. This article
-will also include a python code snippet to calculate these measures." />
-  <meta property="og:url" content= "calculating-stock-beta.html" />
-  <meta name="keywords" content="investment, stock beta">
-
-  <meta property="og:locale" content="en_US" />
-
-  <title>
-Stock Time Series Analytics  </title>
-
-<script type="text/javascript">
-  var _gaq = _gaq || [];
-  _gaq.push(['_setAccount', 'UA-46714334-1']);
-  _gaq.push(['_trackPageview']);
-
-  (function() {
-    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-  })();
-</script>
-</head>
-
-<body>
-  <aside>
-    <div id="user_meta">
-	<center>
-      <a href=".">
-        <img src="./theme/images/logo.png" alt="logo">
-      </a>
-      <h2><a href=".">Karuth</a></h2>
-	  
-      <p></p>
-      <ul>
-        <li><a href="./pages/about.html">About</a></li>
-        <a href="https://twitter.com/quantspeak" class="twitter-follow-button" data-show-count="false" data-show-screen-name="false">Follow @quantspeak</a>
-        <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
-      </ul>
-	  </center>
-    </div>
-  </aside>
-
-  <main>
-    <header>
-      <p>
-      <a href=".">Index</a> &#124; <a href="./archives.html">Archives</a>
-      </p>
-    </header>
-
-<article>
-  <div class="article_title">
-    <h1><a href="./calculating-stock-beta.html">Stock Time Series Analytics</a></h1>
-  </div>
-  <div class="article_credits">
-     Published January 09, 2014 By Gouthaman Balaraman
-  </div>
-  <div class="article_text">
+<section id="content" class="article content">
+  <header>
+    <h1 class="entry-title">
+      <a href="http://karuth.com/calculating-stock-beta.html" rel="bookmark"
+         title="Permalink to Stock Time Series Analytics">Stock Time Series Analytics</a></h2>
+ 
+  </header>
+  
+     
+  <div class="entry-content">
     <p>Have you ever wondered how to calculate the Beta value that is shown in
 <a class="reference external" href="http://www.google.com/finance">GoogleFinance</a> or <a class="reference external" href="http://www.finance.yahoo.com/">YahooFinance</a> and what does it mean from an investment perspective?
 This article will give you an introduction to the concept and demonstrate how
@@ -166,7 +118,7 @@ will be the 3-year return of the stock.</p>
 <span class="n">r_squared</span>       <span class="o">=</span> <span class="n">covmat</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">covmat</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="n">covmat</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">])</span>
 
 <span class="c"># 5- year volatiity and 1-year momentum</span>
-<span class="n">volatility</span>      <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">covmat</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">volatility</span>      <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">covmat</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">])</span>
 <span class="n">momentum</span>        <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">prod</span><span class="p">(</span><span class="mi">1</span><span class="o">+</span><span class="n">dfsm</span><span class="p">[</span><span class="s">&quot;s_returns&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">tail</span><span class="p">(</span><span class="mi">12</span><span class="p">)</span><span class="o">.</span><span class="n">values</span><span class="p">)</span> <span class="o">-</span><span class="mi">1</span>
 </pre>
 <p>Some caveats about the sample code. The returns are calculated using the
@@ -179,77 +131,39 @@ model perspective volatility is calculated assuming a log-normal distribution
 for the returns.</p>
 </div>
 
-  </div>
-  <div class="article_meta">
-    <p>
-	<div style="float:left;width=50%">
-		<span class="key">Category:</span> 
-		<a href="./category/articles.html">
-			<span class="value">articles</span>
-		</a>
-	</div>
-	<div style="float:right;width=50%">
-	  <span class="key">Tags:</span>
-        <a href="./tag/finance.html">
-	      <span class="value">finance</span>
-		</a>
-,        <a href="./tag/investing.html">
-	      <span class="value">investing</span>
-		</a>
-	</div>
-	<div style="clear: both;"></div>
-	</p>
-	<hr></hr>
-  <div>
-  <a href="https://twitter.com/share" class="twitter-share-button" data-via="quantspeak">Tweet</a>
-  <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(! d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');
-  </script>
-  <!-- Google plus share button -->
-  <!-- Place this tag where you want the share button to render. -->
-  <div class="g-plus" data-action="share" data-annotation="bubble"></div>
-  <!-- Place this tag after the last share tag. -->
+  </div><!-- /.entry-content -->
+   <footer class="post-info text-muted">
+    Posted on <abbr class="published" title="2014-01-09T00:00:00">
+      January 09, 2014
+    </abbr>
+    <address class="vcard author">
+      by <a class="url fn" href="http://karuth.com/author/gouthaman-balaraman.html">Gouthaman Balaraman</a>
+    </address> in <a href="http://karuth.com/category/articles.html">articles</a> Tagged <a href="http://karuth.com/tag/finance.html">finance </a><a href="http://karuth.com/tag/investing.html">investing </a>  </footer><!-- /.post-info -->
+</section>
+    <div class="comment">
+        <div id="disqus_thread"></div> <!-- comment app container -->
+    </div>
+	<!-- Comment BEGIN -->
     <script type="text/javascript">
-      (function() {
-        var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
-        po.src = 'https://apis.google.com/js/platform.js';
-        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
-      })();
-  </script>
-  <!-- end of google plus share-->
-  <!-- LinkedIn button -->
-  <script src="//platform.linkedin.com/in.js" type="text/javascript">
-    lang: en_US
+        var disqus_shortname = 'karuth'; // required: replace example with your forum shortname
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
     </script>
-  <script type="IN/Share" data-counter="right"></script>
-  <!-- end of LinkedIn share -->
-    <div id="article_comments" style="display:block">
-        <div id="disqus_thread"></div>
-        <script type="text/javascript">
-           var disqus_identifier = "calculating-stock-beta.html";
-           (function() {
-           var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-           dsq.src = 'http://karuth.disqus.com/embed.js';
-           (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-          })();
-        </script>
-    </div>
-
-</article>
-
-    <footer>
-<p><a href="./" class="button_accent">&larr; Back to Index</a></p>
-<script language="javascript">
-    function toggleComments() {
-        var commentDiv = document.getElementById("article_comments");
-        (commentDiv.style.display == "none") ? commentDiv.style.display = "block" : commentDiv.style.display = "none";
-        return false;
-    }
-</script>
-    </footer>
-
-    <div id="ending_message">
-      <p>&copy; Gouthaman Balaraman. Built using <a href="http://getpelican.com" target="_blank">Pelican</a>. Theme by Giulio Fidente on <a href="https://github.com/giulivo/pelican-svbhack" target="_blank">github</a>. .</p>
-    </div>
-  </main>
-</body>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+     <!-- Comment END -->
+            <footer id="contentinfo" class="footer">
+                    <nav class="pull-right bottom-nav">
+                        <a href="http://karuth.com/None">RSS</a>
+                    </nav>
+                    <address id="about" class="vcard body">
+                    &copy; <a href="http://karuth.com">Karuth</a> Proudly powered by <a href="http://getpelican.com/">Pelican</a>
+                    </address><!-- /#about -->
+            </footer><!-- /#contentinfo -->
+        </div><!-- container -->
+    </body>
 </html>
