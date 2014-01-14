@@ -1,12 +1,34 @@
 <!DOCTYPE html>
-<html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:og="http://ogp.me/ns#"
+      xmlns:fb="https://www.facebook.com/2008/fbml">
     <head>
         <title>Stock Time Series Analytics - Karuth</title>
+        <!-- All the meta tags -->
         <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+        <meta property="og:type" content="article"/>
+        <meta property="og:title" content="Stock Time Series Analytics"/>
+        <meta property="og:url" content="http://karuth.com/calculating-stock-beta.html"/>
+        <meta property="og:description" content="Introduction to calculating Beta, Alpha and R-squared for a stock. This article will also include a python code snippet to calculate these measures."/>
+
         <!--link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'-->
         <link href="http://bootswatch.com/journal/bootstrap.min.css" rel="stylesheet"/>
         <link href="http://karuth.com/theme/static/css/style.css" rel="stylesheet" />
-        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+        
+        <!-- Google Analytics -->
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-46714334-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
     </head>
 
     <body id="index" class="archive">
@@ -114,11 +136,10 @@ will be the 3-year return of the stock.</p>
 
 <span class="c"># calculate measures now</span>
 <span class="n">beta</span>            <span class="o">=</span> <span class="n">covmat</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span><span class="o">/</span><span class="n">covmat</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span>
-<span class="n">alpha</span>           <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">dfsm</span><span class="p">[</span><span class="s">&quot;s_returns&quot;</span><span class="p">])</span><span class="o">-</span><span class="n">beta</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">dfsm</span><span class="p">[</span><span class="s">&quot;b_returns&quot;</span><span class="p">])</span>
-<span class="n">r_squared</span>       <span class="o">=</span> <span class="n">covmat</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">covmat</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="n">covmat</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">alpha</span>           <span class="o">=</span> <span class="mi">12</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">dfsm</span><span class="p">[</span><span class="s">&quot;s_returns&quot;</span><span class="p">])</span><span class="o">-</span><span class="n">beta</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">dfsm</span><span class="p">[</span><span class="s">&quot;b_returns&quot;</span><span class="p">])</span>
 
 <span class="c"># 5- year volatiity and 1-year momentum</span>
-<span class="n">volatility</span>      <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">covmat</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">volatility</span>      <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">12</span><span class="o">*</span><span class="n">covmat</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">])</span> <span class="c"># annualize with the factor sqrt(12)</span>
 <span class="n">momentum</span>        <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">prod</span><span class="p">(</span><span class="mi">1</span><span class="o">+</span><span class="n">dfsm</span><span class="p">[</span><span class="s">&quot;s_returns&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">tail</span><span class="p">(</span><span class="mi">12</span><span class="p">)</span><span class="o">.</span><span class="n">values</span><span class="p">)</span> <span class="o">-</span><span class="mi">1</span>
 </pre>
 <p>Some caveats about the sample code. The returns are calculated using the
@@ -129,6 +150,10 @@ but not always accurate. The volatility is calculated here as a simple
 standard deviation of the returns. From an option-pricing
 model perspective volatility is calculated assuming a log-normal distribution
 for the returns.</p>
+<p>The alpha shown above is annualized by scaling by a factor of 12, the periodicity
+of returns. The same goes for volatility, which is scaled by <span class="formula"><span class="sqrt"><span class="radical">√</span><span class="ignored">(</span><span class="root">12</span><span class="ignored">)</span></span></span>
+
+in order to annualize.</p>
 </div>
 
   </div><!-- /.entry-content -->
