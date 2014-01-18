@@ -26,6 +26,9 @@
   (function() {
     var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
     ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    /*Update Your Analytics Tracking Code to Support Display Advertising by uncommenting the following 
+    instead of the above line */    
+    /*ga.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'stats.g.doubleclick.net/dc.js';*/
     var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
   })();
 </script>
@@ -72,7 +75,7 @@ the returns of stock as a function of the returns of the market benchmark (such 
 and fit it with a straight line, then beta is nothing but the slope of the fitted line.
 The regression equation is given as shown below.</p>
 <div class="formula">
-<i>R</i><sub><i>stock</i></sub> = <i>α</i> + <i>β</i> × <i>R</i><sub><i>market</i></sub> + <i>ϵ</i>
+<i>R</i><span class="scripts"><sub class="script"><i>i</i></sub><sup class="script"><i>stock</i></sup></span> = <i>α</i> + <i>β</i> × <i>R</i><span class="scripts"><sub class="script"><i>i</i></sub><sup class="script"><i>market</i></sup></span> + <i>ϵ</i><sub><i>i</i></sub>
 </div>
 <p>In Capital Asset Pricing Model, the returns of the stock <span class="formula"><i>R</i><sub><i>stock</i></sub></span>
 
@@ -84,10 +87,22 @@ environment, this adjustment will add little value.</p>
 A positive alpha for a stock or portfolio gives you sense of how well your asset
 outperformed a benchmark.</p>
 <p>R-squared is a measure of how well the the returns of a stock is explained by the
-returns of the benchmark. If your investment goal is to track a particular index,
-then you should chose stocks that show a high R-squared with respect to that index.
-R-squared value of 1 means a perfect correlation with the index, while a value of 0
-means no correlation whatsoever.</p>
+returns of the benchmark. If your investment goal is to track a particular benchmark,
+then you should chose stocks that show a high R-squared with respect to the benchmark.
+R-squared value of 1 means that the benchmark completely explains the stock returns,
+while a value of 0 means that the benchmark does not explain the  stock
+returns.</p>
+<p>R-squared is defined as:</p>
+<div class="formula">
+<i>R</i><sup>2</sup> = 1 − <i>SS</i><sub><i>res</i></sub> ⁄ <i>SS</i><sub><i>tot</i></sub>
+</div>
+<p>where</p>
+<div class="formula">
+<i>SS</i><sub><i>res</i></sub> = <span class="limits"><sup class="limit"> </sup><span class="limit"><span class="symbol">∑</span></span><sub class="limit"><i>i</i></sub></span>(<i>R</i><span class="scripts"><sub class="script"><i>i</i></sub><sup class="script"><i>stock</i></sup></span> − <i>f</i><span class="scripts"><sub class="script"><i>i</i></sub><sup class="script"><i>stock</i></sup></span>)<sup>2</sup>
+</div>
+<div class="formula">
+<i>SS</i><sub><i>tot</i></sub> = <span class="limits"><sup class="limit"> </sup><span class="limit"><span class="symbol">∑</span></span><sub class="limit"><i>i</i></sub></span>(<i>R</i><span class="scripts"><sub class="script"><i>i</i></sub><sup class="script"><i>stock</i></sup></span> −  &lt; <i>R</i><sup><i>stock</i></sup> &gt; )<sup>2</sup>
+</div>
 </div>
 <div class="section" id="volatility-and-momentum">
 <h2>Volatility and Momentum</h2>
@@ -117,7 +132,7 @@ will be the 3-year return of the stock.</p>
 <span class="c"># and for S&amp;P-500 Index</span>
 <span class="n">sdate</span>           <span class="o">=</span> <span class="n">date</span><span class="p">(</span><span class="mi">2008</span><span class="p">,</span><span class="mi">12</span><span class="p">,</span><span class="mi">31</span><span class="p">)</span>
 <span class="n">edate</span>           <span class="o">=</span> <span class="n">date</span><span class="p">(</span><span class="mi">2013</span><span class="p">,</span><span class="mi">12</span><span class="p">,</span><span class="mi">31</span><span class="p">)</span>
-<span class="n">df</span>              <span class="o">=</span> <span class="n">DataReader</span><span class="p">(</span><span class="s">'AAPL'</span><span class="p">,</span><span class="s">'yahoo'</span><span class="p">,</span><span class="n">sdate</span><span class="p">,</span><span class="n">edate</span><span class="p">)</span>
+<span class="n">df</span>              <span class="o">=</span> <span class="n">DataReader</span><span class="p">(</span><span class="s">'WFM'</span><span class="p">,</span><span class="s">'yahoo'</span><span class="p">,</span><span class="n">sdate</span><span class="p">,</span><span class="n">edate</span><span class="p">)</span>
 <span class="n">dfb</span>             <span class="o">=</span> <span class="n">DataReader</span><span class="p">(</span><span class="s">'^GSPC'</span><span class="p">,</span><span class="s">'yahoo'</span><span class="p">,</span><span class="n">sdate</span><span class="p">,</span><span class="n">edate</span><span class="p">)</span>
 
 <span class="c"># create a time-series of monthly data points</span>
@@ -126,6 +141,7 @@ will be the 3-year return of the stock.</p>
 <span class="n">dfsm</span>            <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s">'s_adjclose'</span> <span class="p">:</span> <span class="n">rts</span><span class="p">[</span><span class="s">'Adj Close'</span><span class="p">],</span>
                         <span class="s">'b_adjclose'</span> <span class="p">:</span> <span class="n">rbts</span><span class="p">[</span><span class="s">'Adj Close'</span><span class="p">]},</span>
                         <span class="n">index</span><span class="o">=</span><span class="n">rts</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
+
 
 <span class="c"># compute returns</span>
 <span class="n">dfsm</span><span class="p">[[</span><span class="s">'s_returns'</span><span class="p">,</span><span class="s">'b_returns'</span><span class="p">]]</span> <span class="o">=</span> <span class="n">dfsm</span><span class="p">[[</span><span class="s">'s_adjclose'</span><span class="p">,</span><span class="s">'b_adjclose'</span><span class="p">]]</span><span class="o">/</span> \
@@ -136,11 +152,23 @@ will be the 3-year return of the stock.</p>
 
 <span class="c"># calculate measures now</span>
 <span class="n">beta</span>            <span class="o">=</span> <span class="n">covmat</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span><span class="o">/</span><span class="n">covmat</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span>
-<span class="n">alpha</span>           <span class="o">=</span> <span class="mi">12</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">dfsm</span><span class="p">[</span><span class="s">&quot;s_returns&quot;</span><span class="p">])</span><span class="o">-</span><span class="n">beta</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">dfsm</span><span class="p">[</span><span class="s">&quot;b_returns&quot;</span><span class="p">])</span>
+<span class="n">alpha</span>           <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">dfsm</span><span class="p">[</span><span class="s">&quot;s_returns&quot;</span><span class="p">])</span><span class="o">-</span><span class="n">beta</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">dfsm</span><span class="p">[</span><span class="s">&quot;b_returns&quot;</span><span class="p">])</span>
 
+<span class="c"># r_squared     = 1. - SS_res/SS_tot</span>
+<span class="n">ypred</span>           <span class="o">=</span> <span class="n">alpha</span> <span class="o">+</span> <span class="n">beta</span> <span class="o">*</span> <span class="n">dfsm</span><span class="p">[</span><span class="s">&quot;b_returns&quot;</span><span class="p">]</span>
+<span class="n">SS_res</span>          <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">power</span><span class="p">(</span><span class="n">ypred</span><span class="o">-</span><span class="n">dfsm</span><span class="p">[</span><span class="s">&quot;s_returns&quot;</span><span class="p">],</span><span class="mi">2</span><span class="p">))</span>
+<span class="n">SS_tot</span>          <span class="o">=</span> <span class="n">covmat</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">dfsm</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="c"># SS_tot is sample_variance*(n-1)</span>
+<span class="n">r_squared</span>       <span class="o">=</span> <span class="mf">1.</span> <span class="o">-</span> <span class="n">SS_res</span><span class="o">/</span><span class="n">SS_tot</span>
 <span class="c"># 5- year volatiity and 1-year momentum</span>
-<span class="n">volatility</span>      <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">12</span><span class="o">*</span><span class="n">covmat</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">])</span> <span class="c"># annualize with the factor sqrt(12)</span>
+<span class="n">volatility</span>      <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">covmat</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">])</span>
 <span class="n">momentum</span>        <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">prod</span><span class="p">(</span><span class="mi">1</span><span class="o">+</span><span class="n">dfsm</span><span class="p">[</span><span class="s">&quot;s_returns&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">tail</span><span class="p">(</span><span class="mi">12</span><span class="p">)</span><span class="o">.</span><span class="n">values</span><span class="p">)</span> <span class="o">-</span><span class="mi">1</span>
+
+<span class="c"># annualize the numbers</span>
+<span class="n">prd</span>              <span class="o">=</span> <span class="mf">12.</span> <span class="c"># used monthly returns; 12 periods to annualize</span>
+<span class="n">alpha</span>            <span class="o">=</span> <span class="n">alpha</span><span class="o">*</span><span class="n">prd</span>
+<span class="n">volatility</span>       <span class="o">=</span> <span class="n">volatility</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">prd</span><span class="p">)</span>
+
+<span class="k">print</span> <span class="n">beta</span><span class="p">,</span><span class="n">alpha</span><span class="p">,</span> <span class="n">r_squared</span><span class="p">,</span> <span class="n">volatility</span><span class="p">,</span> <span class="n">momentum</span>
 </pre>
 <p>Some caveats about the sample code. The returns are calculated using the
 adjusted close from Yahoo finance data. This is because the adjusted close
