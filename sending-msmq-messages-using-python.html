@@ -59,8 +59,8 @@
 <div class="section" id="setting-up-msmq-on-windows-7">
 <h2>Setting Up MSMQ on Windows 7</h2>
 <p>Before we can proceed with the code, here is a quick note on set-up.
-To setup MSMQ (disabled by default) go to <em>Control Panel</em>-&gt;*Programs and Features*-&gt;*Turn Windows Features on or off* (on the left panel). Now check <em>Microsoft Message Queue(MSMQ) Server</em> if it is not checked. Hit OK. Now we have enabled MSMQ server.</p>
-<p>Now that we have the MSMQ server up and running, lets create a private queue so we can use in our script. To do that, go to <em>Control Panel</em>-&gt;*Administrative Tools*-&gt;*Computer Management*. Expand <em>Services and Applications</em>-&gt;*Message Queuing*. Select <em>Private Queues</em> under <em>Message Queuing</em> and right-click and click <em>New</em>. Now in the dialog box put a <em>Queue Name</em>, for this example purpose, say <em>KaruthQueue</em> and click OK.</p>
+To setup MSMQ (disabled by default) go to <em>Control Panel</em> -&gt; <em>Programs and Features</em> -&gt; <em>Turn Windows Features on or off</em> (on the left panel). Now check <em>Microsoft Message Queue(MSMQ) Server</em> if it is not checked. Hit OK. Now we have enabled MSMQ server.</p>
+<p>Now that we have the MSMQ server up and running, lets create a private queue so we can use in our script. To do that, go to <em>Control Panel</em> -&gt; <em>Administrative Tools</em> -&gt; <em>Computer Management</em>. Expand <em>Services and Applications</em> -&gt; <em>Message Queuing</em>. Select <em>Private Queues</em> under <em>Message Queuing</em> and right-click and click <em>New</em>. Now in the dialog box put a <em>Queue Name</em>, for this example purpose, say <em>KaruthQueue</em> and click OK.</p>
 </div>
 <div class="section" id="installing-pywin32">
 <h2>Installing PyWin32</h2>
@@ -85,8 +85,8 @@ To setup MSMQ (disabled by default) go to <em>Control Panel</em>-&gt;*Programs a
 <span class="n">queue</span><span class="o">.</span><span class="n">Close</span><span class="p">()</span>
 </pre>
 <p>Voila! We have sent our message. You can check if the message was sent properly by checking under
-<em>Control Panel</em>-&gt;*Administrative Tools*-&gt;*Computer Management*-&gt;*Services and Applications*-&gt;*Message Queuing*-&gt;*Private Queues*
--&gt;*KaruthQueue*-&gt;*Queue Messages*. Right click and refresh after you have run the script, if you don't see any.
+<em>Control Panel</em> -&gt; <em>Administrative Tools</em> -&gt; <em>Computer Management</em> -&gt; <em>Services and Applications</em> -&gt; <em>Message Queuing</em> -&gt; <em>Private Queues</em>
+-&gt; <em>KaruthQueue</em> -&gt; <em>Queue Messages</em>. Right click and refresh after you have run the script, if you don't see any.
 You should see an entry there that corresponds to the message that was sent</p>
 </div>
 <div class="section" id="receiving-msmq-messages">
