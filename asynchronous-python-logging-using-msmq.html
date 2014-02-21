@@ -77,7 +77,8 @@ with the logging module in python. Here is the <tt class="docutils literal">MSMQ
                 <span class="bp">self</span><span class="o">.</span><span class="n">computer_name</span> <span class="o">=</span> <span class="n">dest_computer</span> <span class="k">if</span> <span class="n">dest_computer</span> <span class="o">!=</span> <span class="bp">None</span> \
                                 <span class="k">else</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s">'COMPUTERNAME'</span><span class="p">)</span>
                 <span class="n">qinfo</span><span class="o">=</span><span class="n">win32com</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">Dispatch</span><span class="p">(</span><span class="s">&quot;MSMQ.MSMQQueueInfo&quot;</span><span class="p">)</span>
-                <span class="n">qinfo</span><span class="o">.</span><span class="n">FormatName</span><span class="o">=</span><span class="s">&quot;direct=os:&quot;</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">computer_name</span><span class="o">+</span><span class="s">&quot;</span><span class="se">\\</span><span class="s">PRIVATE$</span><span class="se">\\</span><span class="s">&quot;</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">queue_name</span>
+                <span class="n">qinfo</span><span class="o">.</span><span class="n">FormatName</span><span class="o">=</span><span class="s">&quot;direct=os:&quot;</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">computer_name</span><span class="o">+</span><span class="s">&quot;</span><span class="se">\\</span><span class="s">PRIVATE$</span><span class="se">\\</span><span class="s">&quot;</span><span class="o">+</span>\
+                        <span class="bp">self</span><span class="o">.</span><span class="n">queue_name</span>
                 <span class="k">try</span><span class="p">:</span>
                         <span class="bp">self</span><span class="o">.</span><span class="n">queue</span> <span class="o">=</span> <span class="n">qinfo</span><span class="o">.</span><span class="n">Open</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>
                 <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
@@ -102,11 +103,11 @@ with the logging module in python. Here is the <tt class="docutils literal">MSMQ
 <p>Once you have the handler in place, and setup a private MSMQ queue, say KaruthQueue, then
 you can incorporate it into your workflow as shown below:</p>
 <pre class="code python literal-block">
-    <span class="c"># example.py</span>
-    <span class="kn">from</span> <span class="nn">customhandler</span> <span class="kn">import</span> <span class="n">MSMQHandler</span>
-    <span class="kn">import</span> <span class="nn">logging</span>
+<span class="c"># example.py</span>
+<span class="kn">from</span> <span class="nn">customhandler</span> <span class="kn">import</span> <span class="n">MSMQHandler</span>
+<span class="kn">import</span> <span class="nn">logging</span>
 
-    <span class="n">lgr</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s">&quot;Test&quot;</span><span class="p">)</span>
+<span class="n">lgr</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s">&quot;Test&quot;</span><span class="p">)</span>
 <span class="n">hnd</span> <span class="o">=</span> <span class="n">MSMQHandler</span><span class="p">(</span><span class="s">&quot;KaruthQueue&quot;</span><span class="p">,</span><span class="s">&quot;QPyLog&quot;</span><span class="p">)</span> <span class="c"># here KaruthQueue is the private queue name</span>
 <span class="n">lgr</span><span class="o">.</span><span class="n">addHandler</span><span class="p">(</span><span class="n">hnd</span><span class="p">)</span>
 <span class="n">lgr</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">)</span>
