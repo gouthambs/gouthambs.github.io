@@ -69,28 +69,21 @@ To setup MSMQ (disabled by default) go to <em>Control Panel</em>-&gt;*Programs a
 <div class="section" id="sending-msmq-messages">
 <h2>Sending MSMQ Messages</h2>
 <p>Here is a small code snippet that shows you how to send messages using MSMQ.</p>
-<div class="system-message">
-<p class="system-message-title">System Message: ERROR/3 (<tt class="docutils">/home/travis/build/gouthambs/karuth-source/content/articles/sending-msmq-messages-python.rst</tt>, line 26)</p>
-<p>Error in &quot;code&quot; directive:
-maximum 1 argument(s) allowed, 5 supplied.</p>
-<pre class="literal-block">
-.. code:: python
-        import win32com.client
-        import os
+<pre class="code python literal-block">
+<span class="kn">import</span> <span class="nn">win32com.client</span>
+<span class="kn">import</span> <span class="nn">os</span>
 
-        qinfo=win32com.client.Dispatch(&quot;MSMQ.MSMQQueueInfo&quot;)
-        computer_name = os.getenv('COMPUTERNAME')
-        qinfo.FormatName=&quot;direct=os:&quot;+computer_name+&quot;\\PRIVATE$\\KaruthQueue&quot;
-        queue=qinfo.Open(2,0)   # Open a ref to queue
-        msg=win32com.client.Dispatch(&quot;MSMQ.MSMQMessage&quot;)
-        msg.Label=&quot;TestMsg&quot;
-        msg.Body = &quot;The quick brown fox jumps over the lazy dog&quot;
-        msg.Send(queue)
+<span class="n">qinfo</span><span class="o">=</span><span class="n">win32com</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">Dispatch</span><span class="p">(</span><span class="s">&quot;MSMQ.MSMQQueueInfo&quot;</span><span class="p">)</span>
+<span class="n">computer_name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s">'COMPUTERNAME'</span><span class="p">)</span>
+<span class="n">qinfo</span><span class="o">.</span><span class="n">FormatName</span><span class="o">=</span><span class="s">&quot;direct=os:&quot;</span><span class="o">+</span><span class="n">computer_name</span><span class="o">+</span><span class="s">&quot;</span><span class="se">\\</span><span class="s">PRIVATE$</span><span class="se">\\</span><span class="s">KaruthQueue&quot;</span>
+<span class="n">queue</span><span class="o">=</span><span class="n">qinfo</span><span class="o">.</span><span class="n">Open</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>   <span class="c"># Open a ref to queue</span>
+<span class="n">msg</span><span class="o">=</span><span class="n">win32com</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">Dispatch</span><span class="p">(</span><span class="s">&quot;MSMQ.MSMQMessage&quot;</span><span class="p">)</span>
+<span class="n">msg</span><span class="o">.</span><span class="n">Label</span><span class="o">=</span><span class="s">&quot;TestMsg&quot;</span>
+<span class="n">msg</span><span class="o">.</span><span class="n">Body</span> <span class="o">=</span> <span class="s">&quot;The quick brown fox jumps over the lazy dog&quot;</span>
+<span class="n">msg</span><span class="o">.</span><span class="n">Send</span><span class="p">(</span><span class="n">queue</span><span class="p">)</span>
 
-        queue.Close()
-
+<span class="n">queue</span><span class="o">.</span><span class="n">Close</span><span class="p">()</span>
 </pre>
-</div>
 <p>Voila! We have sent our message. You can check if the message was sent properly by checking under
 <em>Control Panel</em>-&gt;*Administrative Tools*-&gt;*Computer Management*-&gt;*Services and Applications*-&gt;*Message Queuing*-&gt;*Private Queues*
 -&gt;*KaruthQueue*-&gt;*Queue Messages*. Right click and refresh after you have run the script, if you don't see any.
@@ -98,26 +91,19 @@ You should see an entry there that corresponds to the message that was sent</p>
 </div>
 <div class="section" id="receiving-msmq-messages">
 <h2>Receiving MSMQ Messages</h2>
-<div class="system-message">
-<p class="system-message-title">System Message: ERROR/3 (<tt class="docutils">/home/travis/build/gouthambs/karuth-source/content/articles/sending-msmq-messages-python.rst</tt>, line 50)</p>
-<p>Error in &quot;code&quot; directive:
-maximum 1 argument(s) allowed, 5 supplied.</p>
-<pre class="literal-block">
-.. code:: python
-        import win32com.client
-        import os
+<pre class="code python literal-block">
+<span class="kn">import</span> <span class="nn">win32com.client</span>
+<span class="kn">import</span> <span class="nn">os</span>
 
-        qinfo=win32com.client.Dispatch(&quot;MSMQ.MSMQQueueInfo&quot;)
-        computer_name = os.getenv('COMPUTERNAME')
-        qinfo.FormatName=&quot;direct=os:&quot;+computer_name+&quot;\\PRIVATE$\\KaruthQueue&quot;
-        queue=qinfo.Open(1,0)   # Open a ref to queue to read(1)
-        msg=queue.Receive()
-        print &quot;Label:&quot;,msg.Label
-        print &quot;Body :&quot;,msg.Body
-        queue.Close()
-
+<span class="n">qinfo</span><span class="o">=</span><span class="n">win32com</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">Dispatch</span><span class="p">(</span><span class="s">&quot;MSMQ.MSMQQueueInfo&quot;</span><span class="p">)</span>
+<span class="n">computer_name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s">'COMPUTERNAME'</span><span class="p">)</span>
+<span class="n">qinfo</span><span class="o">.</span><span class="n">FormatName</span><span class="o">=</span><span class="s">&quot;direct=os:&quot;</span><span class="o">+</span><span class="n">computer_name</span><span class="o">+</span><span class="s">&quot;</span><span class="se">\\</span><span class="s">PRIVATE$</span><span class="se">\\</span><span class="s">KaruthQueue&quot;</span>
+<span class="n">queue</span><span class="o">=</span><span class="n">qinfo</span><span class="o">.</span><span class="n">Open</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>   <span class="c"># Open a ref to queue to read(1)</span>
+<span class="n">msg</span><span class="o">=</span><span class="n">queue</span><span class="o">.</span><span class="n">Receive</span><span class="p">()</span>
+<span class="k">print</span> <span class="s">&quot;Label:&quot;</span><span class="p">,</span><span class="n">msg</span><span class="o">.</span><span class="n">Label</span>
+<span class="k">print</span> <span class="s">&quot;Body :&quot;</span><span class="p">,</span><span class="n">msg</span><span class="o">.</span><span class="n">Body</span>
+<span class="n">queue</span><span class="o">.</span><span class="n">Close</span><span class="p">()</span>
 </pre>
-</div>
 <p>Run this code after you have sent the message using the above script. Now you should
 see your earlier message printed out.</p>
 <p>Have fun messaging!</p>
