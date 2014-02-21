@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:og="http://ogp.me/ns#"
+      xmlns:fb="https://www.facebook.com/2008/fbml">
+    <head>
+        <title>Asynchronous Python Logging Using MSMQ - Karuth</title>
+        <!-- All the meta tags -->
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+        <meta property="og:type" content="article"/>
+        <meta property="og:title" content="Asynchronous Python Logging Using MSMQ"/>
+        <meta property="og:url" content="http://karuth.com/asynchronous-python-logging-using-msmq.html"/>
+        <meta property="og:description" content="Asynchronous logging in Python using MSMQ."/>
+
+        <!--link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'-->
+        <link href="http://bootswatch.com/journal/bootstrap.min.css" rel="stylesheet"/>
+        <link href="http://karuth.com/theme/static/css/style.css" rel="stylesheet" />
+        
+        <!-- Google Analytics -->
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-46714334-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    /*Update Your Analytics Tracking Code to Support Display Advertising by uncommenting the following 
+    instead of the above line */    
+    /*ga.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'stats.g.doubleclick.net/dc.js';*/
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+    </head>
+
+    <body id="index" class="archive">
+        <div class="container">
+            <div class="header">
+                <ul class="nav nav-pills pull-right">
+                    <li class=""><a href="http://karuth.com">Home</a></li>
+                    <li><a href="http://karuth.com/pages/about.html">About</a></li>
+                    <li><a href="http://karuth.com/archives.html">Archives</a></li>
+                </ul>
+                <h3 class="text-muted"><a href="http://karuth.com">Karuth</a></h3>
+             </div>
+
+<section id="content" class="article content">
+  <header>
+    <h1 class="entry-title">
+      <a href="http://karuth.com/asynchronous-python-logging-using-msmq.html" rel="bookmark"
+         title="Permalink to Asynchronous Python Logging Using MSMQ">Asynchronous Python Logging Using MSMQ</a></h2>
+ 
+  </header>
+  
+     
+  <div class="entry-content">
+    <p>If you have a web application running in Python, there can be a need for the logging to
+not interfere with the performance. Default file based loggers can lead to a slow down
+because of the constand disk writes. An alternate solution that can be quite handy is
+logging into a message based logger, such as MSMQ. This post is built on my earlier post
+<a class="reference external" href="http://karuth.com/sending-msmq-messages-using-python.html">Sending MSMQ Messages Using Python</a>, where
+I discuss how to setup, send and receive messages using MSMQ.</p>
+<p>Here I will show how one can use the MSMQ to build a custom handler, that can be used
+with the logging module in python. Here is the <tt class="docutils literal">MSMQHandler</tt> class:</p>
+<pre class="code python literal-block">
+<span class="c"># customhandler.py</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+
+<span class="k">class</span> <span class="nc">MSMQHandler</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">Handler</span><span class="p">):</span>
+        <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">queue_name</span><span class="p">,</span><span class="n">label_name</span><span class="p">,</span><span class="n">dest_computer</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+                <span class="n">logging</span><span class="o">.</span><span class="n">Handler</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+                <span class="kn">import</span> <span class="nn">os</span>
+                <span class="kn">import</span> <span class="nn">win32com.client</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">queue_name</span> <span class="o">=</span> <span class="n">queue_name</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">label_name</span> <span class="o">=</span> <span class="n">label_name</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">computer_name</span> <span class="o">=</span> <span class="n">dest_computer</span> <span class="k">if</span> <span class="n">dest_computer</span> <span class="o">!=</span> <span class="bp">None</span> \
+                                <span class="k">else</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s">'COMPUTERNAME'</span><span class="p">)</span>
+                <span class="n">qinfo</span><span class="o">=</span><span class="n">win32com</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">Dispatch</span><span class="p">(</span><span class="s">&quot;MSMQ.MSMQQueueInfo&quot;</span><span class="p">)</span>
+                <span class="n">qinfo</span><span class="o">.</span><span class="n">FormatName</span><span class="o">=</span><span class="s">&quot;direct=os:&quot;</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">computer_name</span><span class="o">+</span><span class="s">&quot;</span><span class="se">\\</span><span class="s">PRIVATE$</span><span class="se">\\</span><span class="s">&quot;</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">queue_name</span>
+                <span class="k">try</span><span class="p">:</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">queue</span> <span class="o">=</span> <span class="n">qinfo</span><span class="o">.</span><span class="n">Open</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>
+                <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">queue</span> <span class="o">=</span> <span class="bp">None</span>
+                        <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
+
+        <span class="k">def</span> <span class="nf">emit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">record</span><span class="p">):</span>
+                <span class="kn">import</span> <span class="nn">win32com.client</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">queue</span> <span class="p">:</span>
+                        <span class="n">msg</span><span class="o">=</span><span class="n">win32com</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">Dispatch</span><span class="p">(</span><span class="s">&quot;MSMQ.MSMQMessage&quot;</span><span class="p">)</span>
+                        <span class="n">msg</span><span class="o">.</span><span class="n">Label</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">label_name</span>
+                        <span class="n">msg</span><span class="o">.</span><span class="n">Body</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">record</span><span class="p">)</span>
+                        <span class="n">msg</span><span class="o">.</span><span class="n">Send</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">queue</span><span class="p">)</span>
+        <span class="k">def</span> <span class="nf">close</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>        <span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">acquire</span><span class="p">()</span>
+                <span class="k">try</span><span class="p">:</span>
+                        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">queue</span><span class="p">:</span>
+                                <span class="bp">self</span><span class="o">.</span><span class="n">queue</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+                <span class="k">finally</span><span class="p">:</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">release</span><span class="p">()</span>
+</pre>
+<p>Once you have the handler in place, and setup a private MSMQ queue, say KaruthQueue, then
+you can incorporate it into your workflow as shown below:</p>
+<pre class="code python literal-block">
+    <span class="c"># example.py</span>
+    <span class="kn">from</span> <span class="nn">customhandler</span> <span class="kn">import</span> <span class="n">MSMQHandler</span>
+    <span class="kn">import</span> <span class="nn">logging</span>
+
+    <span class="n">lgr</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s">&quot;Test&quot;</span><span class="p">)</span>
+<span class="n">hnd</span> <span class="o">=</span> <span class="n">MSMQHandler</span><span class="p">(</span><span class="s">&quot;KaruthQueue&quot;</span><span class="p">,</span><span class="s">&quot;QPyLog&quot;</span><span class="p">)</span> <span class="c"># here KaruthQueue is the private queue name</span>
+<span class="n">lgr</span><span class="o">.</span><span class="n">addHandler</span><span class="p">(</span><span class="n">hnd</span><span class="p">)</span>
+<span class="n">lgr</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">)</span>
+<span class="n">lgr</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&quot;Test Message&quot;</span><span class="p">)</span>
+</pre>
+<p>And that completes the MSMQ logger using python. Now all your logs will be pushed to the KaruthQueue
+that we created. You can use the example shown <a class="reference external" href="http://karuth.com/sending-msmq-messages-using-python.html">here</a> to read the messages in a seperate application
+and store any way you chose, files, database etc.</p>
+
+  </div><!-- /.entry-content -->
+   <footer class="post-info text-muted">
+    Posted on <abbr class="published" title="2014-02-21T00:00:00">
+      February 21, 2014
+    </abbr>
+    <address class="vcard author">
+      by <a class="url fn" href="http://karuth.com/author/gouthaman-balaraman.html">Gouthaman Balaraman</a>
+    </address> in <a href="http://karuth.com/category/articles.html">articles</a> Tagged <a href="http://karuth.com/tag/python.html">python </a><a href="http://karuth.com/tag/programming.html">programming </a>  </footer><!-- /.post-info -->
+</section>
+    <div class="comment">
+        <div id="disqus_thread"></div> <!-- comment app container -->
+    </div>
+	<!-- Comment BEGIN -->
+    <script type="text/javascript">
+        var disqus_shortname = 'karuth'; // required: replace example with your forum shortname
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+     <!-- Comment END -->
+            <footer id="contentinfo" class="footer">
+                    <nav class="pull-right bottom-nav">
+                        <a href="http://karuth.com/None">RSS</a>
+                    </nav>
+                    <address id="about" class="vcard body">
+                    &copy; <a href="http://karuth.com">Karuth</a> Proudly powered by <a href="http://getpelican.com/">Pelican</a>
+                    </address><!-- /#about -->
+            </footer><!-- /#contentinfo -->
+        </div><!-- container -->
+    </body>
+</html>
