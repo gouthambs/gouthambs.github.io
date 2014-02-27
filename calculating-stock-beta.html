@@ -12,9 +12,8 @@
         <meta property="og:title" content="Stock Time Series Analytics"/>
         <meta property="og:url" content="http://karuth.com/calculating-stock-beta.html"/>
         <meta property="og:description" content="Introduction to calculating Beta, Alpha and R-squared for a stock. This article will also include a python code snippet to calculate these measures."/>
-
-        <!--link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'-->
-        <link href="http://bootswatch.com/journal/bootstrap.min.css" rel="stylesheet"/>
+        <link href="http://bootswatch.com/readable/bootstrap.css" rel="stylesheet"/>
+        <link href="http://bootswatch.com/readable/bootstrap.min.css" rel="stylesheet"/>
         <link href="http://karuth.com/theme/static/css/style.css" rel="stylesheet" />
         
         <!-- Google Analytics -->
@@ -34,28 +33,45 @@
 </script>
     </head>
 
-    <body id="index" class="archive">
-        <div class="container">
-            <div class="header">
-                <ul class="nav nav-pills pull-right">
-                    <li class=""><a href="http://karuth.com">Home</a></li>
-                    <li><a href="http://karuth.com/pages/about.html">About</a></li>
-                    <li><a href="http://karuth.com/archives.html">Archives</a></li>
-                </ul>
-                <h3 class="text-muted"><a href="http://karuth.com">Karuth</a></h3>
-             </div>
+    <body>
+      <div class="navbar navbar-default navbar-fixed-top">
+          <div class="container">
+            <div class="navbar-header">
+              <a href="http://karuth.com"" class="navbar-brand">Karuth</a>
+              <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+            </div>
+            <div class="navbar-collapse collapse" id="navbar-main">
+              <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="http://karuth.com/pages/about.html">About</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
 
-<section id="content" class="article content">
-  <header>
-    <h1 class="entry-title">
-      <a href="http://karuth.com/calculating-stock-beta.html" rel="bookmark"
-         title="Permalink to Stock Time Series Analytics">Stock Time Series Analytics</a></h2>
- 
-  </header>
-  
-     
-  <div class="entry-content">
-    <p>Have you ever wondered how to calculate the Beta value that is shown in
+        <div class="container">
+            <div class="row">
+                <div class="col-md-10 col-md-offset-1">
+
+<div class="bs-docs-section">
+    <div class="page-header">
+        <h1>Stock Time Series Analytics</h1>
+     <!--span class="glyphicon glyphicon-calendar"></span-->&nbspJanuary 09, 2014 
+     &nbsp&nbsp
+     <!--span class="glyphicon glyphicon-user"></span--> by  
+     <a class="url fn" href="http://karuth.com/author/gouthaman-balaraman.html">&nbspGouthaman Balaraman </a>
+     </div>
+     <!-- article description -->
+         <p class="lead">Introduction to calculating Beta, Alpha and R-squared for a stock. This article
+will also include a python code snippet to calculate these measures.</p>
+      
+      <!-- article content -->
+     <p><p>Have you ever wondered how to calculate the Beta value that is shown in
 <a class="reference external" href="http://www.google.com/finance">GoogleFinance</a> or <a class="reference external" href="http://www.finance.yahoo.com/">YahooFinance</a> and what does it mean from an investment perspective?
 This article will give you an introduction to the concept and demonstrate how
 you can calculate various time series measures for a stock using python.</p>
@@ -183,16 +199,16 @@ of returns. The same goes for volatility, which is scaled by <span class="formul
 
 in order to annualize.</p>
 </div>
-
-  </div><!-- /.entry-content -->
-   <footer class="post-info text-muted">
-    Posted on <abbr class="published" title="2014-01-09T00:00:00">
-      January 09, 2014
-    </abbr>
-    <address class="vcard author">
-      by <a class="url fn" href="http://karuth.com/author/gouthaman-balaraman.html">Gouthaman Balaraman</a>
-    </address> in <a href="http://karuth.com/category/articles.html">articles</a> Tagged <a href="http://karuth.com/tag/finance.html">finance </a><a href="http://karuth.com/tag/investing.html">investing </a>  </footer><!-- /.post-info -->
-</section>
+</p>
+     <br>
+     
+     <!-- article tags-->
+        <span class="glyphicon glyphicon-tags"></span>&nbsp&nbsp
+            <a href="http://karuth.com/tag/finance.html">finance</a>&nbsp&nbsp
+            <a href="http://karuth.com/tag/investing.html">investing</a>&nbsp&nbsp
+        <br>
+     
+     <!-- article comments -->
     <div class="comment">
         <div id="disqus_thread"></div> <!-- comment app container -->
     </div>
@@ -209,6 +225,10 @@ in order to annualize.</p>
     </script>
     <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
      <!-- Comment END -->
+</div>    
+                </div>
+            </div>
+            
             <footer id="contentinfo" class="footer">
                     <nav class="pull-right bottom-nav">
                         <a href="http://karuth.com/None">RSS</a>

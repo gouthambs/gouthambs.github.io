@@ -12,9 +12,8 @@
         <meta property="og:title" content="Asynchronous Python Logging Using MSMQ"/>
         <meta property="og:url" content="http://karuth.com/asynchronous-python-logging-using-msmq.html"/>
         <meta property="og:description" content="Asynchronous logging in Python using MSMQ."/>
-
-        <!--link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'-->
-        <link href="http://bootswatch.com/journal/bootstrap.min.css" rel="stylesheet"/>
+        <link href="http://bootswatch.com/readable/bootstrap.css" rel="stylesheet"/>
+        <link href="http://bootswatch.com/readable/bootstrap.min.css" rel="stylesheet"/>
         <link href="http://karuth.com/theme/static/css/style.css" rel="stylesheet" />
         
         <!-- Google Analytics -->
@@ -34,28 +33,44 @@
 </script>
     </head>
 
-    <body id="index" class="archive">
-        <div class="container">
-            <div class="header">
-                <ul class="nav nav-pills pull-right">
-                    <li class=""><a href="http://karuth.com">Home</a></li>
-                    <li><a href="http://karuth.com/pages/about.html">About</a></li>
-                    <li><a href="http://karuth.com/archives.html">Archives</a></li>
-                </ul>
-                <h3 class="text-muted"><a href="http://karuth.com">Karuth</a></h3>
-             </div>
+    <body>
+      <div class="navbar navbar-default navbar-fixed-top">
+          <div class="container">
+            <div class="navbar-header">
+              <a href="http://karuth.com"" class="navbar-brand">Karuth</a>
+              <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+            </div>
+            <div class="navbar-collapse collapse" id="navbar-main">
+              <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="http://karuth.com/pages/about.html">About</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
 
-<section id="content" class="article content">
-  <header>
-    <h1 class="entry-title">
-      <a href="http://karuth.com/asynchronous-python-logging-using-msmq.html" rel="bookmark"
-         title="Permalink to Asynchronous Python Logging Using MSMQ">Asynchronous Python Logging Using MSMQ</a></h2>
- 
-  </header>
-  
-     
-  <div class="entry-content">
-    <p>If you have a web application running in Python, there can be a need for the logging to
+        <div class="container">
+            <div class="row">
+                <div class="col-md-10 col-md-offset-1">
+
+<div class="bs-docs-section">
+    <div class="page-header">
+        <h1>Asynchronous Python Logging Using MSMQ</h1>
+     <!--span class="glyphicon glyphicon-calendar"></span-->&nbspFebruary 21, 2014 
+     &nbsp&nbsp
+     <!--span class="glyphicon glyphicon-user"></span--> by  
+     <a class="url fn" href="http://karuth.com/author/gouthaman-balaraman.html">&nbspGouthaman Balaraman </a>
+     </div>
+     <!-- article description -->
+         <p class="lead">Asynchronous logging in Python using MSMQ.</p>
+      
+      <!-- article content -->
+     <p><p>If you have a web application running in Python, there can be a need for the logging to
 not interfere with the performance. Default file based loggers can lead to a slow down
 because of the constand disk writes. An alternate solution that can be quite handy is
 logging into a message based logger, such as MSMQ. This post is built on my earlier post
@@ -116,16 +131,16 @@ you can incorporate it into your workflow as shown below:</p>
 <p>And that completes the MSMQ logger using python. Now all your logs will be pushed to the KaruthQueue
 that we created. You can use the example shown <a class="reference external" href="http://karuth.com/sending-msmq-messages-using-python.html">here</a> to read the messages in a seperate application
 and store any way you chose, files, database etc.</p>
-
-  </div><!-- /.entry-content -->
-   <footer class="post-info text-muted">
-    Posted on <abbr class="published" title="2014-02-21T00:00:00">
-      February 21, 2014
-    </abbr>
-    <address class="vcard author">
-      by <a class="url fn" href="http://karuth.com/author/gouthaman-balaraman.html">Gouthaman Balaraman</a>
-    </address> in <a href="http://karuth.com/category/articles.html">articles</a> Tagged <a href="http://karuth.com/tag/python.html">python </a><a href="http://karuth.com/tag/programming.html">programming </a>  </footer><!-- /.post-info -->
-</section>
+</p>
+     <br>
+     
+     <!-- article tags-->
+        <span class="glyphicon glyphicon-tags"></span>&nbsp&nbsp
+            <a href="http://karuth.com/tag/python.html">python</a>&nbsp&nbsp
+            <a href="http://karuth.com/tag/programming.html">programming</a>&nbsp&nbsp
+        <br>
+     
+     <!-- article comments -->
     <div class="comment">
         <div id="disqus_thread"></div> <!-- comment app container -->
     </div>
@@ -142,6 +157,10 @@ and store any way you chose, files, database etc.</p>
     </script>
     <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
      <!-- Comment END -->
+</div>    
+                </div>
+            </div>
+            
             <footer id="contentinfo" class="footer">
                     <nav class="pull-right bottom-nav">
                         <a href="http://karuth.com/None">RSS</a>

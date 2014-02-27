@@ -12,9 +12,8 @@
         <meta property="og:title" content="Python Multiprocessing as a Task Queue"/>
         <meta property="og:url" content="http://karuth.com/python-multiprocessing-as-a-task-queue.html"/>
         <meta property="og:description" content="Use multiprocessing module as a task queue, and over come GIL in python."/>
-
-        <!--link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'-->
-        <link href="http://bootswatch.com/journal/bootstrap.min.css" rel="stylesheet"/>
+        <link href="http://bootswatch.com/readable/bootstrap.css" rel="stylesheet"/>
+        <link href="http://bootswatch.com/readable/bootstrap.min.css" rel="stylesheet"/>
         <link href="http://karuth.com/theme/static/css/style.css" rel="stylesheet" />
         
         <!-- Google Analytics -->
@@ -34,28 +33,44 @@
 </script>
     </head>
 
-    <body id="index" class="archive">
-        <div class="container">
-            <div class="header">
-                <ul class="nav nav-pills pull-right">
-                    <li class=""><a href="http://karuth.com">Home</a></li>
-                    <li><a href="http://karuth.com/pages/about.html">About</a></li>
-                    <li><a href="http://karuth.com/archives.html">Archives</a></li>
-                </ul>
-                <h3 class="text-muted"><a href="http://karuth.com">Karuth</a></h3>
-             </div>
+    <body>
+      <div class="navbar navbar-default navbar-fixed-top">
+          <div class="container">
+            <div class="navbar-header">
+              <a href="http://karuth.com"" class="navbar-brand">Karuth</a>
+              <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+            </div>
+            <div class="navbar-collapse collapse" id="navbar-main">
+              <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="http://karuth.com/pages/about.html">About</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
 
-<section id="content" class="article content">
-  <header>
-    <h1 class="entry-title">
-      <a href="http://karuth.com/python-multiprocessing-as-a-task-queue.html" rel="bookmark"
-         title="Permalink to Python Multiprocessing as a Task Queue">Python Multiprocessing as a Task Queue</a></h2>
- 
-  </header>
-  
-     
-  <div class="entry-content">
-    <p>When you have computationally intensive tasks in your website (or scripts),
+        <div class="container">
+            <div class="row">
+                <div class="col-md-10 col-md-offset-1">
+
+<div class="bs-docs-section">
+    <div class="page-header">
+        <h1>Python Multiprocessing as a Task Queue</h1>
+     <!--span class="glyphicon glyphicon-calendar"></span-->&nbspJanuary 07, 2014 
+     &nbsp&nbsp
+     <!--span class="glyphicon glyphicon-user"></span--> by  
+     <a class="url fn" href="http://karuth.com/author/gouthaman-balaraman.html">&nbspGouthaman Balaraman </a>
+     </div>
+     <!-- article description -->
+         <p class="lead">Use multiprocessing module as a task queue, and over come GIL in python.</p>
+      
+      <!-- article content -->
+     <p><p>When you have computationally intensive tasks in your website (or scripts),
 it is conventional to use a task queue such as <a class="reference external" href="http://www.celeryproject.org/">Celery</a>. Using Celery requires
 some amount of setup and if you want to avoid, try using the following task
 queue based on the multiprocessing.
@@ -105,16 +120,16 @@ evaluate the <tt class="docutils literal">expensive_function</tt>.</p>
                 <span class="n">_pool</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
                 <span class="n">_pool</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>
 </pre>
-
-  </div><!-- /.entry-content -->
-   <footer class="post-info text-muted">
-    Posted on <abbr class="published" title="2014-01-07T00:00:00">
-      January 07, 2014
-    </abbr>
-    <address class="vcard author">
-      by <a class="url fn" href="http://karuth.com/author/gouthaman-balaraman.html">Gouthaman Balaraman</a>
-    </address> in <a href="http://karuth.com/category/articles.html">articles</a> Tagged <a href="http://karuth.com/tag/python.html">python </a><a href="http://karuth.com/tag/programming.html">programming </a>  </footer><!-- /.post-info -->
-</section>
+</p>
+     <br>
+     
+     <!-- article tags-->
+        <span class="glyphicon glyphicon-tags"></span>&nbsp&nbsp
+            <a href="http://karuth.com/tag/python.html">python</a>&nbsp&nbsp
+            <a href="http://karuth.com/tag/programming.html">programming</a>&nbsp&nbsp
+        <br>
+     
+     <!-- article comments -->
     <div class="comment">
         <div id="disqus_thread"></div> <!-- comment app container -->
     </div>
@@ -131,6 +146,10 @@ evaluate the <tt class="docutils literal">expensive_function</tt>.</p>
     </script>
     <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
      <!-- Comment END -->
+</div>    
+                </div>
+            </div>
+            
             <footer id="contentinfo" class="footer">
                     <nav class="pull-right bottom-nav">
                         <a href="http://karuth.com/None">RSS</a>

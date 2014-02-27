@@ -12,9 +12,8 @@
         <meta property="og:title" content="Karuth"/>
         <meta property="og:url" content="http://karuth.com"/>
         <meta property="og:description" content="Karuth"/>
-
-        <!--link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'-->
-        <link href="http://bootswatch.com/journal/bootstrap.min.css" rel="stylesheet"/>
+        <link href="http://bootswatch.com/readable/bootstrap.css" rel="stylesheet"/>
+        <link href="http://bootswatch.com/readable/bootstrap.min.css" rel="stylesheet"/>
         <link href="http://karuth.com/theme/static/css/style.css" rel="stylesheet" />
         
         <!-- Google Analytics -->
@@ -34,32 +33,89 @@
 </script>
     </head>
 
-    <body id="index" class="archive">
+    <body>
+      <div class="navbar navbar-default navbar-fixed-top">
+          <div class="container">
+            <div class="navbar-header">
+              <a href="http://karuth.com"" class="navbar-brand">Karuth</a>
+              <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+            </div>
+            <div class="navbar-collapse collapse" id="navbar-main">
+              <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="http://karuth.com/pages/about.html">About</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
         <div class="container">
-            <div class="header">
-                <ul class="nav nav-pills pull-right">
-                    <li class=""><a href="http://karuth.com">Home</a></li>
-                    <li><a href="http://karuth.com/pages/about.html">About</a></li>
-                    <li class="active"active><a href="http://karuth.com/archives.html">Archives</a></li>
-                </ul>
-                <h3 class="text-muted"><a href="http://karuth.com">Karuth</a></h3>
-             </div>
+            <div class="row">
+                <div class="col-md-10 col-md-offset-1">
 <section id="content" class="content">
 <h2>Articles with the python tag</h2>
 
-        <article class="hentry">
-                <header> <h2 class="entry-title"><a href="http://karuth.com/asynchronous-python-logging-using-msmq.html" rel="bookmark" title="Permalink to Asynchronous Python Logging Using MSMQ">Asynchronous Python Logging Using MSMQ</a></h2> </header>
-                <div class="entry-content"> Asynchronous logging in Python using MSMQ. </div><!-- entry-content -->
-        </article>
-        <article class="hentry">
-                <header> <h2 class="entry-title"><a href="http://karuth.com/sending-msmq-messages-using-python.html" rel="bookmark" title="Permalink to Sending MSMQ Messages Using Python">Sending MSMQ Messages Using Python</a></h2> </header>
-                <div class="entry-content"> Send MSMQ messages using python </div><!-- entry-content -->
-        </article>
-        <article class="hentry">
-                <header> <h2 class="entry-title"><a href="http://karuth.com/python-multiprocessing-as-a-task-queue.html" rel="bookmark" title="Permalink to Python Multiprocessing as a Task Queue">Python Multiprocessing as a Task Queue</a></h2> </header>
-                <div class="entry-content"> Use multiprocessing module as a task queue, and over come GIL in python. </div><!-- entry-content -->
-        </article>
+
+<div class="story">
+    <h3>
+    <a href="http://karuth.com/asynchronous-python-logging-using-msmq.html" rel="bookmark" title="Permalink to Asynchronous Python Logging Using MSMQ">Asynchronous Python Logging Using MSMQ</a>
+    </h3>
+    February 21, 2014 
+ by 
+    <a class="url fn" href="http://karuth.com/author/gouthaman-balaraman.html">Gouthaman Balaraman</a> 
+ 
+    <div class="media">
+         <p ><p>If you have a web application running in Python, there can be a need for the logging to
+not interfere with the performance. Default file based loggers can lead to a slow down
+because of the constand disk writes. An alternate solution that can be quite handy is
+logging into ...</p></p>
+     </div>
+     <hr>
+</div>
+<div class="story">
+    <h3>
+    <a href="http://karuth.com/sending-msmq-messages-using-python.html" rel="bookmark" title="Permalink to Sending MSMQ Messages Using Python">Sending MSMQ Messages Using Python</a>
+    </h3>
+    February 21, 2014 
+ by 
+    <a class="url fn" href="http://karuth.com/author/gouthaman-balaraman.html">Gouthaman Balaraman</a> 
+ 
+    <div class="media">
+         <p ><p>Here I show how to send and receive MSMQ messages using python.</p>
+<div class="section" id="setting-up-msmq-on-windows-7">
+<h2>Setting Up MSMQ on Windows 7</h2>
+<p>Before we can proceed with the code, here is a quick note on set-up.
+To setup MSMQ (disabled by default) go to <em>Control Panel</em> -&gt; <em>Programs and Features</em> -&gt; <em>Turn Windows Features on or ...</em></p></div></p>
+     </div>
+     <hr>
+</div>
+<div class="story">
+    <h3>
+    <a href="http://karuth.com/python-multiprocessing-as-a-task-queue.html" rel="bookmark" title="Permalink to Python Multiprocessing as a Task Queue">Python Multiprocessing as a Task Queue</a>
+    </h3>
+    January 07, 2014 
+ by 
+    <a class="url fn" href="http://karuth.com/author/gouthaman-balaraman.html">Gouthaman Balaraman</a> 
+ 
+    <div class="media">
+         <p ><p>When you have computationally intensive tasks in your website (or scripts),
+it is conventional to use a task queue such as <a class="reference external" href="http://www.celeryproject.org/">Celery</a>. Using Celery requires
+some amount of setup and if you want to avoid, try using the following task
+queue based on the multiprocessing.
+Depending on the application at ...</p></p>
+     </div>
+     <hr>
+</div>
+
 </section><!-- content -->
+                </div>
+            </div>
+            
             <footer id="contentinfo" class="footer">
                     <nav class="pull-right bottom-nav">
                         <a href="http://karuth.com/None">RSS</a>

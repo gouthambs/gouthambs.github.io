@@ -12,9 +12,8 @@
         <meta property="og:title" content="Karuth"/>
         <meta property="og:url" content="http://karuth.com"/>
         <meta property="og:description" content="Karuth"/>
-
-        <!--link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'-->
-        <link href="http://bootswatch.com/journal/bootstrap.min.css" rel="stylesheet"/>
+        <link href="http://bootswatch.com/readable/bootstrap.css" rel="stylesheet"/>
+        <link href="http://bootswatch.com/readable/bootstrap.min.css" rel="stylesheet"/>
         <link href="http://karuth.com/theme/static/css/style.css" rel="stylesheet" />
         
         <!-- Google Analytics -->
@@ -34,16 +33,30 @@
 </script>
     </head>
 
-    <body id="index" class="archive">
+    <body>
+      <div class="navbar navbar-default navbar-fixed-top">
+          <div class="container">
+            <div class="navbar-header">
+              <a href="http://karuth.com"" class="navbar-brand">Karuth</a>
+              <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+            </div>
+            <div class="navbar-collapse collapse" id="navbar-main">
+              <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="http://karuth.com/pages/about.html">About</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
         <div class="container">
-            <div class="header">
-                <ul class="nav nav-pills pull-right">
-                    <li class=""><a href="http://karuth.com">Home</a></li>
-                    <li><a href="http://karuth.com/pages/about.html">About</a></li>
-                    <li class="active"><a href="http://karuth.com/archives.html">Archives</a></li>
-                </ul>
-                <h3 class="text-muted"><a href="http://karuth.com">Karuth</a></h3>
-             </div>
+            <div class="row">
+                <div class="col-md-10 col-md-offset-1">
 
 <dl>
   
@@ -51,6 +64,7 @@
             <ul class="archive-list">
                 <li><span class="text-muted">February 21, 2014 &raquo; </span><a href="http://karuth.com/asynchronous-python-logging-using-msmq.html">Asynchronous Python Logging Using MSMQ</a></li>   
                 <li><span class="text-muted">February 21, 2014 &raquo; </span><a href="http://karuth.com/sending-msmq-messages-using-python.html">Sending MSMQ Messages Using Python</a></li>   
+                <li><span class="text-muted">January 23, 2014 &raquo; </span><a href="http://karuth.com/a-short-story-of-wall-street.html">A Short Story of Wall Street</a></li>   
                 <li><span class="text-muted">January 09, 2014 &raquo; </span><a href="http://karuth.com/calculating-stock-beta.html">Stock Time Series Analytics</a></li>   
                 <li><span class="text-muted">January 07, 2014 &raquo; </span><a href="http://karuth.com/python-multiprocessing-as-a-task-queue.html">Python Multiprocessing as a Task Queue</a></li>   
      </ul>
@@ -60,6 +74,9 @@
                 <li><span class="text-muted">December 24, 2013 &raquo; </span><a href="http://karuth.com/hello-world.html">Hello World!</a></li>   
      </ul>
 </dl>
+                </div>
+            </div>
+            
             <footer id="contentinfo" class="footer">
                     <nav class="pull-right bottom-nav">
                         <a href="http://karuth.com/None">RSS</a>
