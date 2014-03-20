@@ -76,51 +76,58 @@ keep this article updated as and when I learn something new.</p>
 <p>One of the basic concepts in git is the notion of <em>upstream</em> and <em>origin</em>. The term <em>upstream</em> refers to the main
 repository lets say the pandas on github hosted at <cite>https://github.com/pydata/pandas &lt;https://github.com/pydata/pandas&gt;</cite>. However you have forked the
 to work on an issue, then the <em>origin</em> would refer to the user's fork of the <em>upstream</em> repository.</p>
-<ul class="simple">
-<li><strong>Initialize repository</strong>: in an empty folder
-``
+<ul>
+<li><p class="first"><strong>Initialize repository</strong>: in an empty folder:</p>
+<pre class="literal-block">
 git init
-``
-You should see a message akin to
-``
+</pre>
+<p>You should see a message akin to:</p>
+<pre class="literal-block">
 Initialized empty Git repository in /home/username/test/.git/
-``</li>
-<li><strong>Add remote repository</strong>:  To hook up to your local repository to a remote repository, such as the <cite>pandas</cite> repository on github.
-``
-git remote add upstream <a class="reference external" href="https://github.com/pydata/pandas.git">https://github.com/pydata/pandas.git</a>
-``
-Note that instead of adding upstream, I could have added my fork as origin as shown below:
-``
-git remote add origin <a class="reference external" href="https://github.com/gouthambs/pandas.git">https://github.com/gouthambs/pandas.git</a>
-``</li>
-<li><strong>Remove remote repository</strong>: You have made a mistake and added a wrong remote repository. To remove a remote repo:
-``
+</pre>
+</li>
+<li><p class="first"><strong>Add remote repository</strong>:  To hook up to your local repository to a remote repository, such as the <cite>pandas</cite> repository on
+github:</p>
+<pre class="literal-block">
+git remote add upstream https://github.com/pydata/pandas.git
+</pre>
+<p>Note that instead of adding upstream, I could have added my fork as origin as shown below:</p>
+<pre class="literal-block">
+git remote add origin https://github.com/gouthambs/pandas.git
+</pre>
+</li>
+<li><p class="first"><strong>Remove remote repository</strong>: You have made a mistake and added a wrong remote repository. To remove a remote repo:</p>
+<pre class="literal-block">
 git remote remove upstream
-``
-You can do the same to remove a remote origin.
-``
+</pre>
+<p>You can do the same to remove a remote origin:</p>
+<pre class="literal-block">
 git remote remove origin
-``</li>
-<li><strong>View remote repositories</strong>: Check what the remote repositories are attached to your local repo using:
-``
+</pre>
+</li>
+<li><p class="first"><strong>View remote repositories</strong>: Check what the remote repositories are attached to your local repo using:</p>
+<pre class="literal-block">
 git remote -v
-``
-This after adding the above pandas repo would show something like:
-``
-upstream      <a class="reference external" href="https://github.com/pydata/pandas.git">https://github.com/pydata/pandas.git</a> (fetch)
-upstream      <a class="reference external" href="https://github.com/pydata/pandas.git">https://github.com/pydata/pandas.git</a> (push)
-``</li>
-<li><strong>Fetching code from remote</strong>: Now that you have hooked up to a remote repository, how do you fetch the code from
-there? Lets say we have added remote upstream, and we want to fetch the code, then do the following:
-``
+</pre>
+<p>This after adding the above pandas repo would show something like:</p>
+<pre class="literal-block">
+upstream    https://github.com/pydata/pandas.git (fetch)
+upstream    https://github.com/pydata/pandas.git (push)
+</pre>
+</li>
+<li><p class="first"><strong>Fetching code from remote</strong>: Now that you have hooked up to a remote repository, how do you fetch the code from
+there? Lets say we have added remote upstream, and we want to fetch the code, then do the following:</p>
+<pre class="literal-block">
 git fetch upstream
-``
-What this does is it fetches the whole repository, with all its branches and tags etc. Now to actually start using
-a particular branch you have to checkout.</li>
-<li><strong>Checkout code</strong>: To checkout the master try
-``
+</pre>
+<p>What this does is it fetches the whole repository, with all its branches and tags etc. Now to actually start using
+a particular branch you have to checkout.</p>
+</li>
+<li><p class="first"><strong>Checkout code</strong>: To checkout the master try:</p>
+<pre class="literal-block">
 git checkout master
-``</li>
+</pre>
+</li>
 </ul>
 </div>
 
