@@ -68,16 +68,16 @@
          <p class="lead">This is my notes on using git and github. Will work through some basics and discuss some how tos.</p>
       
       <!-- article content -->
-     <p>I have had to do a lot of googling lately to get familiar with <cite>git</cite>. My understanding of git is a
+     <p>I have had to do a lot of googling lately to get familiar with <tt class="docutils literal">git</tt>. My understanding of git is a
 work in progress. Here I summarize some of the basic commands and features that I learnt. I plan to
 keep this article updated as and when I learn something new.</p>
 <div class="section" id="git-basics">
 <h2>Git Basics</h2>
 <p>One of the basic concepts in git is the notion of <em>upstream</em> and <em>origin</em>. The term <em>upstream</em> refers to the main
-repository lets say the pandas on github hosted at <cite>https://github.com/pydata/pandas</cite>. However you have forked the
+repository lets say the pandas on github hosted at <cite>https://github.com/pydata/pandas &lt;https://github.com/pydata/pandas&gt;</cite>. However you have forked the
 to work on an issue, then the <em>origin</em> would refer to the user's fork of the <em>upstream</em> repository.</p>
 <ul class="simple">
-<li><strong>Initialize repositor</strong>: in an empty folder
+<li><strong>Initialize repository</strong>: in an empty folder
 ``
 git init
 ``
@@ -101,7 +101,7 @@ You can do the same to remove a remote origin.
 ``
 git remote remove origin
 ``</li>
-<li>Check what the remote repositories are.
+<li><strong>View remote repositories</strong>: Check what the remote repositories are attached to your local repo using:
 ``
 git remote -v
 ``
