@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Git For Dummies - Karuth</title>
+        <!-- All the meta tags -->
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+        <meta property="og:type" content="article"/>
+        <meta property="og:title" content="Git For Dummies"/>
+        <meta property="og:url" content="http://karuth.com/git-for-dummies.html"/>
+        <meta property="og:description" content="This is my notes on using git and github. Will work through some basics and discuss some how tos."/>
+        <link href="http://bootswatch.com/readable/bootstrap.css" rel="stylesheet"/>
+        <link href="http://bootswatch.com/readable/bootstrap.min.css" rel="stylesheet"/>
+        <link href="http://karuth.com/theme/static/css/style.css" rel="stylesheet" />
+        
+        <!-- Google Analytics -->
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-46714334-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    /*Update Your Analytics Tracking Code to Support Display Advertising by uncommenting the following 
+    instead of the above line */    
+    /*ga.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'stats.g.doubleclick.net/dc.js';*/
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+    </head>
+
+    <body>
+      <div class="navbar navbar-default navbar-fixed-top">
+          <div class="container">
+            <div class="navbar-header">
+              <a href="http://karuth.com" class="navbar-brand">Karuth</a>
+              <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+            </div>
+            <div class="navbar-collapse collapse" id="navbar-main">
+              <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="http://karuth.com/pages/about.html">About</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                <div class="col-md-10 col-md-offset-1">
+
+<div class="bs-docs-section">
+    <div class="page-header">
+        <h1>Git For Dummies</h1>
+     <!--span class="glyphicon glyphicon-calendar"></span-->&nbsp;March 20, 2014 
+     &nbsp;&nbsp;
+     <!--span class="glyphicon glyphicon-user"></span--> by  
+     <a class="url fn" href="http://karuth.com/author/gouthaman-balaraman.html">&nbsp;Gouthaman Balaraman </a>
+     </div>
+     <!-- article description -->
+         <p class="lead">This is my notes on using git and github. Will work through some basics and discuss some how tos.</p>
+      
+      <!-- article content -->
+     <p>I have had to do a lot of googling lately to get familiar with <cite>git</cite>. My understanding of git is a
+work in progress. Here I summarize some of the basic commands and features that I learnt. I plan to
+keep this article updated as and when I learn something new.</p>
+<div class="section" id="git-basics">
+<h2>Git Basics</h2>
+<p>One of the basic concepts in git is the notion of <em>upstream</em> and <em>origin</em>. The term <em>upstream</em> refers to the main
+repository lets say the pandas on github hosted at <cite>https://github.com/pydata/pandas</cite>. However you have forked the
+to work on an issue, then the <em>origin</em> would refer to the user's fork of the <em>upstream</em> repository.</p>
+<ul class="simple">
+<li><strong>Initialize repositor</strong>: in an empty folder
+<tt class="docutils literal">`git init`</tt>
+You should see a message akin to
+<tt class="docutils literal">`
+Initialized empty Git repository in <span class="pre">/home/username/test/.git/</span>
+`</tt></li>
+<li><strong>Add remote repository</strong>:  To hook up to your local repository to a remote repository, such as the <cite>pandas</cite> repository on github.
+<tt class="docutils literal">`git remote add upstream <span class="pre">https://github.com/pydata/pandas.git`</span></tt>
+Note that instead of adding upstream, I could have added my fork as origin as shown below:
+<tt class="docutils literal">`git remote add origin <span class="pre">https://github.com/gouthambs/pandas.git`</span></tt></li>
+<li><strong>Remove remote repository</strong>: You have made a mistake and added a wrong remote repository. To remove a remote repo:
+<tt class="docutils literal">`git remote remove upstream`</tt>
+You can do the same to remove a remote origin.
+<tt class="docutils literal">`git remote remove origin`</tt></li>
+<li>Check what the remote repositories are.
+<tt class="docutils literal">`git remote <span class="pre">-v`</span></tt>
+This after adding the above pandas repo would show something like:
+<tt class="docutils literal">`
+upstream&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="pre">https://github.com/pydata/pandas.git</span> (fetch)
+upstream&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="pre">https://github.com/pydata/pandas.git</span> (push)
+`</tt></li>
+<li><strong>Fetching code from remote</strong>: Now that you have hooked up to a remote repository, how do you fetch the code from
+there? Lets say we have added remote upstream, and we want to fetch the code, then do the following:
+<tt class="docutils literal">`git fetch upstream`</tt>
+What this does is it fetches the whole repository, with all its branches and tags etc. Now to actually start using
+a particular branch you have to checkout.</li>
+<li><strong>Checkout code</strong>: To checkout the master try
+<tt class="docutils literal">`git checkout master`</tt></li>
+</ul>
+</div>
+
+     <br>
+     
+     <!-- article tags-->
+        <span class="glyphicon glyphicon-tags"></span>&nbsp;&nbsp;
+            <a href="http://karuth.com/tag/git.html">git</a>&nbsp;&nbsp;
+            <a href="http://karuth.com/tag/programming.html">programming</a>&nbsp;&nbsp;
+            <a href="http://karuth.com/tag/github.html">github</a>&nbsp;&nbsp;
+        <br>
+     
+     <!-- article comments -->
+    <div class="comment">
+        <div id="disqus_thread"></div> <!-- comment app container -->
+    </div>
+	<!-- Comment BEGIN -->
+    <script type="text/javascript">
+        var disqus_shortname = 'karuth'; // required: replace example with your forum shortname
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+     <!-- Comment END -->
+</div>    
+                </div>
+            </div>
+            
+            <footer id="contentinfo" class="footer">
+                    <nav class="pull-right bottom-nav">
+                        <a href="http://karuth.com/None">RSS</a>
+                    </nav>
+                    <address id="about" class="vcard body">
+                    &copy; <a href="http://karuth.com">Karuth</a> Proudly powered by <a href="http://getpelican.com/">Pelican</a>
+                    </address><!-- /#about -->
+            </footer><!-- /#contentinfo -->
+        </div><!-- container -->
+    </body>
+</html>
