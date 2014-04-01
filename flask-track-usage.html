@@ -75,9 +75,10 @@ I also wanted to easily track all the REST apis. That is when I stumbled upon <a
 <cite>Flask-Track-Usage</cite> package.</p>
 <p>The API and usage is incredibly simple, and as of version 0.0.7 supported Mongo DB storage. Since Mongo was not an
 option for me, I added SQLAlchemy based storage, thus opening doors for a wide array of databases. These additions will
-be released as part of version 0.0.8.</p>
+be released as part of version 1.0.0.</p>
 <p>Here is a quick-start version on using SQLStorage with Flask-Track-Usage:</p>
 <pre class="code python literal-block">
+<span class="c"># mainapp.py</span>
 <span class="c"># Create the Flask 'app'</span>
 <span class="kn">from</span> <span class="nn">flask</span> <span class="kn">import</span> <span class="n">Flask</span>
 <span class="n">app</span> <span class="o">=</span> <span class="n">Flask</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
@@ -110,25 +111,56 @@ any of the <a class="reference external" href="http://docs.sqlalchemy.org/en/rel
 supported by SQLAlchemy itself.</p>
 <p>You can use Flask-Track-Usage with blueprints as well. This is how you include blueprints views:</p>
 <pre class="code python literal-block">
-<span class="c"># ...</span>
+<span class="c"># Here app is the Flask app created in mainapp.py</span>
 <span class="n">app</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s">'TRACK_USAGE_INCLUDE_OR_EXCLUDE_VIEWS'</span><span class="p">]</span> <span class="o">=</span> <span class="s">'include'</span>
 
 <span class="c"># Make an instance of the extension</span>
 <span class="n">t</span> <span class="o">=</span> <span class="n">TrackUsage</span><span class="p">(</span><span class="n">app</span><span class="p">,</span> <span class="n">SQLStorage</span><span class="p">(</span><span class="n">conn_str</span><span class="o">=</span><span class="s">&quot;sqlite:///D:</span><span class="se">\\</span><span class="s">usage_tracking.db&quot;</span><span class="p">))</span>
 
+<span class="c"># exclude just the a_blueprint out</span>
 <span class="kn">from</span> <span class="nn">my_blueprints</span> <span class="kn">import</span> <span class="n">a_blueprint</span>
+<span class="n">t</span><span class="o">.</span><span class="n">exclude_blueprint</span><span class="p">(</span><span class="n">a_blueprint</span><span class="p">)</span>
 </pre>
-<p>This is how you exclude blueprints</p>
+<p>What we have done here is to include all views, except for the ones in the blueprint <tt class="docutils literal">a_blueprint</tt>.
+You can instead exclude all by default, and include just the specific ones as shown below.</p>
 <pre class="code python literal-block">
-<span class="c"># ...</span>
+<span class="c"># Here app is the Flask app created in mainapp.py</span>
 <span class="n">app</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s">'TRACK_USAGE_INCLUDE_OR_EXCLUDE_VIEWS'</span><span class="p">]</span> <span class="o">=</span> <span class="s">'exclude'</span>
-<span class="kn">from</span> <span class="nn">my_blueprints</span> <span class="kn">import</span> <span class="n">b_blueprint</span>
 
-<span class="c"># Now ALL of b_blueprints will be in the exclude list</span>
-<span class="n">t</span><span class="o">.</span><span class="n">exclude_blueprint</span><span class="p">(</span><span class="n">b_blueprint</span><span class="p">)</span>
+<span class="c"># Make an instance of the extension</span>
+<span class="n">t</span> <span class="o">=</span> <span class="n">TrackUsage</span><span class="p">(</span><span class="n">app</span><span class="p">,</span> <span class="n">SQLStorage</span><span class="p">(</span><span class="n">conn_str</span><span class="o">=</span><span class="s">&quot;sqlite:///D:</span><span class="se">\\</span><span class="s">usage_tracking.db&quot;</span><span class="p">))</span>
+
+<span class="kn">from</span> <span class="nn">my_blueprints</span> <span class="kn">import</span> <span class="n">a_blueprint</span>
+<span class="n">t</span><span class="o">.</span><span class="n">include_blueprint</span><span class="p">(</span><span class="n">a_blueprint</span><span class="p">)</span>
 </pre>
-<p>You can even use the <cite>get_usage</cite> method in the <cite>Storage</cite> object to include
-usage statistics part of your web application.</p>
+<p>Once you have setup the extension to track usage, you can even use the <tt class="docutils literal">_get_usage</tt> method
+part of the <tt class="docutils literal">Storage</tt> object to view the usage hits. This method returns a list of JSON
+dict and has the following schema:</p>
+<pre class="literal-block">
+[
+    {
+            'url': str,
+            'user_agent': {
+                'browser': str,
+                'language': str,
+                'platform': str,
+                'version': str,
+            },
+            'blueprint': str,
+            'view_args': dict or None
+            'status': int,
+            'remote_addr': str,
+            'authorization': bool,
+            'ip_info': str or None,
+            'path': str,
+            'speed': float,
+            'date': datetime,
+    },
+    {
+        ....
+    }
+]
+</pre>
 
      <br>
      
