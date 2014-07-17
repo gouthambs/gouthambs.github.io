@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Minimal Lua C++ Example - Karuth</title>
+        <!-- All the meta tags -->
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+        <meta property="og:type" content="article"/>
+        <meta property="og:title" content="Minimal Lua C++ Example"/>
+        <meta property="og:url" content="http://karuth.com/minimal-lua-c-example.html"/>
+        <meta property="og:description" content="Very basic introduction to Lua C++ API"/>
+        <link href="http://bootswatch.com/readable/bootstrap.css" rel="stylesheet"/>
+        <link href="http://bootswatch.com/readable/bootstrap.min.css" rel="stylesheet"/>
+        <link href="http://karuth.com/theme/static/css/style.css" rel="stylesheet" />
+        
+        <!-- Google Analytics -->
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-46714334-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    /*Update Your Analytics Tracking Code to Support Display Advertising by uncommenting the following 
+    instead of the above line */    
+    /*ga.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'stats.g.doubleclick.net/dc.js';*/
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+    </head>
+
+    <body>
+      <div class="navbar navbar-default navbar-fixed-top">
+          <div class="container">
+            <div class="navbar-header">
+              <a href="http://karuth.com" class="navbar-brand">Karuth</a>
+              <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+            </div>
+            <div class="navbar-collapse collapse" id="navbar-main">
+              <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="http://karuth.com/pages/about.html">About</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                <div class="col-md-10 col-md-offset-1">
+
+<div class="bs-docs-section">
+    <div class="page-header">
+        <h1>Minimal Lua C++ Example</h1>
+     <!--span class="glyphicon glyphicon-calendar"></span-->&nbsp;July 17, 2014 
+     &nbsp;&nbsp;
+     <!--span class="glyphicon glyphicon-user"></span--> by  
+     <a class="url fn" href="http://karuth.com/author/gouthaman-balaraman.html">&nbsp;Gouthaman Balaraman </a>
+     </div>
+     <!-- article description -->
+         <p class="lead">Very basic introduction to Lua C++ API</p>
+      
+      <!-- article content -->
+     <p>If you want to extend and customize the capabilities of a C++ application
+without requiring a full recompilation, then using a embedded scripting language
+is the way to go. Lua is one such embeddable scripting language, and is very popular
+among game developers. The main advantage of Lua, in my opinion, is that the core API
+is very minimal, has very small memory footprint. The availability of LuaJIT makes
+it a very performant alternative as well.</p>
+<div class="section" id="minimal-example">
+<h2>Minimal Example</h2>
+<p>Here is a minimal Lua(V5.1) - C++  example to get one started.</p>
+<pre class="code c++ literal-block">
+<span class="c1">// luaexample.cpp
+</span><span class="k">extern</span> <span class="s">&quot;C&quot;</span> <span class="p">{</span>
+  <span class="err">#</span><span class="n">include</span> <span class="s">&quot;lua.h&quot;</span>
+  <span class="err">#</span><span class="n">include</span> <span class="s">&quot;lualib.h&quot;</span>
+  <span class="err">#</span><span class="n">include</span> <span class="s">&quot;lauxlib.h&quot;</span>
+<span class="p">}</span>
+<span class="cp">#include &lt;string.h&gt;
+</span>
+<span class="kt">int</span> <span class="n">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span><span class="o">*</span> <span class="n">argv</span><span class="p">[])</span>
+<span class="p">{</span>
+      <span class="c1">// initialization
+</span>      <span class="n">lua_State</span> <span class="o">*</span> <span class="n">L</span> <span class="o">=</span> <span class="n">lua_open</span><span class="p">();</span>
+      <span class="n">luaL_openlibs</span><span class="p">(</span><span class="n">L</span><span class="p">);</span>
+
+      <span class="c1">// execute script
+</span>      <span class="n">lua_settop</span><span class="p">(</span><span class="n">L</span><span class="p">,</span><span class="mi">0</span><span class="p">);</span>
+      <span class="k">const</span> <span class="kt">char</span> <span class="n">lua_script</span><span class="p">[]</span> <span class="o">=</span> <span class="s">&quot;print('Hello World!')&quot;</span><span class="p">;</span>
+      <span class="kt">int</span> <span class="n">load_stat</span> <span class="o">=</span> <span class="n">luaL_loadbuffer</span><span class="p">(</span><span class="n">L</span><span class="p">,</span><span class="n">lua_script</span><span class="p">,</span><span class="n">strlen</span><span class="p">(</span><span class="n">lua_script</span><span class="p">),</span><span class="n">lua_script</span><span class="p">);</span>
+      <span class="n">lua_pcall</span><span class="p">(</span><span class="n">L</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+
+      <span class="c1">// cleanup
+</span>      <span class="n">lua_close</span><span class="p">(</span><span class="n">L</span><span class="p">);</span>
+      <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</pre>
+<p>This needs to be compiled using a C++ compiler and linked to Lua library. When you run the
+executable, you should see <cite>Hello World!</cite> printed on the screen.</p>
+</div>
+
+     <br>
+     
+     <!-- article tags-->
+        <span class="glyphicon glyphicon-tags"></span>&nbsp;&nbsp;
+            <a href="http://karuth.com/tag/lua.html">lua</a>&nbsp;&nbsp;
+            <a href="http://karuth.com/tag/programming.html">programming</a>&nbsp;&nbsp;
+            <a href="http://karuth.com/tag/c.html">C++</a>&nbsp;&nbsp;
+        <br>
+     
+     <!-- article comments -->
+    <div class="comment">
+        <div id="disqus_thread"></div> <!-- comment app container -->
+    </div>
+	<!-- Comment BEGIN -->
+    <script type="text/javascript">
+        var disqus_shortname = 'karuth'; // required: replace example with your forum shortname
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+     <!-- Comment END -->
+</div>    
+                </div>
+            </div>
+            
+            <footer id="contentinfo" class="footer">
+                    <address id="about" class="vcard body">
+                    &copy; <a href="http://karuth.com">Gouthaman Balaraman</a> Proudly powered by <a href="http://getpelican.com/">Pelican</a>
+                    </address><!-- /#about -->
+            </footer><!-- /#contentinfo -->
+        </div><!-- container -->
+    </body>
+</html>
