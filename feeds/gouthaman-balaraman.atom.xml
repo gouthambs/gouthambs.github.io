@@ -35,7 +35,7 @@ it a very performant alternative as well.&lt;/p&gt;
 &lt;span class="p"&gt;}&lt;/span&gt;
 &lt;/pre&gt;
 &lt;p&gt;This needs to be compiled using a C++ compiler and linked to Lua library. When you run the
-executable, you should see &lt;cite&gt;Hello World!&lt;/cite&gt; printed on the screen.&lt;/p&gt;
+executable, you should see &lt;tt class="docutils literal"&gt;Hello World!&lt;/tt&gt; printed on the screen.&lt;/p&gt;
 &lt;/div&gt;
 </summary><category term="lua"></category><category term="programming"></category><category term="C++"></category></entry><entry><title>Flask Track Usage Primer</title><link href="http://karuth.com/flask-track-usage.html" rel="alternate"></link><updated>2014-03-26T00:00:00-07:00</updated><author><name>Gouthaman Balaraman</name></author><id>tag:karuth.com,2014-03-26:flask-track-usage.html</id><summary type="html">&lt;p&gt;Recently I had a requirement to add light weight tracking for a Flask app. Tools like Google analytics was not
 an option because, I wanted raw number and data handy rather than just figures, this was a website page in the intranet, and
