@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Minimal Flask-Login Example - Karuth</title>
+        <!-- All the meta tags -->
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+        <meta property="og:type" content="article"/>
+        <meta property="og:title" content="Minimal Flask-Login Example"/>
+        <meta property="og:url" content="http://karuth.com/minimal-flask-login-example.html"/>
+        <meta property="og:description" content="Flask-Login is a Flask extension that provides a framework for handling user authentication. This post will give you a basic tutorial of the Flask-Login mechanism for token based authentication."/>
+        <link href="http://bootswatch.com/readable/bootstrap.css" rel="stylesheet"/>
+        <link href="http://bootswatch.com/readable/bootstrap.min.css" rel="stylesheet"/>
+        <link href="http://karuth.com/theme/static/css/style.css" rel="stylesheet" />
+        
+        <!-- Google Analytics -->
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-46714334-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    /*Update Your Analytics Tracking Code to Support Display Advertising by uncommenting the following 
+    instead of the above line */    
+    /*ga.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'stats.g.doubleclick.net/dc.js';*/
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+    </head>
+
+    <body>
+      <div class="navbar navbar-default navbar-fixed-top">
+          <div class="container">
+            <div class="navbar-header">
+              <a href="http://karuth.com" class="navbar-brand">Karuth</a>
+              <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+            </div>
+            <div class="navbar-collapse collapse" id="navbar-main">
+              <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="http://karuth.com/pages/about.html">About</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                <div class="col-md-10 col-md-offset-1">
+
+<div class="bs-docs-section">
+    <div class="page-header">
+        <h1>Minimal Flask-Login Example</h1>
+     <!--span class="glyphicon glyphicon-calendar"></span-->&nbsp;July 24, 2014 
+     &nbsp;&nbsp;
+     <!--span class="glyphicon glyphicon-user"></span--> by  
+     <a class="url fn" href="http://karuth.com/author/gouthaman-balaraman.html">&nbsp;Gouthaman Balaraman </a>
+     </div>
+     <!-- article description -->
+         <p class="lead">Flask-Login is a Flask extension that provides a framework for handling user authentication.
+This post will give you a basic tutorial of the Flask-Login mechanism for token based authentication.</p>
+      
+      <!-- article content -->
+     <p>The goal of this post is to give a very basic introduction to token based authentication using Flask-Login.
+Usually the user credentials are stored in a database, with passwords hashed. However the authentication
+mechanism can be understood without having to worry about database, and various token generation algorithms.
+As a first step lets focus on just understanding the authentication mechanism. Then in a subsequent post
+we will handle other important parts.</p>
+<p>To run this example, you will need <cite>flask</cite> and <cite>flask-login</cite> with their dependencies installed.
+This can be done using <cite>pip</cite> as shown below:</p>
+<pre class="literal-block">
+&gt;pip install flask
+&gt;pip install flask-login
+</pre>
+<p>Here is the full source code that we are about to discuss:</p>
+<pre class="code python literal-block">
+<span class="kn">from</span> <span class="nn">flask</span> <span class="kn">import</span> <span class="n">Flask</span><span class="p">,</span> <span class="n">Response</span>
+<span class="kn">from</span> <span class="nn">flask.ext.login</span> <span class="kn">import</span> <span class="n">LoginManager</span><span class="p">,</span> <span class="n">UserMixin</span><span class="p">,</span> <span class="n">login_required</span>
+
+
+<span class="n">app</span> <span class="o">=</span> <span class="n">Flask</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
+<span class="n">login_manager</span> <span class="o">=</span> <span class="n">LoginManager</span><span class="p">()</span>
+<span class="n">login_manager</span><span class="o">.</span><span class="n">init_app</span><span class="p">(</span><span class="n">app</span><span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">User</span><span class="p">(</span><span class="n">UserMixin</span><span class="p">):</span>
+    <span class="c"># proxy for a database of users</span>
+    <span class="n">user_database</span> <span class="o">=</span> <span class="p">{</span><span class="s">&quot;JohnDoe&quot;</span><span class="p">:</span> <span class="p">(</span><span class="s">&quot;JohnDoe&quot;</span><span class="p">,</span> <span class="s">&quot;John&quot;</span><span class="p">),</span>
+               <span class="s">&quot;JaneDoe&quot;</span><span class="p">:</span> <span class="p">(</span><span class="s">&quot;JaneDoe&quot;</span><span class="p">,</span> <span class="s">&quot;Jane&quot;</span><span class="p">)}</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">username</span><span class="p">,</span> <span class="n">password</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">id</span> <span class="o">=</span> <span class="n">username</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">password</span> <span class="o">=</span> <span class="n">password</span>
+
+    <span class="nd">&#64;classmethod</span>
+    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span><span class="nb">id</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">cls</span><span class="o">.</span><span class="n">user_database</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="nb">id</span><span class="p">)</span>
+
+
+<span class="nd">&#64;login_manager.request_loader</span>
+<span class="k">def</span> <span class="nf">load_user</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+    <span class="n">token</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">headers</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">'Authorization'</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">token</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="n">token</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">'token'</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">token</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="n">username</span><span class="p">,</span><span class="n">password</span> <span class="o">=</span> <span class="n">token</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&quot;:&quot;</span><span class="p">)</span> <span class="c"># naive token</span>
+        <span class="n">user_entry</span> <span class="o">=</span> <span class="n">User</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">username</span><span class="p">)</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">user_entry</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">):</span>
+            <span class="n">user</span> <span class="o">=</span> <span class="n">User</span><span class="p">(</span><span class="n">user_entry</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">user_entry</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">user</span><span class="o">.</span><span class="n">password</span> <span class="o">==</span> <span class="n">password</span><span class="p">):</span>
+                <span class="k">return</span> <span class="n">user</span>
+    <span class="k">return</span> <span class="bp">None</span>
+
+
+<span class="nd">&#64;app.route</span><span class="p">(</span><span class="s">&quot;/&quot;</span><span class="p">,</span><span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="s">&quot;GET&quot;</span><span class="p">])</span>
+<span class="k">def</span> <span class="nf">index</span><span class="p">():</span>
+    <span class="k">return</span> <span class="n">Response</span><span class="p">(</span><span class="n">response</span><span class="o">=</span><span class="s">&quot;Hello World!&quot;</span><span class="p">,</span><span class="n">status</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
+
+
+<span class="nd">&#64;app.route</span><span class="p">(</span><span class="s">&quot;/protected/&quot;</span><span class="p">,</span><span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="s">&quot;GET&quot;</span><span class="p">])</span>
+<span class="nd">&#64;login_required</span>
+<span class="k">def</span> <span class="nf">protected</span><span class="p">():</span>
+    <span class="k">return</span> <span class="n">Response</span><span class="p">(</span><span class="n">response</span><span class="o">=</span><span class="s">&quot;Hello Protected World!&quot;</span><span class="p">,</span> <span class="n">status</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
+
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">'__main__'</span><span class="p">:</span>
+    <span class="n">app</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s">&quot;SECRET_KEY&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&quot;ITSASECRET&quot;</span>
+    <span class="n">app</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">port</span><span class="o">=</span><span class="mi">5000</span><span class="p">,</span><span class="n">debug</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+</pre>
+<p>Lets delve deeper into this example, and I will explain each part of the code in greater detail here.
+The first</p>
+
+     <br>
+     
+     <!-- article tags-->
+        <span class="glyphicon glyphicon-tags"></span>&nbsp;&nbsp;
+            <a href="http://karuth.com/tag/programming.html">Programming</a>&nbsp;&nbsp;
+            <a href="http://karuth.com/tag/python.html">Python</a>&nbsp;&nbsp;
+            <a href="http://karuth.com/tag/flask.html">Flask</a>&nbsp;&nbsp;
+            <a href="http://karuth.com/tag/flask-login.html">Flask-Login</a>&nbsp;&nbsp;
+        <br>
+     
+     <!-- article comments -->
+    <div class="comment">
+        <div id="disqus_thread"></div> <!-- comment app container -->
+    </div>
+	<!-- Comment BEGIN -->
+    <script type="text/javascript">
+        var disqus_shortname = 'karuth'; // required: replace example with your forum shortname
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+     <!-- Comment END -->
+</div>    
+                </div>
+            </div>
+            
+            <footer id="contentinfo" class="footer">
+                    <address id="about" class="vcard body">
+                    &copy; <a href="http://karuth.com">Gouthaman Balaraman</a> Proudly powered by <a href="http://getpelican.com/">Pelican</a>
+                    </address><!-- /#about -->
+            </footer><!-- /#contentinfo -->
+        </div><!-- container -->
+    </body>
+</html>
