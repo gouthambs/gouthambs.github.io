@@ -123,10 +123,9 @@ and should not be used in practice. Using serializers from &lt;cite&gt;itsdanger
 will touch upon these issues in another post.&lt;/p&gt;
 &lt;p&gt;Once this setup is done, in order to require authentication for a route, use the &lt;cite&gt;&amp;#64;login_required&lt;/cite&gt;
 decorator.&lt;/p&gt;
-&lt;p&gt;Run the above script, and if you visit the &lt;cite&gt;http://localhost:5000/protected/&lt;/cite&gt; route without
-a token you will get a &lt;cite&gt;401 Unauthorized&lt;/cite&gt; message. If you pass a token as
-&lt;cite&gt;http://localhost:5000/protected/?token=JohnDoe:John&lt;/cite&gt;, then you will be allowed access to
-the protected page.&lt;/p&gt;
+&lt;p&gt;Run the above script, and if you visit the &lt;a class="reference external" href="http://localhost:5000/protected/"&gt;LocalHostUnAuthenticated&lt;/a&gt; route without
+a token you will get a &lt;cite&gt;401 Unauthorized&lt;/cite&gt; message. If you pass a token to
+&lt;a class="reference external" href="http://localhost:5000/protected/?token=JohnDoe:John"&gt;LocalHostAuthenticated&lt;/a&gt;, then you will be allowed access to the protected page.&lt;/p&gt;
 </summary><category term="Programming"></category><category term="Python"></category><category term="Flask"></category><category term="Flask-Login"></category></entry><entry><title>Minimal Lua C++ Example</title><link href="http://karuth.com/minimal-lua-c-example.html" rel="alternate"></link><updated>2014-07-17T00:00:00-07:00</updated><author><name>Gouthaman Balaraman</name></author><id>tag:karuth.com,2014-07-17:minimal-lua-c-example.html</id><summary type="html">&lt;p&gt;If you want to extend and customize the capabilities of a C++ application
 without requiring a full recompilation, then using a embedded scripting language
 is the way to go. Lua is one such embeddable scripting language, and is very popular
