@@ -75,7 +75,7 @@ This can be done using &lt;cite&gt;pip&lt;/cite&gt; as shown below:&lt;/p&gt;
 &lt;span class="n"&gt;login_manager&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;LoginManager&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
 &lt;span class="n"&gt;login_manager&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;init_app&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;app&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 &lt;/pre&gt;
-&lt;p&gt;The first five lines of the code import the required modules, and initializes the Flask app. Then
+&lt;p&gt;The first five lines of the code import the required modules, and initializes the Flask &lt;tt class="docutils literal"&gt;app&lt;/tt&gt;. Then
 the &lt;cite&gt;LoginManager&lt;/cite&gt; instance is created and then is configure for login. Now lets try to understand
 the &lt;cite&gt;User&lt;/cite&gt; class.&lt;/p&gt;
 &lt;pre class="code python literal-block"&gt;
@@ -92,13 +92,13 @@ the &lt;cite&gt;User&lt;/cite&gt; class.&lt;/p&gt;
     &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;get&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;cls&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="nb"&gt;id&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
         &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;cls&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;user_database&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;get&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;id&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 &lt;/pre&gt;
-&lt;p&gt;Here I have created the &lt;cite&gt;User&lt;/cite&gt; class by overloading the &lt;cite&gt;UserMixin&lt;/cite&gt; class. The &lt;cite&gt;UserMixin&lt;/cite&gt; class
-implements some of the default methods, and hence is a convenient starting point. The &lt;cite&gt;dict&lt;/cite&gt; &lt;cite&gt;user_database&lt;/cite&gt;
-is a proxy for all the database code one would need. I am abstracting this away as a &lt;cite&gt;dict&lt;/cite&gt; for simplicity.
+&lt;p&gt;Here I have created the &lt;tt class="docutils literal"&gt;User&lt;/tt&gt; class by overloading the &lt;tt class="docutils literal"&gt;UserMixin&lt;/tt&gt; class. The &lt;tt class="docutils literal"&gt;UserMixin&lt;/tt&gt; class
+implements some of the default methods, and hence is a convenient starting point. The &lt;tt class="docutils literal"&gt;dict&lt;/tt&gt; &lt;tt class="docutils literal"&gt;user_database&lt;/tt&gt;
+is a proxy for all the database code one would need. I am abstracting this away as a &lt;tt class="docutils literal"&gt;dict&lt;/tt&gt; for simplicity.
 The &lt;cite&gt;get&lt;/cite&gt; class method returns the user data from &lt;cite&gt;user_database&lt;/cite&gt;.&lt;/p&gt;
-&lt;p&gt;For the &lt;cite&gt;LoginManager&lt;/cite&gt; to handle authentication, we have to provide a method for it to load user.
-Here I use the generic &lt;cite&gt;&amp;#64;login_manager.request_loader&lt;/cite&gt; decorator to decorate the &lt;cite&gt;load_user&lt;/cite&gt; function.
-The expected behavior of a &lt;cite&gt;request_loader&lt;/cite&gt; is to return a &lt;cite&gt;User&lt;/cite&gt; instance if the provided credentials are
+&lt;p&gt;For the &lt;tt class="docutils literal"&gt;LoginManager&lt;/tt&gt; to handle authentication, we have to provide a method for it to load user.
+Here I use the generic &lt;tt class="docutils literal"&gt;&amp;#64;login_manager.request_loader&lt;/tt&gt; decorator to decorate the &lt;tt class="docutils literal"&gt;load_user&lt;/tt&gt; function.
+The expected behavior of a &lt;tt class="docutils literal"&gt;request_loader&lt;/tt&gt; is to return a &lt;tt class="docutils literal"&gt;User&lt;/tt&gt; instance if the provided credentials are
 valid, and return &lt;cite&gt;None&lt;/cite&gt; otherwise.&lt;/p&gt;
 &lt;pre class="code python literal-block"&gt;
 &lt;span class="nd"&gt;&amp;#64;login_manager.request_loader&lt;/span&gt;
@@ -116,15 +116,15 @@ valid, and return &lt;cite&gt;None&lt;/cite&gt; otherwise.&lt;/p&gt;
                 &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;user&lt;/span&gt;
     &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="bp"&gt;None&lt;/span&gt;
 &lt;/pre&gt;
-&lt;p&gt;The &lt;cite&gt;load_user&lt;/cite&gt; looks for a token in &lt;cite&gt;Authorization&lt;/cite&gt; header, or the &lt;cite&gt;request&lt;/cite&gt; arguments. If a token
-is provided, then I return an instance of &lt;cite&gt;User&lt;/cite&gt; if the token is valid, and return &lt;cite&gt;None&lt;/cite&gt; otherwise.
-Here I assume that a valid token would be of the form &lt;cite&gt;&amp;lt;username&amp;gt;:&amp;lt;password&amp;gt;&lt;/cite&gt;. This is a naive token,
-and should not be used in practice. Using serializers from &lt;cite&gt;itsdangerous&lt;/cite&gt; package can come handy. We
+&lt;p&gt;The &lt;tt class="docutils literal"&gt;load_user&lt;/tt&gt; looks for a token in &lt;tt class="docutils literal"&gt;Authorization&lt;/tt&gt; header, or the &lt;tt class="docutils literal"&gt;request&lt;/tt&gt; arguments. If a token
+is provided, then I return an instance of &lt;tt class="docutils literal"&gt;User&lt;/tt&gt; if the token is valid, and return &lt;tt class="docutils literal"&gt;None&lt;/tt&gt; otherwise.
+Here I assume that a valid token would be of the form &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;&amp;lt;username&amp;gt;:&amp;lt;password&amp;gt;&lt;/span&gt;&lt;/tt&gt;. This is a naive token,
+and should not be used in practice. Using serializers from &lt;tt class="docutils literal"&gt;itsdangerous&lt;/tt&gt; package can come handy. We
 will touch upon these issues in another post.&lt;/p&gt;
-&lt;p&gt;Once this setup is done, in order to require authentication for a route, use the &lt;cite&gt;&amp;#64;login_required&lt;/cite&gt;
+&lt;p&gt;Once this setup is done, in order to require authentication for a route, use the &lt;tt class="docutils literal"&gt;&amp;#64;login_required&lt;/tt&gt;
 decorator.&lt;/p&gt;
 &lt;p&gt;Run the above script, and if you visit the &lt;a class="reference external" href="http://localhost:5000/protected/"&gt;LocalHostUnAuthenticated&lt;/a&gt; route without
-a token you will get a &lt;cite&gt;401 Unauthorized&lt;/cite&gt; message. If you pass a token to
+a token you will get a &lt;tt class="docutils literal"&gt;401 Unauthorized&lt;/tt&gt; message. If you pass a token to
 &lt;a class="reference external" href="http://localhost:5000/protected/?token=JohnDoe:John"&gt;LocalHostAuthenticated&lt;/a&gt;, then you will be allowed access to the protected page.&lt;/p&gt;
 </description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Gouthaman Balaraman</dc:creator><pubDate>Thu, 24 Jul 2014 00:00:00 -0700</pubDate><guid>tag:karuth.com,2014-07-24:minimal-flask-login-example.html</guid><category>Programming</category><category>Python</category><category>Flask</category><category>Flask-Login</category></item><item><title>Minimal Lua C++ Example</title><link>http://karuth.com/minimal-lua-c-example.html</link><description>&lt;p&gt;If you want to extend and customize the capabilities of a C++ application
 without requiring a full recompilation, then using a embedded scripting language
