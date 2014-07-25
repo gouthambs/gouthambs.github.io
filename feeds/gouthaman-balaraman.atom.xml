@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Karuth</title><link href="http://karuth.com/" rel="alternate"></link><link href="http://karuth.com/feeds/gouthaman-balaraman.atom.xml" rel="self"></link><id>http://karuth.com/</id><updated>2014-07-24T00:00:00-07:00</updated><entry><title>Minimal Flask-Login Example</title><link href="http://karuth.com/minimal-flask-login-example.html" rel="alternate"></link><updated>2014-07-24T00:00:00-07:00</updated><author><name>Gouthaman Balaraman</name></author><id>tag:karuth.com,2014-07-24:minimal-flask-login-example.html</id><summary type="html">&lt;p&gt;The goal of this post is to give a very basic introduction to token based authentication using Flask-Login.
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Gouthaman Balaraman</title><link href="http://gouthamanbalaraman.com/" rel="alternate"></link><link href="http://gouthamanbalaraman.com/feeds/gouthaman-balaraman.atom.xml" rel="self"></link><id>http://gouthamanbalaraman.com/</id><updated>2014-07-24T00:00:00-07:00</updated><entry><title>Minimal Flask-Login Example</title><link href="http://gouthamanbalaraman.com/minimal-flask-login-example.html" rel="alternate"></link><updated>2014-07-24T00:00:00-07:00</updated><author><name>Gouthaman Balaraman</name></author><id>tag:gouthamanbalaraman.com,2014-07-24:minimal-flask-login-example.html</id><summary type="html">&lt;p&gt;The goal of this post is to give a very basic introduction to token based authentication using Flask-Login.
 Usually the user credentials are stored in a database, with passwords hashed. However the authentication
 mechanism can be understood without having to worry about database, and various token generation algorithms.
 As a first step lets focus on just understanding the authentication mechanism. Then in a subsequent post
@@ -126,7 +126,7 @@ decorator.&lt;/p&gt;
 &lt;p&gt;Run the above script, and if you visit the &lt;a class="reference external" href="http://localhost:5000/protected/"&gt;LocalHostUnAuthenticated&lt;/a&gt; route without
 a token you will get a &lt;tt class="docutils literal"&gt;401 Unauthorized&lt;/tt&gt; message. If you pass a token to
 &lt;a class="reference external" href="http://localhost:5000/protected/?token=JohnDoe:John"&gt;LocalHostAuthenticated&lt;/a&gt;, then you will be allowed access to the protected page.&lt;/p&gt;
-</summary><category term="Programming"></category><category term="Python"></category><category term="Flask"></category><category term="Flask-Login"></category></entry><entry><title>Minimal Lua C++ Example</title><link href="http://karuth.com/minimal-lua-c-example.html" rel="alternate"></link><updated>2014-07-17T00:00:00-07:00</updated><author><name>Gouthaman Balaraman</name></author><id>tag:karuth.com,2014-07-17:minimal-lua-c-example.html</id><summary type="html">&lt;p&gt;If you want to extend and customize the capabilities of a C++ application
+</summary><category term="Programming"></category><category term="Python"></category><category term="Flask"></category><category term="Flask-Login"></category></entry><entry><title>Minimal Lua C++ Example</title><link href="http://gouthamanbalaraman.com/minimal-lua-c-example.html" rel="alternate"></link><updated>2014-07-17T00:00:00-07:00</updated><author><name>Gouthaman Balaraman</name></author><id>tag:gouthamanbalaraman.com,2014-07-17:minimal-lua-c-example.html</id><summary type="html">&lt;p&gt;If you want to extend and customize the capabilities of a C++ application
 without requiring a full recompilation, then using a embedded scripting language
 is the way to go. Lua is one such embeddable scripting language, and is very popular
 among game developers. The main advantage of Lua, in my opinion, is that the core API
@@ -164,7 +164,7 @@ it a very performant alternative as well.&lt;/p&gt;
 &lt;p&gt;This needs to be compiled using a C++ compiler and linked to Lua library. When you run the
 executable, you should see &lt;tt class="docutils literal"&gt;Hello World!&lt;/tt&gt; printed on the screen.&lt;/p&gt;
 &lt;/div&gt;
-</summary><category term="lua"></category><category term="programming"></category><category term="C++"></category></entry><entry><title>Flask Track Usage Primer</title><link href="http://karuth.com/flask-track-usage.html" rel="alternate"></link><updated>2014-03-26T00:00:00-07:00</updated><author><name>Gouthaman Balaraman</name></author><id>tag:karuth.com,2014-03-26:flask-track-usage.html</id><summary type="html">&lt;p&gt;Recently I had a requirement to add light weight tracking for a Flask app. Tools like Google analytics was not
+</summary><category term="lua"></category><category term="programming"></category><category term="C++"></category></entry><entry><title>Flask Track Usage Primer</title><link href="http://gouthamanbalaraman.com/flask-track-usage.html" rel="alternate"></link><updated>2014-03-26T00:00:00-07:00</updated><author><name>Gouthaman Balaraman</name></author><id>tag:gouthamanbalaraman.com,2014-03-26:flask-track-usage.html</id><summary type="html">&lt;p&gt;Recently I had a requirement to add light weight tracking for a Flask app. Tools like Google analytics was not
 an option because, I wanted raw number and data handy rather than just figures, this was a website page in the intranet, and
 I also wanted to easily track all the REST apis. That is when I stumbled upon &lt;a class="reference external" href="http://www.stevemilner.org/"&gt;Steve Milner's&lt;/a&gt;
 &lt;cite&gt;Flask-Track-Usage&lt;/cite&gt; package.&lt;/p&gt;
@@ -256,7 +256,7 @@ dict and has the following schema:&lt;/p&gt;
     }
 ]
 &lt;/pre&gt;
-</summary><category term="Programming"></category><category term="Python"></category></entry><entry><title>Git For Dummies</title><link href="http://karuth.com/git-for-dummies.html" rel="alternate"></link><updated>2014-03-20T00:00:00-07:00</updated><author><name>Gouthaman Balaraman</name></author><id>tag:karuth.com,2014-03-20:git-for-dummies.html</id><summary type="html">&lt;p&gt;Git is a version control with a ton of powerful features. This article is intended to be
+</summary><category term="Programming"></category><category term="Python"></category></entry><entry><title>Git For Dummies</title><link href="http://gouthamanbalaraman.com/git-for-dummies.html" rel="alternate"></link><updated>2014-03-20T00:00:00-07:00</updated><author><name>Gouthaman Balaraman</name></author><id>tag:gouthamanbalaraman.com,2014-03-20:git-for-dummies.html</id><summary type="html">&lt;p&gt;Git is a version control with a ton of powerful features. This article is intended to be
 an introduction for dummies (like me). I have had to do a lot of googling lately to get familiar
 with git. My understanding of git is a work in progress. Here I summarize some of the basic
 commands and features that I learnt. I plan to keep this article updated as and when I learn
@@ -347,11 +347,11 @@ git push origin master
 &lt;/li&gt;
 &lt;/ul&gt;
 &lt;/div&gt;
-</summary><category term="git"></category><category term="programming"></category><category term="github"></category></entry><entry><title>Asynchronous Python Logging Using MSMQ</title><link href="http://karuth.com/asynchronous-python-logging-using-msmq.html" rel="alternate"></link><updated>2014-02-21T00:00:00-08:00</updated><author><name>Gouthaman Balaraman</name></author><id>tag:karuth.com,2014-02-21:asynchronous-python-logging-using-msmq.html</id><summary type="html">&lt;p&gt;If you have a web application running in Python, there can be a need for the logging to
+</summary><category term="git"></category><category term="programming"></category><category term="github"></category></entry><entry><title>Asynchronous Python Logging Using MSMQ</title><link href="http://gouthamanbalaraman.com/asynchronous-python-logging-using-msmq.html" rel="alternate"></link><updated>2014-02-21T00:00:00-08:00</updated><author><name>Gouthaman Balaraman</name></author><id>tag:gouthamanbalaraman.com,2014-02-21:asynchronous-python-logging-using-msmq.html</id><summary type="html">&lt;p&gt;If you have a web application running in Python, there can be a need for the logging to
 not interfere with the performance. Default file based loggers can lead to a slow down
 because of the constand disk writes. An alternate solution that can be quite handy is
 logging into a message based logger, such as MSMQ. This post is built on my earlier post
-&lt;a class="reference external" href="http://karuth.com/sending-msmq-messages-using-python.html"&gt;Sending MSMQ Messages Using Python&lt;/a&gt;, where
+&lt;a class="reference external" href="http://gouthamanbalaraman.com/sending-msmq-messages-using-python.html"&gt;Sending MSMQ Messages Using Python&lt;/a&gt;, where
 I discuss how to setup, send and receive messages using MSMQ.&lt;/p&gt;
 &lt;p&gt;Here I will show how one can use the MSMQ to build a custom handler, that can be used
 with the logging module in python. Here is the &lt;tt class="docutils literal"&gt;MSMQHandler&lt;/tt&gt; class:&lt;/p&gt;
@@ -407,9 +407,9 @@ you can incorporate it into your workflow as shown below:&lt;/p&gt;
 &lt;span class="n"&gt;lgr&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;info&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;Test Message&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 &lt;/pre&gt;
 &lt;p&gt;And that completes the MSMQ logger using python. Now all your logs will be pushed to the KaruthQueue
-that we created. You can use the example shown &lt;a class="reference external" href="http://karuth.com/sending-msmq-messages-using-python.html"&gt;here&lt;/a&gt; to read the messages in a seperate application
+that we created. You can use the example shown &lt;a class="reference external" href="http://gouthamanbalaraman.com/sending-msmq-messages-using-python.html"&gt;here&lt;/a&gt; to read the messages in a seperate application
 and store any way you chose, files, database etc.&lt;/p&gt;
-</summary><category term="python"></category><category term="programming"></category></entry><entry><title>Sending MSMQ Messages Using Python</title><link href="http://karuth.com/sending-msmq-messages-using-python.html" rel="alternate"></link><updated>2014-02-21T00:00:00-08:00</updated><author><name>Gouthaman Balaraman</name></author><id>tag:karuth.com,2014-02-21:sending-msmq-messages-using-python.html</id><summary type="html">&lt;p&gt;MSMQ is a message queue in the Windows environment, very much like
+</summary><category term="python"></category><category term="programming"></category></entry><entry><title>Sending MSMQ Messages Using Python</title><link href="http://gouthamanbalaraman.com/sending-msmq-messages-using-python.html" rel="alternate"></link><updated>2014-02-21T00:00:00-08:00</updated><author><name>Gouthaman Balaraman</name></author><id>tag:gouthamanbalaraman.com,2014-02-21:sending-msmq-messages-using-python.html</id><summary type="html">&lt;p&gt;MSMQ is a message queue in the Windows environment, very much like
 RabbitMQ. MSMQ can be used as a task queue or for communicating
 between processes. One advantage of using MSMQ rather than inter-process communication (IPC)
 is that messages have persistence. Here I show how to send and receive MSMQ messages using python.&lt;/p&gt;
@@ -465,7 +465,7 @@ You should see an entry there that corresponds to the message that was sent&lt;/
 see your earlier message printed out.&lt;/p&gt;
 &lt;p&gt;Have fun messaging!&lt;/p&gt;
 &lt;/div&gt;
-</summary><category term="python"></category><category term="programming"></category></entry><entry><title>A Short Story of Wall Street</title><link href="http://karuth.com/a-short-story-of-wall-street.html" rel="alternate"></link><updated>2014-01-23T00:00:00-08:00</updated><author><name>Gouthaman Balaraman</name></author><id>tag:karuth.com,2014-01-23:a-short-story-of-wall-street.html</id><summary type="html">&lt;p&gt;In the last couple of decades, the US market has witnessed a
+</summary><category term="python"></category><category term="programming"></category></entry><entry><title>A Short Story of Wall Street</title><link href="http://gouthamanbalaraman.com/a-short-story-of-wall-street.html" rel="alternate"></link><updated>2014-01-23T00:00:00-08:00</updated><author><name>Gouthaman Balaraman</name></author><id>tag:gouthamanbalaraman.com,2014-01-23:a-short-story-of-wall-street.html</id><summary type="html">&lt;p&gt;In the last couple of decades, the US market has witnessed a
 technology bubble, a housing bubble, recession, and market
 crashes. I wanted to understand the human sentiment, the fear
 when market crashes, the euphoria while riding the upside of the bubble.
@@ -508,7 +508,7 @@ high quality debt, even though a lot of them defaulted.&lt;/li&gt;
 calculated by computing volatility using daily returns over a 45 day window.&lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-</summary><category term="finance"></category><category term="equity"></category></entry><entry><title>Calculating Stock Beta, Volatility, and More</title><link href="http://karuth.com/calculating-stock-beta.html" rel="alternate"></link><updated>2014-01-09T00:00:00-08:00</updated><author><name>Gouthaman Balaraman</name></author><id>tag:karuth.com,2014-01-09:calculating-stock-beta.html</id><summary type="html">&lt;p&gt;Have you ever wondered how to calculate the Beta value that is shown in
+</summary><category term="finance"></category><category term="equity"></category></entry><entry><title>Calculating Stock Beta, Volatility, and More</title><link href="http://gouthamanbalaraman.com/calculating-stock-beta.html" rel="alternate"></link><updated>2014-01-09T00:00:00-08:00</updated><author><name>Gouthaman Balaraman</name></author><id>tag:gouthamanbalaraman.com,2014-01-09:calculating-stock-beta.html</id><summary type="html">&lt;p&gt;Have you ever wondered how to calculate the Beta value that is shown in
 &lt;a class="reference external" href="http://www.google.com/finance"&gt;GoogleFinance&lt;/a&gt; or &lt;a class="reference external" href="http://www.finance.yahoo.com/"&gt;YahooFinance&lt;/a&gt; and what does it mean from an investment perspective?
 This article will give you an introduction to the concept and demonstrate how
 you can calculate various time series measures for a stock using python.&lt;/p&gt;
@@ -631,7 +631,7 @@ for the returns.&lt;/p&gt;
 of returns. The same goes for volatility, which is scaled by &lt;span class="formula"&gt;&lt;span class="sqrt"&gt;&lt;span class="radical"&gt;√&lt;/span&gt;&lt;span class="ignored"&gt;(&lt;/span&gt;&lt;span class="root"&gt;12&lt;/span&gt;&lt;span class="ignored"&gt;)&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;
 in order to annualize.&lt;/p&gt;
 &lt;/div&gt;
-</summary><category term="finance"></category><category term="investing"></category></entry><entry><title>Python Multiprocessing as a Task Queue</title><link href="http://karuth.com/python-multiprocessing-as-a-task-queue.html" rel="alternate"></link><updated>2014-01-07T00:00:00-08:00</updated><author><name>Gouthaman Balaraman</name></author><id>tag:karuth.com,2014-01-07:python-multiprocessing-as-a-task-queue.html</id><summary type="html">&lt;p&gt;When you have computationally intensive tasks in your website (or scripts),
+</summary><category term="finance"></category><category term="investing"></category></entry><entry><title>Python Multiprocessing as a Task Queue</title><link href="http://gouthamanbalaraman.com/python-multiprocessing-as-a-task-queue.html" rel="alternate"></link><updated>2014-01-07T00:00:00-08:00</updated><author><name>Gouthaman Balaraman</name></author><id>tag:gouthamanbalaraman.com,2014-01-07:python-multiprocessing-as-a-task-queue.html</id><summary type="html">&lt;p&gt;When you have computationally intensive tasks in your website (or scripts),
 it is conventional to use a task queue such as &lt;a class="reference external" href="http://www.celeryproject.org/"&gt;Celery&lt;/a&gt;. Using Celery requires
 some amount of setup and if you want to avoid, try using the following task
 queue based on the multiprocessing.
