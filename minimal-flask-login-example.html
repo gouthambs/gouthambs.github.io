@@ -136,8 +136,67 @@ This can be done using <cite>pip</cite> as shown below:</p>
     <span class="n">app</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s">&quot;SECRET_KEY&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&quot;ITSASECRET&quot;</span>
     <span class="n">app</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">port</span><span class="o">=</span><span class="mi">5000</span><span class="p">,</span><span class="n">debug</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
 </pre>
-<p>Lets delve deeper into this example, and I will explain each part of the code in greater detail here.
-The first</p>
+<p>Lets delve deeper into this example, and I will explain each part of the code in greater detail here.</p>
+<pre class="code python literal-block">
+<span class="kn">from</span> <span class="nn">flask</span> <span class="kn">import</span> <span class="n">Flask</span><span class="p">,</span> <span class="n">Response</span>
+<span class="kn">from</span> <span class="nn">flask.ext.login</span> <span class="kn">import</span> <span class="n">LoginManager</span><span class="p">,</span> <span class="n">UserMixin</span><span class="p">,</span> <span class="n">login_required</span>
+
+<span class="n">app</span> <span class="o">=</span> <span class="n">Flask</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
+<span class="n">login_manager</span> <span class="o">=</span> <span class="n">LoginManager</span><span class="p">()</span>
+<span class="n">login_manager</span><span class="o">.</span><span class="n">init_app</span><span class="p">(</span><span class="n">app</span><span class="p">)</span>
+</pre>
+<p>The first five lines of the code import the required modules, and initializes the Flask app. Then
+the <cite>LoginManager</cite> instance is created and then is configure for login. Now lets try to understand
+the <cite>User</cite> class.</p>
+<pre class="code python literal-block">
+<span class="k">class</span> <span class="nc">User</span><span class="p">(</span><span class="n">UserMixin</span><span class="p">):</span>
+    <span class="c"># proxy for a database of users</span>
+    <span class="n">user_database</span> <span class="o">=</span> <span class="p">{</span><span class="s">&quot;JohnDoe&quot;</span><span class="p">:</span> <span class="p">(</span><span class="s">&quot;JohnDoe&quot;</span><span class="p">,</span> <span class="s">&quot;John&quot;</span><span class="p">),</span>
+               <span class="s">&quot;JaneDoe&quot;</span><span class="p">:</span> <span class="p">(</span><span class="s">&quot;JaneDoe&quot;</span><span class="p">,</span> <span class="s">&quot;Jane&quot;</span><span class="p">)}</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">username</span><span class="p">,</span> <span class="n">password</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">id</span> <span class="o">=</span> <span class="n">username</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">password</span> <span class="o">=</span> <span class="n">password</span>
+
+    <span class="nd">&#64;classmethod</span>
+    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span><span class="nb">id</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">cls</span><span class="o">.</span><span class="n">user_database</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="nb">id</span><span class="p">)</span>
+</pre>
+<p>Here I have created the <cite>User</cite> class by overloading the <cite>UserMixin</cite> class. The <cite>UserMixin</cite> class
+implements some of the default methods, and hence is a convenient starting point. The <cite>dict</cite> <cite>user_database</cite>
+is a proxy for all the database code one would need. I am abstracting this away as a <cite>dict</cite> for simplicity.
+The <cite>get</cite> class method returns the user data from <cite>user_database</cite>.</p>
+<p>For the <cite>LoginManager</cite> to handle authentication, we have to provide a method for it to load user.
+Here I use the generic <cite>&#64;login_manager.request_loader</cite> decorator to decorate the <cite>load_user</cite> function.
+The expected behavior of a <cite>request_loader</cite> is to return a <cite>User</cite> instance if the provided credentials are
+valid, and return <cite>None</cite> otherwise.</p>
+<pre class="code python literal-block">
+<span class="nd">&#64;login_manager.request_loader</span>
+<span class="k">def</span> <span class="nf">load_user</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+    <span class="n">token</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">headers</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">'Authorization'</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">token</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="n">token</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">'token'</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">token</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="n">username</span><span class="p">,</span><span class="n">password</span> <span class="o">=</span> <span class="n">token</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&quot;:&quot;</span><span class="p">)</span> <span class="c"># naive token</span>
+        <span class="n">user_entry</span> <span class="o">=</span> <span class="n">User</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">username</span><span class="p">)</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">user_entry</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">):</span>
+            <span class="n">user</span> <span class="o">=</span> <span class="n">User</span><span class="p">(</span><span class="n">user_entry</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">user_entry</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">user</span><span class="o">.</span><span class="n">password</span> <span class="o">==</span> <span class="n">password</span><span class="p">):</span>
+                <span class="k">return</span> <span class="n">user</span>
+    <span class="k">return</span> <span class="bp">None</span>
+</pre>
+<p>The <cite>load_user</cite> looks for a token in <cite>Authorization</cite> header, or the <cite>request</cite> arguments. If a token
+is provided, then I return an instance of <cite>User</cite> if the token is valid, and return <cite>None</cite> otherwise.
+Here I assume that a valid token would be of the form <cite>&lt;username&gt;:&lt;password&gt;</cite>. This is a naive token,
+and should not be used in practice. Using serializers from <cite>itsdangerous</cite> package can come handy. We
+will touch upon these issues in another post.</p>
+<p>Once this setup is done, in order to require authentication for a route, use the <cite>&#64;login_required</cite>
+decorator.</p>
+<p>Run the above script, and if you visit the <cite>http://localhost:5000/protected/</cite> route without
+a token you will get a <cite>401 Unauthorized</cite> message. If you pass a token as
+<cite>http://localhost:5000/protected/?token=JohnDoe:John</cite>, then you will be allowed access to
+the protected page.</p>
 
      <br>
      
