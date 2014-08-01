@@ -80,6 +80,8 @@ This can be done using <cite>pip</cite> as shown below:</p>
 &gt;pip install flask
 &gt;pip install flask-login
 </pre>
+<div class="section" id="example-code">
+<h2>Example Code</h2>
 <p>Here is the full source code that we are about to discuss:</p>
 <pre class="code python literal-block">
 <span class="kn">from</span> <span class="nn">flask</span> <span class="kn">import</span> <span class="n">Flask</span><span class="p">,</span> <span class="n">Response</span>
@@ -136,6 +138,9 @@ This can be done using <cite>pip</cite> as shown below:</p>
     <span class="n">app</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s">&quot;SECRET_KEY&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&quot;ITSASECRET&quot;</span>
     <span class="n">app</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">port</span><span class="o">=</span><span class="mi">5000</span><span class="p">,</span><span class="n">debug</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
 </pre>
+</div>
+<div class="section" id="code-explained">
+<h2>Code Explained</h2>
 <p>Lets delve deeper into this example, and I will explain each part of the code in greater detail here.</p>
 <pre class="code python literal-block">
 <span class="kn">from</span> <span class="nn">flask</span> <span class="kn">import</span> <span class="n">Flask</span><span class="p">,</span> <span class="n">Response</span>
@@ -196,6 +201,17 @@ decorator.</p>
 <p>Run the above script, and if you visit the <a class="reference external" href="http://localhost:5000/protected/">LocalHostUnAuthenticated</a> route without
 a token you will get a <tt class="docutils literal">401 Unauthorized</tt> message. If you pass a token to
 <a class="reference external" href="http://localhost:5000/protected/?token=JohnDoe:John">LocalHostAuthenticated</a>, then you will be allowed access to the protected page.</p>
+</div>
+<div class="section" id="conclusion">
+<h2>Conclusion</h2>
+<p>This article explained how to write token based authentication using <tt class="docutils literal"><span class="pre">Flask-Login</span></tt> extension. The focus
+of this article was explaining the basic workings of <tt class="docutils literal"><span class="pre">flask-login</span></tt> without having to setup database or
+even the token generation. Once the basic plumbing is setup, one can extend this example in two ways:</p>
+<ul class="simple">
+<li>have a robust token generation and token validation,</li>
+<li>have a database to store and retrive user credentials.</li>
+</ul>
+</div>
 
      <br>
      
