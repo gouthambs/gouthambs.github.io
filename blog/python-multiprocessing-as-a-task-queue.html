@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Python Multiprocessing as a Task Queue - Gouthaman Balaraman</title>
+        <!-- All the meta tags -->
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+        <meta property="og:type" content="article"/>
+        <meta property="og:title" content="Python Multiprocessing as a Task Queue"/>
+        <meta property="og:url" content="http://gouthamanbalaraman.com/blog/python-multiprocessing-as-a-task-queue.html"/>
+        <meta property="og:description" content="Use multiprocessing module as a task queue, and over come GIL in python."/>
+        <link href="http://bootswatch.com/readable/bootstrap.css" rel="stylesheet"/>
+        <link href="http://bootswatch.com/readable/bootstrap.min.css" rel="stylesheet"/>
+        <link href="http://gouthamanbalaraman.com/theme/static/css/style.css" rel="stylesheet" />
+        
+        <!-- Google Analytics -->
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-46714334-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    /*Update Your Analytics Tracking Code to Support Display Advertising by uncommenting the following 
+    instead of the above line */    
+    /*ga.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'stats.g.doubleclick.net/dc.js';*/
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+    </head>
+
+    <body>
+      <div class="navbar navbar-default navbar-fixed-top">
+          <div class="container">
+            <div class="navbar-header">
+              <a href="http://gouthamanbalaraman.com" class="navbar-brand">Gouthaman Balaraman</a>
+              <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+            </div>
+            <div class="navbar-collapse collapse" id="navbar-main">
+              <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="http://gouthamanbalaraman.com/pages/about.html">About</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                <div class="col-md-10 col-md-offset-1">
+
+<div class="bs-docs-section">
+    <div class="page-header">
+        <h1>Python Multiprocessing as a Task Queue</h1>
+     <!--span class="glyphicon glyphicon-calendar"></span-->&nbsp;January 07, 2014 
+     &nbsp;&nbsp;
+     <!--span class="glyphicon glyphicon-user"></span--> by  
+     <a class="url fn" href="http://gouthamanbalaraman.com/author/gouthaman-balaraman.html">&nbsp;Gouthaman Balaraman </a>
+     </div>
+     <!-- article description -->
+         <p class="lead">Use multiprocessing module as a task queue, and over come GIL in python.</p>
+      
+      <!-- article content -->
+     <p>When you have computationally intensive tasks in your website (or scripts),
+it is conventional to use a task queue such as <a class="reference external" href="http://www.celeryproject.org/">Celery</a>. Using Celery requires
+some amount of setup and if you want to avoid, try using the following task
+queue based on the multiprocessing.
+Depending on the application at hand, Celery might be an overkill. An alternate approach
+is to use multiprocessing as a task queue.</p>
+<p>Here is a simple introduction to multiprocessing:</p>
+<pre class="code python literal-block">
+<span class="kn">from</span> <span class="nn">multiprocessing</span> <span class="kn">import</span> <span class="n">Pool</span>
+<span class="k">def</span> <span class="nf">expensive_function</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+        <span class="c"># do your expensive time consuming process</span>
+        <span class="k">return</span> <span class="n">x</span><span class="o">*</span><span class="n">x</span>
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">'__main__'</span><span class="p">:</span>
+        <span class="c"># start 4 worker processes</span>
+        <span class="n">pool</span> <span class="o">=</span> <span class="n">Pool</span><span class="p">(</span><span class="n">processes</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+        <span class="c"># evaluate &quot;f(10)&quot; asynchronously</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">pool</span><span class="o">.</span><span class="n">apply_async</span><span class="p">(</span><span class="n">expensive_function</span><span class="p">,</span> <span class="p">[</span><span class="mi">10</span><span class="p">])</span>
+        <span class="k">print</span> <span class="n">result</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">timeout</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</pre>
+<p>The above snippet is copied from the multiprocessing documentation, and is fairly self
+explanatory. In the main block we start a pool of 4 processes. Then we asynchronously
+evaluate the <tt class="docutils literal">expensive_function</tt>.</p>
+<p>One can use the same idea for a website as shown below in the Flask app example:</p>
+<pre class="code python literal-block">
+<span class="kn">from</span> <span class="nn">multiprocessing</span> <span class="kn">import</span> <span class="n">Pool</span>
+<span class="kn">from</span> <span class="nn">flask</span> <span class="kn">import</span> <span class="n">Flask</span>
+
+<span class="n">app</span> <span class="o">=</span> <span class="n">Flask</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
+<span class="n">_pool</span> <span class="o">=</span> <span class="bp">None</span>
+
+<span class="k">def</span> <span class="nf">expensive_function</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+        <span class="c"># import packages that is used in this function</span>
+        <span class="c"># do your expensive time consuming process</span>
+        <span class="k">return</span> <span class="n">x</span><span class="o">*</span><span class="n">x</span>
+
+<span class="nd">&#64;app.route</span><span class="p">(</span><span class="s">'/expensive_calc/&lt;int:x&gt;'</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">route_expcalc</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+        <span class="n">f</span> <span class="o">=</span> <span class="n">_pool</span><span class="o">.</span><span class="n">apply_async</span><span class="p">(</span><span class="n">expensive_function</span><span class="p">,[</span><span class="n">x</span><span class="p">])</span>
+        <span class="n">r</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">timeout</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+        <span class="k">return</span> <span class="s">'Result is </span><span class="si">%d</span><span class="s">'</span><span class="o">%</span><span class="n">r</span>
+
+<span class="k">if</span> <span class="n">__name__</span><span class="o">==</span><span class="s">'__main__'</span><span class="p">:</span>
+        <span class="n">_pool</span> <span class="o">=</span> <span class="n">Pool</span><span class="p">(</span><span class="n">processes</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+                <span class="c"># insert production server deployment code</span>
+                <span class="n">app</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+        <span class="k">except</span> <span class="ne">KeyboardInterrupt</span><span class="p">:</span>
+                <span class="n">_pool</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+                <span class="n">_pool</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>
+</pre>
+
+     <br>
+     
+     <!-- article tags-->
+        <span class="glyphicon glyphicon-tags"></span>&nbsp;&nbsp;
+            <a href="http://gouthamanbalaraman.com/tag/python.html">python</a>&nbsp;&nbsp;
+            <a href="http://gouthamanbalaraman.com/tag/programming.html">programming</a>&nbsp;&nbsp;
+        <br>
+     
+     <!-- article comments -->
+    <div class="comment">
+        <div id="disqus_thread"></div> <!-- comment app container -->
+    </div>
+	<!-- Comment BEGIN -->
+    <script type="text/javascript">
+        var disqus_shortname = 'gouthamanbalaramancom'; // required: replace example with your forum shortname
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+     <!-- Comment END -->
+</div>    
+                </div>
+            </div>
+            
+            <footer id="contentinfo" class="footer">
+                    <address id="about" class="vcard body">
+                    &copy; <a href="http://gouthamanbalaraman.com">Gouthaman Balaraman</a> Proudly powered by <a href="http://getpelican.com/">Pelican</a>
+                    </address><!-- /#about -->
+            </footer><!-- /#contentinfo -->
+        </div><!-- container -->
+    </body>
+</html>
