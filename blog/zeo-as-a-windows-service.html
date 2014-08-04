@@ -70,8 +70,11 @@
       <!-- article content -->
      <p>The other day, I wanted to run ZEO as a Windows service. The <tt class="docutils literal">runzeo.py</tt> part of <tt class="docutils literal">ZEO</tt> will let you
 run the client, but it doesn't work well for deployment on a windows machine. So I used <tt class="docutils literal">pywin32</tt> to wrap
-the <tt class="docutils literal">runzeo.py</tt> into a Windows Service. You can fetch the source from my github <a class="reference external" href="https://github.com/gouthambs/ZEO-WinService">repo</a>.</p>
-<p>When you run:</p>
+the <tt class="docutils literal">runzeo.py</tt> into a Windows Service.</p>
+<div class="section" id="code">
+<h2>Code</h2>
+<p>You can fetch the source from my github <a class="reference external" href="https://github.com/gouthambs/ZEO-WinService">repo</a>. I do intend to put it on PyPi when I have the time</p>
+<p>You can run from <tt class="docutils literal">cmd</tt> as Administrator:</p>
 <pre class="literal-block">
 &gt; python zeo_winservice.py
 </pre>
@@ -92,7 +95,11 @@ Options for 'start' and 'stop' commands only:
                  and all dependent services will be stopped, each waiting
                  the specified period.
 </pre>
-<p>I like to install such that it will start up automatically, as shown below:</p>
+</div>
+<div class="section" id="installing-the-service">
+<h2>Installing the Service</h2>
+<p>Before you try to install, make sure you are running <tt class="docutils literal">cmd</tt> as Administrator.
+I like to install such that it will start up automatically, as shown below:</p>
 <pre class="literal-block">
 &gt;python zeo_winservice.py --startup=auto install
 </pre>
@@ -131,6 +138,16 @@ script, you need to start it by:</p>
 &gt;python zeo_winservice.py start
 </pre>
 <p>You will also be able to access the service from <tt class="docutils literal">task manager</tt> or the <tt class="docutils literal">Windows Services</tt> app.</p>
+</div>
+<div class="section" id="logging">
+<h2>Logging</h2>
+<p>The logs from the service are sent to the windows <tt class="docutils literal">Event Log</tt> which can be accessed by opening
+the <tt class="docutils literal">Event Viewer</tt>. Once you open the <tt class="docutils literal">Event Viewer</tt>, the logs can be found under:</p>
+<pre class="literal-block">
+Event Viewer-&gt;Windows Logs-&gt;Application
+</pre>
+<p>The logs from this script can be found under <tt class="docutils literal">ZEO WinService</tt> in the Source column.</p>
+</div>
 
      <br>
      

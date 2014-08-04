@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom"><title>Gouthaman Balaraman</title><link href="http://gouthamanbalaraman.com/" rel="alternate"></link><link href="http://gouthamanbalaraman.com/feeds/gouthaman-balaraman.atom.xml" rel="self"></link><id>http://gouthamanbalaraman.com/</id><updated>2014-08-04T00:00:00-07:00</updated><entry><title>Running ZEO as a Windows Service</title><link href="http://gouthamanbalaraman.com/blog/zeo-as-a-windows-service.html" rel="alternate"></link><updated>2014-08-04T00:00:00-07:00</updated><author><name>Gouthaman Balaraman</name></author><id>tag:gouthamanbalaraman.com,2014-08-04:blog/zeo-as-a-windows-service.html</id><summary type="html">&lt;p&gt;The other day, I wanted to run ZEO as a Windows service. The &lt;tt class="docutils literal"&gt;runzeo.py&lt;/tt&gt; part of &lt;tt class="docutils literal"&gt;ZEO&lt;/tt&gt; will let you
 run the client, but it doesn't work well for deployment on a windows machine. So I used &lt;tt class="docutils literal"&gt;pywin32&lt;/tt&gt; to wrap
-the &lt;tt class="docutils literal"&gt;runzeo.py&lt;/tt&gt; into a Windows Service. You can fetch the source from my github &lt;a class="reference external" href="https://github.com/gouthambs/ZEO-WinService"&gt;repo&lt;/a&gt;.&lt;/p&gt;
-&lt;p&gt;When you run:&lt;/p&gt;
+the &lt;tt class="docutils literal"&gt;runzeo.py&lt;/tt&gt; into a Windows Service.&lt;/p&gt;
+&lt;div class="section" id="code"&gt;
+&lt;h2&gt;Code&lt;/h2&gt;
+&lt;p&gt;You can fetch the source from my github &lt;a class="reference external" href="https://github.com/gouthambs/ZEO-WinService"&gt;repo&lt;/a&gt;. I do intend to put it on PyPi when I have the time&lt;/p&gt;
+&lt;p&gt;You can run from &lt;tt class="docutils literal"&gt;cmd&lt;/tt&gt; as Administrator:&lt;/p&gt;
 &lt;pre class="literal-block"&gt;
 &amp;gt; python zeo_winservice.py
 &lt;/pre&gt;
@@ -23,7 +26,11 @@ Options for 'start' and 'stop' commands only:
                  and all dependent services will be stopped, each waiting
                  the specified period.
 &lt;/pre&gt;
-&lt;p&gt;I like to install such that it will start up automatically, as shown below:&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="installing-the-service"&gt;
+&lt;h2&gt;Installing the Service&lt;/h2&gt;
+&lt;p&gt;Before you try to install, make sure you are running &lt;tt class="docutils literal"&gt;cmd&lt;/tt&gt; as Administrator.
+I like to install such that it will start up automatically, as shown below:&lt;/p&gt;
 &lt;pre class="literal-block"&gt;
 &amp;gt;python zeo_winservice.py --startup=auto install
 &lt;/pre&gt;
@@ -62,6 +69,16 @@ script, you need to start it by:&lt;/p&gt;
 &amp;gt;python zeo_winservice.py start
 &lt;/pre&gt;
 &lt;p&gt;You will also be able to access the service from &lt;tt class="docutils literal"&gt;task manager&lt;/tt&gt; or the &lt;tt class="docutils literal"&gt;Windows Services&lt;/tt&gt; app.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="logging"&gt;
+&lt;h2&gt;Logging&lt;/h2&gt;
+&lt;p&gt;The logs from the service are sent to the windows &lt;tt class="docutils literal"&gt;Event Log&lt;/tt&gt; which can be accessed by opening
+the &lt;tt class="docutils literal"&gt;Event Viewer&lt;/tt&gt;. Once you open the &lt;tt class="docutils literal"&gt;Event Viewer&lt;/tt&gt;, the logs can be found under:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+Event Viewer-&amp;gt;Windows Logs-&amp;gt;Application
+&lt;/pre&gt;
+&lt;p&gt;The logs from this script can be found under &lt;tt class="docutils literal"&gt;ZEO WinService&lt;/tt&gt; in the Source column.&lt;/p&gt;
+&lt;/div&gt;
 </summary><category term="Programming"></category><category term="Python"></category><category term="ZEO"></category><category term="ZODB"></category></entry><entry><title>Minimal Flask-Login Example</title><link href="http://gouthamanbalaraman.com/blog/minimal-flask-login-example.html" rel="alternate"></link><updated>2014-07-24T00:00:00-07:00</updated><author><name>Gouthaman Balaraman</name></author><id>tag:gouthamanbalaraman.com,2014-07-24:blog/minimal-flask-login-example.html</id><summary type="html">&lt;p&gt;The goal of this post is to give a very basic introduction to token based authentication using Flask-Login.
 Usually the user credentials are stored in a database, with passwords hashed. However the authentication
 mechanism can be understood without having to worry about database, and various token generation algorithms.
