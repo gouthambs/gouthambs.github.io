@@ -1,5 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Gouthaman Balaraman</title><link>http://gouthamanbalaraman.com/</link><description></description><atom:link href="http://gouthamanbalaraman.com/feeds/gouthaman-balaraman.rss.xml" rel="self"></atom:link><lastBuildDate>Thu, 24 Jul 2014 00:00:00 -0700</lastBuildDate><item><title>Minimal Flask-Login Example</title><link>http://gouthamanbalaraman.com/blog/minimal-flask-login-example.html</link><description>&lt;p&gt;The goal of this post is to give a very basic introduction to token based authentication using Flask-Login.
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Gouthaman Balaraman</title><link>http://gouthamanbalaraman.com/</link><description></description><atom:link href="http://gouthamanbalaraman.com/feeds/gouthaman-balaraman.rss.xml" rel="self"></atom:link><lastBuildDate>Mon, 04 Aug 2014 00:00:00 -0700</lastBuildDate><item><title>Running ZEO as a Windows Service</title><link>http://gouthamanbalaraman.com/blog/zeo-as-a-windows-service.html</link><description>&lt;p&gt;The other day, I wanted to run ZEO as a Windows service. The &lt;tt class="docutils literal"&gt;runzeo.py&lt;/tt&gt; part of &lt;tt class="docutils literal"&gt;ZEO&lt;/tt&gt; will let you
+run the client, but it doesn't work well for deployment on a windows machine. So I used &lt;tt class="docutils literal"&gt;pywin32&lt;/tt&gt; to wrap
+the &lt;tt class="docutils literal"&gt;runzeo.py&lt;/tt&gt; into a Windows Service. You can fetch the source from my github &lt;a class="reference external" href="https://github.com/gouthambs/ZEO-WinService"&gt;repo&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;When you run:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+&amp;gt; python zeo_winservice.py
+&lt;/pre&gt;
+&lt;p&gt;you will be given the service options, as shown below:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+Usage: 'zeo_winservice.py [options] install|update|remove|start [...]|stop|restart [...]|debug [...]'
+Options for 'install' and 'update' commands only:
+ --username domain\username : The Username the service is to run under
+ --password password : The password for the username
+ --startup [manual|auto|disabled|delayed] : How the service starts, default = manual
+ --interactive : Allow the service to interact with the desktop.
+ --perfmonini file: .ini file to use for registering performance monitor data
+ --perfmondll file: .dll file to use when querying the service for
+   performance data, default = perfmondata.dll
+Options for 'start' and 'stop' commands only:
+ --wait seconds: Wait for the service to actually start or stop.
+                 If you specify --wait with the 'stop' option, the service
+                 and all dependent services will be stopped, each waiting
+                 the specified period.
+&lt;/pre&gt;
+&lt;p&gt;I like to install such that it will start up automatically, as shown below:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+&amp;gt;python zeo_service.py --startup=auto install
+&lt;/pre&gt;
+&lt;p&gt;which gives you the following screen with ZEO options:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+Installing service ZEO Service
+Changing service configuration
+Installing the ZEO Service
+Start the ZEO storage server.
+
+Usage: %s [-C URL] [-a ADDRESS] [-f FILENAME] [-h]
+
+Options:
+-C/--configuration URL -- configuration file or URL
+-a/--address ADDRESS -- server address of the form PORT, HOST:PORT, or PATH
+                        (a PATH must contain at least one &amp;quot;/&amp;quot;)
+-f/--filename FILENAME -- filename for FileStorage
+-t/--timeout TIMEOUT -- transaction timeout in seconds (default no timeout)
+-h/--help -- print this usage message and exit
+-m/--monitor ADDRESS -- address of monitor server ([HOST:]PORT or PATH)
+--pid-file PATH -- relative path to output file containing this process's pid;
+                   default $(INSTANCE_HOME)/var/ZEO.pid but only if envar
+                   INSTANCE_HOME is defined
+
+Unless -C is specified, -a and -f are required.
+
+Enter command line arguments for ZEO Service:
+&lt;/pre&gt;
+&lt;p&gt;Now you are prompted with the different configurations for the ZEO Service that you can pass. One thing to note here
+is that the filename option has to absolute path, and not a relative path.&lt;/p&gt;
+&lt;p&gt;An example command line argument is:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+Enter command line arguments for ZEO Service: -f D:\path\to\data\file.fs -a localhost:9999
+&lt;/pre&gt;
+&lt;p&gt;Here I am specifying that ZEO be run with the &lt;tt class="docutils literal"&gt;file.fs&lt;/tt&gt; on &lt;tt class="docutils literal"&gt;localhost&lt;/tt&gt; port &lt;tt class="docutils literal"&gt;9999&lt;/tt&gt;. After installing the
+script, you need to start it by:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+&amp;gt;python zeo_service.py start
+&lt;/pre&gt;
+&lt;p&gt;You will also be able to access the service from &lt;tt class="docutils literal"&gt;task manager&lt;/tt&gt; or the &lt;tt class="docutils literal"&gt;Windows Services&lt;/tt&gt; app.&lt;/p&gt;
+</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Gouthaman Balaraman</dc:creator><pubDate>Mon, 04 Aug 2014 00:00:00 -0700</pubDate><guid>tag:gouthamanbalaraman.com,2014-08-04:blog/zeo-as-a-windows-service.html</guid><category>Programming</category><category>Python</category><category>ZEO</category><category>ZODB</category></item><item><title>Minimal Flask-Login Example</title><link>http://gouthamanbalaraman.com/blog/minimal-flask-login-example.html</link><description>&lt;p&gt;The goal of this post is to give a very basic introduction to token based authentication using Flask-Login.
 Usually the user credentials are stored in a database, with passwords hashed. However the authentication
 mechanism can be understood without having to worry about database, and various token generation algorithms.
 As a first step lets focus on just understanding the authentication mechanism. Then in a subsequent post

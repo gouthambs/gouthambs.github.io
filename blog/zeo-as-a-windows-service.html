@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Running ZEO as a Windows Service - Gouthaman Balaraman</title>
+        <!-- All the meta tags -->
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+        <meta property="og:type" content="article"/>
+        <meta property="og:title" content="Running ZEO as a Windows Service"/>
+        <meta property="og:url" content="http://gouthamanbalaraman.com/blog/zeo-as-a-windows-service.html"/>
+        <meta property="og:description" content="This article shows how to use ZEO-WinService to run ZEO as a service in Windows."/>
+        <link href="http://bootswatch.com/readable/bootstrap.css" rel="stylesheet"/>
+        <link href="http://bootswatch.com/readable/bootstrap.min.css" rel="stylesheet"/>
+        <link href="http://gouthamanbalaraman.com/theme/static/css/style.css" rel="stylesheet" />
+        
+        <!-- Google Analytics -->
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-46714334-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    /*Update Your Analytics Tracking Code to Support Display Advertising by uncommenting the following 
+    instead of the above line */    
+    /*ga.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'stats.g.doubleclick.net/dc.js';*/
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+    </head>
+
+    <body>
+      <div class="navbar navbar-default navbar-fixed-top">
+          <div class="container">
+            <div class="navbar-header">
+              <a href="http://gouthamanbalaraman.com" class="navbar-brand">Gouthaman Balaraman</a>
+              <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+            </div>
+            <div class="navbar-collapse collapse" id="navbar-main">
+              <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="http://gouthamanbalaraman.com/pages/about.html">About</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                <div class="col-md-10 col-md-offset-1">
+
+<div class="bs-docs-section">
+    <div class="page-header">
+        <h1>Running ZEO as a Windows Service</h1>
+     <!--span class="glyphicon glyphicon-calendar"></span-->&nbsp;August 04, 2014 
+     &nbsp;&nbsp;
+     <!--span class="glyphicon glyphicon-user"></span--> by  
+     <a class="url fn" href="http://gouthamanbalaraman.com/author/gouthaman-balaraman.html">&nbsp;Gouthaman Balaraman </a>
+     </div>
+     <!-- article description -->
+         <p class="lead">This article shows how to use ZEO-WinService to run ZEO as a service in Windows.</p>
+      
+      <!-- article content -->
+     <p>The other day, I wanted to run ZEO as a Windows service. The <tt class="docutils literal">runzeo.py</tt> part of <tt class="docutils literal">ZEO</tt> will let you
+run the client, but it doesn't work well for deployment on a windows machine. So I used <tt class="docutils literal">pywin32</tt> to wrap
+the <tt class="docutils literal">runzeo.py</tt> into a Windows Service. You can fetch the source from my github <a class="reference external" href="https://github.com/gouthambs/ZEO-WinService">repo</a>.</p>
+<p>When you run:</p>
+<pre class="literal-block">
+&gt; python zeo_winservice.py
+</pre>
+<p>you will be given the service options, as shown below:</p>
+<pre class="literal-block">
+Usage: 'zeo_winservice.py [options] install|update|remove|start [...]|stop|restart [...]|debug [...]'
+Options for 'install' and 'update' commands only:
+ --username domain\username : The Username the service is to run under
+ --password password : The password for the username
+ --startup [manual|auto|disabled|delayed] : How the service starts, default = manual
+ --interactive : Allow the service to interact with the desktop.
+ --perfmonini file: .ini file to use for registering performance monitor data
+ --perfmondll file: .dll file to use when querying the service for
+   performance data, default = perfmondata.dll
+Options for 'start' and 'stop' commands only:
+ --wait seconds: Wait for the service to actually start or stop.
+                 If you specify --wait with the 'stop' option, the service
+                 and all dependent services will be stopped, each waiting
+                 the specified period.
+</pre>
+<p>I like to install such that it will start up automatically, as shown below:</p>
+<pre class="literal-block">
+&gt;python zeo_service.py --startup=auto install
+</pre>
+<p>which gives you the following screen with ZEO options:</p>
+<pre class="literal-block">
+Installing service ZEO Service
+Changing service configuration
+Installing the ZEO Service
+Start the ZEO storage server.
+
+Usage: %s [-C URL] [-a ADDRESS] [-f FILENAME] [-h]
+
+Options:
+-C/--configuration URL -- configuration file or URL
+-a/--address ADDRESS -- server address of the form PORT, HOST:PORT, or PATH
+                        (a PATH must contain at least one &quot;/&quot;)
+-f/--filename FILENAME -- filename for FileStorage
+-t/--timeout TIMEOUT -- transaction timeout in seconds (default no timeout)
+-h/--help -- print this usage message and exit
+-m/--monitor ADDRESS -- address of monitor server ([HOST:]PORT or PATH)
+--pid-file PATH -- relative path to output file containing this process's pid;
+                   default $(INSTANCE_HOME)/var/ZEO.pid but only if envar
+                   INSTANCE_HOME is defined
+
+Unless -C is specified, -a and -f are required.
+
+Enter command line arguments for ZEO Service:
+</pre>
+<p>Now you are prompted with the different configurations for the ZEO Service that you can pass. One thing to note here
+is that the filename option has to absolute path, and not a relative path.</p>
+<p>An example command line argument is:</p>
+<pre class="literal-block">
+Enter command line arguments for ZEO Service: -f D:\path\to\data\file.fs -a localhost:9999
+</pre>
+<p>Here I am specifying that ZEO be run with the <tt class="docutils literal">file.fs</tt> on <tt class="docutils literal">localhost</tt> port <tt class="docutils literal">9999</tt>. After installing the
+script, you need to start it by:</p>
+<pre class="literal-block">
+&gt;python zeo_service.py start
+</pre>
+<p>You will also be able to access the service from <tt class="docutils literal">task manager</tt> or the <tt class="docutils literal">Windows Services</tt> app.</p>
+
+     <br>
+     
+     <!-- article tags-->
+        <span class="glyphicon glyphicon-tags"></span>&nbsp;&nbsp;
+            <a href="http://gouthamanbalaraman.com/tag/programming.html">Programming</a>&nbsp;&nbsp;
+            <a href="http://gouthamanbalaraman.com/tag/python.html">Python</a>&nbsp;&nbsp;
+            <a href="http://gouthamanbalaraman.com/tag/zeo.html">ZEO</a>&nbsp;&nbsp;
+            <a href="http://gouthamanbalaraman.com/tag/zodb.html">ZODB</a>&nbsp;&nbsp;
+        <br>
+     
+     <!-- article comments -->
+    <div class="comment">
+        <div id="disqus_thread"></div> <!-- comment app container -->
+    </div>
+	<!-- Comment BEGIN -->
+    <script type="text/javascript">
+        var disqus_shortname = 'gouthamanbalaramancom'; // required: replace example with your forum shortname
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+     <!-- Comment END -->
+</div>    
+                </div>
+            </div>
+            
+            <footer id="contentinfo" class="footer">
+                    <address id="about" class="vcard body">
+                    &copy; <a href="http://gouthamanbalaraman.com">Gouthaman Balaraman</a> Proudly powered by <a href="http://getpelican.com/">Pelican</a>
+                    </address><!-- /#about -->
+            </footer><!-- /#contentinfo -->
+        </div><!-- container -->
+    </body>
+</html>
