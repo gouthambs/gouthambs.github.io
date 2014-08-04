@@ -4,7 +4,8 @@ run the client, but it doesn't work well for deployment on a windows machine. So
 the &lt;tt class="docutils literal"&gt;runzeo.py&lt;/tt&gt; into a Windows Service.&lt;/p&gt;
 &lt;div class="section" id="code"&gt;
 &lt;h2&gt;Code&lt;/h2&gt;
-&lt;p&gt;You can fetch the source from my github &lt;a class="reference external" href="https://github.com/gouthambs/ZEO-WinService"&gt;repo&lt;/a&gt;. I do intend to put it on PyPi when I have the time&lt;/p&gt;
+&lt;p&gt;You can fetch the source from my github &lt;a class="reference external" href="https://github.com/gouthambs/ZEO-WinService"&gt;repo&lt;/a&gt;. This script requires &lt;tt class="docutils literal"&gt;pywin32&lt;/tt&gt; and &lt;tt class="docutils literal"&gt;ZEO&lt;/tt&gt; to run.
+I do intend to put it on PyPi when I have the time&lt;/p&gt;
 &lt;p&gt;You can run from &lt;tt class="docutils literal"&gt;cmd&lt;/tt&gt; as Administrator:&lt;/p&gt;
 &lt;pre class="literal-block"&gt;
 &amp;gt; python zeo_winservice.py
