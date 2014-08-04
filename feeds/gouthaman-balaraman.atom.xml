@@ -25,13 +25,11 @@ Options for 'start' and 'stop' commands only:
 &lt;/pre&gt;
 &lt;p&gt;I like to install such that it will start up automatically, as shown below:&lt;/p&gt;
 &lt;pre class="literal-block"&gt;
-&amp;gt;python zeo_service.py --startup=auto install
+&amp;gt;python zeo_winservice.py --startup=auto install
 &lt;/pre&gt;
 &lt;p&gt;which gives you the following screen with ZEO options:&lt;/p&gt;
 &lt;pre class="literal-block"&gt;
-Installing service ZEO Service
-Changing service configuration
-Installing the ZEO Service
+Installing service ZEO WinService
 Start the ZEO storage server.
 
 Usage: %s [-C URL] [-a ADDRESS] [-f FILENAME] [-h]
@@ -61,7 +59,7 @@ Enter command line arguments for ZEO Service: -f D:\path\to\data\file.fs -a loca
 &lt;p&gt;Here I am specifying that ZEO be run with the &lt;tt class="docutils literal"&gt;file.fs&lt;/tt&gt; on &lt;tt class="docutils literal"&gt;localhost&lt;/tt&gt; port &lt;tt class="docutils literal"&gt;9999&lt;/tt&gt;. After installing the
 script, you need to start it by:&lt;/p&gt;
 &lt;pre class="literal-block"&gt;
-&amp;gt;python zeo_service.py start
+&amp;gt;python zeo_winservice.py start
 &lt;/pre&gt;
 &lt;p&gt;You will also be able to access the service from &lt;tt class="docutils literal"&gt;task manager&lt;/tt&gt; or the &lt;tt class="docutils literal"&gt;Windows Services&lt;/tt&gt; app.&lt;/p&gt;
 </summary><category term="Programming"></category><category term="Python"></category><category term="ZEO"></category><category term="ZODB"></category></entry><entry><title>Minimal Flask-Login Example</title><link href="http://gouthamanbalaraman.com/blog/minimal-flask-login-example.html" rel="alternate"></link><updated>2014-07-24T00:00:00-07:00</updated><author><name>Gouthaman Balaraman</name></author><id>tag:gouthamanbalaraman.com,2014-07-24:blog/minimal-flask-login-example.html</id><summary type="html">&lt;p&gt;The goal of this post is to give a very basic introduction to token based authentication using Flask-Login.

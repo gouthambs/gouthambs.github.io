@@ -94,13 +94,11 @@ Options for 'start' and 'stop' commands only:
 </pre>
 <p>I like to install such that it will start up automatically, as shown below:</p>
 <pre class="literal-block">
-&gt;python zeo_service.py --startup=auto install
+&gt;python zeo_winservice.py --startup=auto install
 </pre>
 <p>which gives you the following screen with ZEO options:</p>
 <pre class="literal-block">
-Installing service ZEO Service
-Changing service configuration
-Installing the ZEO Service
+Installing service ZEO WinService
 Start the ZEO storage server.
 
 Usage: %s [-C URL] [-a ADDRESS] [-f FILENAME] [-h]
@@ -130,7 +128,7 @@ Enter command line arguments for ZEO Service: -f D:\path\to\data\file.fs -a loca
 <p>Here I am specifying that ZEO be run with the <tt class="docutils literal">file.fs</tt> on <tt class="docutils literal">localhost</tt> port <tt class="docutils literal">9999</tt>. After installing the
 script, you need to start it by:</p>
 <pre class="literal-block">
-&gt;python zeo_service.py start
+&gt;python zeo_winservice.py start
 </pre>
 <p>You will also be able to access the service from <tt class="docutils literal">task manager</tt> or the <tt class="docutils literal">Windows Services</tt> app.</p>
 
