@@ -2,6 +2,12 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
   <url>
+    <loc>http://gouthamanbalaraman.com/blog/minimal-example-lua-function-cpp.html</loc>
+    <priority>0.8</priority>
+    
+  </url>
+
+  <url>
     <loc>http://gouthamanbalaraman.com/blog/zeo-as-a-windows-service.html</loc>
     <priority>0.8</priority>
     
