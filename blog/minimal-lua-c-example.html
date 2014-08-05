@@ -74,8 +74,8 @@ is the way to go. Lua is one such embeddable scripting language, and is very pop
 among game developers. The main advantage of Lua, in my opinion, is that the core API
 is very minimal, has very small memory footprint. The availability of LuaJIT makes
 it a very performant alternative as well.</p>
-<div class="section" id="minimal-example">
-<h2>Minimal Example</h2>
+<div class="section" id="example-code">
+<h2>Example Code</h2>
 <p>Here is a minimal Lua(V5.1) - C++  example to get one started.</p>
 <pre class="code c++ literal-block">
 <span class="c1">// luaexample.cpp
@@ -93,8 +93,7 @@ it a very performant alternative as well.</p>
       <span class="n">luaL_openlibs</span><span class="p">(</span><span class="n">L</span><span class="p">);</span>
 
       <span class="c1">// execute script
-</span>      <span class="n">lua_settop</span><span class="p">(</span><span class="n">L</span><span class="p">,</span><span class="mi">0</span><span class="p">);</span>
-      <span class="k">const</span> <span class="kt">char</span> <span class="n">lua_script</span><span class="p">[]</span> <span class="o">=</span> <span class="s">&quot;print('Hello World!')&quot;</span><span class="p">;</span>
+</span>      <span class="k">const</span> <span class="kt">char</span> <span class="n">lua_script</span><span class="p">[]</span> <span class="o">=</span> <span class="s">&quot;print('Hello World!')&quot;</span><span class="p">;</span>
       <span class="kt">int</span> <span class="n">load_stat</span> <span class="o">=</span> <span class="n">luaL_loadbuffer</span><span class="p">(</span><span class="n">L</span><span class="p">,</span><span class="n">lua_script</span><span class="p">,</span><span class="n">strlen</span><span class="p">(</span><span class="n">lua_script</span><span class="p">),</span><span class="n">lua_script</span><span class="p">);</span>
       <span class="n">lua_pcall</span><span class="p">(</span><span class="n">L</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
 
@@ -103,8 +102,21 @@ it a very performant alternative as well.</p>
       <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
 <span class="p">}</span>
 </pre>
+</div>
+<div class="section" id="code-explained">
+<h2>Code Explained</h2>
+<p>Here the <tt class="docutils literal">lua_open</tt> and <tt class="docutils literal">luaL_openlibs</tt> are initialization step in order to prepare
+the <tt class="docutils literal">lua_State * L</tt>. We store the script that we need to execute in the variable <tt class="docutils literal">lua_script</tt>.
+The <tt class="docutils literal">luaL_loadbuffer</tt> is used to load the script. The loaded script can be executed by
+calling <tt class="docutils literal">lua_pcall(L, 0, 0, 0)</tt>. The arguments passed to <tt class="docutils literal">lua_pcall</tt> are the <tt class="docutils literal">lua_State</tt> pointer,
+number of arguments to the script (which is none here), number of values returned (which is none here). The
+last argument to <tt class="docutils literal">lua_pcall</tt> is the error handler which we will not discuss here.</p>
 <p>This needs to be compiled using a C++ compiler and linked to Lua library. When you run the
 executable, you should see <tt class="docutils literal">Hello World!</tt> printed on the screen.</p>
+</div>
+<div class="section" id="conclusion">
+<h2>Conclusion</h2>
+<p>We looked at a rather simple introductory example of <tt class="docutils literal">lua</tt> interpreter embeded into <tt class="docutils literal">C++</tt> code.</p>
 </div>
 
      <br>

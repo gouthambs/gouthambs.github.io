@@ -229,8 +229,8 @@ is the way to go. Lua is one such embeddable scripting language, and is very pop
 among game developers. The main advantage of Lua, in my opinion, is that the core API
 is very minimal, has very small memory footprint. The availability of LuaJIT makes
 it a very performant alternative as well.&lt;/p&gt;
-&lt;div class="section" id="minimal-example"&gt;
-&lt;h2&gt;Minimal Example&lt;/h2&gt;
+&lt;div class="section" id="example-code"&gt;
+&lt;h2&gt;Example Code&lt;/h2&gt;
 &lt;p&gt;Here is a minimal Lua(V5.1) - C++  example to get one started.&lt;/p&gt;
 &lt;pre class="code c++ literal-block"&gt;
 &lt;span class="c1"&gt;// luaexample.cpp
@@ -248,8 +248,7 @@ it a very performant alternative as well.&lt;/p&gt;
       &lt;span class="n"&gt;luaL_openlibs&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;L&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
 
       &lt;span class="c1"&gt;// execute script
-&lt;/span&gt;      &lt;span class="n"&gt;lua_settop&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;L&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
-      &lt;span class="k"&gt;const&lt;/span&gt; &lt;span class="kt"&gt;char&lt;/span&gt; &lt;span class="n"&gt;lua_script&lt;/span&gt;&lt;span class="p"&gt;[]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;print('Hello World!')&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/span&gt;      &lt;span class="k"&gt;const&lt;/span&gt; &lt;span class="kt"&gt;char&lt;/span&gt; &lt;span class="n"&gt;lua_script&lt;/span&gt;&lt;span class="p"&gt;[]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;print('Hello World!')&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
       &lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="n"&gt;load_stat&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;luaL_loadbuffer&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;L&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;lua_script&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;strlen&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;lua_script&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;&lt;span class="n"&gt;lua_script&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
       &lt;span class="n"&gt;lua_pcall&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;L&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
 
@@ -258,8 +257,21 @@ it a very performant alternative as well.&lt;/p&gt;
       &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
 &lt;span class="p"&gt;}&lt;/span&gt;
 &lt;/pre&gt;
+&lt;/div&gt;
+&lt;div class="section" id="code-explained"&gt;
+&lt;h2&gt;Code Explained&lt;/h2&gt;
+&lt;p&gt;Here the &lt;tt class="docutils literal"&gt;lua_open&lt;/tt&gt; and &lt;tt class="docutils literal"&gt;luaL_openlibs&lt;/tt&gt; are initialization step in order to prepare
+the &lt;tt class="docutils literal"&gt;lua_State * L&lt;/tt&gt;. We store the script that we need to execute in the variable &lt;tt class="docutils literal"&gt;lua_script&lt;/tt&gt;.
+The &lt;tt class="docutils literal"&gt;luaL_loadbuffer&lt;/tt&gt; is used to load the script. The loaded script can be executed by
+calling &lt;tt class="docutils literal"&gt;lua_pcall(L, 0, 0, 0)&lt;/tt&gt;. The arguments passed to &lt;tt class="docutils literal"&gt;lua_pcall&lt;/tt&gt; are the &lt;tt class="docutils literal"&gt;lua_State&lt;/tt&gt; pointer,
+number of arguments to the script (which is none here), number of values returned (which is none here). The
+last argument to &lt;tt class="docutils literal"&gt;lua_pcall&lt;/tt&gt; is the error handler which we will not discuss here.&lt;/p&gt;
 &lt;p&gt;This needs to be compiled using a C++ compiler and linked to Lua library. When you run the
 executable, you should see &lt;tt class="docutils literal"&gt;Hello World!&lt;/tt&gt; printed on the screen.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="conclusion"&gt;
+&lt;h2&gt;Conclusion&lt;/h2&gt;
+&lt;p&gt;We looked at a rather simple introductory example of &lt;tt class="docutils literal"&gt;lua&lt;/tt&gt; interpreter embeded into &lt;tt class="docutils literal"&gt;C++&lt;/tt&gt; code.&lt;/p&gt;
 &lt;/div&gt;
 </summary><category term="lua"></category><category term="programming"></category><category term="C++"></category></entry><entry><title>Flask Track Usage Primer</title><link href="http://gouthamanbalaraman.com/blog/flask-track-usage.html" rel="alternate"></link><updated>2014-03-26T00:00:00-07:00</updated><author><name>Gouthaman Balaraman</name></author><id>tag:gouthamanbalaraman.com,2014-03-26:blog/flask-track-usage.html</id><summary type="html">&lt;p&gt;Recently I had a requirement to add light weight tracking for a Flask app. Tools like Google analytics was not
 an option because, I wanted raw number and data handy rather than just figures, this was a website page in the intranet, and
