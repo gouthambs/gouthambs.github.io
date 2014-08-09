@@ -7,34 +7,20 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
         <meta property="og:type" content="article"/>
         <meta property="og:title" content="Asynchronous Python Logging Using MSMQ"/>
-        <meta property="og:url" content="http://gouthamanbalaraman.com/blog/asynchronous-python-logging-using-msmq.html"/>
+        <meta property="og:url" content="../blog/asynchronous-python-logging-using-msmq.html"/>
         <meta property="og:description" content="Asynchronous logging in Python using MSMQ."/>
         <link href="http://bootswatch.com/readable/bootstrap.css" rel="stylesheet"/>
         <link href="http://bootswatch.com/readable/bootstrap.min.css" rel="stylesheet"/>
-        <link href="http://gouthamanbalaraman.com/theme/static/css/style.css" rel="stylesheet" />
+        <link href="../theme/static/css/style.css" rel="stylesheet" />
         
         <!-- Google Analytics -->
-<script type="text/javascript">
-  var _gaq = _gaq || [];
-  _gaq.push(['_setAccount', 'UA-46714334-1']);
-  _gaq.push(['_trackPageview']);
-
-  (function() {
-    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-    /*Update Your Analytics Tracking Code to Support Display Advertising by uncommenting the following 
-    instead of the above line */    
-    /*ga.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'stats.g.doubleclick.net/dc.js';*/
-    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-  })();
-</script>
     </head>
 
     <body>
       <div class="navbar navbar-default navbar-fixed-top">
           <div class="container">
             <div class="navbar-header">
-              <a href="http://gouthamanbalaraman.com" class="navbar-brand">Gouthaman Balaraman</a>
+              <a href=".." class="navbar-brand">Gouthaman Balaraman</a>
               <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
@@ -44,7 +30,7 @@
             <div class="navbar-collapse collapse" id="navbar-main">
               <ul class="nav navbar-nav navbar-right">
                 <li>
-                    <a href="http://gouthamanbalaraman.com/pages/about.html">About</a>
+                    <a href="../pages/about.html">About</a>
                 </li>
               </ul>
             </div>
@@ -61,7 +47,7 @@
      <!--span class="glyphicon glyphicon-calendar"></span-->&nbsp;February 21, 2014 
      &nbsp;&nbsp;
      <!--span class="glyphicon glyphicon-user"></span--> by  
-     <a class="url fn" href="http://gouthamanbalaraman.com/author/gouthaman-balaraman.html">&nbsp;Gouthaman Balaraman </a>
+     <a class="url fn" href="../author/gouthaman-balaraman.html">&nbsp;Gouthaman Balaraman </a>
      </div>
      <!-- article description -->
          <p class="lead">Asynchronous logging in Python using MSMQ.</p>
@@ -71,7 +57,7 @@
 not interfere with the performance. Default file based loggers can lead to a slow down
 because of the constand disk writes. An alternate solution that can be quite handy is
 logging into a message based logger, such as MSMQ. This post is built on my earlier post
-<a class="reference external" href="http://gouthamanbalaraman.com/blog/sending-msmq-messages-using-python.html">Sending MSMQ Messages Using Python</a>, where
+<a class="reference external" href="../blog/sending-msmq-messages-using-python.html">Sending MSMQ Messages Using Python</a>, where
 I discuss how to setup, send and receive messages using MSMQ.</p>
 <p>Here I will show how one can use the MSMQ to build a custom handler, that can be used
 with the logging module in python. Here is the <tt class="docutils literal">MSMQHandler</tt> class:</p>
@@ -127,41 +113,25 @@ you can incorporate it into your workflow as shown below:</p>
 <span class="n">lgr</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&quot;Test Message&quot;</span><span class="p">)</span>
 </pre>
 <p>And that completes the MSMQ logger using python. Now all your logs will be pushed to the KaruthQueue
-that we created. You can use the example shown <a class="reference external" href="http://gouthamanbalaraman.com/blog/sending-msmq-messages-using-python.html">here</a> to read the messages in a seperate application
+that we created. You can use the example shown <a class="reference external" href="../blog/sending-msmq-messages-using-python.html">here</a> to read the messages in a seperate application
 and store any way you chose, files, database etc.</p>
 
      <br>
      
      <!-- article tags-->
         <span class="glyphicon glyphicon-tags"></span>&nbsp;&nbsp;
-            <a href="http://gouthamanbalaraman.com/tag/python.html">python</a>&nbsp;&nbsp;
-            <a href="http://gouthamanbalaraman.com/tag/programming.html">programming</a>&nbsp;&nbsp;
+            <a href="../tag/python.html">python</a>&nbsp;&nbsp;
+            <a href="../tag/programming.html">programming</a>&nbsp;&nbsp;
         <br>
      
      <!-- article comments -->
-    <div class="comment">
-        <div id="disqus_thread"></div> <!-- comment app container -->
-    </div>
-	<!-- Comment BEGIN -->
-    <script type="text/javascript">
-        var disqus_shortname = 'gouthamanbalaramancom'; // required: replace example with your forum shortname
-
-        /* * * DON'T EDIT BELOW THIS LINE * * */
-        (function() {
-            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-        })();
-    </script>
-    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-     <!-- Comment END -->
 </div>    
                 </div>
             </div>
             
             <footer id="contentinfo" class="footer">
                     <address id="about" class="vcard body">
-                    &copy; <a href="http://gouthamanbalaraman.com">Gouthaman Balaraman</a> Proudly powered by <a href="http://getpelican.com/">Pelican</a>
+                    &copy; <a href="..">Gouthaman Balaraman</a> Proudly powered by <a href="http://getpelican.com/">Pelican</a>
                     </address><!-- /#about -->
             </footer><!-- /#contentinfo -->
         </div><!-- container -->
