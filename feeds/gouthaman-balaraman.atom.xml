@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Gouthaman Balaraman</title><link href="/" rel="alternate"></link><link href="/feeds/gouthaman-balaraman.atom.xml" rel="self"></link><id>/</id><updated>2014-08-08T00:00:00-07:00</updated><entry><title>Option Model Handbook, Part I: Introduction to Option Models</title><link href="/blog/option-model-handbook-part-I-introduction-to-option-models.html" rel="alternate"></link><updated>2014-08-08T00:00:00-07:00</updated><author><name>Gouthaman Balaraman</name></author><id>tag:,2014-08-08:blog/option-model-handbook-part-I-introduction-to-option-models.html</id><summary type="html">&lt;p&gt;This is a series of articles pertaining to option model pricing. Here I will
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Gouthaman Balaraman</title><link href="http://gouthamanbalaraman.com/" rel="alternate"></link><link href="http://gouthamanbalaraman.com/feeds/gouthaman-balaraman.atom.xml" rel="self"></link><id>http://gouthamanbalaraman.com/</id><updated>2014-08-08T00:00:00-07:00</updated><entry><title>Option Model Handbook, Part I: Introduction to Option Models</title><link href="http://gouthamanbalaraman.com/blog/option-model-handbook-part-I-introduction-to-option-models.html" rel="alternate"></link><updated>2014-08-08T00:00:00-07:00</updated><author><name>Gouthaman Balaraman</name></author><id>tag:gouthamanbalaraman.com,2014-08-08:blog/option-model-handbook-part-I-introduction-to-option-models.html</id><summary type="html">&lt;p&gt;This is a series of articles pertaining to option model pricing. Here I will
 explain the various concepts such as risk-neutral valuation, Black-Scholes formula,
 and binomial tree option pricing models.&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;Contents:&lt;/strong&gt;&lt;/p&gt;
@@ -87,7 +87,7 @@ model.&lt;/p&gt;
         (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
     }
 &lt;/script&gt;
-</summary><category term="finance"></category><category term="option models"></category><category term="binomial tree"></category></entry><entry><title>Minimal Example of Calling Lua Functions from C++</title><link href="/blog/minimal-example-lua-function-cpp.html" rel="alternate"></link><updated>2014-08-05T00:00:00-07:00</updated><author><name>Gouthaman Balaraman</name></author><id>tag:,2014-08-05:blog/minimal-example-lua-function-cpp.html</id><summary type="html">&lt;p&gt;If you want to extend and customize the capabilities of a C++ application
+</summary><category term="finance"></category><category term="option models"></category><category term="binomial tree"></category></entry><entry><title>Minimal Example of Calling Lua Functions from C++</title><link href="http://gouthamanbalaraman.com/blog/minimal-example-lua-function-cpp.html" rel="alternate"></link><updated>2014-08-05T00:00:00-07:00</updated><author><name>Gouthaman Balaraman</name></author><id>tag:gouthamanbalaraman.com,2014-08-05:blog/minimal-example-lua-function-cpp.html</id><summary type="html">&lt;p&gt;If you want to extend and customize the capabilities of a C++ application
 without requiring a full recompilation, then using a embedded scripting language
 is the way to go. Lua is one such embeddable scripting language, and is very popular
 among game developers. The main advantage of Lua, in my opinion, is that the core API
@@ -159,7 +159,7 @@ sum=11.000000
 &lt;h2&gt;Conclusion&lt;/h2&gt;
 &lt;p&gt;This article gave a very minimal example explaining how to call a lua function from C++.&lt;/p&gt;
 &lt;/div&gt;
-</summary><category term="lua"></category><category term="programming"></category><category term="C++"></category></entry><entry><title>Running ZEO as a Windows Service</title><link href="/blog/zeo-as-a-windows-service.html" rel="alternate"></link><updated>2014-08-04T00:00:00-07:00</updated><author><name>Gouthaman Balaraman</name></author><id>tag:,2014-08-04:blog/zeo-as-a-windows-service.html</id><summary type="html">&lt;p&gt;The other day, I wanted to run ZEO as a Windows service. The &lt;tt class="docutils literal"&gt;runzeo.py&lt;/tt&gt; part of &lt;tt class="docutils literal"&gt;ZEO&lt;/tt&gt; will let you
+</summary><category term="lua"></category><category term="programming"></category><category term="C++"></category></entry><entry><title>Running ZEO as a Windows Service</title><link href="http://gouthamanbalaraman.com/blog/zeo-as-a-windows-service.html" rel="alternate"></link><updated>2014-08-04T00:00:00-07:00</updated><author><name>Gouthaman Balaraman</name></author><id>tag:gouthamanbalaraman.com,2014-08-04:blog/zeo-as-a-windows-service.html</id><summary type="html">&lt;p&gt;The other day, I wanted to run ZEO as a Windows service. The &lt;tt class="docutils literal"&gt;runzeo.py&lt;/tt&gt; part of &lt;tt class="docutils literal"&gt;ZEO&lt;/tt&gt; will let you
 run the client, but it doesn't work well for deployment on a windows machine. So I used &lt;tt class="docutils literal"&gt;pywin32&lt;/tt&gt; to wrap
 the &lt;tt class="docutils literal"&gt;runzeo.py&lt;/tt&gt; into a Windows Service.&lt;/p&gt;
 &lt;div class="section" id="code"&gt;
@@ -240,7 +240,7 @@ Event Viewer-&amp;gt;Windows Logs-&amp;gt;Application
 &lt;/pre&gt;
 &lt;p&gt;The logs from this script can be found under &lt;tt class="docutils literal"&gt;ZEO WinService&lt;/tt&gt; in the Source column.&lt;/p&gt;
 &lt;/div&gt;
-</summary><category term="Programming"></category><category term="Python"></category><category term="ZEO"></category><category term="ZODB"></category></entry><entry><title>Minimal Flask-Login Example</title><link href="/blog/minimal-flask-login-example.html" rel="alternate"></link><updated>2014-07-24T00:00:00-07:00</updated><author><name>Gouthaman Balaraman</name></author><id>tag:,2014-07-24:blog/minimal-flask-login-example.html</id><summary type="html">&lt;p&gt;The goal of this post is to give a very basic introduction to token based authentication using Flask-Login.
+</summary><category term="Programming"></category><category term="Python"></category><category term="ZEO"></category><category term="ZODB"></category></entry><entry><title>Minimal Flask-Login Example</title><link href="http://gouthamanbalaraman.com/blog/minimal-flask-login-example.html" rel="alternate"></link><updated>2014-07-24T00:00:00-07:00</updated><author><name>Gouthaman Balaraman</name></author><id>tag:gouthamanbalaraman.com,2014-07-24:blog/minimal-flask-login-example.html</id><summary type="html">&lt;p&gt;The goal of this post is to give a very basic introduction to token based authentication using Flask-Login.
 Usually the user credentials are stored in a database, with passwords hashed. However the authentication
 mechanism can be understood without having to worry about database, and various token generation algorithms.
 As a first step lets focus on just understanding the authentication mechanism. Then in a subsequent post
@@ -383,7 +383,7 @@ even the token generation. Once the basic plumbing is setup, one can extend this
 &lt;li&gt;have a database to store and retrive user credentials.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/div&gt;
-</summary><category term="Programming"></category><category term="Python"></category><category term="Flask"></category><category term="Flask-Login"></category></entry><entry><title>Minimal Lua C++ Example</title><link href="/blog/minimal-lua-c-example.html" rel="alternate"></link><updated>2014-07-17T00:00:00-07:00</updated><author><name>Gouthaman Balaraman</name></author><id>tag:,2014-07-17:blog/minimal-lua-c-example.html</id><summary type="html">&lt;p&gt;If you want to extend and customize the capabilities of a C++ application
+</summary><category term="Programming"></category><category term="Python"></category><category term="Flask"></category><category term="Flask-Login"></category></entry><entry><title>Minimal Lua C++ Example</title><link href="http://gouthamanbalaraman.com/blog/minimal-lua-c-example.html" rel="alternate"></link><updated>2014-07-17T00:00:00-07:00</updated><author><name>Gouthaman Balaraman</name></author><id>tag:gouthamanbalaraman.com,2014-07-17:blog/minimal-lua-c-example.html</id><summary type="html">&lt;p&gt;If you want to extend and customize the capabilities of a C++ application
 without requiring a full recompilation, then using a embedded scripting language
 is the way to go. Lua is one such embeddable scripting language, and is very popular
 among game developers. The main advantage of Lua, in my opinion, is that the core API
@@ -433,7 +433,7 @@ executable, you should see &lt;tt class="docutils literal"&gt;Hello World!&lt;/t
 &lt;h2&gt;Conclusion&lt;/h2&gt;
 &lt;p&gt;We looked at a rather simple introductory example of &lt;tt class="docutils literal"&gt;lua&lt;/tt&gt; interpreter embeded into &lt;tt class="docutils literal"&gt;C++&lt;/tt&gt; code.&lt;/p&gt;
 &lt;/div&gt;
-</summary><category term="lua"></category><category term="programming"></category><category term="C++"></category></entry><entry><title>Flask Track Usage Primer</title><link href="/blog/flask-track-usage.html" rel="alternate"></link><updated>2014-03-26T00:00:00-07:00</updated><author><name>Gouthaman Balaraman</name></author><id>tag:,2014-03-26:blog/flask-track-usage.html</id><summary type="html">&lt;p&gt;Recently I had a requirement to add light weight tracking for a Flask app. Tools like Google analytics was not
+</summary><category term="lua"></category><category term="programming"></category><category term="C++"></category></entry><entry><title>Flask Track Usage Primer</title><link href="http://gouthamanbalaraman.com/blog/flask-track-usage.html" rel="alternate"></link><updated>2014-03-26T00:00:00-07:00</updated><author><name>Gouthaman Balaraman</name></author><id>tag:gouthamanbalaraman.com,2014-03-26:blog/flask-track-usage.html</id><summary type="html">&lt;p&gt;Recently I had a requirement to add light weight tracking for a Flask app. Tools like Google analytics was not
 an option because, I wanted raw number and data handy rather than just figures, this was a website page in the intranet, and
 I also wanted to easily track all the REST apis. That is when I stumbled upon &lt;a class="reference external" href="http://www.stevemilner.org/"&gt;Steve Milner's&lt;/a&gt;
 &lt;cite&gt;Flask-Track-Usage&lt;/cite&gt; package.&lt;/p&gt;
@@ -525,7 +525,7 @@ dict and has the following schema:&lt;/p&gt;
     }
 ]
 &lt;/pre&gt;
-</summary><category term="Programming"></category><category term="Python"></category></entry><entry><title>Git For Dummies</title><link href="/blog/git-for-dummies.html" rel="alternate"></link><updated>2014-03-20T00:00:00-07:00</updated><author><name>Gouthaman Balaraman</name></author><id>tag:,2014-03-20:blog/git-for-dummies.html</id><summary type="html">&lt;p&gt;Git is a version control with a ton of powerful features. This article is intended to be
+</summary><category term="Programming"></category><category term="Python"></category></entry><entry><title>Git For Dummies</title><link href="http://gouthamanbalaraman.com/blog/git-for-dummies.html" rel="alternate"></link><updated>2014-03-20T00:00:00-07:00</updated><author><name>Gouthaman Balaraman</name></author><id>tag:gouthamanbalaraman.com,2014-03-20:blog/git-for-dummies.html</id><summary type="html">&lt;p&gt;Git is a version control with a ton of powerful features. This article is intended to be
 an introduction for dummies (like me). I have had to do a lot of googling lately to get familiar
 with git. My understanding of git is a work in progress. Here I summarize some of the basic
 commands and features that I learnt. I plan to keep this article updated as and when I learn
@@ -616,11 +616,11 @@ git push origin master
 &lt;/li&gt;
 &lt;/ul&gt;
 &lt;/div&gt;
-</summary><category term="git"></category><category term="programming"></category><category term="github"></category></entry><entry><title>Asynchronous Python Logging Using MSMQ</title><link href="/blog/asynchronous-python-logging-using-msmq.html" rel="alternate"></link><updated>2014-02-21T00:00:00-08:00</updated><author><name>Gouthaman Balaraman</name></author><id>tag:,2014-02-21:blog/asynchronous-python-logging-using-msmq.html</id><summary type="html">&lt;p&gt;If you have a web application running in Python, there can be a need for the logging to
+</summary><category term="git"></category><category term="programming"></category><category term="github"></category></entry><entry><title>Asynchronous Python Logging Using MSMQ</title><link href="http://gouthamanbalaraman.com/blog/asynchronous-python-logging-using-msmq.html" rel="alternate"></link><updated>2014-02-21T00:00:00-08:00</updated><author><name>Gouthaman Balaraman</name></author><id>tag:gouthamanbalaraman.com,2014-02-21:blog/asynchronous-python-logging-using-msmq.html</id><summary type="html">&lt;p&gt;If you have a web application running in Python, there can be a need for the logging to
 not interfere with the performance. Default file based loggers can lead to a slow down
 because of the constand disk writes. An alternate solution that can be quite handy is
 logging into a message based logger, such as MSMQ. This post is built on my earlier post
-&lt;a class="reference external" href="/blog/sending-msmq-messages-using-python.html"&gt;Sending MSMQ Messages Using Python&lt;/a&gt;, where
+&lt;a class="reference external" href="http://gouthamanbalaraman.com/blog/sending-msmq-messages-using-python.html"&gt;Sending MSMQ Messages Using Python&lt;/a&gt;, where
 I discuss how to setup, send and receive messages using MSMQ.&lt;/p&gt;
 &lt;p&gt;Here I will show how one can use the MSMQ to build a custom handler, that can be used
 with the logging module in python. Here is the &lt;tt class="docutils literal"&gt;MSMQHandler&lt;/tt&gt; class:&lt;/p&gt;
@@ -676,9 +676,9 @@ you can incorporate it into your workflow as shown below:&lt;/p&gt;
 &lt;span class="n"&gt;lgr&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;info&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;Test Message&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 &lt;/pre&gt;
 &lt;p&gt;And that completes the MSMQ logger using python. Now all your logs will be pushed to the KaruthQueue
-that we created. You can use the example shown &lt;a class="reference external" href="/blog/sending-msmq-messages-using-python.html"&gt;here&lt;/a&gt; to read the messages in a seperate application
+that we created. You can use the example shown &lt;a class="reference external" href="http://gouthamanbalaraman.com/blog/sending-msmq-messages-using-python.html"&gt;here&lt;/a&gt; to read the messages in a seperate application
 and store any way you chose, files, database etc.&lt;/p&gt;
-</summary><category term="python"></category><category term="programming"></category></entry><entry><title>Sending MSMQ Messages Using Python</title><link href="/blog/sending-msmq-messages-using-python.html" rel="alternate"></link><updated>2014-02-21T00:00:00-08:00</updated><author><name>Gouthaman Balaraman</name></author><id>tag:,2014-02-21:blog/sending-msmq-messages-using-python.html</id><summary type="html">&lt;p&gt;MSMQ is a message queue in the Windows environment, very much like
+</summary><category term="python"></category><category term="programming"></category></entry><entry><title>Sending MSMQ Messages Using Python</title><link href="http://gouthamanbalaraman.com/blog/sending-msmq-messages-using-python.html" rel="alternate"></link><updated>2014-02-21T00:00:00-08:00</updated><author><name>Gouthaman Balaraman</name></author><id>tag:gouthamanbalaraman.com,2014-02-21:blog/sending-msmq-messages-using-python.html</id><summary type="html">&lt;p&gt;MSMQ is a message queue in the Windows environment, very much like
 RabbitMQ. MSMQ can be used as a task queue or for communicating
 between processes. One advantage of using MSMQ rather than inter-process communication (IPC)
 is that messages have persistence. Here I show how to send and receive MSMQ messages using python.&lt;/p&gt;
@@ -764,7 +764,7 @@ see your earlier message printed out.&lt;/p&gt;
         (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
     }
 &lt;/script&gt;
-</summary><category term="python"></category><category term="programming"></category></entry><entry><title>A Short Story of Wall Street</title><link href="/blog/a-short-story-of-wall-street.html" rel="alternate"></link><updated>2014-01-23T00:00:00-08:00</updated><author><name>Gouthaman Balaraman</name></author><id>tag:,2014-01-23:blog/a-short-story-of-wall-street.html</id><summary type="html">&lt;p&gt;In the last couple of decades, the US market has witnessed a
+</summary><category term="python"></category><category term="programming"></category></entry><entry><title>A Short Story of Wall Street</title><link href="http://gouthamanbalaraman.com/blog/a-short-story-of-wall-street.html" rel="alternate"></link><updated>2014-01-23T00:00:00-08:00</updated><author><name>Gouthaman Balaraman</name></author><id>tag:gouthamanbalaraman.com,2014-01-23:blog/a-short-story-of-wall-street.html</id><summary type="html">&lt;p&gt;In the last couple of decades, the US market has witnessed a
 technology bubble, a housing bubble, recession, and market
 crashes. I wanted to understand the human sentiment, the fear
 when market crashes, the euphoria while riding the upside of the bubble.
@@ -807,7 +807,7 @@ high quality debt, even though a lot of them defaulted.&lt;/li&gt;
 calculated by computing volatility using daily returns over a 45 day window.&lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-</summary><category term="finance"></category><category term="equity"></category></entry><entry><title>Calculating Stock Beta, Volatility, and More</title><link href="/blog/calculating-stock-beta.html" rel="alternate"></link><updated>2014-01-09T00:00:00-08:00</updated><author><name>Gouthaman Balaraman</name></author><id>tag:,2014-01-09:blog/calculating-stock-beta.html</id><summary type="html">&lt;p&gt;Have you ever wondered how to calculate the Beta value that is shown in
+</summary><category term="finance"></category><category term="equity"></category></entry><entry><title>Calculating Stock Beta, Volatility, and More</title><link href="http://gouthamanbalaraman.com/blog/calculating-stock-beta.html" rel="alternate"></link><updated>2014-01-09T00:00:00-08:00</updated><author><name>Gouthaman Balaraman</name></author><id>tag:gouthamanbalaraman.com,2014-01-09:blog/calculating-stock-beta.html</id><summary type="html">&lt;p&gt;Have you ever wondered how to calculate the Beta value that is shown in
 &lt;a class="reference external" href="http://www.google.com/finance"&gt;GoogleFinance&lt;/a&gt; or &lt;a class="reference external" href="http://www.finance.yahoo.com/"&gt;YahooFinance&lt;/a&gt; and what does it mean from an investment perspective?
 This article will give you an introduction to the concept and demonstrate how
 you can calculate various time series measures for a stock using python.&lt;/p&gt;
@@ -952,7 +952,7 @@ in order to annualize.&lt;/p&gt;
         (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
     }
 &lt;/script&gt;
-</summary><category term="finance"></category><category term="investing"></category></entry><entry><title>Python Multiprocessing as a Task Queue</title><link href="/blog/python-multiprocessing-as-a-task-queue.html" rel="alternate"></link><updated>2014-01-07T00:00:00-08:00</updated><author><name>Gouthaman Balaraman</name></author><id>tag:,2014-01-07:blog/python-multiprocessing-as-a-task-queue.html</id><summary type="html">&lt;p&gt;When you have computationally intensive tasks in your website (or scripts),
+</summary><category term="finance"></category><category term="investing"></category></entry><entry><title>Python Multiprocessing as a Task Queue</title><link href="http://gouthamanbalaraman.com/blog/python-multiprocessing-as-a-task-queue.html" rel="alternate"></link><updated>2014-01-07T00:00:00-08:00</updated><author><name>Gouthaman Balaraman</name></author><id>tag:gouthamanbalaraman.com,2014-01-07:blog/python-multiprocessing-as-a-task-queue.html</id><summary type="html">&lt;p&gt;When you have computationally intensive tasks in your website (or scripts),
 it is conventional to use a task queue such as &lt;a class="reference external" href="http://www.celeryproject.org/"&gt;Celery&lt;/a&gt;. Using Celery requires
 some amount of setup and if you want to avoid, try using the following task
 queue based on the multiprocessing.
