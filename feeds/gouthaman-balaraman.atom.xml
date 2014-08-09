@@ -1,5 +1,93 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Gouthaman Balaraman</title><link href="http://gouthamanbalaraman.com/" rel="alternate"></link><link href="http://gouthamanbalaraman.com/feeds/gouthaman-balaraman.atom.xml" rel="self"></link><id>http://gouthamanbalaraman.com/</id><updated>2014-08-05T00:00:00-07:00</updated><entry><title>Minimal Example of Calling Lua Functions from C++</title><link href="http://gouthamanbalaraman.com/blog/minimal-example-lua-function-cpp.html" rel="alternate"></link><updated>2014-08-05T00:00:00-07:00</updated><author><name>Gouthaman Balaraman</name></author><id>tag:gouthamanbalaraman.com,2014-08-05:blog/minimal-example-lua-function-cpp.html</id><summary type="html">&lt;p&gt;If you want to extend and customize the capabilities of a C++ application
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Gouthaman Balaraman</title><link href="http://gouthamanbalaraman.com/" rel="alternate"></link><link href="http://gouthamanbalaraman.com/feeds/gouthaman-balaraman.atom.xml" rel="self"></link><id>http://gouthamanbalaraman.com/</id><updated>2014-08-08T00:00:00-07:00</updated><entry><title>Option Model Handbook, Part I: Introduction to Option Models</title><link href="http://gouthamanbalaraman.com/blog/option-model-handbook-part-I-introduction-to-option-models.html" rel="alternate"></link><updated>2014-08-08T00:00:00-07:00</updated><author><name>Gouthaman Balaraman</name></author><id>tag:gouthamanbalaraman.com,2014-08-08:blog/option-model-handbook-part-I-introduction-to-option-models.html</id><summary type="html">&lt;p&gt;This is a series of articles pertaining to option model pricing. Here I will
+explain the various concepts such as risk-neutral valuation, Black-Scholes formula,
+and binomial tree option pricing models.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Contents:&lt;/strong&gt;&lt;/p&gt;
+&lt;ol class="upperroman simple"&gt;
+&lt;li&gt;Introduction to Option Models&lt;/li&gt;
+&lt;/ol&gt;
+&lt;div class="section" id="introduction-to-option-models"&gt;
+&lt;h2&gt;Introduction to Option Models&lt;/h2&gt;
+&lt;p&gt;The bedrock of options pricing is the risk-neutral valuation principle, which relates the expected value of a
+ﬁnancial product at a future time to its current price. This is consistent with no-arbitrage hypothesis.
+Vanilla options have a theoretical price given by the Black-Scholes formula. In this article we will
+briefly touch upon these two concepts.&lt;/p&gt;
+&lt;div class="section" id="risk-neutral-valuation"&gt;
+&lt;h3&gt;Risk-Neutral Valuation&lt;/h3&gt;
+&lt;p&gt;An important general principle in options pricing is the risk-neutral valuation. According to this principle, the
+expected return from a stock at time $T$, $E(S_T)$, is the risk free value of the current stock price:&lt;/p&gt;
+&lt;p&gt;$$ E(S_T) = S_0 e^{rT} $$&lt;/p&gt;
+&lt;p&gt;The continuous compounding risk-free rate is $r$ and the current stock price is $S_0$.
+The principal of risk-neutral valuation can be used to create a binomial model for price movement,
+and subsequently a method to value options.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="black-scholes-formula"&gt;
+&lt;h3&gt;Black-Scholes Formula&lt;/h3&gt;
+&lt;p&gt;Value of a vanilla European call option, struck at $K$ with time $T$
+to maturity, can be derived using the above mentioned risk-neutral valuation principle.
+The payoﬀ of the call at maturity on an underlying with price $V$ (at maturity)
+is $max(V − K, 0)$. The expected value of this payoﬀ can be found, assuming
+a geometric brownian motion price movement for the underlying as,&lt;/p&gt;
+&lt;p&gt;\begin{equation} E[max(V-K,0)] = \int_K^\infty (V-K)g(V)dV \end{equation}&lt;/p&gt;
+&lt;p&gt;where $g(V)$ is the probability density function of $V$
+such that $log(V)$ is normally distributed with standard deviation $w$.
+Thus the current value of the call is&lt;/p&gt;
+&lt;p&gt;$$  C = e^{-rT} E[max(V-K,0)] $$&lt;/p&gt;
+&lt;p&gt;which after a lengthy calculation comes out to be&lt;/p&gt;
+&lt;p&gt;\begin{equation} \label{eq:bs} C = S_0 N(d_1) - K e^{-rT} N(d_2)   \end{equation}&lt;/p&gt;
+&lt;p&gt;where $S_0$ is the current price of the underlying, the risk free rate $r$,
+the volatility of the underlying is $\sigma$,&lt;/p&gt;
+&lt;p&gt;$$ d_1 = \frac{ \ln(S_0/K) + (r+\sigma^2/2)T } { \sigma \sqrt{T} } $$&lt;/p&gt;
+&lt;p&gt;$$ d_2 = \frac{ \ln(S_0/K) + (r-\sigma^2/2)T } { \sigma \sqrt{T} }  = d_1 - \sigma\sqrt{T}$$&lt;/p&gt;
+&lt;p&gt;and $N(x)$ is the cumulative distribution function. The put-call parity relates the price of the
+put and call prices, and is given as:&lt;/p&gt;
+&lt;p&gt;$$ C - P = S_0 - e^{-rT}K $$&lt;/p&gt;
+&lt;p&gt;Put-Call parity and Eq. $\ref{eq:bs}$ can be used to arrive at put prices.&lt;/p&gt;
+&lt;p&gt;For the case where the underlying has a continuous payout (dividend), the
+Black-Scholes formula can be extended to yield&lt;/p&gt;
+&lt;p&gt;$$ C = S_0 e^{-qT} N(d_1^\prime) - K e^{-rT} N(d_2^\prime)  $$&lt;/p&gt;
+&lt;p&gt;where&lt;/p&gt;
+&lt;p&gt;$$ d_1^\prime  = \frac{ \ln(S_0/K) +  (r - q + \sigma^2/2)T} {\sigma\sqrt{T}} $$&lt;/p&gt;
+&lt;p&gt;$$ d_2^\prime = d_1^\prime - \sigma\sqrt{T} $$&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="conclusion"&gt;
+&lt;h3&gt;Conclusion&lt;/h3&gt;
+&lt;p&gt;In this article I explained the fundamentals of option model pricing. We looked
+at the risk neutral valuation, and how it can be used to derive the Black-Scholes
+model.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;script type= "text/javascript"&gt;
+    if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
+        var mathjaxscript = document.createElement('script');
+        mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
+        mathjaxscript.type = 'text/javascript';
+        mathjaxscript.src = 'https:' == document.location.protocol
+                ? 'https://c328740.ssl.cf1.rackcdn.com/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+                : 'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML';
+        mathjaxscript[(window.opera ? "innerHTML" : "text")] =
+            "MathJax.Hub.Config({" +
+            "    config: ['MMLorHTML.js']," +
+            "    TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'AMS' } }," +
+            "    jax: ['input/TeX','input/MathML','output/HTML-CSS']," +
+            "    extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']," +
+            "    displayAlign: 'center'," +
+            "    displayIndent: '0em'," +
+            "    showMathMenu: true," +
+            "    tex2jax: { " +
+            "        inlineMath: [ ['$','$'] ], " +
+            "        displayMath: [ ['$$','$$'] ]," +
+            "        processEscapes: true," +
+            "        preview: 'TeX'," +
+            "    }, " +
+            "    'HTML-CSS': { " +
+            "        styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: 'black ! important'} }" +
+            "    } " +
+            "}); ";
+        (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
+    }
+&lt;/script&gt;
+</summary><category term="Finance"></category><category term="Options"></category><category term="Binomial Tree"></category></entry><entry><title>Minimal Example of Calling Lua Functions from C++</title><link href="http://gouthamanbalaraman.com/blog/minimal-example-lua-function-cpp.html" rel="alternate"></link><updated>2014-08-05T00:00:00-07:00</updated><author><name>Gouthaman Balaraman</name></author><id>tag:gouthamanbalaraman.com,2014-08-05:blog/minimal-example-lua-function-cpp.html</id><summary type="html">&lt;p&gt;If you want to extend and customize the capabilities of a C++ application
 without requiring a full recompilation, then using a embedded scripting language
 is the way to go. Lua is one such embeddable scripting language, and is very popular
 among game developers. The main advantage of Lua, in my opinion, is that the core API
@@ -646,6 +734,36 @@ You should see an entry there that corresponds to the message that was sent&lt;/
 see your earlier message printed out.&lt;/p&gt;
 &lt;p&gt;Have fun messaging!&lt;/p&gt;
 &lt;/div&gt;
+&lt;script type= "text/javascript"&gt;
+    if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
+        var mathjaxscript = document.createElement('script');
+        mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
+        mathjaxscript.type = 'text/javascript';
+        mathjaxscript.src = 'https:' == document.location.protocol
+                ? 'https://c328740.ssl.cf1.rackcdn.com/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+                : 'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML';
+        mathjaxscript[(window.opera ? "innerHTML" : "text")] =
+            "MathJax.Hub.Config({" +
+            "    config: ['MMLorHTML.js']," +
+            "    TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'AMS' } }," +
+            "    jax: ['input/TeX','input/MathML','output/HTML-CSS']," +
+            "    extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']," +
+            "    displayAlign: 'center'," +
+            "    displayIndent: '0em'," +
+            "    showMathMenu: true," +
+            "    tex2jax: { " +
+            "        inlineMath: [ ['$','$'] ], " +
+            "        displayMath: [ ['$$','$$'] ]," +
+            "        processEscapes: true," +
+            "        preview: 'TeX'," +
+            "    }, " +
+            "    'HTML-CSS': { " +
+            "        styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: 'black ! important'} }" +
+            "    } " +
+            "}); ";
+        (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
+    }
+&lt;/script&gt;
 </summary><category term="python"></category><category term="programming"></category></entry><entry><title>A Short Story of Wall Street</title><link href="http://gouthamanbalaraman.com/blog/a-short-story-of-wall-street.html" rel="alternate"></link><updated>2014-01-23T00:00:00-08:00</updated><author><name>Gouthaman Balaraman</name></author><id>tag:gouthamanbalaraman.com,2014-01-23:blog/a-short-story-of-wall-street.html</id><summary type="html">&lt;p&gt;In the last couple of decades, the US market has witnessed a
 technology bubble, a housing bubble, recession, and market
 crashes. I wanted to understand the human sentiment, the fear
@@ -708,33 +826,25 @@ a beta of 1 means that the stock is equally volatile, and equally risky.&lt;/p&g
 the returns of stock as a function of the returns of the market benchmark (such as S&amp;amp;P 500)
 and fit it with a straight line, then beta is nothing but the slope of the fitted line.
 The regression equation is given as shown below.&lt;/p&gt;
-&lt;div class="formula"&gt;
-&lt;i&gt;R&lt;/i&gt;&lt;span class="scripts"&gt;&lt;sub class="script"&gt;&lt;i&gt;i&lt;/i&gt;&lt;/sub&gt;&lt;sup class="script"&gt;&lt;i&gt;stock&lt;/i&gt;&lt;/sup&gt;&lt;/span&gt; = &lt;i&gt;α&lt;/i&gt; + &lt;i&gt;β&lt;/i&gt; × &lt;i&gt;R&lt;/i&gt;&lt;span class="scripts"&gt;&lt;sub class="script"&gt;&lt;i&gt;i&lt;/i&gt;&lt;/sub&gt;&lt;sup class="script"&gt;&lt;i&gt;market&lt;/i&gt;&lt;/sup&gt;&lt;/span&gt; + &lt;i&gt;ϵ&lt;/i&gt;&lt;sub&gt;&lt;i&gt;i&lt;/i&gt;&lt;/sub&gt;
-&lt;/div&gt;
-&lt;p&gt;In Capital Asset Pricing Model, the returns of the stock &lt;span class="formula"&gt;&lt;i&gt;R&lt;/i&gt;&lt;sub&gt;&lt;i&gt;stock&lt;/i&gt;&lt;/sub&gt;&lt;/span&gt;
-and that of the market &lt;span class="formula"&gt;&lt;i&gt;R&lt;/i&gt;&lt;sub&gt;&lt;i&gt;market&lt;/i&gt;&lt;/sub&gt;&lt;/span&gt; are adjusted for the risk-free
+&lt;p&gt;$$ R^{stock}_i = \alpha + \beta \times R^{market}_i + \epsilon_i $$&lt;/p&gt;
+&lt;p&gt;In Capital Asset Pricing Model, the returns of the stock $R^{stock}$
+and that of the market $R^{market}$ are adjusted for the risk-free
 rate. Here for simplicity I leave that out. Given the current low interest rate
 environment, this adjustment will add little value.&lt;/p&gt;
 &lt;p&gt;Alpha of a stock gives you a measure of the excess return with respect to the benchmark.
 A positive alpha for a stock or portfolio gives you sense of how well your asset
 outperformed a benchmark.&lt;/p&gt;
-&lt;p&gt;R-squared is a measure of how well the the returns of a stock is explained by the
+&lt;p&gt;The $R^2$ is a measure of how well the the returns of a stock is explained by the
 returns of the benchmark. If your investment goal is to track a particular benchmark,
-then you should chose stocks that show a high R-squared with respect to the benchmark.
-R-squared value of 1 means that the benchmark completely explains the stock returns,
-while a value of 0 means that the benchmark does not explain the  stock
+then you should chose stocks that show a high $R^2$ with respect to the benchmark.
+The $R^2$ value of $1$ means that the benchmark completely explains the stock returns,
+while a value of $0$ means that the benchmark does not explain the  stock
 returns.&lt;/p&gt;
 &lt;p&gt;R-squared is defined as:&lt;/p&gt;
-&lt;div class="formula"&gt;
-&lt;i&gt;R&lt;/i&gt;&lt;sup&gt;2&lt;/sup&gt; = 1 − &lt;i&gt;SS&lt;/i&gt;&lt;sub&gt;&lt;i&gt;res&lt;/i&gt;&lt;/sub&gt; ⁄ &lt;i&gt;SS&lt;/i&gt;&lt;sub&gt;&lt;i&gt;tot&lt;/i&gt;&lt;/sub&gt;
-&lt;/div&gt;
+&lt;p&gt;$$    R^2 = 1 - SS_{res}/SS_{tot} $$&lt;/p&gt;
 &lt;p&gt;where&lt;/p&gt;
-&lt;div class="formula"&gt;
-&lt;i&gt;SS&lt;/i&gt;&lt;sub&gt;&lt;i&gt;res&lt;/i&gt;&lt;/sub&gt; = &lt;span class="limits"&gt;&lt;sup class="limit"&gt; &lt;/sup&gt;&lt;span class="limit"&gt;&lt;span class="symbol"&gt;∑&lt;/span&gt;&lt;/span&gt;&lt;sub class="limit"&gt;&lt;i&gt;i&lt;/i&gt;&lt;/sub&gt;&lt;/span&gt;(&lt;i&gt;R&lt;/i&gt;&lt;span class="scripts"&gt;&lt;sub class="script"&gt;&lt;i&gt;i&lt;/i&gt;&lt;/sub&gt;&lt;sup class="script"&gt;&lt;i&gt;stock&lt;/i&gt;&lt;/sup&gt;&lt;/span&gt; − &lt;i&gt;f&lt;/i&gt;&lt;span class="scripts"&gt;&lt;sub class="script"&gt;&lt;i&gt;i&lt;/i&gt;&lt;/sub&gt;&lt;sup class="script"&gt;&lt;i&gt;stock&lt;/i&gt;&lt;/sup&gt;&lt;/span&gt;)&lt;sup&gt;2&lt;/sup&gt;
-&lt;/div&gt;
-&lt;div class="formula"&gt;
-&lt;i&gt;SS&lt;/i&gt;&lt;sub&gt;&lt;i&gt;tot&lt;/i&gt;&lt;/sub&gt; = &lt;span class="limits"&gt;&lt;sup class="limit"&gt; &lt;/sup&gt;&lt;span class="limit"&gt;&lt;span class="symbol"&gt;∑&lt;/span&gt;&lt;/span&gt;&lt;sub class="limit"&gt;&lt;i&gt;i&lt;/i&gt;&lt;/sub&gt;&lt;/span&gt;(&lt;i&gt;R&lt;/i&gt;&lt;span class="scripts"&gt;&lt;sub class="script"&gt;&lt;i&gt;i&lt;/i&gt;&lt;/sub&gt;&lt;sup class="script"&gt;&lt;i&gt;stock&lt;/i&gt;&lt;/sup&gt;&lt;/span&gt; −  &amp;lt; &lt;i&gt;R&lt;/i&gt;&lt;sup&gt;&lt;i&gt;stock&lt;/i&gt;&lt;/sup&gt; &amp;gt; )&lt;sup&gt;2&lt;/sup&gt;
-&lt;/div&gt;
+&lt;p&gt;$$    SS_{res} = \sum_i (R^{stock}_i - f^{stock}_i)^2 $$&lt;/p&gt;
+&lt;p&gt;$$    SS_{tot} = \sum_i (R^{stock}_i - &amp;lt;R^{stock}&amp;gt;)^2 $$&lt;/p&gt;
 &lt;/div&gt;
 &lt;div class="section" id="volatility-and-momentum"&gt;
 &lt;h2&gt;Volatility and Momentum&lt;/h2&gt;
@@ -809,9 +919,39 @@ standard deviation of the returns. From an option-pricing
 model perspective volatility is calculated assuming a log-normal distribution
 for the returns.&lt;/p&gt;
 &lt;p&gt;The alpha shown above is annualized by scaling by a factor of 12, the periodicity
-of returns. The same goes for volatility, which is scaled by &lt;span class="formula"&gt;&lt;span class="sqrt"&gt;&lt;span class="radical"&gt;√&lt;/span&gt;&lt;span class="ignored"&gt;(&lt;/span&gt;&lt;span class="root"&gt;12&lt;/span&gt;&lt;span class="ignored"&gt;)&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;
+of returns. The same goes for volatility, which is scaled by $\sqrt{12}$
 in order to annualize.&lt;/p&gt;
 &lt;/div&gt;
+&lt;script type= "text/javascript"&gt;
+    if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
+        var mathjaxscript = document.createElement('script');
+        mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
+        mathjaxscript.type = 'text/javascript';
+        mathjaxscript.src = 'https:' == document.location.protocol
+                ? 'https://c328740.ssl.cf1.rackcdn.com/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+                : 'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML';
+        mathjaxscript[(window.opera ? "innerHTML" : "text")] =
+            "MathJax.Hub.Config({" +
+            "    config: ['MMLorHTML.js']," +
+            "    TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'AMS' } }," +
+            "    jax: ['input/TeX','input/MathML','output/HTML-CSS']," +
+            "    extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']," +
+            "    displayAlign: 'center'," +
+            "    displayIndent: '0em'," +
+            "    showMathMenu: true," +
+            "    tex2jax: { " +
+            "        inlineMath: [ ['$','$'] ], " +
+            "        displayMath: [ ['$$','$$'] ]," +
+            "        processEscapes: true," +
+            "        preview: 'TeX'," +
+            "    }, " +
+            "    'HTML-CSS': { " +
+            "        styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: 'black ! important'} }" +
+            "    } " +
+            "}); ";
+        (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
+    }
+&lt;/script&gt;
 </summary><category term="finance"></category><category term="investing"></category></entry><entry><title>Python Multiprocessing as a Task Queue</title><link href="http://gouthamanbalaraman.com/blog/python-multiprocessing-as-a-task-queue.html" rel="alternate"></link><updated>2014-01-07T00:00:00-08:00</updated><author><name>Gouthaman Balaraman</name></author><id>tag:gouthamanbalaraman.com,2014-01-07:blog/python-multiprocessing-as-a-task-queue.html</id><summary type="html">&lt;p&gt;When you have computationally intensive tasks in your website (or scripts),
 it is conventional to use a task queue such as &lt;a class="reference external" href="http://www.celeryproject.org/"&gt;Celery&lt;/a&gt;. Using Celery requires
 some amount of setup and if you want to avoid, try using the following task

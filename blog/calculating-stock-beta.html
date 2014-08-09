@@ -5,7 +5,6 @@
         <!-- All the meta tags -->
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-
         <meta property="og:type" content="article"/>
         <meta property="og:title" content="Calculating Stock Beta, Volatility, and More"/>
         <meta property="og:url" content="http://gouthamanbalaraman.com/blog/calculating-stock-beta.html"/>
@@ -89,33 +88,25 @@ a beta of 1 means that the stock is equally volatile, and equally risky.</p>
 the returns of stock as a function of the returns of the market benchmark (such as S&amp;P 500)
 and fit it with a straight line, then beta is nothing but the slope of the fitted line.
 The regression equation is given as shown below.</p>
-<div class="formula">
-<i>R</i><span class="scripts"><sub class="script"><i>i</i></sub><sup class="script"><i>stock</i></sup></span> = <i>α</i> + <i>β</i> × <i>R</i><span class="scripts"><sub class="script"><i>i</i></sub><sup class="script"><i>market</i></sup></span> + <i>ϵ</i><sub><i>i</i></sub>
-</div>
-<p>In Capital Asset Pricing Model, the returns of the stock <span class="formula"><i>R</i><sub><i>stock</i></sub></span>
-and that of the market <span class="formula"><i>R</i><sub><i>market</i></sub></span> are adjusted for the risk-free
+<p>$$ R^{stock}_i = \alpha + \beta \times R^{market}_i + \epsilon_i $$</p>
+<p>In Capital Asset Pricing Model, the returns of the stock $R^{stock}$
+and that of the market $R^{market}$ are adjusted for the risk-free
 rate. Here for simplicity I leave that out. Given the current low interest rate
 environment, this adjustment will add little value.</p>
 <p>Alpha of a stock gives you a measure of the excess return with respect to the benchmark.
 A positive alpha for a stock or portfolio gives you sense of how well your asset
 outperformed a benchmark.</p>
-<p>R-squared is a measure of how well the the returns of a stock is explained by the
+<p>The $R^2$ is a measure of how well the the returns of a stock is explained by the
 returns of the benchmark. If your investment goal is to track a particular benchmark,
-then you should chose stocks that show a high R-squared with respect to the benchmark.
-R-squared value of 1 means that the benchmark completely explains the stock returns,
-while a value of 0 means that the benchmark does not explain the  stock
+then you should chose stocks that show a high $R^2$ with respect to the benchmark.
+The $R^2$ value of $1$ means that the benchmark completely explains the stock returns,
+while a value of $0$ means that the benchmark does not explain the  stock
 returns.</p>
 <p>R-squared is defined as:</p>
-<div class="formula">
-<i>R</i><sup>2</sup> = 1 − <i>SS</i><sub><i>res</i></sub> ⁄ <i>SS</i><sub><i>tot</i></sub>
-</div>
+<p>$$    R^2 = 1 - SS_{res}/SS_{tot} $$</p>
 <p>where</p>
-<div class="formula">
-<i>SS</i><sub><i>res</i></sub> = <span class="limits"><sup class="limit"> </sup><span class="limit"><span class="symbol">∑</span></span><sub class="limit"><i>i</i></sub></span>(<i>R</i><span class="scripts"><sub class="script"><i>i</i></sub><sup class="script"><i>stock</i></sup></span> − <i>f</i><span class="scripts"><sub class="script"><i>i</i></sub><sup class="script"><i>stock</i></sup></span>)<sup>2</sup>
-</div>
-<div class="formula">
-<i>SS</i><sub><i>tot</i></sub> = <span class="limits"><sup class="limit"> </sup><span class="limit"><span class="symbol">∑</span></span><sub class="limit"><i>i</i></sub></span>(<i>R</i><span class="scripts"><sub class="script"><i>i</i></sub><sup class="script"><i>stock</i></sup></span> −  &lt; <i>R</i><sup><i>stock</i></sup> &gt; )<sup>2</sup>
-</div>
+<p>$$    SS_{res} = \sum_i (R^{stock}_i - f^{stock}_i)^2 $$</p>
+<p>$$    SS_{tot} = \sum_i (R^{stock}_i - &lt;R^{stock}&gt;)^2 $$</p>
 </div>
 <div class="section" id="volatility-and-momentum">
 <h2>Volatility and Momentum</h2>
@@ -190,9 +181,39 @@ standard deviation of the returns. From an option-pricing
 model perspective volatility is calculated assuming a log-normal distribution
 for the returns.</p>
 <p>The alpha shown above is annualized by scaling by a factor of 12, the periodicity
-of returns. The same goes for volatility, which is scaled by <span class="formula"><span class="sqrt"><span class="radical">√</span><span class="ignored">(</span><span class="root">12</span><span class="ignored">)</span></span></span>
+of returns. The same goes for volatility, which is scaled by $\sqrt{12}$
 in order to annualize.</p>
 </div>
+<script type= "text/javascript">
+    if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
+        var mathjaxscript = document.createElement('script');
+        mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
+        mathjaxscript.type = 'text/javascript';
+        mathjaxscript.src = 'https:' == document.location.protocol
+                ? 'https://c328740.ssl.cf1.rackcdn.com/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+                : 'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML';
+        mathjaxscript[(window.opera ? "innerHTML" : "text")] =
+            "MathJax.Hub.Config({" +
+            "    config: ['MMLorHTML.js']," +
+            "    TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'AMS' } }," +
+            "    jax: ['input/TeX','input/MathML','output/HTML-CSS']," +
+            "    extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']," +
+            "    displayAlign: 'center'," +
+            "    displayIndent: '0em'," +
+            "    showMathMenu: true," +
+            "    tex2jax: { " +
+            "        inlineMath: [ ['$','$'] ], " +
+            "        displayMath: [ ['$$','$$'] ]," +
+            "        processEscapes: true," +
+            "        preview: 'TeX'," +
+            "    }, " +
+            "    'HTML-CSS': { " +
+            "        styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: 'black ! important'} }" +
+            "    } " +
+            "}); ";
+        (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
+    }
+</script>
 
      <br>
      

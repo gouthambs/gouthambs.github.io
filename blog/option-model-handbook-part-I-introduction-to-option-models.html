@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Option Model Handbook, Part I: Introduction to Option Models - Gouthaman Balaraman</title>
+        <!-- All the meta tags -->
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+        <meta property="og:type" content="article"/>
+        <meta property="og:title" content="Option Model Handbook, Part I: Introduction to Option Models"/>
+        <meta property="og:url" content="http://gouthamanbalaraman.com/blog/option-model-handbook-part-I-introduction-to-option-models.html"/>
+        <meta property="og:description" content="This handbook gives a concise introduction to option models. Part I gives a basic introduction to principles behind option model pricing"/>
+        <link href="http://bootswatch.com/readable/bootstrap.css" rel="stylesheet"/>
+        <link href="http://bootswatch.com/readable/bootstrap.min.css" rel="stylesheet"/>
+        <link href="http://gouthamanbalaraman.com/theme/static/css/style.css" rel="stylesheet" />
+        
+        <!-- Google Analytics -->
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-46714334-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    /*Update Your Analytics Tracking Code to Support Display Advertising by uncommenting the following 
+    instead of the above line */    
+    /*ga.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'stats.g.doubleclick.net/dc.js';*/
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+    </head>
+
+    <body>
+      <div class="navbar navbar-default navbar-fixed-top">
+          <div class="container">
+            <div class="navbar-header">
+              <a href="http://gouthamanbalaraman.com" class="navbar-brand">Gouthaman Balaraman</a>
+              <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+            </div>
+            <div class="navbar-collapse collapse" id="navbar-main">
+              <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="http://gouthamanbalaraman.com/pages/about.html">About</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                <div class="col-md-10 col-md-offset-1">
+
+<div class="bs-docs-section">
+    <div class="page-header">
+        <h1>Option Model Handbook, Part I: Introduction to Option Models</h1>
+     <!--span class="glyphicon glyphicon-calendar"></span-->&nbsp;August 08, 2014 
+     &nbsp;&nbsp;
+     <!--span class="glyphicon glyphicon-user"></span--> by  
+     <a class="url fn" href="http://gouthamanbalaraman.com/author/gouthaman-balaraman.html">&nbsp;Gouthaman Balaraman </a>
+     </div>
+     <!-- article description -->
+         <p class="lead">This handbook gives a concise introduction to option models.
+Part I gives a basic introduction to principles behind option model pricing</p>
+      
+      <!-- article content -->
+     <p>This is a series of articles pertaining to option model pricing. Here I will
+explain the various concepts such as risk-neutral valuation, Black-Scholes formula,
+and binomial tree option pricing models.</p>
+<p><strong>Contents:</strong></p>
+<ol class="upperroman simple">
+<li>Introduction to Option Models</li>
+</ol>
+<div class="section" id="introduction-to-option-models">
+<h2>Introduction to Option Models</h2>
+<p>The bedrock of options pricing is the risk-neutral valuation principle, which relates the expected value of a
+ﬁnancial product at a future time to its current price. This is consistent with no-arbitrage hypothesis.
+Vanilla options have a theoretical price given by the Black-Scholes formula. In this article we will
+briefly touch upon these two concepts.</p>
+<div class="section" id="risk-neutral-valuation">
+<h3>Risk-Neutral Valuation</h3>
+<p>An important general principle in options pricing is the risk-neutral valuation. According to this principle, the
+expected return from a stock at time $T$, $E(S_T)$, is the risk free value of the current stock price:</p>
+<p>$$ E(S_T) = S_0 e^{rT} $$</p>
+<p>The continuous compounding risk-free rate is $r$ and the current stock price is $S_0$.
+The principal of risk-neutral valuation can be used to create a binomial model for price movement,
+and subsequently a method to value options.</p>
+</div>
+<div class="section" id="black-scholes-formula">
+<h3>Black-Scholes Formula</h3>
+<p>Value of a vanilla European call option, struck at $K$ with time $T$
+to maturity, can be derived using the above mentioned risk-neutral valuation principle.
+The payoﬀ of the call at maturity on an underlying with price $V$ (at maturity)
+is $max(V − K, 0)$. The expected value of this payoﬀ can be found, assuming
+a geometric brownian motion price movement for the underlying as,</p>
+<p>\begin{equation} E[max(V-K,0)] = \int_K^\infty (V-K)g(V)dV \end{equation}</p>
+<p>where $g(V)$ is the probability density function of $V$
+such that $log(V)$ is normally distributed with standard deviation $w$.
+Thus the current value of the call is</p>
+<p>$$  C = e^{-rT} E[max(V-K,0)] $$</p>
+<p>which after a lengthy calculation comes out to be</p>
+<p>\begin{equation} \label{eq:bs} C = S_0 N(d_1) - K e^{-rT} N(d_2)   \end{equation}</p>
+<p>where $S_0$ is the current price of the underlying, the risk free rate $r$,
+the volatility of the underlying is $\sigma$,</p>
+<p>$$ d_1 = \frac{ \ln(S_0/K) + (r+\sigma^2/2)T } { \sigma \sqrt{T} } $$</p>
+<p>$$ d_2 = \frac{ \ln(S_0/K) + (r-\sigma^2/2)T } { \sigma \sqrt{T} }  = d_1 - \sigma\sqrt{T}$$</p>
+<p>and $N(x)$ is the cumulative distribution function. The put-call parity relates the price of the
+put and call prices, and is given as:</p>
+<p>$$ C - P = S_0 - e^{-rT}K $$</p>
+<p>Put-Call parity and Eq. $\ref{eq:bs}$ can be used to arrive at put prices.</p>
+<p>For the case where the underlying has a continuous payout (dividend), the
+Black-Scholes formula can be extended to yield</p>
+<p>$$ C = S_0 e^{-qT} N(d_1^\prime) - K e^{-rT} N(d_2^\prime)  $$</p>
+<p>where</p>
+<p>$$ d_1^\prime  = \frac{ \ln(S_0/K) +  (r - q + \sigma^2/2)T} {\sigma\sqrt{T}} $$</p>
+<p>$$ d_2^\prime = d_1^\prime - \sigma\sqrt{T} $$</p>
+</div>
+<div class="section" id="conclusion">
+<h3>Conclusion</h3>
+<p>In this article I explained the fundamentals of option model pricing. We looked
+at the risk neutral valuation, and how it can be used to derive the Black-Scholes
+model.</p>
+</div>
+</div>
+<script type= "text/javascript">
+    if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
+        var mathjaxscript = document.createElement('script');
+        mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
+        mathjaxscript.type = 'text/javascript';
+        mathjaxscript.src = 'https:' == document.location.protocol
+                ? 'https://c328740.ssl.cf1.rackcdn.com/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+                : 'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML';
+        mathjaxscript[(window.opera ? "innerHTML" : "text")] =
+            "MathJax.Hub.Config({" +
+            "    config: ['MMLorHTML.js']," +
+            "    TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'AMS' } }," +
+            "    jax: ['input/TeX','input/MathML','output/HTML-CSS']," +
+            "    extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']," +
+            "    displayAlign: 'center'," +
+            "    displayIndent: '0em'," +
+            "    showMathMenu: true," +
+            "    tex2jax: { " +
+            "        inlineMath: [ ['$','$'] ], " +
+            "        displayMath: [ ['$$','$$'] ]," +
+            "        processEscapes: true," +
+            "        preview: 'TeX'," +
+            "    }, " +
+            "    'HTML-CSS': { " +
+            "        styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: 'black ! important'} }" +
+            "    } " +
+            "}); ";
+        (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
+    }
+</script>
+
+     <br>
+     
+     <!-- article tags-->
+        <span class="glyphicon glyphicon-tags"></span>&nbsp;&nbsp;
+            <a href="http://gouthamanbalaraman.com/tag/finance.html">Finance</a>&nbsp;&nbsp;
+            <a href="http://gouthamanbalaraman.com/tag/options.html">Options</a>&nbsp;&nbsp;
+            <a href="http://gouthamanbalaraman.com/tag/binomial-tree.html">Binomial Tree</a>&nbsp;&nbsp;
+        <br>
+     
+     <!-- article comments -->
+    <div class="comment">
+        <div id="disqus_thread"></div> <!-- comment app container -->
+    </div>
+	<!-- Comment BEGIN -->
+    <script type="text/javascript">
+        var disqus_shortname = 'gouthamanbalaramancom'; // required: replace example with your forum shortname
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+     <!-- Comment END -->
+</div>    
+                </div>
+            </div>
+            
+            <footer id="contentinfo" class="footer">
+                    <address id="about" class="vcard body">
+                    &copy; <a href="http://gouthamanbalaraman.com">Gouthaman Balaraman</a> Proudly powered by <a href="http://getpelican.com/">Pelican</a>
+                    </address><!-- /#about -->
+            </footer><!-- /#contentinfo -->
+        </div><!-- container -->
+    </body>
+</html>
