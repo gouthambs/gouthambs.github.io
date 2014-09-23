@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Gouthaman Balaraman</title><link>http://gouthamanbalaraman.com/</link><description></description><atom:link href="http://gouthamanbalaraman.com/feeds/gouthaman-balaraman.rss.xml" rel="self"></atom:link><lastBuildDate>Sun, 21 Sep 2014 00:00:00 -0700</lastBuildDate><item><title>Modern Portfolio Theory Statistics</title><link>http://gouthamanbalaraman.com/blog/modern-portfolio-theory-statistics.html</link><description>&lt;script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular.min.js"&gt;&lt;/script&gt;
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Gouthaman Balaraman</title><link>http://gouthamanbalaraman.com/</link><description></description><atom:link href="http://gouthamanbalaraman.com/feeds/gouthaman-balaraman.rss.xml" rel="self"></atom:link><lastBuildDate>Sun, 21 Sep 2014 00:00:00 -0700</lastBuildDate><item><title>Modern Portfolio Theory Statistics</title><link>http://gouthamanbalaraman.com/blog/modern-portfolio-theory-statistics.html</link><description>&lt;p&gt;This widget shows Modern Portfolio Theory (MPT) statistics for a selected list of stocks. The calculations were made
+using &lt;a class="reference external" href="https://www.quandl.com/"&gt;Quandl&lt;/a&gt; data in the &lt;a class="reference external" href="https://www.quandl.com/WIKI"&gt;WIKI&lt;/a&gt; dataset. The ETF SPY was used as a benchmark using a 5-year time horizon. If the time
+series is not long enough, then an N/A is shown. You can also download the &lt;a class="reference external" href="/extra/data/mptstats/mpt_5y_latest.csv"&gt;CSV_File&lt;/a&gt; containing all the metrics.&lt;/p&gt;
+&lt;script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular.min.js"&gt;&lt;/script&gt;
 &lt;script src="http://d3js.org/d3.v3.min.js"&gt;&lt;/script&gt;
 &lt;script&gt;
     var myModule = angular.module('mptApp', []);
@@ -30,7 +33,7 @@
                             &lt;fieldset&gt;
                                     &lt;!-- Form Name --&gt;
                                     &lt;!-- Text input--&gt;
-                                    &lt;div class="form-group col-md-4 col-md-offset-2"&gt;
+                                    &lt;div class="form-group col-md-2 "&gt;
                                       &lt;div class=""&gt;
                                             &lt;input id="ticker" name="ticker" type="text" placeholder="TICKER" class="form-control input-md" ng-model="ticker"&gt;
                                       &lt;/div&gt;
@@ -45,7 +48,7 @@
                             &lt;/fieldset&gt;
                     &lt;/form&gt;
                     &lt;hr/&gt;
-                    &lt;div style="height:320px; overflow hidden;"&gt;
+                    &lt;div &gt;
                             &lt;div id="results" ng-show="tickerData !=null"&gt;
                                     &lt;div class="col-md-6"&gt;
                                             &lt;table class="table table-striped col-md-6"&gt;
@@ -122,12 +125,9 @@
                                     {{message}}
                             &lt;/div&gt;
                     &lt;/div&gt;
-                    &lt;hr&gt;
+
     &lt;/div&gt; &lt;!-- controller --&gt;
-&lt;/div&gt;&lt;!--app --&gt;&lt;p&gt;This widget shows Modern Portfolio Theory (MPT) statistics for a selected list of stocks. The calculations were made
-using &lt;a class="reference external" href="https://www.quandl.com/"&gt;Quandl&lt;/a&gt; data in the &lt;a class="reference external" href="https://www.quandl.com/WIKI"&gt;WIKI&lt;/a&gt; dataset. The ETF SPY was used as a benchmark using a 5-year time horizon. If the time
-series is not long enough, then an N/A is shown. You can also download the &lt;a class="reference external" href="/extra/data/mptstats/mpt_5y_latest.csv"&gt;CSV_File&lt;/a&gt; containing all the metrics.&lt;/p&gt;
-&lt;script type= "text/javascript"&gt;
+&lt;/div&gt;&lt;!--app --&gt;&lt;script type= "text/javascript"&gt;
     if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
         var mathjaxscript = document.createElement('script');
         mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';

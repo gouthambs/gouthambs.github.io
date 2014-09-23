@@ -67,7 +67,10 @@
          <p class="lead">This is a small widget that lets you view the modern portfolio theory statistics for a selection of stocks</p>
       
       <!-- article content -->
-     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular.min.js"></script>
+     <p>This widget shows Modern Portfolio Theory (MPT) statistics for a selected list of stocks. The calculations were made
+using <a class="reference external" href="https://www.quandl.com/">Quandl</a> data in the <a class="reference external" href="https://www.quandl.com/WIKI">WIKI</a> dataset. The ETF SPY was used as a benchmark using a 5-year time horizon. If the time
+series is not long enough, then an N/A is shown. You can also download the <a class="reference external" href="/extra/data/mptstats/mpt_5y_latest.csv">CSV_File</a> containing all the metrics.</p>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular.min.js"></script>
 <script src="http://d3js.org/d3.v3.min.js"></script>
 <script>
     var myModule = angular.module('mptApp', []);
@@ -98,7 +101,7 @@
                             <fieldset>
                                     <!-- Form Name -->
                                     <!-- Text input-->
-                                    <div class="form-group col-md-4 col-md-offset-2">
+                                    <div class="form-group col-md-2 ">
                                       <div class="">
                                             <input id="ticker" name="ticker" type="text" placeholder="TICKER" class="form-control input-md" ng-model="ticker">
                                       </div>
@@ -113,7 +116,7 @@
                             </fieldset>
                     </form>
                     <hr/>
-                    <div style="height:320px; overflow hidden;">
+                    <div >
                             <div id="results" ng-show="tickerData !=null">
                                     <div class="col-md-6">
                                             <table class="table table-striped col-md-6">
@@ -190,12 +193,9 @@
                                     {{message}}
                             </div>
                     </div>
-                    <hr>
+
     </div> <!-- controller -->
-</div><!--app --><p>This widget shows Modern Portfolio Theory (MPT) statistics for a selected list of stocks. The calculations were made
-using <a class="reference external" href="https://www.quandl.com/">Quandl</a> data in the <a class="reference external" href="https://www.quandl.com/WIKI">WIKI</a> dataset. The ETF SPY was used as a benchmark using a 5-year time horizon. If the time
-series is not long enough, then an N/A is shown. You can also download the <a class="reference external" href="/extra/data/mptstats/mpt_5y_latest.csv">CSV_File</a> containing all the metrics.</p>
-<script type= "text/javascript">
+</div><!--app --><script type= "text/javascript">
     if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
         var mathjaxscript = document.createElement('script');
         mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
