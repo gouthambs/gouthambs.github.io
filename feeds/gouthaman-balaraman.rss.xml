@@ -22,7 +22,7 @@ binomial tree is:&lt;/p&gt;
 &lt;p&gt;$$ pu^2 + (1−p)d^2 − [ pu+ (1−p)d]^2 = \sigma^2 \Delta t $$&lt;/p&gt;
 &lt;p&gt;On ignoring terms of order higher than $\Delta t^2$ and making use of
 $ud = 1$, we get&lt;/p&gt;
-&lt;p&gt;\begin{equation} u &amp;amp;=&amp;amp; e^{\sigma \sqrt{\Delta t}} \nonumber \ d &amp;amp;=&amp;amp; e^{-sigmasqrt{Delta t}} \end{equation}&lt;/p&gt;
+&lt;p&gt;\begin{equation} u &amp;amp;=&amp;amp; e^{\sigma \sqrt{\Delta t}} \nonumber \\ d &amp;amp;=&amp;amp; e^{-\sigma\sqrt{\Delta t}} \end{equation}&lt;/p&gt;
 &lt;p&gt;One can make use of the above construction to value an option. Let $f$
 be the current value of an option on a stock. Let the payoﬀ of the option
 after one step (time T) on a binomial tree be $f_u$ and $f_d$
