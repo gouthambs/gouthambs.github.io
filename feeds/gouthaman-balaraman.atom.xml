@@ -4,10 +4,10 @@ explain the various concepts such as risk-neutral valuation, Black-Scholes formu
 and binomial tree option pricing models.&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;Contents:&lt;/strong&gt;&lt;/p&gt;
 &lt;ol class="upperroman simple"&gt;
-&lt;li&gt;Introduction to Option Models&lt;/li&gt;
-&lt;li&gt;Introduction to Binomial Trees&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference external" href="http://gouthamanbalaraman.com/blog/option-model-handbook-part-I-introduction-to-option-models.html"&gt;Introduction to Option Models&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference external" href="|filename|intro_binomial_trees.rst"&gt;Introduction to Binomial Trees&lt;/a&gt;&lt;/li&gt;
 &lt;/ol&gt;
-&lt;div class="section" id="introduction-to-binomial-trees"&gt;
+&lt;div class="section" id="id1"&gt;
 &lt;h2&gt;Introduction to Binomial Trees&lt;/h2&gt;
 &lt;img alt="BinomialTree" src="/images/binomialtree.png" /&gt;
 &lt;p&gt;Let us construct a tree whose pricing is given as shown in the figure above, restricting to time
@@ -229,10 +229,10 @@ explain the various concepts such as risk-neutral valuation, Black-Scholes formu
 and binomial tree option pricing models.&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;Contents:&lt;/strong&gt;&lt;/p&gt;
 &lt;ol class="upperroman simple"&gt;
-&lt;li&gt;Introduction to Option Models&lt;/li&gt;
-&lt;li&gt;Introduction to Binomial Trees&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference external" href="|filename|option_models.rst"&gt;Introduction to Option Models&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference external" href="|filename|intro_binomial_trees.rst"&gt;Introduction to Binomial Trees&lt;/a&gt;&lt;/li&gt;
 &lt;/ol&gt;
-&lt;div class="section" id="introduction-to-option-models"&gt;
+&lt;div class="section" id="id1"&gt;
 &lt;h2&gt;Introduction to Option Models&lt;/h2&gt;
 &lt;p&gt;The bedrock of options pricing is the risk-neutral valuation principle, which relates the expected value of a
 ﬁnancial product at a future time to its current price. This is consistent with no-arbitrage hypothesis.
