@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Gouthaman Balaraman</title><link href="http://gouthamanbalaraman.com/" rel="alternate"></link><link href="http://gouthamanbalaraman.com/feeds/gouthaman-balaraman.atom.xml" rel="self"></link><id>http://gouthamanbalaraman.com/</id><updated>2014-09-30T00:00:00-07:00</updated><entry><title>Option Model Handbook, Part II: Introduction to Binomial Trees</title><link href="http://gouthamanbalaraman.com/blog/option-model-handbook-part-I-introduction-to-binomial-trees.html" rel="alternate"></link><updated>2014-09-30T00:00:00-07:00</updated><author><name>Gouthaman Balaraman</name></author><id>tag:gouthamanbalaraman.com,2014-09-30:blog/option-model-handbook-part-I-introduction-to-binomial-trees.html</id><summary type="html">&lt;p&gt;This is a series of articles pertaining to option model pricing. Here I will
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Gouthaman Balaraman</title><link href="http://gouthamanbalaraman.com/" rel="alternate"></link><link href="http://gouthamanbalaraman.com/feeds/gouthaman-balaraman.atom.xml" rel="self"></link><id>http://gouthamanbalaraman.com/</id><updated>2014-09-30T00:00:00-07:00</updated><entry><title>Option Model Handbook, Part II: Introduction to Binomial Trees</title><link href="http://gouthamanbalaraman.com/blog/option-model-handbook-part-II-introduction-to-binomial-trees.html" rel="alternate"></link><updated>2014-09-30T00:00:00-07:00</updated><author><name>Gouthaman Balaraman</name></author><id>tag:gouthamanbalaraman.com,2014-09-30:blog/option-model-handbook-part-II-introduction-to-binomial-trees.html</id><summary type="html">&lt;p&gt;This is a series of articles pertaining to option model pricing. Here I will
 explain the various concepts such as risk-neutral valuation, Black-Scholes formula,
 and binomial tree option pricing models.&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;Contents:&lt;/strong&gt;&lt;/p&gt;
@@ -7,7 +7,10 @@ and binomial tree option pricing models.&lt;/p&gt;
 &lt;li&gt;Introduction to Option Models&lt;/li&gt;
 &lt;li&gt;Introduction to Binomial Trees&lt;/li&gt;
 &lt;/ol&gt;
-&lt;p&gt;Let us construct a tree whose pricing is given as shown in the fgure below, restricting to time
+&lt;div class="section" id="introduction-to-binomial-trees"&gt;
+&lt;h2&gt;Introduction to Binomial Trees&lt;/h2&gt;
+&lt;img alt="BinomialTree" src="/images/binomialtree.png" /&gt;
+&lt;p&gt;Let us construct a tree whose pricing is given as shown in the figure above, restricting to time
 $t_0$ and $t_1$. Initial price of the stock is $S_0$ at $t_0$ and has the possibility of moving to
 $S_0u$ or $S_0d$ at time $t_1$. Let $p$ be the probability of the price to rise from
 $S_0$ to $S_0u$. Calculating the expected return from the stock at $t_1$
@@ -22,13 +25,15 @@ binomial tree is:&lt;/p&gt;
 &lt;p&gt;$$ pu^2 + (1−p)d^2 − [ pu+ (1−p)d]^2 = \sigma^2 \Delta t $$&lt;/p&gt;
 &lt;p&gt;On ignoring terms of order higher than $\Delta t^2$ and making use of
 $ud = 1$, we get&lt;/p&gt;
-&lt;p&gt;\begin{equation} u &amp;amp;=&amp;amp; e^{\sigma \sqrt{\Delta t}} \nonumber \\ d &amp;amp;=&amp;amp; e^{-\sigma\sqrt{\Delta t}} \end{equation}&lt;/p&gt;
+&lt;p&gt;\begin{equation} u = e^{\sigma \sqrt{\Delta t}} \nonumber  \end{equation}
+\begin{equation} d = e^{-\sigma\sqrt{\Delta t}} \end{equation}&lt;/p&gt;
 &lt;p&gt;One can make use of the above construction to value an option. Let $f$
-be the current value of an option on a stock. Let the payoﬀ of the option
+be the current value of an option on a stock. Let the payoff of the option
 after one step (time T) on a binomial tree be $f_u$ and $f_d$
 for up and down movement of the stock respectively. The value of
 the option in this case is given as:&lt;/p&gt;
 &lt;p&gt;$$ f = e^{−rT}[ pf_u + (1−p)f_d] $$.&lt;/p&gt;
+&lt;/div&gt;
 &lt;script type= "text/javascript"&gt;
     if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
         var mathjaxscript = document.createElement('script');
@@ -225,6 +230,7 @@ and binomial tree option pricing models.&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;Contents:&lt;/strong&gt;&lt;/p&gt;
 &lt;ol class="upperroman simple"&gt;
 &lt;li&gt;Introduction to Option Models&lt;/li&gt;
+&lt;li&gt;Introduction to Binomial Trees&lt;/li&gt;
 &lt;/ol&gt;
 &lt;div class="section" id="introduction-to-option-models"&gt;
 &lt;h2&gt;Introduction to Option Models&lt;/h2&gt;
