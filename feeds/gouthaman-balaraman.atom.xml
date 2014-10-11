@@ -4,7 +4,7 @@ explain the various concepts such as risk-neutral valuation, Black-Scholes formu
 and binomial tree option pricing models.&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;Contents:&lt;/strong&gt;&lt;/p&gt;
 &lt;ol class="upperroman simple"&gt;
-&lt;li&gt;&lt;a class="reference external" href="|filename|option_models.rst"&gt;Introduction to Option Models&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference external" href="http://gouthamanbalaraman.com/blog/option-model-handbook-part-I-introduction-to-option-models.html"&gt;Introduction to Option Models&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a class="reference external" href="|filename|intro_binomial_trees.rst"&gt;Introduction to Binomial Trees&lt;/a&gt;&lt;/li&gt;
 &lt;/ol&gt;
 &lt;div class="section" id="id1"&gt;
@@ -230,7 +230,7 @@ and binomial tree option pricing models.&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;Contents:&lt;/strong&gt;&lt;/p&gt;
 &lt;ol class="upperroman simple"&gt;
 &lt;li&gt;&lt;a class="reference external" href="|filename|option_models.rst"&gt;Introduction to Option Models&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a class="reference external" href="http://gouthamanbalaraman.com/blog/option-model-handbook-part-II-introduction-to-binomial-trees.html"&gt;Introduction to Binomial Trees&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference external" href="|filename|intro_binomial_trees.rst"&gt;Introduction to Binomial Trees&lt;/a&gt;&lt;/li&gt;
 &lt;/ol&gt;
 &lt;div class="section" id="id1"&gt;
 &lt;h2&gt;Introduction to Option Models&lt;/h2&gt;
@@ -1036,7 +1036,9 @@ calculated by computing volatility using daily returns over a 45 day window.&lt;
 </summary><category term="finance"></category><category term="equity"></category></entry><entry><title>Calculating Stock Beta, Volatility, and More</title><link href="http://gouthamanbalaraman.com/blog/calculating-stock-beta.html" rel="alternate"></link><updated>2014-01-09T00:00:00-08:00</updated><author><name>Gouthaman Balaraman</name></author><id>tag:gouthamanbalaraman.com,2014-01-09:blog/calculating-stock-beta.html</id><summary type="html">&lt;p&gt;Have you ever wondered how to calculate the Beta value that is shown in
 &lt;a class="reference external" href="http://www.google.com/finance"&gt;GoogleFinance&lt;/a&gt; or &lt;a class="reference external" href="http://www.finance.yahoo.com/"&gt;YahooFinance&lt;/a&gt; and what does it mean from an investment perspective?
 This article will give you an introduction to the concept and demonstrate how
-you can calculate various time series measures for a stock using python.&lt;/p&gt;
+you can calculate various time series measures for a stock using python. The
+&lt;a class="reference external" href="|filename|widgets/modern-portfolio-theory-statistics.rst"&gt;Modern Portfolio Theory Statistics&lt;/a&gt;
+page shows calculated betas, alpha, etc for a few thousand stocks.&lt;/p&gt;
 &lt;div class="section" id="beta-alpha-and-r-squared"&gt;
 &lt;h2&gt;Beta, Alpha and R-squared&lt;/h2&gt;
 &lt;p&gt;Beta of a stock is a measure of relative risk of the stock with respect to the market.
