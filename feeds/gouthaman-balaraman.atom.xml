@@ -934,7 +934,7 @@ a beta of 1 means that the stock is equally volatile, and equally risky.&lt;/p&g
 the returns of stock as a function of the returns of the market benchmark (such as S&amp;amp;P 500)
 and fit it with a straight line, then beta is nothing but the slope of the fitted line.
 The regression equation is given as shown below.&lt;/p&gt;
-&lt;p&gt;$$ R^{stock}_i = \alpha + \beta \times R^{market}_i + \epsilon_i $$&lt;/p&gt;
+&lt;p&gt;$$ R^{stock}_i = \alpha + \beta \times R^{market}_i + \epsilon_i  $$&lt;/p&gt;
 &lt;p&gt;In Capital Asset Pricing Model, the returns of the stock $R^{stock}$
 and that of the market $R^{market}$ are adjusted for the risk-free
 rate. Here for simplicity I leave that out. Given the current low interest rate
