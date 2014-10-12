@@ -4,8 +4,8 @@ explain the various concepts such as risk-neutral valuation, Black-Scholes formu
 and binomial tree option pricing models.&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;Contents:&lt;/strong&gt;&lt;/p&gt;
 &lt;ol class="upperroman simple"&gt;
-&lt;li&gt;&lt;a class="reference external" href="|filename|option_models.rst"&gt;Introduction to Option Models&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a class="reference external" href="|filename|intro_binomial_trees.rst"&gt;Introduction to Binomial Trees&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference external" href="http://gouthamanbalaraman.com/blog/option-model-handbook-part-I-introduction-to-option-models.html"&gt;Introduction to Option Models&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference external" href="http://gouthamanbalaraman.com/blog/option-model-handbook-part-II-introduction-to-binomial-trees.html"&gt;Introduction to Binomial Trees&lt;/a&gt;&lt;/li&gt;
 &lt;/ol&gt;
 &lt;div class="section" id="id1"&gt;
 &lt;h2&gt;Introduction to Binomial Trees&lt;/h2&gt;
@@ -34,36 +34,6 @@ for up and down movement of the stock respectively. The value of
 the option in this case is given as:&lt;/p&gt;
 &lt;p&gt;$$ f = e^{−rT}[ pf_u + (1−p)f_d] $$.&lt;/p&gt;
 &lt;/div&gt;
-&lt;script type= "text/javascript"&gt;
-    if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
-        var mathjaxscript = document.createElement('script');
-        mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
-        mathjaxscript.type = 'text/javascript';
-        mathjaxscript.src = 'https:' == document.location.protocol
-                ? 'https://c328740.ssl.cf1.rackcdn.com/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
-                : 'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML';
-        mathjaxscript[(window.opera ? "innerHTML" : "text")] =
-            "MathJax.Hub.Config({" +
-            "    config: ['MMLorHTML.js']," +
-            "    TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'AMS' } }," +
-            "    jax: ['input/TeX','input/MathML','output/HTML-CSS']," +
-            "    extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']," +
-            "    displayAlign: 'center'," +
-            "    displayIndent: '0em'," +
-            "    showMathMenu: true," +
-            "    tex2jax: { " +
-            "        inlineMath: [ ['$','$'] ], " +
-            "        displayMath: [ ['$$','$$'] ]," +
-            "        processEscapes: true," +
-            "        preview: 'TeX'," +
-            "    }, " +
-            "    'HTML-CSS': { " +
-            "        styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: 'black ! important'} }" +
-            "    } " +
-            "}); ";
-        (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
-    }
-&lt;/script&gt;
 </description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Gouthaman Balaraman</dc:creator><pubDate>Tue, 30 Sep 2014 00:00:00 -0700</pubDate><guid>tag:gouthamanbalaraman.com,2014-09-30:blog/option-model-handbook-part-II-introduction-to-binomial-trees.html</guid><category>finance</category><category>option models</category><category>binomial tree</category></item><item><title>Modern Portfolio Theory Statistics</title><link>http://gouthamanbalaraman.com/blog/modern-portfolio-theory-statistics.html</link><description>&lt;p&gt;This widget shows Modern Portfolio Theory (MPT) statistics for a selected list of stocks. The calculations were made
 using &lt;a class="reference external" href="https://www.quandl.com/"&gt;Quandl&lt;/a&gt; data in the &lt;a class="reference external" href="https://www.quandl.com/WIKI"&gt;WIKI&lt;/a&gt; dataset. The ETF SPY was used as a benchmark using a 5-year time horizon. If the time
 series is not long enough, then an N/A is shown. You can also download the &lt;a class="reference external" href="/extra/data/mptstats/mpt_5y_latest.csv"&gt;CSV_File&lt;/a&gt; containing all the metrics.&lt;/p&gt;
@@ -194,42 +164,12 @@ series is not long enough, then an N/A is shown. You can also download the &lt;a
                     &lt;/div&gt;
 
     &lt;/div&gt; &lt;!-- controller --&gt;
-&lt;/div&gt;&lt;!--app --&gt;&lt;script type= "text/javascript"&gt;
-    if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
-        var mathjaxscript = document.createElement('script');
-        mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
-        mathjaxscript.type = 'text/javascript';
-        mathjaxscript.src = 'https:' == document.location.protocol
-                ? 'https://c328740.ssl.cf1.rackcdn.com/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
-                : 'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML';
-        mathjaxscript[(window.opera ? "innerHTML" : "text")] =
-            "MathJax.Hub.Config({" +
-            "    config: ['MMLorHTML.js']," +
-            "    TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'AMS' } }," +
-            "    jax: ['input/TeX','input/MathML','output/HTML-CSS']," +
-            "    extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']," +
-            "    displayAlign: 'center'," +
-            "    displayIndent: '0em'," +
-            "    showMathMenu: true," +
-            "    tex2jax: { " +
-            "        inlineMath: [ ['$','$'] ], " +
-            "        displayMath: [ ['$$','$$'] ]," +
-            "        processEscapes: true," +
-            "        preview: 'TeX'," +
-            "    }, " +
-            "    'HTML-CSS': { " +
-            "        styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: 'black ! important'} }" +
-            "    } " +
-            "}); ";
-        (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
-    }
-&lt;/script&gt;
-</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Gouthaman Balaraman</dc:creator><pubDate>Sun, 21 Sep 2014 00:00:00 -0700</pubDate><guid>tag:gouthamanbalaraman.com,2014-09-21:blog/modern-portfolio-theory-statistics.html</guid><category>finance</category><category>investing</category><category>widget</category></item><item><title>Option Model Handbook, Part I: Introduction to Option Models</title><link>http://gouthamanbalaraman.com/blog/option-model-handbook-part-I-introduction-to-option-models.html</link><description>&lt;p&gt;This is a series of articles pertaining to option model pricing. Here I will
+&lt;/div&gt;&lt;!--app --&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Gouthaman Balaraman</dc:creator><pubDate>Sun, 21 Sep 2014 00:00:00 -0700</pubDate><guid>tag:gouthamanbalaraman.com,2014-09-21:blog/modern-portfolio-theory-statistics.html</guid><category>finance</category><category>investing</category><category>widget</category></item><item><title>Option Model Handbook, Part I: Introduction to Option Models</title><link>http://gouthamanbalaraman.com/blog/option-model-handbook-part-I-introduction-to-option-models.html</link><description>&lt;p&gt;This is a series of articles pertaining to option model pricing. Here I will
 explain the various concepts such as risk-neutral valuation, Black-Scholes formula,
 and binomial tree option pricing models.&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;Contents:&lt;/strong&gt;&lt;/p&gt;
 &lt;ol class="upperroman simple"&gt;
-&lt;li&gt;&lt;a class="reference external" href="|filename|option_models.rst"&gt;Introduction to Option Models&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference external" href="http://gouthamanbalaraman.com/blog/option-model-handbook-part-I-introduction-to-option-models.html"&gt;Introduction to Option Models&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a class="reference external" href="http://gouthamanbalaraman.com/blog/option-model-handbook-part-II-introduction-to-binomial-trees.html"&gt;Introduction to Binomial Trees&lt;/a&gt;&lt;/li&gt;
 &lt;/ol&gt;
 &lt;div class="section" id="id1"&gt;
@@ -283,36 +223,6 @@ at the risk neutral valuation, and how it can be used to derive the Black-Schole
 model.&lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;script type= "text/javascript"&gt;
-    if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
-        var mathjaxscript = document.createElement('script');
-        mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
-        mathjaxscript.type = 'text/javascript';
-        mathjaxscript.src = 'https:' == document.location.protocol
-                ? 'https://c328740.ssl.cf1.rackcdn.com/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
-                : 'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML';
-        mathjaxscript[(window.opera ? "innerHTML" : "text")] =
-            "MathJax.Hub.Config({" +
-            "    config: ['MMLorHTML.js']," +
-            "    TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'AMS' } }," +
-            "    jax: ['input/TeX','input/MathML','output/HTML-CSS']," +
-            "    extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']," +
-            "    displayAlign: 'center'," +
-            "    displayIndent: '0em'," +
-            "    showMathMenu: true," +
-            "    tex2jax: { " +
-            "        inlineMath: [ ['$','$'] ], " +
-            "        displayMath: [ ['$$','$$'] ]," +
-            "        processEscapes: true," +
-            "        preview: 'TeX'," +
-            "    }, " +
-            "    'HTML-CSS': { " +
-            "        styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: 'black ! important'} }" +
-            "    } " +
-            "}); ";
-        (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
-    }
-&lt;/script&gt;
 </description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Gouthaman Balaraman</dc:creator><pubDate>Fri, 08 Aug 2014 00:00:00 -0700</pubDate><guid>tag:gouthamanbalaraman.com,2014-08-08:blog/option-model-handbook-part-I-introduction-to-option-models.html</guid><category>finance</category><category>option models</category><category>binomial tree</category></item><item><title>Minimal Example of Calling Lua Functions from C++</title><link>http://gouthamanbalaraman.com/blog/minimal-example-lua-function-cpp.html</link><description>&lt;p&gt;If you want to extend and customize the capabilities of a C++ application
 without requiring a full recompilation, then using a embedded scripting language
 is the way to go. Lua is one such embeddable scripting language, and is very popular
@@ -960,36 +870,6 @@ You should see an entry there that corresponds to the message that was sent&lt;/
 see your earlier message printed out.&lt;/p&gt;
 &lt;p&gt;Have fun messaging!&lt;/p&gt;
 &lt;/div&gt;
-&lt;script type= "text/javascript"&gt;
-    if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
-        var mathjaxscript = document.createElement('script');
-        mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
-        mathjaxscript.type = 'text/javascript';
-        mathjaxscript.src = 'https:' == document.location.protocol
-                ? 'https://c328740.ssl.cf1.rackcdn.com/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
-                : 'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML';
-        mathjaxscript[(window.opera ? "innerHTML" : "text")] =
-            "MathJax.Hub.Config({" +
-            "    config: ['MMLorHTML.js']," +
-            "    TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'AMS' } }," +
-            "    jax: ['input/TeX','input/MathML','output/HTML-CSS']," +
-            "    extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']," +
-            "    displayAlign: 'center'," +
-            "    displayIndent: '0em'," +
-            "    showMathMenu: true," +
-            "    tex2jax: { " +
-            "        inlineMath: [ ['$','$'] ], " +
-            "        displayMath: [ ['$$','$$'] ]," +
-            "        processEscapes: true," +
-            "        preview: 'TeX'," +
-            "    }, " +
-            "    'HTML-CSS': { " +
-            "        styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: 'black ! important'} }" +
-            "    } " +
-            "}); ";
-        (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
-    }
-&lt;/script&gt;
 </description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Gouthaman Balaraman</dc:creator><pubDate>Fri, 21 Feb 2014 00:00:00 -0800</pubDate><guid>tag:gouthamanbalaraman.com,2014-02-21:blog/sending-msmq-messages-using-python.html</guid><category>python</category><category>programming</category></item><item><title>A Short Story of Wall Street</title><link>http://gouthamanbalaraman.com/blog/a-short-story-of-wall-street.html</link><description>&lt;p&gt;In the last couple of decades, the US market has witnessed a
 technology bubble, a housing bubble, recession, and market
 crashes. I wanted to understand the human sentiment, the fear
@@ -1037,7 +917,7 @@ calculated by computing volatility using daily returns over a 45 day window.&lt;
 &lt;a class="reference external" href="http://www.google.com/finance"&gt;GoogleFinance&lt;/a&gt; or &lt;a class="reference external" href="http://www.finance.yahoo.com/"&gt;YahooFinance&lt;/a&gt; and what does it mean from an investment perspective?
 This article will give you an introduction to the concept and demonstrate how
 you can calculate various time series measures for a stock using python. The
-&lt;a class="reference external" href="|filename|./widgets/modern-portfolio-theory-statistics.rst"&gt;Modern Portfolio Theory Statistics&lt;/a&gt;
+&lt;a class="reference external" href="http://gouthamanbalaraman.com/blog/modern-portfolio-theory-statistics.html"&gt;Modern Portfolio Theory Statistics&lt;/a&gt;
 page shows calculated betas, alpha, etc for a few thousand stocks.&lt;/p&gt;
 &lt;div class="section" id="beta-alpha-and-r-squared"&gt;
 &lt;h2&gt;Beta, Alpha and R-squared&lt;/h2&gt;
@@ -1150,36 +1030,6 @@ for the returns.&lt;/p&gt;
 of returns. The same goes for volatility, which is scaled by $\sqrt{12}$
 in order to annualize.&lt;/p&gt;
 &lt;/div&gt;
-&lt;script type= "text/javascript"&gt;
-    if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
-        var mathjaxscript = document.createElement('script');
-        mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
-        mathjaxscript.type = 'text/javascript';
-        mathjaxscript.src = 'https:' == document.location.protocol
-                ? 'https://c328740.ssl.cf1.rackcdn.com/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
-                : 'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML';
-        mathjaxscript[(window.opera ? "innerHTML" : "text")] =
-            "MathJax.Hub.Config({" +
-            "    config: ['MMLorHTML.js']," +
-            "    TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'AMS' } }," +
-            "    jax: ['input/TeX','input/MathML','output/HTML-CSS']," +
-            "    extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']," +
-            "    displayAlign: 'center'," +
-            "    displayIndent: '0em'," +
-            "    showMathMenu: true," +
-            "    tex2jax: { " +
-            "        inlineMath: [ ['$','$'] ], " +
-            "        displayMath: [ ['$$','$$'] ]," +
-            "        processEscapes: true," +
-            "        preview: 'TeX'," +
-            "    }, " +
-            "    'HTML-CSS': { " +
-            "        styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: 'black ! important'} }" +
-            "    } " +
-            "}); ";
-        (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
-    }
-&lt;/script&gt;
 </description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Gouthaman Balaraman</dc:creator><pubDate>Thu, 09 Jan 2014 00:00:00 -0800</pubDate><guid>tag:gouthamanbalaraman.com,2014-01-09:blog/calculating-stock-beta.html</guid><category>finance</category><category>investing</category></item><item><title>Python Multiprocessing as a Task Queue</title><link>http://gouthamanbalaraman.com/blog/python-multiprocessing-as-a-task-queue.html</link><description>&lt;p&gt;When you have computationally intensive tasks in your website (or scripts),
 it is conventional to use a task queue such as &lt;a class="reference external" href="http://www.celeryproject.org/"&gt;Celery&lt;/a&gt;. Using Celery requires
 some amount of setup and if you want to avoid, try using the following task
