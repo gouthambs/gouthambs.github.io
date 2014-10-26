@@ -2,6 +2,12 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
   <url>
+    <loc>http://gouthamanbalaraman.com/blog/econometric-factor-model.html</loc>
+    <priority>0.8</priority>
+    
+  </url>
+
+  <url>
     <loc>http://gouthamanbalaraman.com/blog/option-model-handbook-part-II-introduction-to-binomial-trees.html</loc>
     <priority>0.8</priority>
     
@@ -88,15 +94,7 @@
 
 
   <url>
-	<loc>http://gouthamanbalaraman.com/tag/zeo.html</loc>
-	<priority>0.7</priority>
-  </url>
-  <url>
-	<loc>http://gouthamanbalaraman.com/tag/investing.html</loc>
-	<priority>0.7</priority>
-  </url>
-  <url>
-	<loc>http://gouthamanbalaraman.com/tag/programming.html</loc>
+	<loc>http://gouthamanbalaraman.com/tag/widget.html</loc>
 	<priority>0.7</priority>
   </url>
   <url>
@@ -104,11 +102,23 @@
 	<priority>0.7</priority>
   </url>
   <url>
-	<loc>http://gouthamanbalaraman.com/tag/lua.html</loc>
+	<loc>http://gouthamanbalaraman.com/tag/flask-login.html</loc>
 	<priority>0.7</priority>
   </url>
   <url>
-	<loc>http://gouthamanbalaraman.com/tag/flask.html</loc>
+	<loc>http://gouthamanbalaraman.com/tag/zeo.html</loc>
+	<priority>0.7</priority>
+  </url>
+  <url>
+	<loc>http://gouthamanbalaraman.com/tag/zodb.html</loc>
+	<priority>0.7</priority>
+  </url>
+  <url>
+	<loc>http://gouthamanbalaraman.com/tag/binomial-tree.html</loc>
+	<priority>0.7</priority>
+  </url>
+  <url>
+	<loc>http://gouthamanbalaraman.com/tag/python.html</loc>
 	<priority>0.7</priority>
   </url>
   <url>
@@ -116,7 +126,27 @@
 	<priority>0.7</priority>
   </url>
   <url>
-	<loc>http://gouthamanbalaraman.com/tag/binomial-tree.html</loc>
+	<loc>http://gouthamanbalaraman.com/tag/investing.html</loc>
+	<priority>0.7</priority>
+  </url>
+  <url>
+	<loc>http://gouthamanbalaraman.com/tag/github.html</loc>
+	<priority>0.7</priority>
+  </url>
+  <url>
+	<loc>http://gouthamanbalaraman.com/tag/flask.html</loc>
+	<priority>0.7</priority>
+  </url>
+  <url>
+	<loc>http://gouthamanbalaraman.com/tag/c.html</loc>
+	<priority>0.7</priority>
+  </url>
+  <url>
+	<loc>http://gouthamanbalaraman.com/tag/lua.html</loc>
+	<priority>0.7</priority>
+  </url>
+  <url>
+	<loc>http://gouthamanbalaraman.com/tag/programming.html</loc>
 	<priority>0.7</priority>
   </url>
   <url>
@@ -125,30 +155,6 @@
   </url>
   <url>
 	<loc>http://gouthamanbalaraman.com/tag/equity.html</loc>
-	<priority>0.7</priority>
-  </url>
-  <url>
-	<loc>http://gouthamanbalaraman.com/tag/python.html</loc>
-	<priority>0.7</priority>
-  </url>
-  <url>
-	<loc>http://gouthamanbalaraman.com/tag/c.html</loc>
-	<priority>0.7</priority>
-  </url>
-  <url>
-	<loc>http://gouthamanbalaraman.com/tag/flask-login.html</loc>
-	<priority>0.7</priority>
-  </url>
-  <url>
-	<loc>http://gouthamanbalaraman.com/tag/widget.html</loc>
-	<priority>0.7</priority>
-  </url>
-  <url>
-	<loc>http://gouthamanbalaraman.com/tag/github.html</loc>
-	<priority>0.7</priority>
-  </url>
-  <url>
-	<loc>http://gouthamanbalaraman.com/tag/zodb.html</loc>
 	<priority>0.7</priority>
   </url>
 
