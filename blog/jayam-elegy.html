@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Option Model Handbook, Part II: Introduction to Binomial Trees - Gouthaman Balaraman</title>
+        <title>An Elegy - Gouthaman Balaraman</title>
         <!-- All the meta tags -->
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
         <meta property="og:type" content="article"/>
-        <meta property="og:title" content="Option Model Handbook, Part II: Introduction to Binomial Trees"/>
-        <meta property="og:url" content="http://gouthamanbalaraman.com/blog/option-model-handbook-part-II-introduction-to-binomial-trees.html"/>
-        <meta property="og:description" content="This handbook gives a concise introduction to option models. Part II gives a basic introduction to binomial trees and its usage in pricing options."/>
+        <meta property="og:title" content="An Elegy"/>
+        <meta property="og:url" content="http://gouthamanbalaraman.com/blog/jayam-elegy.html"/>
+        <meta property="og:description" content="An elegy to our grandmother."/>
         <!--link href="http://gouthamanbalaraman.com/theme/static/css/journal-bootstrap.min.css" rel="stylesheet" /-->
         <link href="http://gouthamanbalaraman.com/theme/static/css/bootstrap.readable.min.css" rel="stylesheet" />
         <link href="http://gouthamanbalaraman.com/theme/static/css/style.css" rel="stylesheet" />
@@ -70,8 +70,8 @@
             <div class="row">
                 <div class="col-md-10 col-md-offset-1">
     <div class="page-header">
-        <h1>Option Model Handbook, Part II: Introduction to Binomial Trees</h1>
-     <!--span class="glyphicon glyphicon-calendar"></span-->&nbsp;September 30, 2014 
+        <h1>An Elegy</h1>
+     <!--span class="glyphicon glyphicon-calendar"></span-->&nbsp;October 26, 2014 
      &nbsp;&nbsp;
      <!--span class="glyphicon glyphicon-user"></span--> by  
      <a class="url fn" href="http://gouthamanbalaraman.com/author/gouthaman-balaraman.html">&nbsp;Gouthaman Balaraman </a>
@@ -84,75 +84,52 @@
 <div class="bs-docs-section">
     
      <!-- article description -->
-         <p class="lead">This handbook gives a concise introduction to option models.
-Part II gives a basic introduction to binomial trees and its usage in pricing options.</p>
+         <p class="lead">An elegy to our grandmother.</p>
       
       <!-- article content -->
-     <p>This is a series of articles pertaining to option model pricing. Here I will
-explain the various concepts such as risk-neutral valuation, Black-Scholes formula,
-and binomial tree option pricing models.</p>
-<p><strong>Contents:</strong></p>
-<ol class="upperroman simple">
-<li><a class="reference external" href="http://gouthamanbalaraman.com/blog/option-model-handbook-part-I-introduction-to-option-models.html">Introduction to Option Models</a></li>
-<li><a class="reference external" href="http://gouthamanbalaraman.com/blog/option-model-handbook-part-II-introduction-to-binomial-trees.html">Introduction to Binomial Trees</a></li>
-</ol>
-<div class="section" id="id1">
-<h2>Introduction to Binomial Trees</h2>
-<img alt="BinomialTree" src="/images/binomialtree.png" />
-<p>Let us construct a tree whose pricing is given as shown in the figure above, restricting to time
-$t_0$ and $t_1$. Initial price of the stock is $S_0$ at $t_0$ and has the possibility of moving to
-$S_0u$ or $S_0d$ at time $t_1$. Let $p$ be the probability of the price to rise from
-$S_0$ to $S_0u$. Calculating the expected return from the stock at $t_1$
-and making use of risk-neutral valuation</p>
-<p>$$ E(S_{t_1}) = pS_0u + (1-p)S_0d = S_0 e^{r(t_1-t_0)} $$</p>
-<p>we get,</p>
-<p>\begin{equation} \label{eq:btp} p = \frac{e^{r(t_1-t_0)} - d}{u - d} \end{equation}</p>
-<p>We need to chose appropriate values for the parameters $u$ and $d$
-which can be obtained from equating the variance of the return to
-$\sigma^2 \Delta t$. The variance of the stock price return on the
-binomial tree is:</p>
-<p>$$ pu^2 + (1−p)d^2 − [ pu+ (1−p)d]^2 = \sigma^2 \Delta t $$</p>
-<p>On ignoring terms of order higher than $\Delta t^2$ and making use of
-$ud = 1$, we get</p>
-<p>\begin{equation} u = e^{\sigma \sqrt{\Delta t}} \nonumber  \end{equation}
-\begin{equation} d = e^{-\sigma\sqrt{\Delta t}} \end{equation}</p>
-<p>One can make use of the above construction to value an option. Let $f$
-be the current value of an option on a stock. Let the payoff of the option
-after one step (time T) on a binomial tree be $f_u$ and $f_d$
-for up and down movement of the stock respectively. The value of
-the option in this case is given as:</p>
-<p>$$ f = e^{−rT}[ pf_u + (1−p)f_d] $$.</p>
+     <div class="line-block">
+<div class="line">On this day, we mourn the loss of Jayam</div>
+<div class="line">Mother to our dads,</div>
+<div class="line">Grandmother to us,</div>
+<div class="line">Great grandmother to our offspring</div>
+<div class="line">And an affectionate human being to all</div>
+<div class="line"><br /></div>
+<div class="line">May we also remember the spirit that represents the person she was</div>
+<div class="line">And what she has left in us - in our little genes and in  our memories.</div>
+<div class="line"><br /></div>
+<div class="line">Lets us remember how her partial blindness</div>
+<div class="line">Did not impede her ability to fulfil her parental duties.</div>
+<div class="line"><br /></div>
+<div class="line">Let us remember her love for music</div>
+<div class="line">And how she strived to impart the same in us.</div>
+<div class="line"><br /></div>
+<div class="line">Let us remember that in her own quiet ways -</div>
+<div class="line">Folding clothes in a corner,</div>
+<div class="line">Sipping <em>Narasus</em> coffee,</div>
+<div class="line">Telling bedtime stories,</div>
+<div class="line">She made a resonant impact in all our lives.</div>
+<div class="line"><br /></div>
+<div class="line"><br /></div>
+<div class="line">Perhaps this is the day for us to pause from all the rigmarole</div>
+<div class="line">And <em>remember</em> what it means to be <em>remembered</em>.</div>
+<div class="line"><br /></div>
+<div class="line">Perhaps this is the day for us to believe</div>
+<div class="line">That in the face of <em>impossibilities</em> it is <em>possible</em> to carry on.</div>
+<div class="line"><br /></div>
+<div class="line">Perhaps this day should be a reminder for us</div>
+<div class="line">To <em>live</em> the gift that is the joy of <em>living</em>.</div>
+<div class="line"><br /></div>
+<div class="line">May her soul rest in peace!</div>
 </div>
 
      <br>
      
      <!-- article tags-->
         <span class="glyphicon glyphicon-tags"></span>&nbsp;&nbsp;
-            <span class="label label-default"><a href="http://gouthamanbalaraman.com/tag/finance.html">finance</a></span>&nbsp;&nbsp;
-            <span class="label label-default"><a href="http://gouthamanbalaraman.com/tag/option-models.html">option models</a></span>&nbsp;&nbsp;
-            <span class="label label-default"><a href="http://gouthamanbalaraman.com/tag/binomial-tree.html">binomial tree</a></span>&nbsp;&nbsp;
+            <span class="label label-default"><a href="http://gouthamanbalaraman.com/tag/personal.html">personal</a></span>&nbsp;&nbsp;
         <br>
      <hr/>
     
-    <strong>Related Post</strong>
-        <ul>
-            <li>
-                <a href="http://gouthamanbalaraman.com/blog/option-model-handbook-part-I-introduction-to-option-models.html">Option Model Handbook, Part I: Introduction to Option Models</a>
-            </li>
-            <li>
-                <a href="http://gouthamanbalaraman.com/blog/econometric-factor-model.html">Econometric Factor Model</a>
-            </li>
-            <li>
-                <a href="http://gouthamanbalaraman.com/blog/calculating-stock-beta.html">Calculating Stock Beta, Volatility, and More</a>
-            </li>
-            <li>
-                <a href="http://gouthamanbalaraman.com/blog/modern-portfolio-theory-statistics.html">Modern Portfolio Theory Statistics</a>
-            </li>
-            <li>
-                <a href="http://gouthamanbalaraman.com/blog/a-short-story-of-wall-street.html">A Short Story of Wall Street</a>
-            </li>
-        </ul>
-        <hr/>
 
      <!-- article comments -->
     <div class="comment">
