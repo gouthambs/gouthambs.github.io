@@ -4,7 +4,7 @@
 &lt;div class="line"&gt;Mother to our dads,&lt;/div&gt;
 &lt;div class="line"&gt;Grandmother to us,&lt;/div&gt;
 &lt;div class="line"&gt;Great grandmother to our offspring&lt;/div&gt;
-&lt;div class="line"&gt;And an affectionate human being to all&lt;/div&gt;
+&lt;div class="line"&gt;And an affectionate human being to all.&lt;/div&gt;
 &lt;div class="line"&gt;&lt;br /&gt;&lt;/div&gt;
 &lt;div class="line"&gt;May we also remember the spirit that represents the person she was&lt;/div&gt;
 &lt;div class="line"&gt;And what she has left in us - in our little genes and in  our memories.&lt;/div&gt;
@@ -33,7 +33,79 @@
 &lt;div class="line"&gt;&lt;br /&gt;&lt;/div&gt;
 &lt;div class="line"&gt;May her soul rest in peace!&lt;/div&gt;
 &lt;/div&gt;
-</summary><category term="personal"></category></entry><entry><title>Econometric Factor Model</title><link href="http://gouthamanbalaraman.com/blog/econometric-factor-model.html" rel="alternate"></link><updated>2014-10-20T00:00:00-07:00</updated><author><name>Gouthaman Balaraman</name></author><id>tag:gouthamanbalaraman.com,2014-10-20:blog/econometric-factor-model.html</id><summary type="html">&lt;script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular.min.js"&gt;&lt;/script&gt;
+</summary><category term="personal"></category></entry><entry><title>Understanding the Econometric Factor Model</title><link href="http://gouthamanbalaraman.com/blog/understanding-econometric-factor-model.html" rel="alternate"></link><updated>2014-10-26T00:00:00-07:00</updated><author><name>Gouthaman Balaraman</name></author><id>tag:gouthamanbalaraman.com,2014-10-26:blog/understanding-econometric-factor-model.html</id><summary type="html">&lt;p&gt;The post explains the &lt;a class="reference external" href="http://gouthamanbalaraman.com/blog/econometric-factor-model.html"&gt;Econometric Factor Model&lt;/a&gt; widget
+that I have built. The factors used in the econometric factor model are: &lt;em&gt;unemployment&lt;/em&gt;,
+&lt;em&gt;consumer sentiment&lt;/em&gt;, &lt;em&gt;market&lt;/em&gt;, &lt;em&gt;size&lt;/em&gt; and &lt;em&gt;value/growth&lt;/em&gt;. A brief explanation of the factors are
+as follows.&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;The &lt;em&gt;unemployment&lt;/em&gt; factor is a proxy for the state of economy, and exposure to this factor
+measures the impact the economy can have on the performance of this stock.&lt;/li&gt;
+&lt;li&gt;The &lt;em&gt;consumer sentiment&lt;/em&gt; is a voice of consumers behaviour and sentiment, and this factor
+can help understand the impact of consumer confidence on the stock's performance.&lt;/li&gt;
+&lt;li&gt;The exposure to &lt;em&gt;market&lt;/em&gt; factor captures how the stock's performance is correlated with
+that of the market.&lt;/li&gt;
+&lt;li&gt;The &lt;em&gt;size&lt;/em&gt; factor (or SML - Small Minus Large ) is a measure of the excess returns that
+the small cap has over the large cap stocks. The exposure to this factor is meant to
+capture the impact size has on the performance of this stock. Small (large) cap stock will
+typically have positive (negative) exposures to this factor.&lt;/li&gt;
+&lt;li&gt;The &lt;em&gt;value/growth&lt;/em&gt; (or HML - High book-to-value Minus Low) is meant to identify the
+value or growth aspect of a stock.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;As a use case, let us try a few examples and see if it makes sense.&lt;/p&gt;
+&lt;script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular.min.js"&gt;&lt;/script&gt;
+&lt;script&gt;
+    var myModule = angular.module('myApp', []);
+    myModule.controller('MyCtrl', ['$scope', function($scope){
+        $scope.mfData = [
+            {Ticker:"X", Unemployment: -0.76, ConsumerSentiment: -0.035, Market: 1.685, Size: 0.3281, Value: 1.509},
+            {Ticker:"DAL", Unemployment: -1.183, ConsumerSentiment: 0.309, Market: 0.456, Size: 1.581, Value: 0.038},
+            {Ticker:"LH", Unemployment: 0.461, ConsumerSentiment: 0.02, Market: 0.606, Size: 0.081, Value: -0.185},
+            {Ticker:"MCD", Unemployment: 0.951, ConsumerSentiment: -0.132, Market: 0.423, Size: -0.329, Value: -0.018},
+            {Ticker:"MSFT", Unemployment: -0.248, ConsumerSentiment: -0.192, Market: 1.032, Size: -0.542, Value: -0.05}
+         ];
+    }]);
+&lt;/script&gt;
+
+&lt;div ng-app="myApp"&gt;
+    &lt;div ng-controller="MyCtrl"&gt;
+        &lt;div class="col-md-12"&gt;
+            &lt;table class="table table-bordered col-md-12"&gt;
+                &lt;thead&gt;
+                    &lt;tr&gt;
+                        &lt;th&gt; &lt;span class = "pull-right key"&gt;Ticker&lt;/span&gt;&lt;/td&gt;
+                        &lt;th&gt; &lt;span class = "pull-right key"&gt;Unemployment&lt;/span&gt;&lt;/td&gt;
+                        &lt;th&gt; &lt;span class = "pull-right key"&gt; Consumer Sentiment&lt;/span&gt;&lt;/td&gt;
+                        &lt;th&gt; &lt;span class = "pull-right key"&gt; Market&lt;/span&gt;&lt;/td&gt;
+                        &lt;th&gt; &lt;span class = "pull-right key"&gt; Size&lt;/span&gt;&lt;/td&gt;
+                        &lt;th&gt; &lt;span class = "pull-right key"&gt; Value&lt;/span&gt;&lt;/td&gt;
+                    &lt;/tr&gt;
+                &lt;/thead&gt;
+                &lt;tbody&gt;
+                    &lt;tr ng-repeat="item in mfData"&gt;
+                        &lt;td&gt; &lt;span class = "pull-right value"&gt;{{item.Ticker}}&lt;/span&gt;&lt;/td&gt;
+                        &lt;td&gt; &lt;span class = "pull-right value"&gt; {{item.Unemployment}} &lt;/span&gt;&lt;/td&gt;
+                        &lt;td&gt; &lt;span class = "pull-right value"&gt; {{item.ConsumerSentiment}} &lt;/span&gt;&lt;/td&gt;
+                        &lt;td&gt; &lt;span class = "pull-right value"&gt;{{item.Market}}&lt;/span&gt;&lt;/td&gt;
+                        &lt;td&gt; &lt;span class = "pull-right value"&gt;{{item.Size}}&lt;/span&gt;&lt;/td&gt;
+                        &lt;td&gt; &lt;span class = "pull-right value"&gt;{{item.Value}}&lt;/span&gt;&lt;/td&gt;
+                    &lt;/tr&gt;
+                &lt;/tbody&gt;
+            &lt;/table&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;United States Steel Corporation (X), Delta Airlines (DAL), and MicroSoft (MSFT) have negative exposure to
+unemployment, meaning increase in unemployment (or a detiorating economy) hurts the returns of this
+company. Mc Donalds (MCD) has a positive exposure to unemployment, in a hurting economy MCD has a better
+business.&lt;/p&gt;
+&lt;p&gt;Delta Airlines has the most significant exposure to the consumer sentiment factor. This makes
+sense because travel industry benefits from a positive consumer sentiment.&lt;/p&gt;
+&lt;p&gt;The companies on the higher end of the large cap spectrum have a negative exposure to the size factor.
+The strong positive exposure of DAL to size is a little puzzling, and its history of mergers with
+Northwest might explain. This is also highlights that factor models do need more than intuition sometimes to
+make sense and make correct use of.&lt;/p&gt;
+</summary><category term="finance"></category><category term="investing"></category><category term="widget"></category></entry><entry><title>Econometric Factor Model</title><link href="http://gouthamanbalaraman.com/blog/econometric-factor-model.html" rel="alternate"></link><updated>2014-10-20T00:00:00-07:00</updated><author><name>Gouthaman Balaraman</name></author><id>tag:gouthamanbalaraman.com,2014-10-20:blog/econometric-factor-model.html</id><summary type="html">&lt;p&gt;Please refer to &lt;a class="reference external" href="http://gouthamanbalaraman.com/blog/understanding-econometric-factor-model.html"&gt;Understanding Econometric Factor Model&lt;/a&gt;
+for details.&lt;/p&gt;
+&lt;script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular.min.js"&gt;&lt;/script&gt;
 &lt;script src="http://d3js.org/d3.v3.min.js"&gt;&lt;/script&gt;
 &lt;script&gt;
     var myModule = angular.module('myApp', []);
@@ -70,7 +142,7 @@
     myModule.controller('mptCtrl', ['$scope','$http', function($scope, $http){
                     /* Initialization steps */
                     var url = "/extra/data/factormodels/fm_5y_latest.csv";
-        $scope.factorItems = ["Alpha","Unemployment","ConsumerSentiment","Market","Size","ValueGrowth"];
+        $scope.factorItems = ["Unemployment","ConsumerSentiment","Market","Size","ValueGrowth"];
         $scope.riskItems = ["TotalRisk","DiversifiableRisk","NonDiversifiableRisk"];
         $scope.myData = [10,20,30,40,60, 80, 20, 50];
                     $http.get(url).success(function(respData, status, headers, config){

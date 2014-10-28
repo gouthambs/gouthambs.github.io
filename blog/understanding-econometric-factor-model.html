@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Understanding the Econometric Factor Model - Gouthaman Balaraman</title>
+        <!-- All the meta tags -->
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+        <meta property="og:type" content="article"/>
+        <meta property="og:title" content="Understanding the Econometric Factor Model"/>
+        <meta property="og:url" content="http://gouthamanbalaraman.com/blog/understanding-econometric-factor-model.html"/>
+        <meta property="og:description" content="Here I explain how to make sense of the econometric factor model widget."/>
+        <!--link href="http://gouthamanbalaraman.com/theme/static/css/journal-bootstrap.min.css" rel="stylesheet" /-->
+        <link href="http://gouthamanbalaraman.com/theme/static/css/bootstrap.readable.min.css" rel="stylesheet" />
+        <link href="http://gouthamanbalaraman.com/theme/static/css/style.css" rel="stylesheet" />
+        
+        <!-- Google Analytics -->
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-46714334-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    /*Update Your Analytics Tracking Code to Support Display Advertising by uncommenting the following 
+    instead of the above line */    
+    /*ga.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'stats.g.doubleclick.net/dc.js';*/
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+        <!-- Using MathJax, with the delimiters $ -->
+        <!-- Conflict with pygments for the .mo and .mi -->
+        <script type="text/x-mathjax-config">
+          MathJax.Hub.Config({
+          "HTML-CSS": {
+          styles: {
+          ".MathJax .mo, .MathJax .mi": {color: "black ! important"}}
+          },
+          tex2jax: {inlineMath: [['$','$'], ['\\\\(','\\\\)']],processEscapes: true}
+          });
+        </script>
+
+        <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
+
+    
+    </head>
+
+    <body>
+      <div class="navbar navbar-default navbar-fixed-top">
+          <div class="container">
+            <div class="navbar-header">
+              <a href="http://gouthamanbalaraman.com" class="navbar-brand">Gouthaman Balaraman</a>
+              <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+            </div>
+            <div class="navbar-collapse collapse" id="navbar-main">
+              <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="http://gouthamanbalaraman.com/pages/about.html">About</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                <div class="col-md-10 col-md-offset-1">
+    <div class="page-header">
+        <h1>Understanding the Econometric Factor Model</h1>
+     <!--span class="glyphicon glyphicon-calendar"></span-->&nbsp;October 26, 2014 
+     &nbsp;&nbsp;
+     <!--span class="glyphicon glyphicon-user"></span--> by  
+     <a class="url fn" href="http://gouthamanbalaraman.com/author/gouthaman-balaraman.html">&nbsp;Gouthaman Balaraman </a>
+     </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-10 col-md-offset-1">
+
+<div class="bs-docs-section">
+    
+     <!-- article description -->
+         <p class="lead">Here I explain how to make sense of the econometric factor model widget.</p>
+      
+      <!-- article content -->
+     <p>The post explains the <a class="reference external" href="http://gouthamanbalaraman.com/blog/econometric-factor-model.html">Econometric Factor Model</a> widget
+that I have built. The factors used in the econometric factor model are: <em>unemployment</em>,
+<em>consumer sentiment</em>, <em>market</em>, <em>size</em> and <em>value/growth</em>. A brief explanation of the factors are
+as follows.</p>
+<ul class="simple">
+<li>The <em>unemployment</em> factor is a proxy for the state of economy, and exposure to this factor
+measures the impact the economy can have on the performance of this stock.</li>
+<li>The <em>consumer sentiment</em> is a voice of consumers behaviour and sentiment, and this factor
+can help understand the impact of consumer confidence on the stock's performance.</li>
+<li>The exposure to <em>market</em> factor captures how the stock's performance is correlated with
+that of the market.</li>
+<li>The <em>size</em> factor (or SML - Small Minus Large ) is a measure of the excess returns that
+the small cap has over the large cap stocks. The exposure to this factor is meant to
+capture the impact size has on the performance of this stock. Small (large) cap stock will
+typically have positive (negative) exposures to this factor.</li>
+<li>The <em>value/growth</em> (or HML - High book-to-value Minus Low) is meant to identify the
+value or growth aspect of a stock.</li>
+</ul>
+<p>As a use case, let us try a few examples and see if it makes sense.</p>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular.min.js"></script>
+<script>
+    var myModule = angular.module('myApp', []);
+    myModule.controller('MyCtrl', ['$scope', function($scope){
+        $scope.mfData = [
+            {Ticker:"X", Unemployment: -0.76, ConsumerSentiment: -0.035, Market: 1.685, Size: 0.3281, Value: 1.509},
+            {Ticker:"DAL", Unemployment: -1.183, ConsumerSentiment: 0.309, Market: 0.456, Size: 1.581, Value: 0.038},
+            {Ticker:"LH", Unemployment: 0.461, ConsumerSentiment: 0.02, Market: 0.606, Size: 0.081, Value: -0.185},
+            {Ticker:"MCD", Unemployment: 0.951, ConsumerSentiment: -0.132, Market: 0.423, Size: -0.329, Value: -0.018},
+            {Ticker:"MSFT", Unemployment: -0.248, ConsumerSentiment: -0.192, Market: 1.032, Size: -0.542, Value: -0.05}
+         ];
+    }]);
+</script>
+
+<div ng-app="myApp">
+    <div ng-controller="MyCtrl">
+        <div class="col-md-12">
+            <table class="table table-bordered col-md-12">
+                <thead>
+                    <tr>
+                        <th> <span class = "pull-right key">Ticker</span></td>
+                        <th> <span class = "pull-right key">Unemployment</span></td>
+                        <th> <span class = "pull-right key"> Consumer Sentiment</span></td>
+                        <th> <span class = "pull-right key"> Market</span></td>
+                        <th> <span class = "pull-right key"> Size</span></td>
+                        <th> <span class = "pull-right key"> Value</span></td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="item in mfData">
+                        <td> <span class = "pull-right value">{{item.Ticker}}</span></td>
+                        <td> <span class = "pull-right value"> {{item.Unemployment}} </span></td>
+                        <td> <span class = "pull-right value"> {{item.ConsumerSentiment}} </span></td>
+                        <td> <span class = "pull-right value">{{item.Market}}</span></td>
+                        <td> <span class = "pull-right value">{{item.Size}}</span></td>
+                        <td> <span class = "pull-right value">{{item.Value}}</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div><p>United States Steel Corporation (X), Delta Airlines (DAL), and MicroSoft (MSFT) have negative exposure to
+unemployment, meaning increase in unemployment (or a detiorating economy) hurts the returns of this
+company. Mc Donalds (MCD) has a positive exposure to unemployment, in a hurting economy MCD has a better
+business.</p>
+<p>Delta Airlines has the most significant exposure to the consumer sentiment factor. This makes
+sense because travel industry benefits from a positive consumer sentiment.</p>
+<p>The companies on the higher end of the large cap spectrum have a negative exposure to the size factor.
+The strong positive exposure of DAL to size is a little puzzling, and its history of mergers with
+Northwest might explain. This is also highlights that factor models do need more than intuition sometimes to
+make sense and make correct use of.</p>
+
+     <br>
+     
+     <!-- article tags-->
+        <span class="glyphicon glyphicon-tags"></span>&nbsp;&nbsp;
+            <span class="label label-default"><a href="http://gouthamanbalaraman.com/tag/finance.html">finance</a></span>&nbsp;&nbsp;
+            <span class="label label-default"><a href="http://gouthamanbalaraman.com/tag/investing.html">investing</a></span>&nbsp;&nbsp;
+            <span class="label label-default"><a href="http://gouthamanbalaraman.com/tag/widget.html">widget</a></span>&nbsp;&nbsp;
+        <br>
+     <hr/>
+    
+    <strong>Related Post</strong>
+        <ul>
+            <li>
+                <a href="http://gouthamanbalaraman.com/blog/modern-portfolio-theory-statistics.html">Modern Portfolio Theory Statistics</a>
+            </li>
+            <li>
+                <a href="http://gouthamanbalaraman.com/blog/econometric-factor-model.html">Econometric Factor Model</a>
+            </li>
+            <li>
+                <a href="http://gouthamanbalaraman.com/blog/calculating-stock-beta.html">Calculating Stock Beta, Volatility, and More</a>
+            </li>
+            <li>
+                <a href="http://gouthamanbalaraman.com/blog/option-model-handbook-part-I-introduction-to-option-models.html">Option Model Handbook, Part I: Introduction to Option Models</a>
+            </li>
+            <li>
+                <a href="http://gouthamanbalaraman.com/blog/a-short-story-of-wall-street.html">A Short Story of Wall Street</a>
+            </li>
+        </ul>
+        <hr/>
+
+     <!-- article comments -->
+    <div class="comment">
+        <div id="disqus_thread"></div> <!-- comment app container -->
+    </div>
+	<!-- Comment BEGIN -->
+    <script type="text/javascript">
+        var disqus_shortname = 'gouthamanbalaramancom'; // required: replace example with your forum shortname
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+     <!-- Comment END -->
+</div>    
+                </div>
+               
+            </div>
+            <div class="row">
+                <div class="col-md-10 col-md-offset-1">
+                </div>
+            </div>
+            <footer id="contentinfo" class="footer">
+                    <address id="about" class="vcard body">
+                    &copy; <a href="http://gouthamanbalaraman.com">Gouthaman Balaraman</a> Proudly powered by <a href="http://getpelican.com/">Pelican</a>
+                    </address><!-- /#about -->
+            </footer><!-- /#contentinfo -->
+        </div><!-- container -->
+    </body>
+</html>

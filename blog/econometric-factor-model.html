@@ -87,7 +87,9 @@
          <p class="lead">An econometric factor model to explain factor exposures and risk</p>
       
       <!-- article content -->
-     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular.min.js"></script>
+     <p>Please refer to <a class="reference external" href="http://gouthamanbalaraman.com/blog/understanding-econometric-factor-model.html">Understanding Econometric Factor Model</a>
+for details.</p>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular.min.js"></script>
 <script src="http://d3js.org/d3.v3.min.js"></script>
 <script>
     var myModule = angular.module('myApp', []);
@@ -124,7 +126,7 @@
     myModule.controller('mptCtrl', ['$scope','$http', function($scope, $http){
                     /* Initialization steps */
                     var url = "/extra/data/factormodels/fm_5y_latest.csv";
-        $scope.factorItems = ["Alpha","Unemployment","ConsumerSentiment","Market","Size","ValueGrowth"];
+        $scope.factorItems = ["Unemployment","ConsumerSentiment","Market","Size","ValueGrowth"];
         $scope.riskItems = ["TotalRisk","DiversifiableRisk","NonDiversifiableRisk"];
         $scope.myData = [10,20,30,40,60, 80, 20, 50];
                     $http.get(url).success(function(respData, status, headers, config){
@@ -245,13 +247,13 @@
     <strong>Related Post</strong>
         <ul>
             <li>
+                <a href="http://gouthamanbalaraman.com/blog/understanding-econometric-factor-model.html">Understanding the Econometric Factor Model</a>
+            </li>
+            <li>
                 <a href="http://gouthamanbalaraman.com/blog/modern-portfolio-theory-statistics.html">Modern Portfolio Theory Statistics</a>
             </li>
             <li>
                 <a href="http://gouthamanbalaraman.com/blog/calculating-stock-beta.html">Calculating Stock Beta, Volatility, and More</a>
-            </li>
-            <li>
-                <a href="http://gouthamanbalaraman.com/blog/option-model-handbook-part-II-introduction-to-binomial-trees.html">Option Model Handbook, Part II: Introduction to Binomial Trees</a>
             </li>
             <li>
                 <a href="http://gouthamanbalaraman.com/blog/option-model-handbook-part-I-introduction-to-option-models.html">Option Model Handbook, Part I: Introduction to Option Models</a>
