@@ -51,7 +51,9 @@ typically have positive (negative) exposures to this factor.&lt;/li&gt;
 &lt;li&gt;The &lt;em&gt;value/growth&lt;/em&gt; (or HML - High book-to-value Minus Low) is meant to identify the
 value or growth aspect of a stock.&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;As a use case, let us try a few examples and see if it makes sense.&lt;/p&gt;
+&lt;p&gt;As a use case, let us try a few examples and see if it makes sense. The following
+table is based on the factor model run using 5 years of historical returns as of
+09-30-2014.&lt;/p&gt;
 &lt;script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular.min.js"&gt;&lt;/script&gt;
 &lt;script&gt;
     var myModule = angular.module('myApp', []);
