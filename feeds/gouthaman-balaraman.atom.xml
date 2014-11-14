@@ -23,10 +23,21 @@ hostname -F /etc/hostname
 &lt;/pre&gt;
 &lt;p&gt;Try &lt;tt class="docutils literal"&gt;hostname&lt;/tt&gt; on the command line to see the hostname printed correctly.&lt;/p&gt;
 &lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;Add to /etc/hosts. In your &lt;em&gt;desktop&lt;/em&gt;, associate the linode IP with a custom servername of
+your liking. Edit /etc/hosts to look like:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+127.0.0.1   localhost
+127.0.1.1   G-ubuntu
+111.11.11.1 ServerName
+&lt;/pre&gt;
+&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/div&gt;
 &lt;div class="section" id="python-setup"&gt;
 &lt;h2&gt;Python Setup&lt;/h2&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;&lt;/li&gt;
+&lt;/ul&gt;
 &lt;/div&gt;
 </summary><category term="programming"></category><category term="linux"></category></entry><entry><title>An Elegy</title><link href="http://gouthamanbalaraman.com/blog/jayam-elegy.html" rel="alternate"></link><updated>2014-10-26T00:00:00-07:00</updated><author><name>Gouthaman Balaraman</name></author><id>tag:gouthamanbalaraman.com,2014-10-26:blog/jayam-elegy.html</id><summary type="html">&lt;div class="line-block"&gt;
 &lt;div class="line"&gt;On this day, we mourn the loss of Jayam&lt;/div&gt;
