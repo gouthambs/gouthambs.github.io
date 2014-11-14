@@ -1,5 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Gouthaman Balaraman</title><link>http://gouthamanbalaraman.com/</link><description></description><atom:link href="http://gouthamanbalaraman.com/feeds/gouthaman-balaraman.rss.xml" rel="self"></atom:link><lastBuildDate>Sun, 26 Oct 2014 00:00:00 -0700</lastBuildDate><item><title>An Elegy</title><link>http://gouthamanbalaraman.com/blog/jayam-elegy.html</link><description>&lt;div class="line-block"&gt;
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Gouthaman Balaraman</title><link>http://gouthamanbalaraman.com/</link><description></description><atom:link href="http://gouthamanbalaraman.com/feeds/gouthaman-balaraman.rss.xml" rel="self"></atom:link><lastBuildDate>Thu, 13 Nov 2014 00:00:00 -0800</lastBuildDate><item><title>Setting Up Linode For The Impatient</title><link>http://gouthamanbalaraman.com/blog/setting-up-linode.html</link><description>&lt;p&gt;When you get a linode instance, you really get a barren (sort of) linux machine on the cloud. That means
+you have to take care of customizing the server based on your needs. Here are some notes based on what I
+wanted to setup.&lt;/p&gt;
+&lt;p&gt;My requirements were the following:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;Python Setup: Setup python to perform installations using &lt;tt class="docutils literal"&gt;pip&lt;/tt&gt;.&lt;/li&gt;
+&lt;li&gt;Secure Server: Enable firewall etc.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class="section" id="linode-basics"&gt;
+&lt;h2&gt;Linode Basics&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p class="first"&gt;Once I setup the linode account, I used the ssh instructions on the &amp;quot;Remote Access&amp;quot; in the linode
+dashboard to get the IP as:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+ssh root&amp;#64;&amp;lt;ip-address&amp;gt;
+&lt;/pre&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;Setup hostname:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+echo &amp;quot;ServerName&amp;quot; &amp;gt; /etc/hostname
+hostname -F /etc/hostname
+&lt;/pre&gt;
+&lt;p&gt;Try &lt;tt class="docutils literal"&gt;hostname&lt;/tt&gt; on the command line to see the hostname printed correctly.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div class="section" id="python-setup"&gt;
+&lt;h2&gt;Python Setup&lt;/h2&gt;
+&lt;/div&gt;
+</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Gouthaman Balaraman</dc:creator><pubDate>Thu, 13 Nov 2014 00:00:00 -0800</pubDate><guid>tag:gouthamanbalaraman.com,2014-11-13:blog/setting-up-linode.html</guid><category>programming</category><category>linux</category></item><item><title>An Elegy</title><link>http://gouthamanbalaraman.com/blog/jayam-elegy.html</link><description>&lt;div class="line-block"&gt;
 &lt;div class="line"&gt;On this day, we mourn the loss of Jayam&lt;/div&gt;
 &lt;div class="line"&gt;Mother to our dads,&lt;/div&gt;
 &lt;div class="line"&gt;Grandmother to us,&lt;/div&gt;
@@ -487,10 +516,10 @@ In this article we will discuss how to call lua functions from C++.&lt;/p&gt;
 &lt;h2&gt;Example Code&lt;/h2&gt;
 &lt;pre class="code c++ literal-block"&gt;
 &lt;span class="k"&gt;extern&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;C&amp;quot;&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-      &lt;span class="err"&gt;#&lt;/span&gt;&lt;span class="n"&gt;include&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;lua.h&amp;quot;&lt;/span&gt;
-      &lt;span class="err"&gt;#&lt;/span&gt;&lt;span class="n"&gt;include&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;lualib.h&amp;quot;&lt;/span&gt;
-      &lt;span class="err"&gt;#&lt;/span&gt;&lt;span class="n"&gt;include&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;lauxlib.h&amp;quot;&lt;/span&gt;
-&lt;span class="p"&gt;}&lt;/span&gt;
+      &lt;span class="cp"&gt;#include &amp;quot;lua.h&amp;quot;
+&lt;/span&gt;      &lt;span class="cp"&gt;#include &amp;quot;lualib.h&amp;quot;
+&lt;/span&gt;      &lt;span class="cp"&gt;#include &amp;quot;lauxlib.h&amp;quot;
+&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
 &lt;span class="cp"&gt;#include &amp;lt;string.h&amp;gt;
 &lt;/span&gt;
 &lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="n"&gt;main&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="n"&gt;argc&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="kt"&gt;char&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="n"&gt;argv&lt;/span&gt;&lt;span class="p"&gt;[])&lt;/span&gt;
@@ -783,10 +812,10 @@ it a very performant alternative as well.&lt;/p&gt;
 &lt;pre class="code c++ literal-block"&gt;
 &lt;span class="c1"&gt;// luaexample.cpp
 &lt;/span&gt;&lt;span class="k"&gt;extern&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;C&amp;quot;&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-  &lt;span class="err"&gt;#&lt;/span&gt;&lt;span class="n"&gt;include&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;lua.h&amp;quot;&lt;/span&gt;
-  &lt;span class="err"&gt;#&lt;/span&gt;&lt;span class="n"&gt;include&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;lualib.h&amp;quot;&lt;/span&gt;
-  &lt;span class="err"&gt;#&lt;/span&gt;&lt;span class="n"&gt;include&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;lauxlib.h&amp;quot;&lt;/span&gt;
-&lt;span class="p"&gt;}&lt;/span&gt;
+  &lt;span class="cp"&gt;#include &amp;quot;lua.h&amp;quot;
+&lt;/span&gt;  &lt;span class="cp"&gt;#include &amp;quot;lualib.h&amp;quot;
+&lt;/span&gt;  &lt;span class="cp"&gt;#include &amp;quot;lauxlib.h&amp;quot;
+&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
 &lt;span class="cp"&gt;#include &amp;lt;string.h&amp;gt;
 &lt;/span&gt;
 &lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="n"&gt;main&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="n"&gt;argc&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="kt"&gt;char&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="n"&gt;argv&lt;/span&gt;&lt;span class="p"&gt;[])&lt;/span&gt;

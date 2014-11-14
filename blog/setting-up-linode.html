@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Option Model Handbook, Part II: Introduction to Binomial Trees - Gouthaman Balaraman</title>
+        <title>Setting Up Linode For The Impatient - Gouthaman Balaraman</title>
         <!-- All the meta tags -->
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
         <meta property="og:type" content="article"/>
-        <meta property="og:title" content="Option Model Handbook, Part II: Introduction to Binomial Trees"/>
-        <meta property="og:url" content="http://gouthamanbalaraman.com/blog/option-model-handbook-part-II-introduction-to-binomial-trees.html"/>
-        <meta property="og:description" content="This handbook gives a concise introduction to option models. Part II gives a basic introduction to binomial trees and its usage in pricing options."/>
+        <meta property="og:title" content="Setting Up Linode For The Impatient"/>
+        <meta property="og:url" content="http://gouthamanbalaraman.com/blog/setting-up-linode.html"/>
+        <meta property="og:description" content="Some notes based on my experience setting up the linode server"/>
         <!--link href="http://gouthamanbalaraman.com/theme/static/css/journal-bootstrap.min.css" rel="stylesheet" /-->
         <link href="http://gouthamanbalaraman.com/theme/static/css/bootstrap.readable.min.css" rel="stylesheet" />
         <link href="http://gouthamanbalaraman.com/theme/static/css/style.css" rel="stylesheet" />
@@ -70,8 +70,8 @@
             <div class="row">
                 <div class="col-md-10 col-md-offset-1">
     <div class="page-header">
-        <h1>Option Model Handbook, Part II: Introduction to Binomial Trees</h1>
-     <!--span class="glyphicon glyphicon-calendar"></span-->&nbsp;September 30, 2014 
+        <h1>Setting Up Linode For The Impatient</h1>
+     <!--span class="glyphicon glyphicon-calendar"></span-->&nbsp;November 13, 2014 
      &nbsp;&nbsp;
      <!--span class="glyphicon glyphicon-user"></span--> by  
      <a class="url fn" href="http://gouthamanbalaraman.com/author/gouthaman-balaraman.html">&nbsp;Gouthaman Balaraman </a>
@@ -84,72 +84,64 @@
 <div class="bs-docs-section">
     
      <!-- article description -->
-         <p class="lead">This handbook gives a concise introduction to option models.
-Part II gives a basic introduction to binomial trees and its usage in pricing options.</p>
+         <p class="lead">Some notes based on my experience setting up the linode server</p>
       
       <!-- article content -->
-     <p>This is a series of articles pertaining to option model pricing. Here I will
-explain the various concepts such as risk-neutral valuation, Black-Scholes formula,
-and binomial tree option pricing models.</p>
-<p><strong>Contents:</strong></p>
-<ol class="upperroman simple">
-<li><a class="reference external" href="http://gouthamanbalaraman.com/blog/option-model-handbook-part-I-introduction-to-option-models.html">Introduction to Option Models</a></li>
-<li><a class="reference external" href="http://gouthamanbalaraman.com/blog/option-model-handbook-part-II-introduction-to-binomial-trees.html">Introduction to Binomial Trees</a></li>
-</ol>
-<div class="section" id="id1">
-<h2>Introduction to Binomial Trees</h2>
-<img alt="BinomialTree" src="/images/binomialtree.png" />
-<p>Let us construct a tree whose pricing is given as shown in the figure above, restricting to time
-$t_0$ and $t_1$. Initial price of the stock is $S_0$ at $t_0$ and has the possibility of moving to
-$S_0u$ or $S_0d$ at time $t_1$. Let $p$ be the probability of the price to rise from
-$S_0$ to $S_0u$. Calculating the expected return from the stock at $t_1$
-and making use of risk-neutral valuation</p>
-<p>$$ E(S_{t_1}) = pS_0u + (1-p)S_0d = S_0 e^{r(t_1-t_0)} $$</p>
-<p>we get,</p>
-<p>\begin{equation} \label{eq:btp} p = \frac{e^{r(t_1-t_0)} - d}{u - d} \end{equation}</p>
-<p>We need to chose appropriate values for the parameters $u$ and $d$
-which can be obtained from equating the variance of the return to
-$\sigma^2 \Delta t$. The variance of the stock price return on the
-binomial tree is:</p>
-<p>$$ pu^2 + (1−p)d^2 − [ pu+ (1−p)d]^2 = \sigma^2 \Delta t $$</p>
-<p>On ignoring terms of order higher than $\Delta t^2$ and making use of
-$ud = 1$, we get</p>
-<p>\begin{equation} u = e^{\sigma \sqrt{\Delta t}} \nonumber  \end{equation}
-\begin{equation} d = e^{-\sigma\sqrt{\Delta t}} \end{equation}</p>
-<p>One can make use of the above construction to value an option. Let $f$
-be the current value of an option on a stock. Let the payoff of the option
-after one step (time T) on a binomial tree be $f_u$ and $f_d$
-for up and down movement of the stock respectively. The value of
-the option in this case is given as:</p>
-<p>$$ f = e^{−rT}[ pf_u + (1−p)f_d] $$.</p>
+     <p>When you get a linode instance, you really get a barren (sort of) linux machine on the cloud. That means
+you have to take care of customizing the server based on your needs. Here are some notes based on what I
+wanted to setup.</p>
+<p>My requirements were the following:</p>
+<ul class="simple">
+<li>Python Setup: Setup python to perform installations using <tt class="docutils literal">pip</tt>.</li>
+<li>Secure Server: Enable firewall etc.</li>
+</ul>
+<div class="section" id="linode-basics">
+<h2>Linode Basics</h2>
+<ul>
+<li><p class="first">Once I setup the linode account, I used the ssh instructions on the &quot;Remote Access&quot; in the linode
+dashboard to get the IP as:</p>
+<pre class="literal-block">
+ssh root&#64;&lt;ip-address&gt;
+</pre>
+</li>
+<li><p class="first">Setup hostname:</p>
+<pre class="literal-block">
+echo &quot;ServerName&quot; &gt; /etc/hostname
+hostname -F /etc/hostname
+</pre>
+<p>Try <tt class="docutils literal">hostname</tt> on the command line to see the hostname printed correctly.</p>
+</li>
+</ul>
+</div>
+<div class="section" id="python-setup">
+<h2>Python Setup</h2>
 </div>
 
      <br>
      
      <!-- article tags-->
         <span class="glyphicon glyphicon-tags"></span>&nbsp;&nbsp;
-            <span class="label label-default"><a href="http://gouthamanbalaraman.com/tag/finance.html">finance</a></span>&nbsp;&nbsp;
-            <span class="label label-default"><a href="http://gouthamanbalaraman.com/tag/option-models.html">option models</a></span>&nbsp;&nbsp;
-            <span class="label label-default"><a href="http://gouthamanbalaraman.com/tag/binomial-tree.html">binomial tree</a></span>&nbsp;&nbsp;
+            <span class="label label-default"><a href="http://gouthamanbalaraman.com/tag/programming.html">programming</a></span>&nbsp;&nbsp;
+            <span class="label label-default"><a href="http://gouthamanbalaraman.com/tag/linux.html">linux</a></span>&nbsp;&nbsp;
         <br>
      <hr/>
     
     <strong>Related Post</strong>
         <ul>
             <li>
-                <a href="http://gouthamanbalaraman.com/blog/option-model-handbook-part-I-introduction-to-option-models.html">Option Model Handbook, Part I: Introduction to Option Models</a>
+                <a href="http://gouthamanbalaraman.com/blog/asynchronous-python-logging-using-msmq.html">Asynchronous Python Logging Using MSMQ</a>
             </li>
             <li>
-                <a href="http://gouthamanbalaraman.com/blog/understanding-econometric-factor-model.html">Understanding the Econometric Factor Model</a>
+                <a href="http://gouthamanbalaraman.com/blog/git-for-dummies.html">Git For Dummies</a>
             </li>
             <li>
-                <a href="http://gouthamanbalaraman.com/blog/a-short-story-of-wall-street.html">A Short Story of Wall Street</a>
+                <a href="http://gouthamanbalaraman.com/blog/minimal-flask-login-example.html">Minimal Flask-Login Example</a>
             </li>
             <li>
-                <a href="http://gouthamanbalaraman.com/blog/econometric-factor-model.html">Econometric Factor Model</a>
+                <a href="http://gouthamanbalaraman.com/blog/minimal-lua-c-example.html">Minimal Lua C++ Example</a>
             </li>
             <li>
-                <a href="http://gouthamanbalaraman.com/blog/modern-portfolio-theory-statistics.html">Modern Portfolio Theory Statistics</a>
+                <a href="http://gouthamanbalaraman.com/blog/flask-track-usage.html">Flask Track Usage Primer</a>
             </li>
         </ul>
         <hr/>
