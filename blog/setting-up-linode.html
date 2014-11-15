@@ -125,6 +125,11 @@ in your linode:</p>
 127.0.0.1  ServerName
 </pre>
 </li>
+</ul>
+</div>
+<div class="section" id="securing-linode">
+<h2>Securing Linode</h2>
+<ul>
 <li><p class="first">Setting up firewall: When I type <tt class="docutils literal">sudo iptables <span class="pre">-L</span></tt> I get:</p>
 <pre class="literal-block">
 Chain INPUT (policy ACCEPT)
@@ -212,6 +217,29 @@ sudo chmod +x /etc/network/if-pre-up.d/firewall
 <p>This should secure your server. If you want to make sure your firewall is up and running,
 reboot the server and check what you get when you type <tt class="docutils literal">sudo iptables <span class="pre">-L</span></tt>.</p>
 </li>
+<li><p class="first">Installing and Configuring Fail2Ban: Fail2Ban is an application that prevents
+dictionary attacks on your server. When Fail2Ban detects multiple failed login
+attempts from the same IP address, it creates temporary firewall rules that block
+traffic from the attacker’s IP address. Attempted logins can be monitored on a
+variety of protocols, including SSH, HTTP, and SMTP. By default, Fail2Ban monitors SSH only.</p>
+<p>Here’s how to install and configure Fail2Ban:</p>
+<ul>
+<li><p class="first">Install Fail2Ban by entering the following command:</p>
+<pre class="literal-block">
+sudo apt-get install fail2ban
+</pre>
+</li>
+</ul>
+<p>Optionally, you can override the default Fail2Ban configuration by creating
+a new <tt class="docutils literal">jail.local</tt> file. Enter the following command to create the file:</p>
+<pre class="literal-block">
+sudo nano /etc/fail2ban/jail.local
+</pre>
+<p>To learn more about Fail2Ban configuration options, see this article on the <a class="reference external" href="http://www.fail2ban.org/wiki/index.php/MANUAL_0_8#Configuration">Fail2Ban</a> website.
+Fail2Ban is now installed and running on your Linode. It will monitor your log files for failed
+login attempts. After an IP address has exceeded the maximum number of authentication attempts,
+it will be blocked at the network level and the event will be logged in <tt class="docutils literal">/var/log/fail2ban.log</tt>.</p>
+</li>
 </ul>
 </div>
 <div class="section" id="python-setup">
@@ -233,16 +261,16 @@ reboot the server and check what you get when you type <tt class="docutils liter
     <strong>Related Post</strong>
         <ul>
             <li>
-                <a href="http://gouthamanbalaraman.com/blog/python-multiprocessing-as-a-task-queue.html">Python Multiprocessing as a Task Queue</a>
+                <a href="http://gouthamanbalaraman.com/blog/sending-msmq-messages-using-python.html">Sending MSMQ Messages Using Python</a>
             </li>
             <li>
                 <a href="http://gouthamanbalaraman.com/blog/zeo-as-a-windows-service.html">Running ZEO as a Windows Service</a>
             </li>
             <li>
-                <a href="http://gouthamanbalaraman.com/blog/sending-msmq-messages-using-python.html">Sending MSMQ Messages Using Python</a>
+                <a href="http://gouthamanbalaraman.com/blog/python-multiprocessing-as-a-task-queue.html">Python Multiprocessing as a Task Queue</a>
             </li>
             <li>
-                <a href="http://gouthamanbalaraman.com/blog/flask-track-usage.html">Flask Track Usage Primer</a>
+                <a href="http://gouthamanbalaraman.com/blog/git-for-dummies.html">Git For Dummies</a>
             </li>
             <li>
                 <a href="http://gouthamanbalaraman.com/blog/minimal-lua-c-example.html">Minimal Lua C++ Example</a>

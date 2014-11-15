@@ -37,6 +37,11 @@ in your linode:&lt;/p&gt;
 127.0.0.1  ServerName
 &lt;/pre&gt;
 &lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div class="section" id="securing-linode"&gt;
+&lt;h2&gt;Securing Linode&lt;/h2&gt;
+&lt;ul&gt;
 &lt;li&gt;&lt;p class="first"&gt;Setting up firewall: When I type &lt;tt class="docutils literal"&gt;sudo iptables &lt;span class="pre"&gt;-L&lt;/span&gt;&lt;/tt&gt; I get:&lt;/p&gt;
 &lt;pre class="literal-block"&gt;
 Chain INPUT (policy ACCEPT)
@@ -123,6 +128,29 @@ sudo chmod +x /etc/network/if-pre-up.d/firewall
 &lt;/pre&gt;
 &lt;p&gt;This should secure your server. If you want to make sure your firewall is up and running,
 reboot the server and check what you get when you type &lt;tt class="docutils literal"&gt;sudo iptables &lt;span class="pre"&gt;-L&lt;/span&gt;&lt;/tt&gt;.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;Installing and Configuring Fail2Ban: Fail2Ban is an application that prevents
+dictionary attacks on your server. When Fail2Ban detects multiple failed login
+attempts from the same IP address, it creates temporary firewall rules that block
+traffic from the attacker’s IP address. Attempted logins can be monitored on a
+variety of protocols, including SSH, HTTP, and SMTP. By default, Fail2Ban monitors SSH only.&lt;/p&gt;
+&lt;p&gt;Here’s how to install and configure Fail2Ban:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p class="first"&gt;Install Fail2Ban by entering the following command:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+sudo apt-get install fail2ban
+&lt;/pre&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Optionally, you can override the default Fail2Ban configuration by creating
+a new &lt;tt class="docutils literal"&gt;jail.local&lt;/tt&gt; file. Enter the following command to create the file:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+sudo nano /etc/fail2ban/jail.local
+&lt;/pre&gt;
+&lt;p&gt;To learn more about Fail2Ban configuration options, see this article on the &lt;a class="reference external" href="http://www.fail2ban.org/wiki/index.php/MANUAL_0_8#Configuration"&gt;Fail2Ban&lt;/a&gt; website.
+Fail2Ban is now installed and running on your Linode. It will monitor your log files for failed
+login attempts. After an IP address has exceeded the maximum number of authentication attempts,
+it will be blocked at the network level and the event will be logged in &lt;tt class="docutils literal"&gt;/var/log/fail2ban.log&lt;/tt&gt;.&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
 &lt;/div&gt;
