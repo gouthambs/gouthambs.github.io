@@ -118,6 +118,87 @@ your liking. Edit /etc/hosts to look like:</p>
 127.0.1.1   G-ubuntu
 111.11.11.1 ServerName
 </pre>
+<p>Also on you linode add an entry to associate <tt class="docutils literal">127.0.0.1</tt> with the server hostname. If not you will
+a error message that the &lt;ServerName is not recognized when you <tt class="docutils literal">sudo</tt>. Add the following to /etc/hostname
+in your linode:</p>
+<pre class="literal-block">
+127.0.0.1  ServerName
+</pre>
+</li>
+<li><p class="first">Setting up firewall: When I type <tt class="docutils literal">sudo iptables <span class="pre">-L</span></tt> I get:</p>
+<pre class="literal-block">
+Chain INPUT (policy ACCEPT)
+target     prot opt source               destination
+
+Chain FORWARD (policy ACCEPT)
+target     prot opt source               destination
+
+Chain OUTPUT (policy ACCEPT)
+target     prot opt source               destination
+</pre>
+<p>Now create a file to store the firewall rules using <tt class="docutils literal">sudo nano /etc/iptables.firewall.rules</tt> and
+paste the following:</p>
+<pre class="literal-block">
+*filter
+
+#  Allow all loopback (lo0) traffic and drop all traffic to 127/8 that doesn't use lo0
+-A INPUT -i lo -j ACCEPT
+-A INPUT -d 127.0.0.0/8 -j REJECT
+
+#  Accept all established inbound connections
+-A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
+
+#  Allow all outbound traffic - you can modify this to only allow certain traffic
+-A OUTPUT -j ACCEPT
+
+#  Allow HTTP and HTTPS connections from anywhere (the normal ports for websites and SSL).
+-A INPUT -p tcp --dport 80 -j ACCEPT
+-A INPUT -p tcp --dport 443 -j ACCEPT
+
+#  Allow SSH connections
+#
+#  The -dport number should be the same port number you set in sshd_config
+#
+-A INPUT -p tcp -m state --state NEW --dport 22 -j ACCEPT
+
+#  Allow ping
+-A INPUT -p icmp --icmp-type echo-request -j ACCEPT
+
+#  Log iptables denied calls
+-A INPUT -m limit --limit 5/min -j LOG --log-prefix &quot;iptables denied: &quot; --log-level 7
+
+#  Drop all other inbound - default deny unless explicitly allowed policy
+-A INPUT -j DROP
+-A FORWARD -j DROP
+
+COMMIT
+</pre>
+<p>Now the firewall rules can be activated using:</p>
+<pre class="literal-block">
+sudo iptables-restore &lt; /etc/iptables.firewall.rules
+</pre>
+<p>Now when you type <tt class="docutils literal">sudo iptables <span class="pre">-L</span></tt>:</p>
+<pre class="literal-block">
+Chain INPUT (policy ACCEPT)
+target     prot opt source               destination
+ACCEPT     all  --  anywhere             anywhere
+REJECT     all  --  anywhere             127.0.0.0/8          reject-with icmp-port-unreachable
+ACCEPT     all  --  anywhere             anywhere             state RELATED,ESTABLISHED
+ACCEPT     tcp  --  anywhere             anywhere             tcp dpt:http
+ACCEPT     tcp  --  anywhere             anywhere             tcp dpt:https
+ACCEPT     tcp  --  anywhere             anywhere             state NEW tcp dpt:ssh
+ACCEPT     icmp --  anywhere             anywhere
+LOG        all  --  anywhere             anywhere             limit: avg 5/min burst 5 LOG level debug prefix &quot;iptables denied: &quot;
+DROP       all  --  anywhere             anywhere
+
+Chain FORWARD (policy ACCEPT)
+target     prot opt source               destination
+DROP       all  --  anywhere             anywhere
+
+Chain OUTPUT (policy ACCEPT)
+target     prot opt source               destination
+ACCEPT     all  --  anywhere             anywhere
+</pre>
 </li>
 </ul>
 </div>
@@ -140,16 +221,16 @@ your liking. Edit /etc/hosts to look like:</p>
     <strong>Related Post</strong>
         <ul>
             <li>
-                <a href="http://gouthamanbalaraman.com/blog/sending-msmq-messages-using-python.html">Sending MSMQ Messages Using Python</a>
+                <a href="http://gouthamanbalaraman.com/blog/asynchronous-python-logging-using-msmq.html">Asynchronous Python Logging Using MSMQ</a>
             </li>
             <li>
-                <a href="http://gouthamanbalaraman.com/blog/asynchronous-python-logging-using-msmq.html">Asynchronous Python Logging Using MSMQ</a>
+                <a href="http://gouthamanbalaraman.com/blog/sending-msmq-messages-using-python.html">Sending MSMQ Messages Using Python</a>
             </li>
             <li>
                 <a href="http://gouthamanbalaraman.com/blog/python-multiprocessing-as-a-task-queue.html">Python Multiprocessing as a Task Queue</a>
             </li>
             <li>
-                <a href="http://gouthamanbalaraman.com/blog/minimal-example-lua-function-cpp.html">Minimal Example of Calling Lua Functions from C++</a>
+                <a href="http://gouthamanbalaraman.com/blog/minimal-lua-c-example.html">Minimal Lua C++ Example</a>
             </li>
             <li>
                 <a href="http://gouthamanbalaraman.com/blog/minimal-flask-login-example.html">Minimal Flask-Login Example</a>

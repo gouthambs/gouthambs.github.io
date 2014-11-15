@@ -30,6 +30,87 @@ your liking. Edit /etc/hosts to look like:&lt;/p&gt;
 127.0.1.1   G-ubuntu
 111.11.11.1 ServerName
 &lt;/pre&gt;
+&lt;p&gt;Also on you linode add an entry to associate &lt;tt class="docutils literal"&gt;127.0.0.1&lt;/tt&gt; with the server hostname. If not you will
+a error message that the &amp;lt;ServerName is not recognized when you &lt;tt class="docutils literal"&gt;sudo&lt;/tt&gt;. Add the following to /etc/hostname
+in your linode:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+127.0.0.1  ServerName
+&lt;/pre&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;Setting up firewall: When I type &lt;tt class="docutils literal"&gt;sudo iptables &lt;span class="pre"&gt;-L&lt;/span&gt;&lt;/tt&gt; I get:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+Chain INPUT (policy ACCEPT)
+target     prot opt source               destination
+
+Chain FORWARD (policy ACCEPT)
+target     prot opt source               destination
+
+Chain OUTPUT (policy ACCEPT)
+target     prot opt source               destination
+&lt;/pre&gt;
+&lt;p&gt;Now create a file to store the firewall rules using &lt;tt class="docutils literal"&gt;sudo nano /etc/iptables.firewall.rules&lt;/tt&gt; and
+paste the following:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+*filter
+
+#  Allow all loopback (lo0) traffic and drop all traffic to 127/8 that doesn't use lo0
+-A INPUT -i lo -j ACCEPT
+-A INPUT -d 127.0.0.0/8 -j REJECT
+
+#  Accept all established inbound connections
+-A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
+
+#  Allow all outbound traffic - you can modify this to only allow certain traffic
+-A OUTPUT -j ACCEPT
+
+#  Allow HTTP and HTTPS connections from anywhere (the normal ports for websites and SSL).
+-A INPUT -p tcp --dport 80 -j ACCEPT
+-A INPUT -p tcp --dport 443 -j ACCEPT
+
+#  Allow SSH connections
+#
+#  The -dport number should be the same port number you set in sshd_config
+#
+-A INPUT -p tcp -m state --state NEW --dport 22 -j ACCEPT
+
+#  Allow ping
+-A INPUT -p icmp --icmp-type echo-request -j ACCEPT
+
+#  Log iptables denied calls
+-A INPUT -m limit --limit 5/min -j LOG --log-prefix &amp;quot;iptables denied: &amp;quot; --log-level 7
+
+#  Drop all other inbound - default deny unless explicitly allowed policy
+-A INPUT -j DROP
+-A FORWARD -j DROP
+
+COMMIT
+&lt;/pre&gt;
+&lt;p&gt;Now the firewall rules can be activated using:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+sudo iptables-restore &amp;lt; /etc/iptables.firewall.rules
+&lt;/pre&gt;
+&lt;p&gt;Now when you type &lt;tt class="docutils literal"&gt;sudo iptables &lt;span class="pre"&gt;-L&lt;/span&gt;&lt;/tt&gt;:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+Chain INPUT (policy ACCEPT)
+target     prot opt source               destination
+ACCEPT     all  --  anywhere             anywhere
+REJECT     all  --  anywhere             127.0.0.0/8          reject-with icmp-port-unreachable
+ACCEPT     all  --  anywhere             anywhere             state RELATED,ESTABLISHED
+ACCEPT     tcp  --  anywhere             anywhere             tcp dpt:http
+ACCEPT     tcp  --  anywhere             anywhere             tcp dpt:https
+ACCEPT     tcp  --  anywhere             anywhere             state NEW tcp dpt:ssh
+ACCEPT     icmp --  anywhere             anywhere
+LOG        all  --  anywhere             anywhere             limit: avg 5/min burst 5 LOG level debug prefix &amp;quot;iptables denied: &amp;quot;
+DROP       all  --  anywhere             anywhere
+
+Chain FORWARD (policy ACCEPT)
+target     prot opt source               destination
+DROP       all  --  anywhere             anywhere
+
+Chain OUTPUT (policy ACCEPT)
+target     prot opt source               destination
+ACCEPT     all  --  anywhere             anywhere
+&lt;/pre&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
 &lt;/div&gt;
