@@ -199,6 +199,18 @@ Chain OUTPUT (policy ACCEPT)
 target     prot opt source               destination
 ACCEPT     all  --  anywhere             anywhere
 </pre>
+<p>Now to ensure that the firewall is going to be up and running every time you reboot your
+Linode, edit <tt class="docutils literal"><span class="pre">/etc/network/if-pre-up.d/firewall</span></tt> as <tt class="docutils literal">sudo</tt> to add:</p>
+<pre class="literal-block">
+#!/bin/sh
+/sbin/iptables-restore &lt; /etc/iptables.firewall.rules
+</pre>
+<p>Once you have saved these edits, make this file executable using:</p>
+<pre class="literal-block">
+sudo chmod +x /etc/network/if-pre-up.d/firewall
+</pre>
+<p>This should secure your server. If you want to make sure your firewall is up and running,
+reboot the server and check what you get when you type <tt class="docutils literal">sudo iptables <span class="pre">-L</span></tt>.</p>
 </li>
 </ul>
 </div>
@@ -221,19 +233,19 @@ ACCEPT     all  --  anywhere             anywhere
     <strong>Related Post</strong>
         <ul>
             <li>
-                <a href="http://gouthamanbalaraman.com/blog/asynchronous-python-logging-using-msmq.html">Asynchronous Python Logging Using MSMQ</a>
+                <a href="http://gouthamanbalaraman.com/blog/python-multiprocessing-as-a-task-queue.html">Python Multiprocessing as a Task Queue</a>
+            </li>
+            <li>
+                <a href="http://gouthamanbalaraman.com/blog/zeo-as-a-windows-service.html">Running ZEO as a Windows Service</a>
             </li>
             <li>
                 <a href="http://gouthamanbalaraman.com/blog/sending-msmq-messages-using-python.html">Sending MSMQ Messages Using Python</a>
             </li>
             <li>
-                <a href="http://gouthamanbalaraman.com/blog/python-multiprocessing-as-a-task-queue.html">Python Multiprocessing as a Task Queue</a>
+                <a href="http://gouthamanbalaraman.com/blog/flask-track-usage.html">Flask Track Usage Primer</a>
             </li>
             <li>
                 <a href="http://gouthamanbalaraman.com/blog/minimal-lua-c-example.html">Minimal Lua C++ Example</a>
-            </li>
-            <li>
-                <a href="http://gouthamanbalaraman.com/blog/minimal-flask-login-example.html">Minimal Flask-Login Example</a>
             </li>
         </ul>
         <hr/>

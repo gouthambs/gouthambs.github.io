@@ -111,6 +111,18 @@ Chain OUTPUT (policy ACCEPT)
 target     prot opt source               destination
 ACCEPT     all  --  anywhere             anywhere
 &lt;/pre&gt;
+&lt;p&gt;Now to ensure that the firewall is going to be up and running every time you reboot your
+Linode, edit &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;/etc/network/if-pre-up.d/firewall&lt;/span&gt;&lt;/tt&gt; as &lt;tt class="docutils literal"&gt;sudo&lt;/tt&gt; to add:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+#!/bin/sh
+/sbin/iptables-restore &amp;lt; /etc/iptables.firewall.rules
+&lt;/pre&gt;
+&lt;p&gt;Once you have saved these edits, make this file executable using:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+sudo chmod +x /etc/network/if-pre-up.d/firewall
+&lt;/pre&gt;
+&lt;p&gt;This should secure your server. If you want to make sure your firewall is up and running,
+reboot the server and check what you get when you type &lt;tt class="docutils literal"&gt;sudo iptables &lt;span class="pre"&gt;-L&lt;/span&gt;&lt;/tt&gt;.&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
 &lt;/div&gt;
