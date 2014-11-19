@@ -9,10 +9,10 @@ running a 32-bit version of python, and I started getting &lt;tt class="docutils
 &lt;tt class="docutils literal"&gt;pandas&lt;/tt&gt; and &lt;tt class="docutils literal"&gt;numpy&lt;/tt&gt; would need to allocate contiguous memory blocks, and 32-bit system
 would have a cap at 2GB. Additionally processing a huge file took some time (more than my impatience
 could tolerate). The approach I took to solve this problem is:&lt;/p&gt;
-&lt;pre class="literal-block"&gt;
-- Read the large input file in smaller chunks so it wouldn't run into ``MemoryError``
-- Use multi-processing to process the input file in parallel to speed up processing
-&lt;/pre&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;Read the large input file in smaller chunks so it wouldn't run into &lt;tt class="docutils literal"&gt;MemoryError&lt;/tt&gt;&lt;/li&gt;
+&lt;li&gt;Use multi-processing to process the input file in parallel to speed up processing&lt;/li&gt;
+&lt;/ul&gt;
 &lt;div class="section" id="sample-code"&gt;
 &lt;h2&gt;Sample Code&lt;/h2&gt;
 &lt;p&gt;&lt;tt class="docutils literal"&gt;Pandas&lt;/tt&gt; &lt;tt class="docutils literal"&gt;read_table&lt;/tt&gt; method can take &lt;tt class="docutils literal"&gt;chunksize&lt;/tt&gt; as an argument and return an &lt;tt class="docutils literal"&gt;iterator&lt;/tt&gt;
