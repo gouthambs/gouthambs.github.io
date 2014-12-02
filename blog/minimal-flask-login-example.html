@@ -102,62 +102,7 @@ This can be done using <cite>pip</cite> as shown below:</p>
 <div class="section" id="example-code">
 <h2>Example Code</h2>
 <p>Here is the full source code that we are about to discuss:</p>
-<pre class="code python literal-block">
-<span class="kn">from</span> <span class="nn">flask</span> <span class="kn">import</span> <span class="n">Flask</span><span class="p">,</span> <span class="n">Response</span>
-<span class="kn">from</span> <span class="nn">flask.ext.login</span> <span class="kn">import</span> <span class="n">LoginManager</span><span class="p">,</span> <span class="n">UserMixin</span><span class="p">,</span> <span class="n">login_required</span>
-
-
-<span class="n">app</span> <span class="o">=</span> <span class="n">Flask</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
-<span class="n">login_manager</span> <span class="o">=</span> <span class="n">LoginManager</span><span class="p">()</span>
-<span class="n">login_manager</span><span class="o">.</span><span class="n">init_app</span><span class="p">(</span><span class="n">app</span><span class="p">)</span>
-
-
-<span class="k">class</span> <span class="nc">User</span><span class="p">(</span><span class="n">UserMixin</span><span class="p">):</span>
-    <span class="c"># proxy for a database of users</span>
-    <span class="n">user_database</span> <span class="o">=</span> <span class="p">{</span><span class="s">&quot;JohnDoe&quot;</span><span class="p">:</span> <span class="p">(</span><span class="s">&quot;JohnDoe&quot;</span><span class="p">,</span> <span class="s">&quot;John&quot;</span><span class="p">),</span>
-               <span class="s">&quot;JaneDoe&quot;</span><span class="p">:</span> <span class="p">(</span><span class="s">&quot;JaneDoe&quot;</span><span class="p">,</span> <span class="s">&quot;Jane&quot;</span><span class="p">)}</span>
-
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">username</span><span class="p">,</span> <span class="n">password</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">id</span> <span class="o">=</span> <span class="n">username</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">password</span> <span class="o">=</span> <span class="n">password</span>
-
-    <span class="nd">&#64;classmethod</span>
-    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span><span class="nb">id</span><span class="p">):</span>
-        <span class="k">return</span> <span class="n">cls</span><span class="o">.</span><span class="n">user_database</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="nb">id</span><span class="p">)</span>
-
-
-<span class="nd">&#64;login_manager.request_loader</span>
-<span class="k">def</span> <span class="nf">load_user</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
-    <span class="n">token</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">headers</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">'Authorization'</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">token</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
-        <span class="n">token</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">'token'</span><span class="p">)</span>
-
-    <span class="k">if</span> <span class="n">token</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
-        <span class="n">username</span><span class="p">,</span><span class="n">password</span> <span class="o">=</span> <span class="n">token</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&quot;:&quot;</span><span class="p">)</span> <span class="c"># naive token</span>
-        <span class="n">user_entry</span> <span class="o">=</span> <span class="n">User</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">username</span><span class="p">)</span>
-        <span class="k">if</span> <span class="p">(</span><span class="n">user_entry</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">):</span>
-            <span class="n">user</span> <span class="o">=</span> <span class="n">User</span><span class="p">(</span><span class="n">user_entry</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">user_entry</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
-            <span class="k">if</span> <span class="p">(</span><span class="n">user</span><span class="o">.</span><span class="n">password</span> <span class="o">==</span> <span class="n">password</span><span class="p">):</span>
-                <span class="k">return</span> <span class="n">user</span>
-    <span class="k">return</span> <span class="bp">None</span>
-
-
-<span class="nd">&#64;app.route</span><span class="p">(</span><span class="s">&quot;/&quot;</span><span class="p">,</span><span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="s">&quot;GET&quot;</span><span class="p">])</span>
-<span class="k">def</span> <span class="nf">index</span><span class="p">():</span>
-    <span class="k">return</span> <span class="n">Response</span><span class="p">(</span><span class="n">response</span><span class="o">=</span><span class="s">&quot;Hello World!&quot;</span><span class="p">,</span><span class="n">status</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
-
-
-<span class="nd">&#64;app.route</span><span class="p">(</span><span class="s">&quot;/protected/&quot;</span><span class="p">,</span><span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="s">&quot;GET&quot;</span><span class="p">])</span>
-<span class="nd">&#64;login_required</span>
-<span class="k">def</span> <span class="nf">protected</span><span class="p">():</span>
-    <span class="k">return</span> <span class="n">Response</span><span class="p">(</span><span class="n">response</span><span class="o">=</span><span class="s">&quot;Hello Protected World!&quot;</span><span class="p">,</span> <span class="n">status</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
-
-
-<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">'__main__'</span><span class="p">:</span>
-    <span class="n">app</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s">&quot;SECRET_KEY&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&quot;ITSASECRET&quot;</span>
-    <span class="n">app</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">port</span><span class="o">=</span><span class="mi">5000</span><span class="p">,</span><span class="n">debug</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
-</pre>
-</div>
+<script src="https://gist.github.com/gouthambs/0a509faf231cff3cdec7.js"></script></div>
 <div class="section" id="code-explained">
 <h2>Code Explained</h2>
 <p>Lets delve deeper into this example, and I will explain each part of the code in greater detail here.</p>
@@ -246,19 +191,19 @@ even the token generation. Once the basic plumbing is setup, one can extend this
     <strong>Related Post</strong>
         <ul>
             <li>
-                <a href="http://gouthamanbalaraman.com/blog/zeo-as-a-windows-service.html">Running ZEO as a Windows Service</a>
+                <a href="http://gouthamanbalaraman.com/blog/flask-track-usage.html">Flask Track Usage Primer</a>
             </li>
             <li>
                 <a href="http://gouthamanbalaraman.com/blog/python-multiprocessing-as-a-task-queue.html">Python Multiprocessing as a Task Queue</a>
             </li>
             <li>
-                <a href="http://gouthamanbalaraman.com/blog/flask-track-usage.html">Flask Track Usage Primer</a>
+                <a href="http://gouthamanbalaraman.com/blog/sending-msmq-messages-using-python.html">Sending MSMQ Messages Using Python</a>
+            </li>
+            <li>
+                <a href="http://gouthamanbalaraman.com/blog/zeo-as-a-windows-service.html">Running ZEO as a Windows Service</a>
             </li>
             <li>
                 <a href="http://gouthamanbalaraman.com/blog/asynchronous-python-logging-using-msmq.html">Asynchronous Python Logging Using MSMQ</a>
-            </li>
-            <li>
-                <a href="http://gouthamanbalaraman.com/blog/sending-msmq-messages-using-python.html">Sending MSMQ Messages Using Python</a>
             </li>
         </ul>
         <hr/>
