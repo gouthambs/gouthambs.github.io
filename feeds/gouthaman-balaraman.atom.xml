@@ -979,7 +979,7 @@ a token you will get a &lt;tt class="docutils literal"&gt;401 Unauthorized&lt;/t
 of this article was explaining the basic workings of &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;flask-login&lt;/span&gt;&lt;/tt&gt; without having to setup database or
 even the token generation. Once the basic plumbing is setup, one can extend this example in two ways:&lt;/p&gt;
 &lt;ul class="simple"&gt;
-&lt;li&gt;have a robust token generation and token validation,&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference external" href="http://gouthamanbalaraman.com/blog/securing-authentication-tokens.html"&gt;Securing Authentication Tokens&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;have a database to store and retrive user credentials.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/div&gt;
