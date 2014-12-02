@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Gouthaman Balaraman</title><link>http://gouthamanbalaraman.com/</link><description></description><atom:link href="http://gouthamanbalaraman.com/feeds/gouthaman-balaraman.rss.xml" rel="self"></atom:link><lastBuildDate>Tue, 02 Dec 2014 00:00:00 -0800</lastBuildDate><item><title>Securing Authentication Tokens</title><link>http://gouthamanbalaraman.com/blog/securing-authentication-tokens.html</link><description>&lt;p&gt;The article &lt;a class="reference external" href="|filename|MinimalFlask-LoginExample.rst"&gt;Minimal Flask Login Example&lt;/a&gt; provided an introduction to token
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Gouthaman Balaraman</title><link>http://gouthamanbalaraman.com/</link><description></description><atom:link href="http://gouthamanbalaraman.com/feeds/gouthaman-balaraman.rss.xml" rel="self"></atom:link><lastBuildDate>Tue, 02 Dec 2014 00:00:00 -0800</lastBuildDate><item><title>Securing Authentication Tokens</title><link>http://gouthamanbalaraman.com/blog/securing-authentication-tokens.html</link><description>&lt;p&gt;The article &lt;a class="reference external" href="http://gouthamanbalaraman.com/blog/minimal-flask-login-example.html"&gt;Minimal Flask Login Example&lt;/a&gt; provided an introduction to token
 based authentication using the Flask-Login extension for the Flask web framework. The focus of that article was to
 highlight the crux of authentication logic. One glaring omission was that the token itself was nothing but
 the username and password passed as clear text. This clearly will not work!&lt;/p&gt;
@@ -13,7 +13,7 @@ part of the request&lt;/li&gt;
 &lt;li&gt;if the token is valid, then the server responds with an access to the secured page; should the token be invalid, then
 the access to secured page is denied.&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;In the &lt;a class="reference external" href="|filename|MinimalFlask-LoginExample.rst"&gt;Minimal Flask Login Example&lt;/a&gt;, we skipped the serialization part
+&lt;p&gt;In the &lt;a class="reference external" href="http://gouthamanbalaraman.com/blog/minimal-flask-login-example.html"&gt;Minimal Flask Login Example&lt;/a&gt;, we skipped the serialization part
 for simplicity. A more rigorous way of doing this would be to use &lt;tt class="docutils literal"&gt;JSONWebSignatureSerializer&lt;/tt&gt; in the
 &lt;tt class="docutils literal"&gt;itsdangerous&lt;/tt&gt; package to serialize the authentication credentials.&lt;/p&gt;
 &lt;pre class="code python literal-block"&gt;
