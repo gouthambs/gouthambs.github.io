@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Running ZEO as a Windows Service - Gouthaman Balaraman</title>
+        <title>Securing Authentication Tokens - Gouthaman Balaraman</title>
         <!-- All the meta tags -->
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
         <meta property="og:type" content="article"/>
-        <meta property="og:title" content="Running ZEO as a Windows Service"/>
-        <meta property="og:url" content="http://gouthamanbalaraman.com/blog/zeo-as-a-windows-service.html"/>
-        <meta property="og:description" content="This article shows how to use ZEO-WinService to run ZEO as a service in Windows."/>
+        <meta property="og:title" content="Securing Authentication Tokens"/>
+        <meta property="og:url" content="http://gouthamanbalaraman.com/blog/securing-authentication-tokens.html"/>
+        <meta property="og:description" content="This post will give a basic discussion on securing authentication tokens that can be used with Flask-Login."/>
         <!--link href="http://gouthamanbalaraman.com/theme/static/css/journal-bootstrap.min.css" rel="stylesheet" /-->
         <link href="http://gouthamanbalaraman.com/theme/static/css/bootstrap.readable.min.css" rel="stylesheet" />
         <link href="http://gouthamanbalaraman.com/theme/static/css/style.css" rel="stylesheet" />
@@ -70,8 +70,8 @@
             <div class="row">
                 <div class="col-md-10 col-md-offset-1">
     <div class="page-header">
-        <h1>Running ZEO as a Windows Service</h1>
-     <!--span class="glyphicon glyphicon-calendar"></span-->&nbsp;August 04, 2014 
+        <h1>Securing Authentication Tokens</h1>
+     <!--span class="glyphicon glyphicon-calendar"></span-->&nbsp;December 02, 2014 
      &nbsp;&nbsp;
      <!--span class="glyphicon glyphicon-user"></span--> by  
      <a class="url fn" href="http://gouthamanbalaraman.com/author/gouthaman-balaraman.html">&nbsp;Gouthaman Balaraman </a>
@@ -84,90 +84,41 @@
 <div class="bs-docs-section">
     
      <!-- article description -->
-         <p class="lead">This article shows how to use ZEO-WinService to run ZEO as a service in Windows.</p>
+         <p class="lead">This post will give a basic discussion on securing authentication tokens
+that can be used with Flask-Login.</p>
       
       <!-- article content -->
-     <p>The other day, I wanted to run ZEO as a Windows service. The <tt class="docutils literal">runzeo.py</tt> part of <tt class="docutils literal">ZEO</tt> will let you
-run the client, but it doesn't work well for deployment on a windows machine. So I used <tt class="docutils literal">pywin32</tt> to wrap
-the <tt class="docutils literal">runzeo.py</tt> into a Windows Service.</p>
-<div class="section" id="code">
-<h2>Code</h2>
-<p>You can fetch the source from my github <a class="reference external" href="https://github.com/gouthambs/ZEO-WinService">repo</a>. This script requires <tt class="docutils literal">pywin32</tt> and <tt class="docutils literal">ZEO</tt> to run.
-I do intend to put it on PyPi when I have the time</p>
-<p>You can run from <tt class="docutils literal">cmd</tt> as Administrator:</p>
-<pre class="literal-block">
-&gt; python zeo_winservice.py
+     <p>The article <a class="reference external" href="|filename|MinimalFlask-LoginExample.rst">Minimal Flask Login Example</a> provided an introduction to token
+based authentication using the Flask-Login extension for the Flask web framework. The focus of that article was to
+highlight the crux of authentication logic. One glaring omission was that the token itself was nothing but
+the username and password passed as clear text. This clearly will not work!</p>
+<p>The high level control flow involving token based authentication is as follows:</p>
+<ul class="simple">
+<li>client (browser) makes a <em>request</em> for the web token in exchange for authentication credential</li>
+<li>the authentication credentials are serialized to create a token, and server <em>responds</em> with this token</li>
+<li>every time the client needs to <em>request</em> a secured page, the client would provide the authentication token to the server
+part of the request</li>
+<li>the server deserializes the token, fetches the authentication credentials and validates the token</li>
+<li>if the token is valid, then the server responds with an access to the secured page; should the token be invalid, then
+the access to secured page is denied.</li>
+</ul>
+<p>In the <a class="reference external" href="|filename|MinimalFlask-LoginExample.rst">Minimal Flask Login Example</a>, we skipped the serialization part
+for simplicity. A more rigorous way of doing this would be to use <tt class="docutils literal">JSONWebSignatureSerializer</tt> in the
+<tt class="docutils literal">itsdangerous</tt> package to serialize the authentication credentials.</p>
+<pre class="code python literal-block">
+<span class="kn">from</span> <span class="nn">itsdangerous</span> <span class="kn">import</span> <span class="n">JSONWebSignatureSerializer</span>
+<span class="n">s</span> <span class="o">=</span> <span class="n">JSONWebSignatureSerializer</span><span class="p">(</span><span class="s">'secret-key'</span><span class="p">)</span>
+<span class="n">token</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">dumps</span><span class="p">({</span><span class="s">'username'</span><span class="p">:</span> <span class="n">JaneDoe</span><span class="p">,</span> <span class="s">'password'</span> <span class="p">:</span> <span class="s">'secret'</span><span class="p">})</span>
 </pre>
-<p>you will be given the service options, as shown below:</p>
-<pre class="literal-block">
-Usage: 'zeo_winservice.py [options] install|update|remove|start [...]|stop|restart [...]|debug [...]'
-Options for 'install' and 'update' commands only:
- --username domain\username : The Username the service is to run under
- --password password : The password for the username
- --startup [manual|auto|disabled|delayed] : How the service starts, default = manual
- --interactive : Allow the service to interact with the desktop.
- --perfmonini file: .ini file to use for registering performance monitor data
- --perfmondll file: .dll file to use when querying the service for
-   performance data, default = perfmondata.dll
-Options for 'start' and 'stop' commands only:
- --wait seconds: Wait for the service to actually start or stop.
-                 If you specify --wait with the 'stop' option, the service
-                 and all dependent services will be stopped, each waiting
-                 the specified period.
+<p>The <tt class="docutils literal">token</tt> in the above code can be used to pass from the server side. Validating a token is
+simple as well.</p>
+<pre class="code python literal-block">
+<span class="kn">from</span> <span class="nn">itsdangerous</span> <span class="kn">import</span> <span class="n">JSONWebSignatureSerializer</span>
+<span class="n">s</span> <span class="o">=</span> <span class="n">JSONWebSignatureSerializer</span><span class="p">(</span><span class="s">'secret-key'</span><span class="p">)</span>
+<span class="n">credential</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">token</span><span class="p">)</span>
 </pre>
-</div>
-<div class="section" id="installing-the-service">
-<h2>Installing the Service</h2>
-<p>Before you try to install, make sure you are running <tt class="docutils literal">cmd</tt> as Administrator.
-I like to install such that it will start up automatically, as shown below:</p>
-<pre class="literal-block">
-&gt;python zeo_winservice.py --startup=auto install
-</pre>
-<p>which gives you the following screen with ZEO options:</p>
-<pre class="literal-block">
-Installing service ZEO WinService
-Start the ZEO storage server.
-
-Usage: %s [-C URL] [-a ADDRESS] [-f FILENAME] [-h]
-
-Options:
--C/--configuration URL -- configuration file or URL
--a/--address ADDRESS -- server address of the form PORT, HOST:PORT, or PATH
-                        (a PATH must contain at least one &quot;/&quot;)
--f/--filename FILENAME -- filename for FileStorage
--t/--timeout TIMEOUT -- transaction timeout in seconds (default no timeout)
--h/--help -- print this usage message and exit
--m/--monitor ADDRESS -- address of monitor server ([HOST:]PORT or PATH)
---pid-file PATH -- relative path to output file containing this process's pid;
-                   default $(INSTANCE_HOME)/var/ZEO.pid but only if envar
-                   INSTANCE_HOME is defined
-
-Unless -C is specified, -a and -f are required.
-
-Enter command line arguments for ZEO Service:
-</pre>
-<p>Now you are prompted with the different configurations for the ZEO Service that you can pass. One thing to note here
-is that the filename option has to absolute path, and not a relative path.</p>
-<p>An example command line argument is:</p>
-<pre class="literal-block">
-Enter command line arguments for ZEO Service: -f D:\path\to\data\file.fs -a localhost:9999
-</pre>
-<p>Here I am specifying that ZEO be run with the <tt class="docutils literal">file.fs</tt> on <tt class="docutils literal">localhost</tt> port <tt class="docutils literal">9999</tt>. After installing the
-script, you need to start it by:</p>
-<pre class="literal-block">
-&gt;python zeo_winservice.py start
-</pre>
-<p>You will also be able to access the service from <tt class="docutils literal">task manager</tt> or the <tt class="docutils literal">Windows Services</tt> app.</p>
-</div>
-<div class="section" id="logging">
-<h2>Logging</h2>
-<p>The logs from the service are sent to the windows <tt class="docutils literal">Event Log</tt> which can be accessed by opening
-the <tt class="docutils literal">Event Viewer</tt>. Once you open the <tt class="docutils literal">Event Viewer</tt>, the logs can be found under:</p>
-<pre class="literal-block">
-Event Viewer-&gt;Windows Logs-&gt;Application
-</pre>
-<p>The logs from this script can be found under <tt class="docutils literal">ZEO WinService</tt> in the Source column.</p>
-</div>
+<p>The above code will get the <tt class="docutils literal">credential</tt> corresponding to the user which can then be checked against what is
+stored in the database.</p>
 
      <br>
      
@@ -175,15 +126,18 @@ Event Viewer-&gt;Windows Logs-&gt;Application
         <span class="glyphicon glyphicon-tags"></span>&nbsp;&nbsp;
             <span class="label label-default"><a href="http://gouthamanbalaraman.com/tag/programming.html">Programming</a></span>&nbsp;&nbsp;
             <span class="label label-default"><a href="http://gouthamanbalaraman.com/tag/python.html">Python</a></span>&nbsp;&nbsp;
-            <span class="label label-default"><a href="http://gouthamanbalaraman.com/tag/zeo.html">ZEO</a></span>&nbsp;&nbsp;
-            <span class="label label-default"><a href="http://gouthamanbalaraman.com/tag/zodb.html">ZODB</a></span>&nbsp;&nbsp;
+            <span class="label label-default"><a href="http://gouthamanbalaraman.com/tag/flask.html">Flask</a></span>&nbsp;&nbsp;
+            <span class="label label-default"><a href="http://gouthamanbalaraman.com/tag/authentication.html">Authentication</a></span>&nbsp;&nbsp;
         <br>
      <hr/>
     
     <strong>Related Post</strong>
         <ul>
             <li>
-                <a href="http://gouthamanbalaraman.com/blog/securing-authentication-tokens.html">Securing Authentication Tokens</a>
+                <a href="http://gouthamanbalaraman.com/blog/minimal-flask-login-example.html">Minimal Flask-Login Example</a>
+            </li>
+            <li>
+                <a href="http://gouthamanbalaraman.com/blog/zeo-as-a-windows-service.html">Running ZEO as a Windows Service</a>
             </li>
             <li>
                 <a href="http://gouthamanbalaraman.com/blog/python-multiprocessing-as-a-task-queue.html">Python Multiprocessing as a Task Queue</a>
@@ -193,9 +147,6 @@ Event Viewer-&gt;Windows Logs-&gt;Application
             </li>
             <li>
                 <a href="http://gouthamanbalaraman.com/blog/sending-msmq-messages-using-python.html">Sending MSMQ Messages Using Python</a>
-            </li>
-            <li>
-                <a href="http://gouthamanbalaraman.com/blog/flask-track-usage.html">Flask Track Usage Primer</a>
             </li>
         </ul>
         <hr/>

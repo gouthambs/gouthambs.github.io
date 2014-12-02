@@ -1,5 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Gouthaman Balaraman</title><link>http://gouthamanbalaraman.com/</link><description></description><atom:link href="http://gouthamanbalaraman.com/feeds/gouthaman-balaraman.rss.xml" rel="self"></atom:link><lastBuildDate>Wed, 19 Nov 2014 00:00:00 -0800</lastBuildDate><item><title>Multi-Processing With Pandas</title><link>http://gouthamanbalaraman.com/blog/distributed-processing-pandas.html</link><description>&lt;p&gt;If you have used &lt;tt class="docutils literal"&gt;pandas&lt;/tt&gt;, you must be familiar with the awesome functionality and tools that
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Gouthaman Balaraman</title><link>http://gouthamanbalaraman.com/</link><description></description><atom:link href="http://gouthamanbalaraman.com/feeds/gouthaman-balaraman.rss.xml" rel="self"></atom:link><lastBuildDate>Tue, 02 Dec 2014 00:00:00 -0800</lastBuildDate><item><title>Securing Authentication Tokens</title><link>http://gouthamanbalaraman.com/blog/securing-authentication-tokens.html</link><description>&lt;p&gt;The article &lt;a class="reference external" href="|filename|MinimalFlask-LoginExample.rst"&gt;Minimal Flask Login Example&lt;/a&gt; provided an introduction to token
+based authentication using the Flask-Login extension for the Flask web framework. The focus of that article was to
+highlight the crux of authentication logic. One glaring omission was that the token itself was nothing but
+the username and password passed as clear text. This clearly will not work!&lt;/p&gt;
+&lt;p&gt;The high level control flow involving token based authentication is as follows:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;client (browser) makes a &lt;em&gt;request&lt;/em&gt; for the web token in exchange for authentication credential&lt;/li&gt;
+&lt;li&gt;the authentication credentials are serialized to create a token, and server &lt;em&gt;responds&lt;/em&gt; with this token&lt;/li&gt;
+&lt;li&gt;every time the client needs to &lt;em&gt;request&lt;/em&gt; a secured page, the client would provide the authentication token to the server
+part of the request&lt;/li&gt;
+&lt;li&gt;the server deserializes the token, fetches the authentication credentials and validates the token&lt;/li&gt;
+&lt;li&gt;if the token is valid, then the server responds with an access to the secured page; should the token be invalid, then
+the access to secured page is denied.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;In the &lt;a class="reference external" href="|filename|MinimalFlask-LoginExample.rst"&gt;Minimal Flask Login Example&lt;/a&gt;, we skipped the serialization part
+for simplicity. A more rigorous way of doing this would be to use &lt;tt class="docutils literal"&gt;JSONWebSignatureSerializer&lt;/tt&gt; in the
+&lt;tt class="docutils literal"&gt;itsdangerous&lt;/tt&gt; package to serialize the authentication credentials.&lt;/p&gt;
+&lt;pre class="code python literal-block"&gt;
+&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;itsdangerous&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;JSONWebSignatureSerializer&lt;/span&gt;
+&lt;span class="n"&gt;s&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;JSONWebSignatureSerializer&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;'secret-key'&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;token&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;s&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;dumps&lt;/span&gt;&lt;span class="p"&gt;({&lt;/span&gt;&lt;span class="s"&gt;'username'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;JaneDoe&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;'password'&lt;/span&gt; &lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s"&gt;'secret'&lt;/span&gt;&lt;span class="p"&gt;})&lt;/span&gt;
+&lt;/pre&gt;
+&lt;p&gt;The &lt;tt class="docutils literal"&gt;token&lt;/tt&gt; in the above code can be used to pass from the server side. Validating a token is
+simple as well.&lt;/p&gt;
+&lt;pre class="code python literal-block"&gt;
+&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;itsdangerous&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;JSONWebSignatureSerializer&lt;/span&gt;
+&lt;span class="n"&gt;s&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;JSONWebSignatureSerializer&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;'secret-key'&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;credential&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;s&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;loads&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;token&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;
+&lt;p&gt;The above code will get the &lt;tt class="docutils literal"&gt;credential&lt;/tt&gt; corresponding to the user which can then be checked against what is
+stored in the database.&lt;/p&gt;
+</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Gouthaman Balaraman</dc:creator><pubDate>Tue, 02 Dec 2014 00:00:00 -0800</pubDate><guid>tag:gouthamanbalaraman.com,2014-12-02:blog/securing-authentication-tokens.html</guid><category>Programming</category><category>Python</category><category>Flask</category><category>Authentication</category></item><item><title>Multi-Processing With Pandas</title><link>http://gouthamanbalaraman.com/blog/distributed-processing-pandas.html</link><description>&lt;p&gt;If you have used &lt;tt class="docutils literal"&gt;pandas&lt;/tt&gt;, you must be familiar with the awesome functionality and tools that
 it brings to data processing. I have used &lt;tt class="docutils literal"&gt;pandas&lt;/tt&gt; as a tool to read data files and transform
 them into various summaries of interest. My usual process pipeline would start with
 a text file with data in a CSV format. I would read data into a &lt;tt class="docutils literal"&gt;pandas&lt;/tt&gt; &lt;tt class="docutils literal"&gt;DataFrame&lt;/tt&gt;
