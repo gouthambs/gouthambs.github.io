@@ -952,7 +952,7 @@ even the token generation. Once the basic plumbing is setup, one can extend this
 &lt;li&gt;have a database to store and retrive user credentials.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/div&gt;
-</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Gouthaman Balaraman</dc:creator><pubDate>Thu, 24 Jul 2014 00:00:00 -0700</pubDate><guid>tag:gouthamanbalaraman.com,2014-07-24:blog/minimal-flask-login-example.html</guid><category>Programming</category><category>Python</category><category>Flask</category><category>Flask-Login</category></item><item><title>Minimal Lua C++ Example</title><link>http://gouthamanbalaraman.com/blog/minimal-lua-c-example.html</link><description>&lt;p&gt;If you want to extend and customize the capabilities of a C++ application
+</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Gouthaman Balaraman</dc:creator><pubDate>Thu, 24 Jul 2014 00:00:00 -0700</pubDate><guid>tag:gouthamanbalaraman.com,2014-07-24:blog/minimal-flask-login-example.html</guid><category>Programming</category><category>Python</category><category>Flask</category><category>Authentication</category></item><item><title>Minimal Lua C++ Example</title><link>http://gouthamanbalaraman.com/blog/minimal-lua-c-example.html</link><description>&lt;p&gt;If you want to extend and customize the capabilities of a C++ application
 without requiring a full recompilation, then using a embedded scripting language
 is the way to go. Lua is one such embeddable scripting language, and is very popular
 among game developers. The main advantage of Lua, in my opinion, is that the core API
