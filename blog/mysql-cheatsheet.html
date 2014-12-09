@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title> Articles in linux tag - Gouthaman Balaraman</title>
+        <title>MySQL Cheatsheet - Gouthaman Balaraman</title>
         <!-- All the meta tags -->
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-        <meta property="og:type" content="website"/>
-        <meta property="og:title" content="Gouthaman Balaraman"/>
-        <meta property="og:url" content="http://gouthamanbalaraman.com"/>
-        <meta property="og:description" content="Gouthaman Balaraman"/>
+        <meta property="og:type" content="article"/>
+        <meta property="og:title" content="MySQL Cheatsheet"/>
+        <meta property="og:url" content="http://gouthamanbalaraman.com/blog/mysql-cheatsheet.html"/>
+        <meta property="og:description" content="Some notes on administering MySQL database"/>
         <!--link href="http://gouthamanbalaraman.com/theme/static/css/journal-bootstrap.min.css" rel="stylesheet" /-->
         <link href="http://gouthamanbalaraman.com/theme/static/css/bootstrap.readable.min.css" rel="stylesheet" />
         <link href="http://gouthamanbalaraman.com/theme/static/css/style.css" rel="stylesheet" />
@@ -69,58 +69,92 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-10 col-md-offset-1">
+    <div class="page-header">
+        <h1>MySQL Cheatsheet</h1>
+     <!--span class="glyphicon glyphicon-calendar"></span-->&nbsp;December 09, 2014 
+     &nbsp;&nbsp;
+     <!--span class="glyphicon glyphicon-user"></span--> by  
+     <a class="url fn" href="http://gouthamanbalaraman.com/author/gouthaman-balaraman.html">&nbsp;Gouthaman Balaraman </a>
+     </div>
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-10 col-md-offset-1">
-<section id="content" class="content">
-<h2>Articles with the linux tag</h2>
 
+<div class="bs-docs-section">
+    
+     <!-- article description -->
+         <p class="lead">Some notes on administering MySQL database</p>
+      
+      <!-- article content -->
+     <p>Here are some notes and commands on MySQL administration</p>
+<ul>
+<li><p class="first">Updating a column with a constant value:</p>
+<pre class="literal-block">
+UPDATE table1 SET column_a='value_a', column_b='value_b' WHERE query_id='1';
+</pre>
+</li>
+<li><p class="first">Deleting rows that satisfy a criterion:</p>
+<pre class="literal-block">
+DELETE FROM table1 WHERE query_id='1';
+</pre>
+</li>
+<li><p class="first">Resetting the primary key value after any deletes that were performed:</p>
+<pre class="literal-block">
+ALTER TABLE table1 AUTO_INCREMENT=1;
+</pre>
+</li>
+</ul>
 
-<div class="story">
-    <h3>
-    <a href="http://gouthamanbalaraman.com/blog/mysql-cheatsheet.html" rel="bookmark" title="Permalink to MySQL Cheatsheet">MySQL Cheatsheet</a>
-    </h3>
-    December 09, 2014 
- by 
-    <a class="url fn" href="http://gouthamanbalaraman.com/author/gouthaman-balaraman.html">Gouthaman Balaraman</a> 
- 
-    <div class="media">
-        <p>
-          Some notes on administering MySQL database
-        </p>
-        <!-- article tags-->
+     <br>
+     
+     <!-- article tags-->
         <span class="glyphicon glyphicon-tags"></span>&nbsp;&nbsp;
             <span class="label label-default"><a href="http://gouthamanbalaraman.com/tag/programming.html">programming</a></span>&nbsp;&nbsp;
             <span class="label label-default"><a href="http://gouthamanbalaraman.com/tag/linux.html">linux</a></span>&nbsp;&nbsp;
             <span class="label label-default"><a href="http://gouthamanbalaraman.com/tag/database.html">database</a></span>&nbsp;&nbsp;
             <span class="label label-default"><a href="http://gouthamanbalaraman.com/tag/mysql.html">mysql</a></span>&nbsp;&nbsp;
-           <br>
-        <hr>
-     </div>
-</div>
-<div class="story">
-    <h3>
-    <a href="http://gouthamanbalaraman.com/blog/setting-up-linode.html" rel="bookmark" title="Permalink to Setting Up Linode For The Impatient">Setting Up Linode For The Impatient</a>
-    </h3>
-    November 13, 2014 
- by 
-    <a class="url fn" href="http://gouthamanbalaraman.com/author/gouthaman-balaraman.html">Gouthaman Balaraman</a> 
- 
-    <div class="media">
-        <p>
-          Some notes based on my experience setting up the linode server
-        </p>
-        <!-- article tags-->
-        <span class="glyphicon glyphicon-tags"></span>&nbsp;&nbsp;
-            <span class="label label-default"><a href="http://gouthamanbalaraman.com/tag/programming.html">programming</a></span>&nbsp;&nbsp;
-            <span class="label label-default"><a href="http://gouthamanbalaraman.com/tag/linux.html">linux</a></span>&nbsp;&nbsp;
-           <br>
-        <hr>
-     </div>
-</div>
+        <br>
+     <hr/>
+    
+    <strong>Related Post</strong>
+        <ul>
+            <li>
+                <a href="http://gouthamanbalaraman.com/blog/setting-up-linode.html">Setting Up Linode For The Impatient</a>
+            </li>
+            <li>
+                <a href="http://gouthamanbalaraman.com/blog/flask-track-usage.html">Flask Track Usage Primer</a>
+            </li>
+            <li>
+                <a href="http://gouthamanbalaraman.com/blog/python-multiprocessing-as-a-task-queue.html">Python Multiprocessing as a Task Queue</a>
+            </li>
+            <li>
+                <a href="http://gouthamanbalaraman.com/blog/git-for-dummies.html">Git For Dummies</a>
+            </li>
+            <li>
+                <a href="http://gouthamanbalaraman.com/blog/distributed-processing-pandas.html">Multi-Processing With Pandas</a>
+            </li>
+        </ul>
+        <hr/>
 
-</section><!-- content -->
+     <!-- article comments -->
+    <div class="comment">
+        <div id="disqus_thread"></div> <!-- comment app container -->
+    </div>
+	<!-- Comment BEGIN -->
+    <script type="text/javascript">
+        var disqus_shortname = 'gouthamanbalaramancom'; // required: replace example with your forum shortname
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+     <!-- Comment END -->
+</div>    
                 </div>
                
             </div>
