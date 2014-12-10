@@ -1,6 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Gouthaman Balaraman</title><link>http://gouthamanbalaraman.com/</link><description></description><atom:link href="http://gouthamanbalaraman.com/feeds/gouthaman-balaraman.rss.xml" rel="self"></atom:link><lastBuildDate>Tue, 09 Dec 2014 00:00:00 -0800</lastBuildDate><item><title>MySQL Cheatsheet</title><link>http://gouthamanbalaraman.com/blog/mysql-cheatsheet.html</link><description>&lt;p&gt;Here are some notes and commands on MySQL administration&lt;/p&gt;
 &lt;ul&gt;
+&lt;li&gt;&lt;p class="first"&gt;Show a list of databases:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+show databases;
+&lt;/pre&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;Pick a database to use:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+use mydatabase;
+&lt;/pre&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;Show a list of tables after selecting a database;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;show tables;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;/li&gt;
 &lt;li&gt;&lt;p class="first"&gt;Updating a column with a constant value:&lt;/p&gt;
 &lt;pre class="literal-block"&gt;
 UPDATE table1 SET column_a='value_a', column_b='value_b' WHERE query_id='1';

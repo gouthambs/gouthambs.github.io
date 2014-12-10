@@ -1,6 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom"><title>Gouthaman Balaraman</title><link href="http://gouthamanbalaraman.com/" rel="alternate"></link><link href="http://gouthamanbalaraman.com/feeds/gouthaman-balaraman.atom.xml" rel="self"></link><id>http://gouthamanbalaraman.com/</id><updated>2014-12-09T00:00:00-08:00</updated><entry><title>MySQL Cheatsheet</title><link href="http://gouthamanbalaraman.com/blog/mysql-cheatsheet.html" rel="alternate"></link><updated>2014-12-09T00:00:00-08:00</updated><author><name>Gouthaman Balaraman</name></author><id>tag:gouthamanbalaraman.com,2014-12-09:blog/mysql-cheatsheet.html</id><summary type="html">&lt;p&gt;Here are some notes and commands on MySQL administration&lt;/p&gt;
 &lt;ul&gt;
+&lt;li&gt;&lt;p class="first"&gt;Show a list of databases:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+show databases;
+&lt;/pre&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;Pick a database to use:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+use mydatabase;
+&lt;/pre&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;Show a list of tables after selecting a database;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;show tables;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;/li&gt;
 &lt;li&gt;&lt;p class="first"&gt;Updating a column with a constant value:&lt;/p&gt;
 &lt;pre class="literal-block"&gt;
 UPDATE table1 SET column_a='value_a', column_b='value_b' WHERE query_id='1';
