@@ -89,19 +89,34 @@
       <!-- article content -->
      <p>Here are some notes and commands on MySQL administration</p>
 <ul>
+<li><p class="first">Create a database:</p>
+<pre class="literal-block">
+CREATE DATABASE mydatabase;
+</pre>
+</li>
+<li><p class="first">Creating a user for the database:</p>
+<pre class="literal-block">
+CREATE USER 'testuser'&#64;localhost IDENTIFIED BY 'password';
+</pre>
+</li>
+<li><p class="first">Granting <tt class="docutils literal">testuser</tt> all privileges on a table:</p>
+<pre class="literal-block">
+GRANT ALL PRIVILEGES ON mydatabase.* TO 'testuser'&#64;localhost;
+</pre>
+</li>
 <li><p class="first">Show a list of databases:</p>
 <pre class="literal-block">
-show databases;
+SHOW DATABASES;
 </pre>
 </li>
 <li><p class="first">Pick a database to use:</p>
 <pre class="literal-block">
-use mydatabase;
+USE mydatabase;
 </pre>
 </li>
 <li><p class="first">Show a list of tables after selecting a database:</p>
 <pre class="literal-block">
-show tables;
+SHOW TABLES;
 </pre>
 </li>
 <li><p class="first">Updating a column with a constant value:</p>
@@ -118,6 +133,14 @@ DELETE FROM table1 WHERE query_id='1';
 <pre class="literal-block">
 ALTER TABLE table1 AUTO_INCREMENT=1;
 </pre>
+</li>
+<li><p class="first">Disabling safe update mode, and turning back on:</p>
+<pre class="literal-block">
+SET SQL_SAFE_UPDATES = 0;
+DELETE FROM table1 WHERE query_id='1';
+SET SQL_SAFE_UPDATES = 1;
+</pre>
+<p>Use the above with caution.</p>
 </li>
 </ul>
 
@@ -138,16 +161,16 @@ ALTER TABLE table1 AUTO_INCREMENT=1;
                 <a href="http://gouthamanbalaraman.com/blog/setting-up-linode.html">Setting Up Linode For The Impatient</a>
             </li>
             <li>
+                <a href="http://gouthamanbalaraman.com/blog/git-for-dummies.html">Git For Dummies</a>
+            </li>
+            <li>
+                <a href="http://gouthamanbalaraman.com/blog/securing-authentication-tokens.html">Securing Authentication Tokens</a>
+            </li>
+            <li>
                 <a href="http://gouthamanbalaraman.com/blog/distributed-processing-pandas.html">Multi-Processing With Pandas</a>
             </li>
             <li>
                 <a href="http://gouthamanbalaraman.com/blog/sending-msmq-messages-using-python.html">Sending MSMQ Messages Using Python</a>
-            </li>
-            <li>
-                <a href="http://gouthamanbalaraman.com/blog/minimal-lua-c-example.html">Minimal Lua C++ Example</a>
-            </li>
-            <li>
-                <a href="http://gouthamanbalaraman.com/blog/python-multiprocessing-as-a-task-queue.html">Python Multiprocessing as a Task Queue</a>
             </li>
         </ul>
         <hr/>
