@@ -54,6 +54,13 @@ SET SQL_SAFE_UPDATES = 1;
 &lt;/pre&gt;
 &lt;p&gt;Use the above with caution.&lt;/p&gt;
 &lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;Counting duplicates in a column:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+SELECT query_id, COUNT(*) c FROM table1 GROUP BY query_id HAVING c &amp;gt; 1;
+&lt;/pre&gt;
+&lt;p&gt;This would count all duplicates in query_id and list the count for each. You can drop the &lt;tt class="docutils literal"&gt;HAVING c &amp;gt; 1&lt;/tt&gt; part
+if you just want to get a count on a certain column.&lt;/p&gt;
+&lt;/li&gt;
 &lt;/ul&gt;
 </description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Gouthaman Balaraman</dc:creator><pubDate>Tue, 09 Dec 2014 00:00:00 -0800</pubDate><guid>tag:gouthamanbalaraman.com,2014-12-09:blog/mysql-cheatsheet.html</guid><category>programming</category><category>linux</category><category>database</category><category>mysql</category></item><item><title>Securing Authentication Tokens</title><link>http://gouthamanbalaraman.com/blog/securing-authentication-tokens.html</link><description>&lt;p&gt;The article &lt;a class="reference external" href="http://gouthamanbalaraman.com/blog/minimal-flask-login-example.html"&gt;Minimal Flask Login Example&lt;/a&gt; provided an introduction to token
 based authentication using the Flask-Login extension for the Flask web framework. The focus of that article was to
