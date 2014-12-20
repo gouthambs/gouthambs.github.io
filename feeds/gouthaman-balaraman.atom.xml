@@ -61,6 +61,15 @@ SELECT query_id, COUNT(*) c FROM table1 GROUP BY query_id HAVING c &amp;gt; 1;
 &lt;p&gt;This would count all duplicates in query_id and list the count for each. You can drop the &lt;tt class="docutils literal"&gt;HAVING c &amp;gt; 1&lt;/tt&gt; part
 if you just want to get a count on a certain column.&lt;/p&gt;
 &lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;Getting size occupied by a database named &lt;tt class="docutils literal"&gt;mydatabase&lt;/tt&gt; listed for each table:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+SELECT table_name AS &amp;quot;Tables&amp;quot;,
+round(((data_length + index_length) / 1024 / 1024), 2) &amp;quot;Size in MB&amp;quot;
+FROM information_schema.TABLES
+WHERE table_schema = &amp;quot;mydatabase&amp;quot;
+ORDER BY (data_length + index_length) DESC;
+&lt;/pre&gt;
+&lt;/li&gt;
 &lt;/ul&gt;
 </summary><category term="programming"></category><category term="linux"></category><category term="database"></category><category term="mysql"></category></entry><entry><title>Securing Authentication Tokens</title><link href="http://gouthamanbalaraman.com/blog/securing-authentication-tokens.html" rel="alternate"></link><updated>2014-12-02T00:00:00-08:00</updated><author><name>Gouthaman Balaraman</name></author><id>tag:gouthamanbalaraman.com,2014-12-02:blog/securing-authentication-tokens.html</id><summary type="html">&lt;p&gt;The article &lt;a class="reference external" href="http://gouthamanbalaraman.com/blog/minimal-flask-login-example.html"&gt;Minimal Flask Login Example&lt;/a&gt; provided an introduction to token
 based authentication using the Flask-Login extension for the Flask web framework. The focus of that article was to

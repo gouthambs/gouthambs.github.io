@@ -149,6 +149,15 @@ SELECT query_id, COUNT(*) c FROM table1 GROUP BY query_id HAVING c &gt; 1;
 <p>This would count all duplicates in query_id and list the count for each. You can drop the <tt class="docutils literal">HAVING c &gt; 1</tt> part
 if you just want to get a count on a certain column.</p>
 </li>
+<li><p class="first">Getting size occupied by a database named <tt class="docutils literal">mydatabase</tt> listed for each table:</p>
+<pre class="literal-block">
+SELECT table_name AS &quot;Tables&quot;,
+round(((data_length + index_length) / 1024 / 1024), 2) &quot;Size in MB&quot;
+FROM information_schema.TABLES
+WHERE table_schema = &quot;mydatabase&quot;
+ORDER BY (data_length + index_length) DESC;
+</pre>
+</li>
 </ul>
 
      <br>
@@ -171,10 +180,10 @@ if you just want to get a count on a certain column.</p>
                 <a href="http://gouthamanbalaraman.com/blog/python-multiprocessing-as-a-task-queue.html">Python Multiprocessing as a Task Queue</a>
             </li>
             <li>
-                <a href="http://gouthamanbalaraman.com/blog/minimal-lua-c-example.html">Minimal Lua C++ Example</a>
+                <a href="http://gouthamanbalaraman.com/blog/flask-track-usage.html">Flask Track Usage Primer</a>
             </li>
             <li>
-                <a href="http://gouthamanbalaraman.com/blog/flask-track-usage.html">Flask Track Usage Primer</a>
+                <a href="http://gouthamanbalaraman.com/blog/securing-authentication-tokens.html">Securing Authentication Tokens</a>
             </li>
             <li>
                 <a href="http://gouthamanbalaraman.com/blog/sending-msmq-messages-using-python.html">Sending MSMQ Messages Using Python</a>
