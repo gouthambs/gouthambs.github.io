@@ -43,19 +43,13 @@
 &lt;/pre&gt;
 &lt;p&gt;What I have shown above is the overall structure of a Flask application that will transition
 over to production smoothly. Let me explain the structure briefly before we dive into any code.&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;p class="first"&gt;&lt;tt class="docutils literal"&gt;run.py&lt;/tt&gt; is the actual python code that will import the app and execute&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p class="first"&gt;&lt;tt class="docutils literal"&gt;config.py&lt;/tt&gt; is the file for storing configurations for the app&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p class="first"&gt;&lt;tt class="docutils literal"&gt;myapp&lt;/tt&gt; is the folder containing the python code and its dependencies such as &lt;tt class="docutils literal"&gt;templates&lt;/tt&gt; and &lt;tt class="docutils literal"&gt;static&lt;/tt&gt; files&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p class="first"&gt;&lt;tt class="docutils literal"&gt;myapp/__init__.py&lt;/tt&gt; is typically where I create the Flask &lt;tt class="docutils literal"&gt;app&lt;/tt&gt; instance and do all the configuration&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p class="first"&gt;&lt;tt class="docutils literal"&gt;myapp/subapp1&lt;/tt&gt; is a sub-package under the &lt;tt class="docutils literal"&gt;myapp&lt;/tt&gt; packages. I recommend using sub-packages to organize
-your web application with the help of &lt;tt class="docutils literal"&gt;Blueprints&lt;/tt&gt;.&lt;/p&gt;
-&lt;blockquote&gt;
 &lt;ul class="simple"&gt;
+&lt;li&gt;&lt;tt class="docutils literal"&gt;run.py&lt;/tt&gt; is the actual python code that will import the app and execute&lt;/li&gt;
+&lt;li&gt;&lt;tt class="docutils literal"&gt;config.py&lt;/tt&gt; is the file for storing configurations for the app&lt;/li&gt;
+&lt;li&gt;&lt;tt class="docutils literal"&gt;myapp&lt;/tt&gt; is the folder containing the python code and its dependencies such as &lt;tt class="docutils literal"&gt;templates&lt;/tt&gt; and &lt;tt class="docutils literal"&gt;static&lt;/tt&gt; files&lt;/li&gt;
+&lt;li&gt;&lt;tt class="docutils literal"&gt;myapp/__init__.py&lt;/tt&gt; is typically where I create the Flask &lt;tt class="docutils literal"&gt;app&lt;/tt&gt; instance and do all the configuration&lt;/li&gt;
+&lt;li&gt;&lt;tt class="docutils literal"&gt;myapp/subapp1&lt;/tt&gt; is a sub-package under the &lt;tt class="docutils literal"&gt;myapp&lt;/tt&gt; packages. I recommend using sub-packages to organize
+your web application with the help of &lt;tt class="docutils literal"&gt;Blueprints&lt;/tt&gt;.&lt;ul&gt;
 &lt;li&gt;&lt;tt class="docutils literal"&gt;myapp/subapp1/__init__.py&lt;/tt&gt; is the place to create the &lt;tt class="docutils literal"&gt;Blueprint&lt;/tt&gt; definition and other initializations
 corresponding to your sub-package.&lt;/li&gt;
 &lt;li&gt;&lt;tt class="docutils literal"&gt;myapp/subapp1/models.py&lt;/tt&gt; is the place to define the SQLAlchemy models.&lt;/li&gt;
@@ -65,7 +59,6 @@ to wrap your database queries using models defined in &lt;tt class="docutils lit
 In the future, should you want to add caching support, you can directly add here and have the benefit of
 caching.&lt;/li&gt;
 &lt;/ul&gt;
-&lt;/blockquote&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
 &lt;/div&gt;

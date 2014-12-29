@@ -131,19 +131,13 @@
 </pre>
 <p>What I have shown above is the overall structure of a Flask application that will transition
 over to production smoothly. Let me explain the structure briefly before we dive into any code.</p>
-<ul>
-<li><p class="first"><tt class="docutils literal">run.py</tt> is the actual python code that will import the app and execute</p>
-</li>
-<li><p class="first"><tt class="docutils literal">config.py</tt> is the file for storing configurations for the app</p>
-</li>
-<li><p class="first"><tt class="docutils literal">myapp</tt> is the folder containing the python code and its dependencies such as <tt class="docutils literal">templates</tt> and <tt class="docutils literal">static</tt> files</p>
-</li>
-<li><p class="first"><tt class="docutils literal">myapp/__init__.py</tt> is typically where I create the Flask <tt class="docutils literal">app</tt> instance and do all the configuration</p>
-</li>
-<li><p class="first"><tt class="docutils literal">myapp/subapp1</tt> is a sub-package under the <tt class="docutils literal">myapp</tt> packages. I recommend using sub-packages to organize
-your web application with the help of <tt class="docutils literal">Blueprints</tt>.</p>
-<blockquote>
 <ul class="simple">
+<li><tt class="docutils literal">run.py</tt> is the actual python code that will import the app and execute</li>
+<li><tt class="docutils literal">config.py</tt> is the file for storing configurations for the app</li>
+<li><tt class="docutils literal">myapp</tt> is the folder containing the python code and its dependencies such as <tt class="docutils literal">templates</tt> and <tt class="docutils literal">static</tt> files</li>
+<li><tt class="docutils literal">myapp/__init__.py</tt> is typically where I create the Flask <tt class="docutils literal">app</tt> instance and do all the configuration</li>
+<li><tt class="docutils literal">myapp/subapp1</tt> is a sub-package under the <tt class="docutils literal">myapp</tt> packages. I recommend using sub-packages to organize
+your web application with the help of <tt class="docutils literal">Blueprints</tt>.<ul>
 <li><tt class="docutils literal">myapp/subapp1/__init__.py</tt> is the place to create the <tt class="docutils literal">Blueprint</tt> definition and other initializations
 corresponding to your sub-package.</li>
 <li><tt class="docutils literal">myapp/subapp1/models.py</tt> is the place to define the SQLAlchemy models.</li>
@@ -153,7 +147,6 @@ to wrap your database queries using models defined in <tt class="docutils litera
 In the future, should you want to add caching support, you can directly add here and have the benefit of
 caching.</li>
 </ul>
-</blockquote>
 </li>
 </ul>
 </div>
@@ -177,10 +170,10 @@ caching.</li>
                 <a href="http://gouthamanbalaraman.com/blog/securing-authentication-tokens.html">Securing Authentication Tokens</a>
             </li>
             <li>
-                <a href="http://gouthamanbalaraman.com/blog/flask-track-usage.html">Flask Track Usage Primer</a>
+                <a href="http://gouthamanbalaraman.com/blog/python-multiprocessing-as-a-task-queue.html">Python Multiprocessing as a Task Queue</a>
             </li>
             <li>
-                <a href="http://gouthamanbalaraman.com/blog/distributed-processing-pandas.html">Multi-Processing With Pandas</a>
+                <a href="http://gouthamanbalaraman.com/blog/flask-track-usage.html">Flask Track Usage Primer</a>
             </li>
             <li>
                 <a href="http://gouthamanbalaraman.com/blog/asynchronous-python-logging-using-msmq.html">Asynchronous Python Logging Using MSMQ</a>
