@@ -1,5 +1,75 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Gouthaman Balaraman</title><link>http://gouthamanbalaraman.com/</link><description></description><atom:link href="http://gouthamanbalaraman.com/feeds/gouthaman-balaraman.rss.xml" rel="self"></atom:link><lastBuildDate>Tue, 09 Dec 2014 00:00:00 -0800</lastBuildDate><item><title>MySQL Cheatsheet</title><link>http://gouthamanbalaraman.com/blog/mysql-cheatsheet.html</link><description>&lt;p&gt;Here are some notes and commands on MySQL administration&lt;/p&gt;
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Gouthaman Balaraman</title><link>http://gouthamanbalaraman.com/</link><description></description><atom:link href="http://gouthamanbalaraman.com/feeds/gouthaman-balaraman.rss.xml" rel="self"></atom:link><lastBuildDate>Mon, 29 Dec 2014 00:00:00 -0800</lastBuildDate><item><title>Flask App Directory Structure</title><link>http://gouthamanbalaraman.com/blog/flask-app-directory-structure.html</link><description>&lt;p&gt;This post is a summary of what I learnt perusing a lot of websites. My goal here is to:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;summarize the directory structure for a flask app&lt;/li&gt;
+&lt;li&gt;setup SQLAlchemy with migrations&lt;/li&gt;
+&lt;li&gt;outline the setup for transition to production&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class="section" id="directory-structure"&gt;
+&lt;h2&gt;Directory Structure&lt;/h2&gt;
+&lt;p&gt;I want to build a website based on the Flask framework for python. I recommend you organize you &lt;tt class="docutils literal"&gt;app&lt;/tt&gt; as:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+~/AppHome
+        |-- run.py
+        |-- config.py
+        |__ /myapp
+                |-- __init__.py
+                |__ /subapp1
+                        |-- __init__.py
+                        |-- models.py
+                        |-- views.py
+                        |-- viewmodel.py
+                |__ /templates
+                        |-- base.html
+                        |-- index.html
+                        |__ /subapp1
+                                |-- subapp1_index.html
+                                |-- otherpage.html
+                |__ /static
+                        |__ /js
+                        |__ /css
+        |-- setup.py
+        |-- MANIFEST.in
+        |-- Requirements.txt
+        |__ /env
+        |
+        |-- manage.py
+        |__ /migrations
+                |__ ...
+        |__ /etl
+                |__ ...
+        |
+        |-- fabfile.py
+&lt;/pre&gt;
+&lt;p&gt;What I have shown above is the overall structure of a Flask application that will transition
+over to production smoothly. Let me explain the structure briefly before we dive into any code.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;tt class="docutils literal"&gt;run.py&lt;/tt&gt; is the actual python code that will import the app and execute&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;tt class="docutils literal"&gt;config.py&lt;/tt&gt; is the file for storing configurations for the app&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;tt class="docutils literal"&gt;myapp&lt;/tt&gt; is the folder containing the python code and its dependencies such as &lt;tt class="docutils literal"&gt;templates&lt;/tt&gt; and &lt;tt class="docutils literal"&gt;static&lt;/tt&gt; files&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;tt class="docutils literal"&gt;myapp/__init__.py&lt;/tt&gt; is typically where I create the Flask &lt;tt class="docutils literal"&gt;app&lt;/tt&gt; instance and do all the configuration&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;tt class="docutils literal"&gt;myapp/subapp1&lt;/tt&gt; is a sub-package under the &lt;tt class="docutils literal"&gt;myapp&lt;/tt&gt; packages. I recommend using sub-packages to organize
+your web application with the help of &lt;tt class="docutils literal"&gt;Blueprints&lt;/tt&gt;.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;&lt;tt class="docutils literal"&gt;myapp/subapp1/__init__.py&lt;/tt&gt; is the place to create the &lt;tt class="docutils literal"&gt;Blueprint&lt;/tt&gt; definition and other initializations
+corresponding to your sub-package.&lt;/li&gt;
+&lt;li&gt;&lt;tt class="docutils literal"&gt;myapp/subapp1/models.py&lt;/tt&gt; is the place to define the SQLAlchemy models.&lt;/li&gt;
+&lt;li&gt;&lt;tt class="docutils literal"&gt;myapp/subapp1/views.py&lt;/tt&gt; is the place to define the routes that the submodule will provide&lt;/li&gt;
+&lt;li&gt;&lt;tt class="docutils literal"&gt;myapp/subapp1/viewmodel.py&lt;/tt&gt; is the bridge between model and view. Use this file to create functions
+to wrap your database queries using models defined in &lt;tt class="docutils literal"&gt;models.py that ``views.py&lt;/tt&gt; can call.
+In the future, should you want to add caching support, you can directly add here and have the benefit of
+caching.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/blockquote&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Gouthaman Balaraman</dc:creator><pubDate>Mon, 29 Dec 2014 00:00:00 -0800</pubDate><guid>tag:gouthamanbalaraman.com,2014-12-29:blog/flask-app-directory-structure.html</guid><category>programming</category><category>flask</category><category>python</category></item><item><title>MySQL Cheatsheet</title><link>http://gouthamanbalaraman.com/blog/mysql-cheatsheet.html</link><description>&lt;p&gt;Here are some notes and commands on MySQL administration&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;p class="first"&gt;Create a database:&lt;/p&gt;
 &lt;pre class="literal-block"&gt;

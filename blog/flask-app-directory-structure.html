@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>MySQL Cheatsheet - Gouthaman Balaraman</title>
+        <title>Flask App Directory Structure - Gouthaman Balaraman</title>
         <!-- All the meta tags -->
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
         <meta property="og:type" content="article"/>
-        <meta property="og:title" content="MySQL Cheatsheet"/>
-        <meta property="og:url" content="http://gouthamanbalaraman.com/blog/mysql-cheatsheet.html"/>
-        <meta property="og:description" content="Some notes on administering MySQL database"/>
+        <meta property="og:title" content="Flask App Directory Structure"/>
+        <meta property="og:url" content="http://gouthamanbalaraman.com/blog/flask-app-directory-structure.html"/>
+        <meta property="og:description" content="Some notes on how to organize your flask app structure, and some thoughts on deployment."/>
         <!--link href="http://gouthamanbalaraman.com/theme/static/css/journal-bootstrap.min.css" rel="stylesheet" /-->
         <link href="http://gouthamanbalaraman.com/theme/static/css/bootstrap.readable.min.css" rel="stylesheet" />
         <link href="http://gouthamanbalaraman.com/theme/static/css/style.css" rel="stylesheet" />
@@ -70,8 +70,8 @@
             <div class="row">
                 <div class="col-md-10 col-md-offset-1">
     <div class="page-header">
-        <h1>MySQL Cheatsheet</h1>
-     <!--span class="glyphicon glyphicon-calendar"></span-->&nbsp;December 09, 2014 
+        <h1>Flask App Directory Structure</h1>
+     <!--span class="glyphicon glyphicon-calendar"></span-->&nbsp;December 29, 2014 
      &nbsp;&nbsp;
      <!--span class="glyphicon glyphicon-user"></span--> by  
      <a class="url fn" href="http://gouthamanbalaraman.com/author/gouthaman-balaraman.html">&nbsp;Gouthaman Balaraman </a>
@@ -84,109 +84,106 @@
 <div class="bs-docs-section">
     
      <!-- article description -->
-         <p class="lead">Some notes on administering MySQL database</p>
+         <p class="lead">Some notes on how to organize your flask app structure, and some thoughts on deployment.</p>
       
       <!-- article content -->
-     <p>Here are some notes and commands on MySQL administration</p>
+     <p>This post is a summary of what I learnt perusing a lot of websites. My goal here is to:</p>
+<ul class="simple">
+<li>summarize the directory structure for a flask app</li>
+<li>setup SQLAlchemy with migrations</li>
+<li>outline the setup for transition to production</li>
+</ul>
+<div class="section" id="directory-structure">
+<h2>Directory Structure</h2>
+<p>I want to build a website based on the Flask framework for python. I recommend you organize you <tt class="docutils literal">app</tt> as:</p>
+<pre class="literal-block">
+~/AppHome
+        |-- run.py
+        |-- config.py
+        |__ /myapp
+                |-- __init__.py
+                |__ /subapp1
+                        |-- __init__.py
+                        |-- models.py
+                        |-- views.py
+                        |-- viewmodel.py
+                |__ /templates
+                        |-- base.html
+                        |-- index.html
+                        |__ /subapp1
+                                |-- subapp1_index.html
+                                |-- otherpage.html
+                |__ /static
+                        |__ /js
+                        |__ /css
+        |-- setup.py
+        |-- MANIFEST.in
+        |-- Requirements.txt
+        |__ /env
+        |
+        |-- manage.py
+        |__ /migrations
+                |__ ...
+        |__ /etl
+                |__ ...
+        |
+        |-- fabfile.py
+</pre>
+<p>What I have shown above is the overall structure of a Flask application that will transition
+over to production smoothly. Let me explain the structure briefly before we dive into any code.</p>
 <ul>
-<li><p class="first">Create a database:</p>
-<pre class="literal-block">
-CREATE DATABASE mydatabase;
-</pre>
+<li><p class="first"><tt class="docutils literal">run.py</tt> is the actual python code that will import the app and execute</p>
 </li>
-<li><p class="first">Creating a user for the database:</p>
-<pre class="literal-block">
-CREATE USER 'testuser'&#64;localhost IDENTIFIED BY 'password';
-</pre>
+<li><p class="first"><tt class="docutils literal">config.py</tt> is the file for storing configurations for the app</p>
 </li>
-<li><p class="first">Granting <tt class="docutils literal">testuser</tt> all privileges on a table:</p>
-<pre class="literal-block">
-GRANT ALL PRIVILEGES ON mydatabase.* TO 'testuser'&#64;localhost;
-</pre>
+<li><p class="first"><tt class="docutils literal">myapp</tt> is the folder containing the python code and its dependencies such as <tt class="docutils literal">templates</tt> and <tt class="docutils literal">static</tt> files</p>
 </li>
-<li><p class="first">Show a list of databases:</p>
-<pre class="literal-block">
-SHOW DATABASES;
-</pre>
+<li><p class="first"><tt class="docutils literal">myapp/__init__.py</tt> is typically where I create the Flask <tt class="docutils literal">app</tt> instance and do all the configuration</p>
 </li>
-<li><p class="first">Pick a database to use:</p>
-<pre class="literal-block">
-USE mydatabase;
-</pre>
-</li>
-<li><p class="first">Show a list of tables after selecting a database:</p>
-<pre class="literal-block">
-SHOW TABLES;
-</pre>
-</li>
-<li><p class="first">Updating a column with a constant value:</p>
-<pre class="literal-block">
-UPDATE table1 SET column_a='value_a', column_b='value_b' WHERE query_id='1';
-</pre>
-</li>
-<li><p class="first">Deleting rows that satisfy a criterion:</p>
-<pre class="literal-block">
-DELETE FROM table1 WHERE query_id='1';
-</pre>
-</li>
-<li><p class="first">Resetting the primary key value after any deletes that were performed:</p>
-<pre class="literal-block">
-ALTER TABLE table1 AUTO_INCREMENT=1;
-</pre>
-</li>
-<li><p class="first">Disabling safe update mode, and turning back on:</p>
-<pre class="literal-block">
-SET SQL_SAFE_UPDATES = 0;
-DELETE FROM table1 WHERE query_id='1';
-SET SQL_SAFE_UPDATES = 1;
-</pre>
-<p>Use the above with caution.</p>
-</li>
-<li><p class="first">Counting duplicates in a column:</p>
-<pre class="literal-block">
-SELECT query_id, COUNT(*) c FROM table1 GROUP BY query_id HAVING c &gt; 1;
-</pre>
-<p>This would count all duplicates in query_id and list the count for each. You can drop the <tt class="docutils literal">HAVING c &gt; 1</tt> part
-if you just want to get a count on a certain column.</p>
-</li>
-<li><p class="first">Getting size occupied by a database named <tt class="docutils literal">mydatabase</tt> listed for each table:</p>
-<pre class="literal-block">
-SELECT table_name AS &quot;Tables&quot;,
-round(((data_length + index_length) / 1024 / 1024), 2) &quot;Size in MB&quot;
-FROM information_schema.TABLES
-WHERE table_schema = &quot;mydatabase&quot;
-ORDER BY (data_length + index_length) DESC;
-</pre>
+<li><p class="first"><tt class="docutils literal">myapp/subapp1</tt> is a sub-package under the <tt class="docutils literal">myapp</tt> packages. I recommend using sub-packages to organize
+your web application with the help of <tt class="docutils literal">Blueprints</tt>.</p>
+<blockquote>
+<ul class="simple">
+<li><tt class="docutils literal">myapp/subapp1/__init__.py</tt> is the place to create the <tt class="docutils literal">Blueprint</tt> definition and other initializations
+corresponding to your sub-package.</li>
+<li><tt class="docutils literal">myapp/subapp1/models.py</tt> is the place to define the SQLAlchemy models.</li>
+<li><tt class="docutils literal">myapp/subapp1/views.py</tt> is the place to define the routes that the submodule will provide</li>
+<li><tt class="docutils literal">myapp/subapp1/viewmodel.py</tt> is the bridge between model and view. Use this file to create functions
+to wrap your database queries using models defined in <tt class="docutils literal">models.py that ``views.py</tt> can call.
+In the future, should you want to add caching support, you can directly add here and have the benefit of
+caching.</li>
+</ul>
+</blockquote>
 </li>
 </ul>
+</div>
 
      <br>
      
      <!-- article tags-->
         <span class="glyphicon glyphicon-tags"></span>&nbsp;&nbsp;
             <span class="label label-default"><a href="http://gouthamanbalaraman.com/tag/programming.html">programming</a></span>&nbsp;&nbsp;
-            <span class="label label-default"><a href="http://gouthamanbalaraman.com/tag/linux.html">linux</a></span>&nbsp;&nbsp;
-            <span class="label label-default"><a href="http://gouthamanbalaraman.com/tag/database.html">database</a></span>&nbsp;&nbsp;
-            <span class="label label-default"><a href="http://gouthamanbalaraman.com/tag/mysql.html">mysql</a></span>&nbsp;&nbsp;
+            <span class="label label-default"><a href="http://gouthamanbalaraman.com/tag/flask.html">flask</a></span>&nbsp;&nbsp;
+            <span class="label label-default"><a href="http://gouthamanbalaraman.com/tag/python.html">python</a></span>&nbsp;&nbsp;
         <br>
      <hr/>
     
     <strong>Related Post</strong>
         <ul>
             <li>
-                <a href="http://gouthamanbalaraman.com/blog/setting-up-linode.html">Setting Up Linode For The Impatient</a>
-            </li>
-            <li>
                 <a href="http://gouthamanbalaraman.com/blog/minimal-flask-login-example.html">Minimal Flask-Login Example</a>
-            </li>
-            <li>
-                <a href="http://gouthamanbalaraman.com/blog/sending-msmq-messages-using-python.html">Sending MSMQ Messages Using Python</a>
             </li>
             <li>
                 <a href="http://gouthamanbalaraman.com/blog/securing-authentication-tokens.html">Securing Authentication Tokens</a>
             </li>
             <li>
-                <a href="http://gouthamanbalaraman.com/blog/minimal-lua-c-example.html">Minimal Lua C++ Example</a>
+                <a href="http://gouthamanbalaraman.com/blog/flask-track-usage.html">Flask Track Usage Primer</a>
+            </li>
+            <li>
+                <a href="http://gouthamanbalaraman.com/blog/distributed-processing-pandas.html">Multi-Processing With Pandas</a>
+            </li>
+            <li>
+                <a href="http://gouthamanbalaraman.com/blog/asynchronous-python-logging-using-msmq.html">Asynchronous Python Logging Using MSMQ</a>
             </li>
         </ul>
         <hr/>
