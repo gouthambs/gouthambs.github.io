@@ -35,10 +35,7 @@ Hello World!
 &lt;h2&gt;Linked Task Example&lt;/h2&gt;
 &lt;p&gt;The above example was a good starter example. Though we did not really do much in terms of building a pipeline.
 Lets modify the above code a little bit, so we can build a pipeline.&lt;/p&gt;
-&lt;pre class="code html literal-block"&gt;
-&lt;span class="nt"&gt;&amp;lt;script &lt;/span&gt;&lt;span class="na"&gt;src=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;https://gist.github.com/gouthambs/8740bf4ff5e8269fd56a.js&amp;quot;&lt;/span&gt;&lt;span class="nt"&gt;&amp;gt;&amp;lt;/script&amp;gt;&lt;/span&gt;
-&lt;/pre&gt;
-&lt;p&gt;This example is built on top of the &amp;quot;Hello World&amp;quot; example from above. The &lt;tt class="docutils literal"&gt;SimpleTask&lt;/tt&gt; outputs
+&lt;script src="https://gist.github.com/gouthambs/8740bf4ff5e8269fd56a.js"&gt;&lt;/script&gt;&lt;p&gt;This example is built on top of the &amp;quot;Hello World&amp;quot; example from above. The &lt;tt class="docutils literal"&gt;SimpleTask&lt;/tt&gt; outputs
 the text &amp;quot;Hello World!&amp;quot;. The &lt;tt class="docutils literal"&gt;DecoratedTask&lt;/tt&gt; takes this output from &lt;tt class="docutils literal"&gt;SimpleTask&lt;/tt&gt; and prefixes
 with the word &amp;quot;Decorated&amp;quot;.&lt;/p&gt;
 &lt;p&gt;In this example, we have modified the output target for the &lt;tt class="docutils literal"&gt;SimpleTask&lt;/tt&gt; to a &lt;tt class="docutils literal"&gt;luigi.LocalTarget&lt;/tt&gt;.
