@@ -119,6 +119,23 @@ Hello World!
 </pre>
 <p>There you go! You have learnt a basic example.</p>
 </div>
+<div class="section" id="linked-task-example">
+<h2>Linked Task Example</h2>
+<p>The above example was a good starter example. Though we did not really do much in terms of building a pipeline.
+Lets modify the above code a little bit, so we can build a pipeline.</p>
+<pre class="code html literal-block">
+<span class="nt">&lt;script </span><span class="na">src=</span><span class="s">&quot;https://gist.github.com/gouthambs/8740bf4ff5e8269fd56a.js&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
+</pre>
+<p>This example is built on top of the &quot;Hello World&quot; example from above. The <tt class="docutils literal">SimpleTask</tt> outputs
+the text &quot;Hello World!&quot;. The <tt class="docutils literal">DecoratedTask</tt> takes this output from <tt class="docutils literal">SimpleTask</tt> and prefixes
+with the word &quot;Decorated&quot;.</p>
+<p>In this example, we have modified the output target for the <tt class="docutils literal">SimpleTask</tt> to a <tt class="docutils literal">luigi.LocalTarget</tt>.
+If you are running on a Linux/Unix based system, you might want to modify this path. So the
+<tt class="docutils literal">SimpleTask</tt> writes to the file system, and the <tt class="docutils literal">DecoratedTask</tt> reads from the file
+and prints the modified output.</p>
+<p>I use the <tt class="docutils literal">StreamTarget</tt> here just as a way to see the results on the console. Though you should
+not use this <tt class="docutils literal">StreamTarget</tt> for any production code.</p>
+</div>
 
      <br>
      
@@ -133,19 +150,19 @@ Hello World!
     <strong>Related Post</strong>
         <ul>
             <li>
-                <a href="http://gouthamanbalaraman.com/blog/flask-track-usage.html">Flask Track Usage Primer</a>
+                <a href="http://gouthamanbalaraman.com/blog/asynchronous-python-logging-using-msmq.html">Asynchronous Python Logging Using MSMQ</a>
             </li>
             <li>
-                <a href="http://gouthamanbalaraman.com/blog/asynchronous-python-logging-using-msmq.html">Asynchronous Python Logging Using MSMQ</a>
+                <a href="http://gouthamanbalaraman.com/blog/minimal-flask-login-example.html">Minimal Flask-Login Example</a>
+            </li>
+            <li>
+                <a href="http://gouthamanbalaraman.com/blog/flask-track-usage.html">Flask Track Usage Primer</a>
             </li>
             <li>
                 <a href="http://gouthamanbalaraman.com/blog/securing-authentication-tokens.html">Securing Authentication Tokens</a>
             </li>
             <li>
                 <a href="http://gouthamanbalaraman.com/blog/zeo-as-a-windows-service.html">Running ZEO as a Windows Service</a>
-            </li>
-            <li>
-                <a href="http://gouthamanbalaraman.com/blog/sending-msmq-messages-using-python.html">Sending MSMQ Messages Using Python</a>
             </li>
         </ul>
         <hr/>

@@ -31,6 +31,23 @@ Hello World!
 &lt;/pre&gt;
 &lt;p&gt;There you go! You have learnt a basic example.&lt;/p&gt;
 &lt;/div&gt;
+&lt;div class="section" id="linked-task-example"&gt;
+&lt;h2&gt;Linked Task Example&lt;/h2&gt;
+&lt;p&gt;The above example was a good starter example. Though we did not really do much in terms of building a pipeline.
+Lets modify the above code a little bit, so we can build a pipeline.&lt;/p&gt;
+&lt;pre class="code html literal-block"&gt;
+&lt;span class="nt"&gt;&amp;lt;script &lt;/span&gt;&lt;span class="na"&gt;src=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;https://gist.github.com/gouthambs/8740bf4ff5e8269fd56a.js&amp;quot;&lt;/span&gt;&lt;span class="nt"&gt;&amp;gt;&amp;lt;/script&amp;gt;&lt;/span&gt;
+&lt;/pre&gt;
+&lt;p&gt;This example is built on top of the &amp;quot;Hello World&amp;quot; example from above. The &lt;tt class="docutils literal"&gt;SimpleTask&lt;/tt&gt; outputs
+the text &amp;quot;Hello World!&amp;quot;. The &lt;tt class="docutils literal"&gt;DecoratedTask&lt;/tt&gt; takes this output from &lt;tt class="docutils literal"&gt;SimpleTask&lt;/tt&gt; and prefixes
+with the word &amp;quot;Decorated&amp;quot;.&lt;/p&gt;
+&lt;p&gt;In this example, we have modified the output target for the &lt;tt class="docutils literal"&gt;SimpleTask&lt;/tt&gt; to a &lt;tt class="docutils literal"&gt;luigi.LocalTarget&lt;/tt&gt;.
+If you are running on a Linux/Unix based system, you might want to modify this path. So the
+&lt;tt class="docutils literal"&gt;SimpleTask&lt;/tt&gt; writes to the file system, and the &lt;tt class="docutils literal"&gt;DecoratedTask&lt;/tt&gt; reads from the file
+and prints the modified output.&lt;/p&gt;
+&lt;p&gt;I use the &lt;tt class="docutils literal"&gt;StreamTarget&lt;/tt&gt; here just as a way to see the results on the console. Though you should
+not use this &lt;tt class="docutils literal"&gt;StreamTarget&lt;/tt&gt; for any production code.&lt;/p&gt;
+&lt;/div&gt;
 </description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Gouthaman Balaraman</dc:creator><pubDate>Wed, 31 Dec 2014 00:00:00 -0800</pubDate><guid>tag:gouthamanbalaraman.com,2014-12-31:blog/building-luigi-task-pipeline.html</guid><category>Programming</category><category>Python</category><category>Luigi</category></item><item><title>Flask App Directory Structure</title><link>http://gouthamanbalaraman.com/blog/flask-app-directory-structure.html</link><description>&lt;p&gt;This post is a summary of what I learnt perusing a lot of websites. My goal here is to:&lt;/p&gt;
 &lt;ul class="simple"&gt;
 &lt;li&gt;summarize the directory structure for a flask app&lt;/li&gt;
