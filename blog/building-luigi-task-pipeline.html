@@ -101,7 +101,7 @@ simple example to get our feet wet, and gradually build towards complex cases.</
 </div>
 <div class="section" id="hello-world">
 <h2>Hello World!</h2>
-<script src="https://gist.github.com/gouthambs/873ebce21062914f038d.js"></script><p>This example is rather self-explanatory. I have created a <tt class="docutils literal">StreamHandler</tt> class as
+<script src="https://gist.github.com/gouthambs/873ebce21062914f038d.js"></script><p>This example is rather self-explanatory. I use the <tt class="docutils literal">MockFile</tt> class as
 the <tt class="docutils literal">Target</tt> just so that I can print to console. One can instead use <tt class="docutils literal">luigi.LocalFileTarget(filename)</tt>
 to use the file system as the target. The <tt class="docutils literal">main_task_cls</tt> specifies <tt class="docutils literal">SimpleTask</tt> as the task
 to run. The actual processing part of the task is encapsulated in the <tt class="docutils literal">run</tt> method of the <tt class="docutils literal">SimpleTask</tt>
@@ -114,8 +114,14 @@ INFO: Done scheduling tasks
 INFO: Running Worker with 1 processes
 DEBUG: Asking scheduler for work...
 DEBUG: Pending tasks: 1
-INFO: [pid 13776] Worker Worker(salt=1212123, host=YourHost, username=yourUserName, pid=1111) running   SimpleTask()
-Hello World!
+INFO: [pid 30338] Worker Worker(salt=329921834, host=G-ubuntu, username=myuser, pid=30338) running   SimpleTask()
+SimpleTask: Hello World!
+INFO: [pid 30338] Worker Worker(salt=329921834, host=G-ubuntu, username=myuser, pid=30338) done      SimpleTask()
+DEBUG: 1 running tasks, waiting for next task to finish
+DEBUG: Asking scheduler for work...
+INFO: Done
+INFO: There are no more tasks to run at this time
+INFO: Worker Worker(salt=329921834, host=G-ubuntu, username=myuser, pid=30338) was stopped. Shutting down Keep-Alive thread
 </pre>
 <p>There you go! You have learnt a basic example.</p>
 </div>
@@ -126,12 +132,38 @@ Lets modify the above code a little bit, so we can build a pipeline.</p>
 <script src="https://gist.github.com/gouthambs/8740bf4ff5e8269fd56a.js"></script><p>This example is built on top of the &quot;Hello World&quot; example from above. The <tt class="docutils literal">SimpleTask</tt> outputs
 the text &quot;Hello World!&quot;. The <tt class="docutils literal">DecoratedTask</tt> takes this output from <tt class="docutils literal">SimpleTask</tt> and prefixes
 with the word &quot;Decorated&quot;.</p>
-<p>In this example, we have modified the output target for the <tt class="docutils literal">SimpleTask</tt> to a <tt class="docutils literal">luigi.LocalTarget</tt>.
-If you are running on a Linux/Unix based system, you might want to modify this path. So the
-<tt class="docutils literal">SimpleTask</tt> writes to the file system, and the <tt class="docutils literal">DecoratedTask</tt> reads from the file
-and prints the modified output.</p>
-<p>I use the <tt class="docutils literal">StreamTarget</tt> here just as a way to see the results on the console. Though you should
-not use this <tt class="docutils literal">StreamTarget</tt> for any production code.</p>
+<p>I use the <tt class="docutils literal">MockFile</tt> here just as a way to see the results on the console. This is
+usually a good testing tool, though I am not sure if it is production ready approach.</p>
+<p>The output for the above example would look like:</p>
+<pre class="literal-block">
+DEBUG: Checking if DecoratedTask() is complete
+INFO: Scheduled DecoratedTask() (PENDING)
+DEBUG: Checking if SimpleTask() is complete
+INFO: Scheduled SimpleTask() (PENDING)
+INFO: Done scheduling tasks
+INFO: Running Worker with 1 processes
+DEBUG: Asking scheduler for work...
+DEBUG: Pending tasks: 2
+INFO: [pid 30648] Worker Worker(salt=907129510, host=G-ubuntu, username=gouthaman, pid=30648) running   SimpleTask()
+SimpleTask: Hello World!
+INFO: [pid 30648] Worker Worker(salt=907129510, host=G-ubuntu, username=gouthaman, pid=30648) done      SimpleTask()
+DEBUG: 1 running tasks, waiting for next task to finish
+DEBUG: Asking scheduler for work...
+DEBUG: Pending tasks: 1
+INFO: [pid 30648] Worker Worker(salt=907129510, host=G-ubuntu, username=gouthaman, pid=30648) running   DecoratedTask()
+DecoratedTask: Decorated Hello World!
+
+INFO: [pid 30648] Worker Worker(salt=907129510, host=G-ubuntu, username=gouthaman, pid=30648) done      DecoratedTask()
+DEBUG: 1 running tasks, waiting for next task to finish
+DEBUG: Asking scheduler for work...
+INFO: Done
+INFO: There are no more tasks to run at this time
+INFO: Worker Worker(salt=907129510, host=G-ubuntu, username=gouthaman, pid=30648) was stopped. Shutting down Keep-Alive thread
+</pre>
+</div>
+<div class="section" id="conclusion">
+<h2>Conclusion</h2>
+<p>Here we learnt a really basic example that gives you basic idea on building Luigi based pipelines.</p>
 </div>
 
      <br>
@@ -147,19 +179,19 @@ not use this <tt class="docutils literal">StreamTarget</tt> for any production c
     <strong>Related Post</strong>
         <ul>
             <li>
+                <a href="http://gouthamanbalaraman.com/blog/asynchronous-python-logging-using-msmq.html">Asynchronous Python Logging Using MSMQ</a>
+            </li>
+            <li>
                 <a href="http://gouthamanbalaraman.com/blog/minimal-flask-login-example.html">Minimal Flask-Login Example</a>
             </li>
             <li>
                 <a href="http://gouthamanbalaraman.com/blog/distributed-processing-pandas.html">Multi-Processing With Pandas</a>
             </li>
             <li>
-                <a href="http://gouthamanbalaraman.com/blog/flask-app-directory-structure.html">Flask App Directory Structure</a>
+                <a href="http://gouthamanbalaraman.com/blog/securing-authentication-tokens.html">Securing Authentication Tokens</a>
             </li>
             <li>
-                <a href="http://gouthamanbalaraman.com/blog/sending-msmq-messages-using-python.html">Sending MSMQ Messages Using Python</a>
-            </li>
-            <li>
-                <a href="http://gouthamanbalaraman.com/blog/asynchronous-python-logging-using-msmq.html">Asynchronous Python Logging Using MSMQ</a>
+                <a href="http://gouthamanbalaraman.com/blog/python-multiprocessing-as-a-task-queue.html">Python Multiprocessing as a Task Queue</a>
             </li>
         </ul>
         <hr/>
