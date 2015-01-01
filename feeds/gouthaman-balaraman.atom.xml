@@ -6,10 +6,10 @@ building data pipelines, and we will start with a simple &amp;quot;Hello World!&
 an example.&lt;/p&gt;
 &lt;div class="section" id="luigi-basics"&gt;
 &lt;h2&gt;Luigi Basics&lt;/h2&gt;
-&lt;p&gt;In Luigi, a data pipeline is built by creating &lt;tt class="docutils literal"&gt;Task&lt;/tt&gt; objects. For every target, you can define
+&lt;p&gt;In Luigi, a data pipeline is built by defining &lt;tt class="docutils literal"&gt;Task&lt;/tt&gt; instances. For every &lt;tt class="docutils literal"&gt;Tas&lt;/tt&gt;, you can define
 its dependency by specifying the &lt;tt class="docutils literal"&gt;requires&lt;/tt&gt; method for the &lt;tt class="docutils literal"&gt;Task&lt;/tt&gt;. Every &lt;tt class="docutils literal"&gt;Task&lt;/tt&gt; can define
-an &lt;tt class="docutils literal"&gt;output&lt;/tt&gt; method to specify where the results of the &lt;tt class="docutils literal"&gt;Task&lt;/tt&gt; should go. Lets look at a
-simple example to get our feet wet, and gradually build towards complex cases.&lt;/p&gt;
+an &lt;tt class="docutils literal"&gt;output&lt;/tt&gt; method to specify the &lt;tt class="docutils literal"&gt;Target&lt;/tt&gt; where the results of the &lt;tt class="docutils literal"&gt;Task&lt;/tt&gt; should go. Lets look at a
+simple example to get our feet wet, and gradually build complex cases.&lt;/p&gt;
 &lt;/div&gt;
 &lt;div class="section" id="hello-world"&gt;
 &lt;h2&gt;Hello World!&lt;/h2&gt;
