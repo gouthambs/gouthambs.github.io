@@ -1429,6 +1429,19 @@ git push origin master
 &lt;/li&gt;
 &lt;/ul&gt;
 &lt;/div&gt;
+&lt;div class="section" id="branching-and-merging"&gt;
+&lt;h2&gt;Branching and Merging&lt;/h2&gt;
+&lt;p&gt;Say you have checked out a repository, and you want to work on a feature. Its a good idea to create a feature
+branch, to work on your modifications.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p class="first"&gt;To create a branch:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+git checkout -b myAwesomeFeature
+Switched to a new branch &amp;quot;myAwesomeFeature&amp;quot;
+&lt;/pre&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
 </summary><category term="git"></category><category term="programming"></category><category term="github"></category></entry><entry><title>Asynchronous Python Logging Using MSMQ</title><link href="http://gouthamanbalaraman.com/blog/asynchronous-python-logging-using-msmq.html" rel="alternate"></link><updated>2014-02-21T00:00:00-08:00</updated><author><name>Gouthaman Balaraman</name></author><id>tag:gouthamanbalaraman.com,2014-02-21:blog/asynchronous-python-logging-using-msmq.html</id><summary type="html">&lt;p&gt;If you have a web application running in Python, there can be a need for the logging to
 not interfere with the performance. Default file based loggers can lead to a slow down
 because of the constand disk writes. An alternate solution that can be quite handy is
