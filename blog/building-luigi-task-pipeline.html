@@ -89,12 +89,14 @@
       <!-- article content -->
      <p>It is incredibly easy to write a script to process some data in python. But if you
 have a lot of tasks that depend on each other, and you need to create a robust work
-flow, then thinking in terms of a data pipeline is useful. Luigi is a framework for
-building data pipelines, and we will start with a simple &quot;Hello World!&quot; equivalent of
-an example.</p>
+flow, then thinking in terms of a data pipeline is useful.</p>
+<p>Luigi is a framework for building data pipelines, and managing workflows. The onus of
+setting up each unit of work is on you as the developer. Luigi taks care of resolving dependencies,
+manages the overall workflow, and most importantly handles failures. As a bonus Luigi provides
+a rather nice visualization tool and a command line interface.</p>
 <div class="section" id="luigi-basics">
 <h2>Luigi Basics</h2>
-<p>In Luigi, a data pipeline is built by defining <tt class="docutils literal">Task</tt> instances. For every <tt class="docutils literal">Tas</tt>, you can define
+<p>In Luigi, a data pipeline is built by defining <tt class="docutils literal">Task</tt> instances. For every <tt class="docutils literal">Task</tt>, you can define
 its dependency by specifying the <tt class="docutils literal">requires</tt> method for the <tt class="docutils literal">Task</tt>. Every <tt class="docutils literal">Task</tt> can define
 an <tt class="docutils literal">output</tt> method to specify the <tt class="docutils literal">Target</tt> where the results of the <tt class="docutils literal">Task</tt> should go. Lets look at a
 simple example to get our feet wet, and gradually build complex cases.</p>
@@ -163,7 +165,7 @@ INFO: Worker Worker(salt=907129510, host=G-ubuntu, username=myuser, pid=30648) w
 </div>
 <div class="section" id="conclusion">
 <h2>Conclusion</h2>
-<p>Here we learnt a really basic example that gives you basic idea on building Luigi based pipelines.</p>
+<p>Here we learnt a really basic example that should give you some sense of building Luigi based task pipelines.</p>
 </div>
 
      <br>
@@ -179,19 +181,19 @@ INFO: Worker Worker(salt=907129510, host=G-ubuntu, username=myuser, pid=30648) w
     <strong>Related Post</strong>
         <ul>
             <li>
-                <a href="http://gouthamanbalaraman.com/blog/sending-msmq-messages-using-python.html">Sending MSMQ Messages Using Python</a>
+                <a href="http://gouthamanbalaraman.com/blog/flask-app-directory-structure.html">Flask App Directory Structure</a>
             </li>
             <li>
-                <a href="http://gouthamanbalaraman.com/blog/flask-app-directory-structure.html">Flask App Directory Structure</a>
+                <a href="http://gouthamanbalaraman.com/blog/asynchronous-python-logging-using-msmq.html">Asynchronous Python Logging Using MSMQ</a>
             </li>
             <li>
                 <a href="http://gouthamanbalaraman.com/blog/flask-track-usage.html">Flask Track Usage Primer</a>
             </li>
             <li>
-                <a href="http://gouthamanbalaraman.com/blog/minimal-flask-login-example.html">Minimal Flask-Login Example</a>
+                <a href="http://gouthamanbalaraman.com/blog/distributed-processing-pandas.html">Multi-Processing With Pandas</a>
             </li>
             <li>
-                <a href="http://gouthamanbalaraman.com/blog/distributed-processing-pandas.html">Multi-Processing With Pandas</a>
+                <a href="http://gouthamanbalaraman.com/blog/minimal-flask-login-example.html">Minimal Flask-Login Example</a>
             </li>
         </ul>
         <hr/>
