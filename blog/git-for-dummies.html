@@ -149,6 +149,14 @@ a particular branch you have to checkout.</p>
 git checkout master
 </pre>
 </li>
+<li><p class="first"><strong>Syncing origin with upstream</strong>: If you have forked a project and have been working on your fork for a while,
+what will happen is that the project that you originally forked from has advanced. Then you would need
+to sync your fork with upstream to ensure that your changes are still valid. This can be done by:</p>
+<pre class="literal-block">
+git merge upstream/master
+</pre>
+<p>Here I am syncing the <tt class="docutils literal">upstream/master</tt> with the local checked out project.</p>
+</li>
 </ul>
 </div>
 <div class="section" id="committing-code-changes">
@@ -183,10 +191,28 @@ git push origin master
 <p>Say you have checked out a repository, and you want to work on a feature. Its a good idea to create a feature
 branch, to work on your modifications.</p>
 <ul>
-<li><p class="first">To create a branch:</p>
+<li><p class="first"><strong>To create a branch</strong>:</p>
 <pre class="literal-block">
 git checkout -b myAwesomeFeature
 Switched to a new branch &quot;myAwesomeFeature&quot;
+</pre>
+</li>
+<li><p class="first"><strong>Deleting branches</strong>: To delete a local branch:</p>
+<pre class="literal-block">
+git branch -d myAwesomeFeature
+</pre>
+</li>
+<li><p class="first"><strong>List branches</strong>: To list local branches:</p>
+<pre class="literal-block">
+git branch
+</pre>
+<p>To list remote branches only:</p>
+<pre class="literal-block">
+git branch -r
+</pre>
+<p>To list all branches:</p>
+<pre class="literal-block">
+git branch -a
 </pre>
 </li>
 </ul>
@@ -205,19 +231,19 @@ Switched to a new branch &quot;myAwesomeFeature&quot;
     <strong>Related Post</strong>
         <ul>
             <li>
-                <a href="http://gouthamanbalaraman.com/blog/flask-app-directory-structure.html">Flask App Directory Structure</a>
+                <a href="http://gouthamanbalaraman.com/blog/minimal-lua-c-example.html">Minimal Lua C++ Example</a>
             </li>
             <li>
                 <a href="http://gouthamanbalaraman.com/blog/minimal-example-lua-function-cpp.html">Minimal Example of Calling Lua Functions from C++</a>
             </li>
             <li>
-                <a href="http://gouthamanbalaraman.com/blog/sending-msmq-messages-using-python.html">Sending MSMQ Messages Using Python</a>
+                <a href="http://gouthamanbalaraman.com/blog/building-luigi-task-pipeline.html">Building Task Pipelines Using Luigi</a>
             </li>
             <li>
-                <a href="http://gouthamanbalaraman.com/blog/minimal-lua-c-example.html">Minimal Lua C++ Example</a>
+                <a href="http://gouthamanbalaraman.com/blog/minimal-flask-login-example.html">Minimal Flask-Login Example</a>
             </li>
             <li>
-                <a href="http://gouthamanbalaraman.com/blog/python-multiprocessing-as-a-task-queue.html">Python Multiprocessing as a Task Queue</a>
+                <a href="http://gouthamanbalaraman.com/blog/flask-app-directory-structure.html">Flask App Directory Structure</a>
             </li>
         </ul>
         <hr/>

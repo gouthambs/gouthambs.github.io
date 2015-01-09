@@ -1402,6 +1402,14 @@ a particular branch you have to checkout.&lt;/p&gt;
 git checkout master
 &lt;/pre&gt;
 &lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;strong&gt;Syncing origin with upstream&lt;/strong&gt;: If you have forked a project and have been working on your fork for a while,
+what will happen is that the project that you originally forked from has advanced. Then you would need
+to sync your fork with upstream to ensure that your changes are still valid. This can be done by:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+git merge upstream/master
+&lt;/pre&gt;
+&lt;p&gt;Here I am syncing the &lt;tt class="docutils literal"&gt;upstream/master&lt;/tt&gt; with the local checked out project.&lt;/p&gt;
+&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/div&gt;
 &lt;div class="section" id="committing-code-changes"&gt;
@@ -1436,10 +1444,28 @@ git push origin master
 &lt;p&gt;Say you have checked out a repository, and you want to work on a feature. Its a good idea to create a feature
 branch, to work on your modifications.&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;&lt;p class="first"&gt;To create a branch:&lt;/p&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;strong&gt;To create a branch&lt;/strong&gt;:&lt;/p&gt;
 &lt;pre class="literal-block"&gt;
 git checkout -b myAwesomeFeature
 Switched to a new branch &amp;quot;myAwesomeFeature&amp;quot;
+&lt;/pre&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;strong&gt;Deleting branches&lt;/strong&gt;: To delete a local branch:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+git branch -d myAwesomeFeature
+&lt;/pre&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;strong&gt;List branches&lt;/strong&gt;: To list local branches:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+git branch
+&lt;/pre&gt;
+&lt;p&gt;To list remote branches only:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+git branch -r
+&lt;/pre&gt;
+&lt;p&gt;To list all branches:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+git branch -a
 &lt;/pre&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
