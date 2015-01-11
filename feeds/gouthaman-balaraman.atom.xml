@@ -142,7 +142,7 @@ caching.&lt;/li&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
 &lt;/div&gt;
-</summary><category term="programming"></category><category term="flask"></category><category term="python"></category></entry><entry><title>MySQL Cheatsheet</title><link href="http://gouthamanbalaraman.com/blog/mysql-cheatsheet.html" rel="alternate"></link><updated>2014-12-09T00:00:00-08:00</updated><author><name>Gouthaman Balaraman</name></author><id>tag:gouthamanbalaraman.com,2014-12-09:blog/mysql-cheatsheet.html</id><summary type="html">&lt;p&gt;Here are some notes and commands on MySQL administration&lt;/p&gt;
+</summary><category term="programming"></category><category term="flask"></category><category term="python"></category></entry><entry><title>MySQL Cheat Sheet</title><link href="http://gouthamanbalaraman.com/blog/mysql-cheatsheet.html" rel="alternate"></link><updated>2014-12-09T00:00:00-08:00</updated><author><name>Gouthaman Balaraman</name></author><id>tag:gouthamanbalaraman.com,2014-12-09:blog/mysql-cheatsheet.html</id><summary type="html">&lt;p&gt;Here are some notes and commands on MySQL administration&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;p class="first"&gt;Create a database:&lt;/p&gt;
 &lt;pre class="literal-block"&gt;
