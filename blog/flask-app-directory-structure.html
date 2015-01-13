@@ -95,7 +95,7 @@
 </ul>
 <div class="section" id="directory-structure">
 <h2>Directory Structure</h2>
-<p>I want to build a website based on the Flask framework for python. I recommend you organize you <tt class="docutils literal">app</tt> as:</p>
+<p>If you want to build a website based on the Flask framework for python. I recommend you organize you <tt class="docutils literal">app</tt> as:</p>
 <pre class="literal-block">
 ~/AppHome
         |-- run.py
@@ -146,9 +146,25 @@ corresponding to your sub-package.</li>
 to wrap your database queries using models defined in <tt class="docutils literal">models.py that ``views.py</tt> can call.
 In the future, should you want to add caching support, you can directly add here and have the benefit of
 caching.</li>
+<li><tt class="docutils literal">templates</tt> folder with its sub structure contains the Flask <tt class="docutils literal">html</tt> templates. By mirroring the template
+sub-folders similar to the app sub-modules, it would be easier to maintain.</li>
+<li><tt class="docutils literal">static</tt> folder contains all the static resources. By isolating this folder, we could use other servers
+such as <tt class="docutils literal">nginx</tt> to serve static content.</li>
 </ul>
 </li>
+<li><tt class="docutils literal">setup.py</tt> script can contain the setup script to bundle your app.</li>
+<li><tt class="docutils literal">MANIFEST.in</tt> typically contains resources about your package, other resources that you wish to
+package.</li>
+<li><tt class="docutils literal">Requirements.txt</tt> is the place to put all your package dependencies. You can easily install all dependencies
+using <tt class="docutils literal">pip</tt>.</li>
+<li><tt class="docutils literal">env</tt> can contain your virtual environment for development.</li>
+<li><tt class="docutils literal">manage.py</tt> is the place to put any kinds of <tt class="docutils literal">Flask</tt> related scripts, such as database migrations.</li>
+<li><tt class="docutils literal">migrations</tt> folder containing  configuration and scripts associated with database migration.</li>
+<li><tt class="docutils literal">etl</tt> is a folder to put scripts related to ETL tasks. This is something that you could move to a
+different location. Though sometimes it is convenient to group them if you do need to share code with your app.</li>
+<li><tt class="docutils literal">fabfile.py</tt> to automate local and server side tasks that need to be run often.</li>
 </ul>
+<p>... to be continued.</p>
 </div>
 
      <br>
@@ -170,13 +186,13 @@ caching.</li>
                 <a href="http://gouthamanbalaraman.com/blog/securing-authentication-tokens.html">Securing Authentication Tokens</a>
             </li>
             <li>
+                <a href="http://gouthamanbalaraman.com/blog/zeo-as-a-windows-service.html">Running ZEO as a Windows Service</a>
+            </li>
+            <li>
                 <a href="http://gouthamanbalaraman.com/blog/sending-msmq-messages-using-python.html">Sending MSMQ Messages Using Python</a>
             </li>
             <li>
-                <a href="http://gouthamanbalaraman.com/blog/python-multiprocessing-as-a-task-queue.html">Python Multiprocessing as a Task Queue</a>
-            </li>
-            <li>
-                <a href="http://gouthamanbalaraman.com/blog/building-luigi-task-pipeline.html">Building Task Pipelines Using Luigi</a>
+                <a href="http://gouthamanbalaraman.com/blog/distributed-processing-pandas.html">Multi-Processing With Pandas</a>
             </li>
         </ul>
         <hr/>
