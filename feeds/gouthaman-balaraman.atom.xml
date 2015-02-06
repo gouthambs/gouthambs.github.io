@@ -1,85 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Gouthaman Balaraman</title><link href="http://gouthamanbalaraman.com/" rel="alternate"></link><link href="http://gouthamanbalaraman.com/feeds/gouthaman-balaraman.atom.xml" rel="self"></link><id>http://gouthamanbalaraman.com/</id><updated>2014-12-31T00:00:00-08:00</updated><entry><title>Building Task Pipelines Using Luigi</title><link href="http://gouthamanbalaraman.com/blog/building-luigi-task-pipeline.html" rel="alternate"></link><updated>2014-12-31T00:00:00-08:00</updated><author><name>Gouthaman Balaraman</name></author><id>tag:gouthamanbalaraman.com,2014-12-31:blog/building-luigi-task-pipeline.html</id><summary type="html">&lt;p&gt;It is incredibly easy to write a script to process some data in python. But if you
-have a lot of tasks that depend on each other, and you need to create a robust work
-flow, then thinking in terms of a data pipeline is useful.&lt;/p&gt;
-&lt;p&gt;Luigi is a framework for building data pipelines, and managing workflows. The onus of
-setting up each unit of work is on you as the developer. Luigi taks care of resolving dependencies,
-manages the overall workflow, and most importantly handles failures. As a bonus Luigi provides
-a rather nice visualization tool and a command line interface.&lt;/p&gt;
-&lt;div class="section" id="luigi-basics"&gt;
-&lt;h2&gt;Luigi Basics&lt;/h2&gt;
-&lt;p&gt;In Luigi, a data pipeline is built by defining &lt;tt class="docutils literal"&gt;Task&lt;/tt&gt; instances. For every &lt;tt class="docutils literal"&gt;Task&lt;/tt&gt;, you can define
-its dependency by specifying the &lt;tt class="docutils literal"&gt;requires&lt;/tt&gt; method for the &lt;tt class="docutils literal"&gt;Task&lt;/tt&gt;. Every &lt;tt class="docutils literal"&gt;Task&lt;/tt&gt; can define
-an &lt;tt class="docutils literal"&gt;output&lt;/tt&gt; method to specify the &lt;tt class="docutils literal"&gt;Target&lt;/tt&gt; where the results of the &lt;tt class="docutils literal"&gt;Task&lt;/tt&gt; should go. Lets look at a
-simple example to get our feet wet, and gradually build complex cases.&lt;/p&gt;
-&lt;/div&gt;
-&lt;div class="section" id="hello-world"&gt;
-&lt;h2&gt;Hello World!&lt;/h2&gt;
-&lt;script src="https://gist.github.com/gouthambs/873ebce21062914f038d.js"&gt;&lt;/script&gt;&lt;p&gt;This example is rather self-explanatory. I use the &lt;tt class="docutils literal"&gt;MockFile&lt;/tt&gt; class as
-the &lt;tt class="docutils literal"&gt;Target&lt;/tt&gt; just so that I can print to console. One can instead use &lt;tt class="docutils literal"&gt;luigi.LocalFileTarget(filename)&lt;/tt&gt;
-to use the file system as the target. The &lt;tt class="docutils literal"&gt;main_task_cls&lt;/tt&gt; specifies &lt;tt class="docutils literal"&gt;SimpleTask&lt;/tt&gt; as the task
-to run. The actual processing part of the task is encapsulated in the &lt;tt class="docutils literal"&gt;run&lt;/tt&gt; method of the &lt;tt class="docutils literal"&gt;SimpleTask&lt;/tt&gt;
-class.&lt;/p&gt;
-&lt;p&gt;When the script is executed, you should see an output that looks like this:&lt;/p&gt;
-&lt;pre class="literal-block"&gt;
-DEBUG: Checking if SimpleTask() is complete
-INFO: Scheduled SimpleTask() (PENDING)
-INFO: Done scheduling tasks
-INFO: Running Worker with 1 processes
-DEBUG: Asking scheduler for work...
-DEBUG: Pending tasks: 1
-INFO: [pid 30338] Worker Worker(salt=329921834, host=G-ubuntu, username=myuser, pid=30338) running   SimpleTask()
-SimpleTask: Hello World!
-INFO: [pid 30338] Worker Worker(salt=329921834, host=G-ubuntu, username=myuser, pid=30338) done      SimpleTask()
-DEBUG: 1 running tasks, waiting for next task to finish
-DEBUG: Asking scheduler for work...
-INFO: Done
-INFO: There are no more tasks to run at this time
-INFO: Worker Worker(salt=329921834, host=G-ubuntu, username=myuser, pid=30338) was stopped. Shutting down Keep-Alive thread
-&lt;/pre&gt;
-&lt;p&gt;There you go! You have learnt a basic example.&lt;/p&gt;
-&lt;/div&gt;
-&lt;div class="section" id="linked-task-example"&gt;
-&lt;h2&gt;Linked Task Example&lt;/h2&gt;
-&lt;p&gt;The above example was a good starter example. Though we did not really do much in terms of building a pipeline.
-Lets modify the above code a little bit, so we can build a pipeline.&lt;/p&gt;
-&lt;script src="https://gist.github.com/gouthambs/8740bf4ff5e8269fd56a.js"&gt;&lt;/script&gt;&lt;p&gt;This example is built on top of the &amp;quot;Hello World&amp;quot; example from above. The &lt;tt class="docutils literal"&gt;SimpleTask&lt;/tt&gt; outputs
-the text &amp;quot;Hello World!&amp;quot;. The &lt;tt class="docutils literal"&gt;DecoratedTask&lt;/tt&gt; takes this output from &lt;tt class="docutils literal"&gt;SimpleTask&lt;/tt&gt; and prefixes
-with the word &amp;quot;Decorated&amp;quot;.&lt;/p&gt;
-&lt;p&gt;I use the &lt;tt class="docutils literal"&gt;MockFile&lt;/tt&gt; here just as a way to see the results on the console. This is
-usually a good testing tool, though I am not sure if it is production ready approach.&lt;/p&gt;
-&lt;p&gt;The output for the above example would look like:&lt;/p&gt;
-&lt;pre class="literal-block"&gt;
-DEBUG: Checking if DecoratedTask() is complete
-INFO: Scheduled DecoratedTask() (PENDING)
-DEBUG: Checking if SimpleTask() is complete
-INFO: Scheduled SimpleTask() (PENDING)
-INFO: Done scheduling tasks
-INFO: Running Worker with 1 processes
-DEBUG: Asking scheduler for work...
-DEBUG: Pending tasks: 2
-INFO: [pid 30648] Worker Worker(salt=907129510, host=G-ubuntu, username=myuser, pid=30648) running   SimpleTask()
-SimpleTask: Hello World!
-INFO: [pid 30648] Worker Worker(salt=907129510, host=G-ubuntu, username=v, pid=30648) done      SimpleTask()
-DEBUG: 1 running tasks, waiting for next task to finish
-DEBUG: Asking scheduler for work...
-DEBUG: Pending tasks: 1
-INFO: [pid 30648] Worker Worker(salt=907129510, host=G-ubuntu, username=myuser, pid=30648) running   DecoratedTask()
-DecoratedTask: Decorated Hello World!
-
-INFO: [pid 30648] Worker Worker(salt=907129510, host=G-ubuntu, username=myuser, pid=30648) done      DecoratedTask()
-DEBUG: 1 running tasks, waiting for next task to finish
-DEBUG: Asking scheduler for work...
-INFO: Done
-INFO: There are no more tasks to run at this time
-INFO: Worker Worker(salt=907129510, host=G-ubuntu, username=myuser, pid=30648) was stopped. Shutting down Keep-Alive thread
-&lt;/pre&gt;
-&lt;/div&gt;
-&lt;div class="section" id="conclusion"&gt;
-&lt;h2&gt;Conclusion&lt;/h2&gt;
-&lt;p&gt;Here we learnt a really basic example that should give you some sense of building Luigi based task pipelines.&lt;/p&gt;
-&lt;/div&gt;
-</summary><category term="Programming"></category><category term="Python"></category><category term="Luigi"></category></entry><entry><title>Using SQLAlchemy in Luigi Workflow Pipeline</title><link href="http://gouthamanbalaraman.com/blog/sqlalchemy-luigi-workflow-pipeline.html" rel="alternate"></link><updated>2014-12-31T00:00:00-08:00</updated><author><name>Gouthaman Balaraman</name></author><id>tag:gouthamanbalaraman.com,2014-12-31:blog/sqlalchemy-luigi-workflow-pipeline.html</id><summary type="html">&lt;p&gt;The &lt;tt class="docutils literal"&gt;luigi.contrib.sqla&lt;/tt&gt; provides support for SQLAlchmey through the &lt;tt class="docutils literal"&gt;SQLAlchemyTarget&lt;/tt&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Gouthaman Balaraman</title><link href="http://gouthamanbalaraman.com/" rel="alternate"></link><link href="http://gouthamanbalaraman.com/feeds/gouthaman-balaraman.atom.xml" rel="self"></link><id>http://gouthamanbalaraman.com/</id><updated>2015-02-05T00:00:00-08:00</updated><entry><title>Using SQLAlchemy in Luigi Workflow Pipeline</title><link href="http://gouthamanbalaraman.com/blog/sqlalchemy-luigi-workflow-pipeline.html" rel="alternate"></link><updated>2015-02-05T00:00:00-08:00</updated><author><name>Gouthaman Balaraman</name></author><id>tag:gouthamanbalaraman.com,2015-02-05:blog/sqlalchemy-luigi-workflow-pipeline.html</id><summary type="html">&lt;p&gt;The &lt;tt class="docutils literal"&gt;luigi.contrib.sqla&lt;/tt&gt; provides support for SQLAlchmey through the &lt;tt class="docutils literal"&gt;SQLAlchemyTarget&lt;/tt&gt;
 for storing in databases supported by SQLAlchemy. The user would be responsible for
 installing the required database driver to connect using &lt;tt class="docutils literal"&gt;SQLAlchemy&lt;/tt&gt;.&lt;/p&gt;
 &lt;p&gt;Minimal example of a job to copy data to database using &lt;tt class="docutils literal"&gt;SQLAlchemy&lt;/tt&gt; is as shown
@@ -176,7 +96,87 @@ tab separated.&lt;/p&gt;
 &lt;cite&gt;chunk_size&lt;/cite&gt;. The default is 5000. This is the number of rows that will be inserted in
 a transaction at a time. Depending on the size of the inserts, this value can be tuned
 for performance.&lt;/p&gt;
-</summary><category term="Programming"></category><category term="Python"></category><category term="Luigi"></category><category term="SQLAlchemy"></category></entry><entry><title>Flask App Directory Structure</title><link href="http://gouthamanbalaraman.com/blog/flask-app-directory-structure.html" rel="alternate"></link><updated>2014-12-29T00:00:00-08:00</updated><author><name>Gouthaman Balaraman</name></author><id>tag:gouthamanbalaraman.com,2014-12-29:blog/flask-app-directory-structure.html</id><summary type="html">&lt;p&gt;This post is a summary of what I learnt perusing a lot of websites. My goal here is to:&lt;/p&gt;
+</summary><category term="Programming"></category><category term="Python"></category><category term="Luigi"></category><category term="SQLAlchemy"></category></entry><entry><title>Building Task Pipelines Using Luigi</title><link href="http://gouthamanbalaraman.com/blog/building-luigi-task-pipeline.html" rel="alternate"></link><updated>2014-12-31T00:00:00-08:00</updated><author><name>Gouthaman Balaraman</name></author><id>tag:gouthamanbalaraman.com,2014-12-31:blog/building-luigi-task-pipeline.html</id><summary type="html">&lt;p&gt;It is incredibly easy to write a script to process some data in python. But if you
+have a lot of tasks that depend on each other, and you need to create a robust work
+flow, then thinking in terms of a data pipeline is useful.&lt;/p&gt;
+&lt;p&gt;Luigi is a framework for building data pipelines, and managing workflows. The onus of
+setting up each unit of work is on you as the developer. Luigi taks care of resolving dependencies,
+manages the overall workflow, and most importantly handles failures. As a bonus Luigi provides
+a rather nice visualization tool and a command line interface.&lt;/p&gt;
+&lt;div class="section" id="luigi-basics"&gt;
+&lt;h2&gt;Luigi Basics&lt;/h2&gt;
+&lt;p&gt;In Luigi, a data pipeline is built by defining &lt;tt class="docutils literal"&gt;Task&lt;/tt&gt; instances. For every &lt;tt class="docutils literal"&gt;Task&lt;/tt&gt;, you can define
+its dependency by specifying the &lt;tt class="docutils literal"&gt;requires&lt;/tt&gt; method for the &lt;tt class="docutils literal"&gt;Task&lt;/tt&gt;. Every &lt;tt class="docutils literal"&gt;Task&lt;/tt&gt; can define
+an &lt;tt class="docutils literal"&gt;output&lt;/tt&gt; method to specify the &lt;tt class="docutils literal"&gt;Target&lt;/tt&gt; where the results of the &lt;tt class="docutils literal"&gt;Task&lt;/tt&gt; should go. Lets look at a
+simple example to get our feet wet, and gradually build complex cases.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="hello-world"&gt;
+&lt;h2&gt;Hello World!&lt;/h2&gt;
+&lt;script src="https://gist.github.com/gouthambs/873ebce21062914f038d.js"&gt;&lt;/script&gt;&lt;p&gt;This example is rather self-explanatory. I use the &lt;tt class="docutils literal"&gt;MockFile&lt;/tt&gt; class as
+the &lt;tt class="docutils literal"&gt;Target&lt;/tt&gt; just so that I can print to console. One can instead use &lt;tt class="docutils literal"&gt;luigi.LocalFileTarget(filename)&lt;/tt&gt;
+to use the file system as the target. The &lt;tt class="docutils literal"&gt;main_task_cls&lt;/tt&gt; specifies &lt;tt class="docutils literal"&gt;SimpleTask&lt;/tt&gt; as the task
+to run. The actual processing part of the task is encapsulated in the &lt;tt class="docutils literal"&gt;run&lt;/tt&gt; method of the &lt;tt class="docutils literal"&gt;SimpleTask&lt;/tt&gt;
+class.&lt;/p&gt;
+&lt;p&gt;When the script is executed, you should see an output that looks like this:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+DEBUG: Checking if SimpleTask() is complete
+INFO: Scheduled SimpleTask() (PENDING)
+INFO: Done scheduling tasks
+INFO: Running Worker with 1 processes
+DEBUG: Asking scheduler for work...
+DEBUG: Pending tasks: 1
+INFO: [pid 30338] Worker Worker(salt=329921834, host=G-ubuntu, username=myuser, pid=30338) running   SimpleTask()
+SimpleTask: Hello World!
+INFO: [pid 30338] Worker Worker(salt=329921834, host=G-ubuntu, username=myuser, pid=30338) done      SimpleTask()
+DEBUG: 1 running tasks, waiting for next task to finish
+DEBUG: Asking scheduler for work...
+INFO: Done
+INFO: There are no more tasks to run at this time
+INFO: Worker Worker(salt=329921834, host=G-ubuntu, username=myuser, pid=30338) was stopped. Shutting down Keep-Alive thread
+&lt;/pre&gt;
+&lt;p&gt;There you go! You have learnt a basic example.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="linked-task-example"&gt;
+&lt;h2&gt;Linked Task Example&lt;/h2&gt;
+&lt;p&gt;The above example was a good starter example. Though we did not really do much in terms of building a pipeline.
+Lets modify the above code a little bit, so we can build a pipeline.&lt;/p&gt;
+&lt;script src="https://gist.github.com/gouthambs/8740bf4ff5e8269fd56a.js"&gt;&lt;/script&gt;&lt;p&gt;This example is built on top of the &amp;quot;Hello World&amp;quot; example from above. The &lt;tt class="docutils literal"&gt;SimpleTask&lt;/tt&gt; outputs
+the text &amp;quot;Hello World!&amp;quot;. The &lt;tt class="docutils literal"&gt;DecoratedTask&lt;/tt&gt; takes this output from &lt;tt class="docutils literal"&gt;SimpleTask&lt;/tt&gt; and prefixes
+with the word &amp;quot;Decorated&amp;quot;.&lt;/p&gt;
+&lt;p&gt;I use the &lt;tt class="docutils literal"&gt;MockFile&lt;/tt&gt; here just as a way to see the results on the console. This is
+usually a good testing tool, though I am not sure if it is production ready approach.&lt;/p&gt;
+&lt;p&gt;The output for the above example would look like:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+DEBUG: Checking if DecoratedTask() is complete
+INFO: Scheduled DecoratedTask() (PENDING)
+DEBUG: Checking if SimpleTask() is complete
+INFO: Scheduled SimpleTask() (PENDING)
+INFO: Done scheduling tasks
+INFO: Running Worker with 1 processes
+DEBUG: Asking scheduler for work...
+DEBUG: Pending tasks: 2
+INFO: [pid 30648] Worker Worker(salt=907129510, host=G-ubuntu, username=myuser, pid=30648) running   SimpleTask()
+SimpleTask: Hello World!
+INFO: [pid 30648] Worker Worker(salt=907129510, host=G-ubuntu, username=v, pid=30648) done      SimpleTask()
+DEBUG: 1 running tasks, waiting for next task to finish
+DEBUG: Asking scheduler for work...
+DEBUG: Pending tasks: 1
+INFO: [pid 30648] Worker Worker(salt=907129510, host=G-ubuntu, username=myuser, pid=30648) running   DecoratedTask()
+DecoratedTask: Decorated Hello World!
+
+INFO: [pid 30648] Worker Worker(salt=907129510, host=G-ubuntu, username=myuser, pid=30648) done      DecoratedTask()
+DEBUG: 1 running tasks, waiting for next task to finish
+DEBUG: Asking scheduler for work...
+INFO: Done
+INFO: There are no more tasks to run at this time
+INFO: Worker Worker(salt=907129510, host=G-ubuntu, username=myuser, pid=30648) was stopped. Shutting down Keep-Alive thread
+&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div class="section" id="conclusion"&gt;
+&lt;h2&gt;Conclusion&lt;/h2&gt;
+&lt;p&gt;Here we learnt a really basic example that should give you some sense of building Luigi based task pipelines.&lt;/p&gt;
+&lt;/div&gt;
+</summary><category term="Programming"></category><category term="Python"></category><category term="Luigi"></category></entry><entry><title>Flask App Directory Structure</title><link href="http://gouthamanbalaraman.com/blog/flask-app-directory-structure.html" rel="alternate"></link><updated>2014-12-29T00:00:00-08:00</updated><author><name>Gouthaman Balaraman</name></author><id>tag:gouthamanbalaraman.com,2014-12-29:blog/flask-app-directory-structure.html</id><summary type="html">&lt;p&gt;This post is a summary of what I learnt perusing a lot of websites. My goal here is to:&lt;/p&gt;
 &lt;ul class="simple"&gt;
 &lt;li&gt;summarize the directory structure for a flask app&lt;/li&gt;
 &lt;li&gt;setup SQLAlchemy with migrations&lt;/li&gt;
