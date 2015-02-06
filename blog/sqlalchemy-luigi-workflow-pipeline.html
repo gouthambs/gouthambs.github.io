@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Using SQLAlchemy in Luigi Workflow Pipeline - Gouthaman Balaraman</title>
+        <!-- All the meta tags -->
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+        <meta property="og:type" content="article"/>
+        <meta property="og:title" content="Using SQLAlchemy in Luigi Workflow Pipeline"/>
+        <meta property="og:url" content="http://gouthamanbalaraman.com/blog/sqlalchemy-luigi-workflow-pipeline.html"/>
+        <meta property="og:description" content="This is a very basic example on using Luigi sqla contrib module in a task pipeline while using luigi"/>
+        <!--link href="http://gouthamanbalaraman.com/theme/static/css/journal-bootstrap.min.css" rel="stylesheet" /-->
+        <link href="http://gouthamanbalaraman.com/theme/static/css/bootstrap.readable.min.css" rel="stylesheet" />
+        <link href="http://gouthamanbalaraman.com/theme/static/css/style.css" rel="stylesheet" />
+        
+        <!-- Google Analytics -->
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-46714334-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    /*Update Your Analytics Tracking Code to Support Display Advertising by uncommenting the following 
+    instead of the above line */    
+    /*ga.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'stats.g.doubleclick.net/dc.js';*/
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+        <!-- Using MathJax, with the delimiters $ -->
+        <!-- Conflict with pygments for the .mo and .mi -->
+        <script type="text/x-mathjax-config">
+          MathJax.Hub.Config({
+          "HTML-CSS": {
+          styles: {
+          ".MathJax .mo, .MathJax .mi": {color: "black ! important"}}
+          },
+          tex2jax: {inlineMath: [['$','$'], ['\\\\(','\\\\)']],processEscapes: true}
+          });
+        </script>
+
+        <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
+
+    
+    </head>
+
+    <body>
+      <div class="navbar navbar-default navbar-fixed-top">
+          <div class="container">
+            <div class="navbar-header">
+              <a href="http://gouthamanbalaraman.com" class="navbar-brand">Gouthaman Balaraman</a>
+              <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+            </div>
+            <div class="navbar-collapse collapse" id="navbar-main">
+              <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="http://gouthamanbalaraman.com/pages/about.html">About</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                <div class="col-md-10 col-md-offset-1">
+    <div class="page-header">
+        <h1>Using SQLAlchemy in Luigi Workflow Pipeline</h1>
+     <!--span class="glyphicon glyphicon-calendar"></span-->&nbsp;December 31, 2014 
+     &nbsp;&nbsp;
+     <!--span class="glyphicon glyphicon-user"></span--> by  
+     <a class="url fn" href="http://gouthamanbalaraman.com/author/gouthaman-balaraman.html">&nbsp;Gouthaman Balaraman </a>
+     </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-10 col-md-offset-1">
+
+<div class="bs-docs-section">
+    
+     <!-- article description -->
+         <p class="lead">This is a very basic example on using Luigi sqla contrib module in a task pipeline while using luigi</p>
+      
+      <!-- article content -->
+     <p>The <tt class="docutils literal">luigi.contrib.sqla</tt> provides support for SQLAlchmey through the <tt class="docutils literal">SQLAlchemyTarget</tt>
+for storing in databases supported by SQLAlchemy. The user would be responsible for
+installing the required database driver to connect using <tt class="docutils literal">SQLAlchemy</tt>.</p>
+<p>Minimal example of a job to copy data to database using <tt class="docutils literal">SQLAlchemy</tt> is as shown
+below:</p>
+<div class="highlight"><pre><span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">String</span>
+<span class="kn">import</span> <span class="nn">luigi</span>
+<span class="kn">from</span> <span class="nn">luigi.contrib</span> <span class="kn">import</span> <span class="n">sqla</span>
+
+<span class="k">class</span> <span class="nc">SQLATask</span><span class="p">(</span><span class="n">sqla</span><span class="o">.</span><span class="n">CopyToTable</span><span class="p">):</span>
+    <span class="c"># columns defines the table schema, with each element corresponding</span>
+    <span class="c"># to a column in the format (args, kwargs) which will be sent to</span>
+    <span class="c"># the sqlalchemy.Column(*args, **kwargs)</span>
+    <span class="n">columns</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="p">([</span><span class="s">&quot;item&quot;</span><span class="p">,</span> <span class="n">String</span><span class="p">(</span><span class="mi">64</span><span class="p">)],</span> <span class="p">{</span><span class="s">&quot;primary_key&quot;</span><span class="p">:</span> <span class="bp">True</span><span class="p">}),</span>
+        <span class="p">([</span><span class="s">&quot;property&quot;</span><span class="p">,</span> <span class="n">String</span><span class="p">(</span><span class="mi">64</span><span class="p">)],</span> <span class="p">{})</span>
+    <span class="p">]</span>
+    <span class="n">connection_string</span> <span class="o">=</span> <span class="s">&quot;sqlite://&quot;</span>  <span class="c"># in memory SQLite database</span>
+    <span class="n">table</span> <span class="o">=</span> <span class="s">&quot;item_property&quot;</span>  <span class="c"># name of the table to store data</span>
+
+    <span class="k">def</span> <span class="nf">rows</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="p">[(</span><span class="s">&quot;item1&quot;</span> <span class="s">&quot;property1&quot;</span><span class="p">),</span> <span class="p">(</span><span class="s">&quot;item2&quot;</span><span class="p">,</span> <span class="s">&quot;property2&quot;</span><span class="p">)]:</span>
+            <span class="k">yield</span> <span class="n">row</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">task</span> <span class="o">=</span> <span class="n">SQLATask</span><span class="p">()</span>
+    <span class="n">luigi</span><span class="o">.</span><span class="n">build</span><span class="p">([</span><span class="n">task</span><span class="p">],</span> <span class="n">local_scheduler</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+</pre></div>
+<p>If the target table where the data needs to be copied already exists, then
+the column schema definition can be skipped and instead the reflect flag
+can be set as True. Here is a modified version of the above example:</p>
+<div class="highlight"><pre><span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">String</span>
+<span class="kn">import</span> <span class="nn">luigi</span>
+<span class="kn">from</span> <span class="nn">luigi.contrib</span> <span class="kn">import</span> <span class="n">sqla</span>
+
+<span class="k">class</span> <span class="nc">SQLATask</span><span class="p">(</span><span class="n">sqla</span><span class="o">.</span><span class="n">CopyToTable</span><span class="p">):</span>
+    <span class="c"># If database table is already created, then the schema can be loaded</span>
+    <span class="c"># by setting the reflect flag to True</span>
+    <span class="n">reflect</span> <span class="o">=</span> <span class="bp">True</span>
+    <span class="n">connection_string</span> <span class="o">=</span> <span class="s">&quot;sqlite://&quot;</span>  <span class="c"># in memory SQLite database</span>
+    <span class="n">table</span> <span class="o">=</span> <span class="s">&quot;item_property&quot;</span>  <span class="c"># name of the table to store data</span>
+
+    <span class="k">def</span> <span class="nf">rows</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="p">[(</span><span class="s">&quot;item1&quot;</span> <span class="s">&quot;property1&quot;</span><span class="p">),</span> <span class="p">(</span><span class="s">&quot;item2&quot;</span><span class="p">,</span> <span class="s">&quot;property2&quot;</span><span class="p">)]:</span>
+            <span class="k">yield</span> <span class="n">row</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">task</span> <span class="o">=</span> <span class="n">SQLATask</span><span class="p">()</span>
+    <span class="n">luigi</span><span class="o">.</span><span class="n">build</span><span class="p">([</span><span class="n">task</span><span class="p">],</span> <span class="n">local_scheduler</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+</pre></div>
+<p>In the above examples, the data that needs to be copied was directly provided by
+overriding the rows method. Alternately, if the data comes from another task, the
+modified example would look as shown below:</p>
+<div class="highlight"><pre><span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">String</span>
+<span class="kn">import</span> <span class="nn">luigi</span>
+<span class="kn">from</span> <span class="nn">luigi.contrib</span> <span class="kn">import</span> <span class="n">sqla</span>
+<span class="kn">from</span> <span class="nn">luigi.mock</span> <span class="kn">import</span> <span class="n">MockFile</span>
+
+<span class="k">class</span> <span class="nc">BaseTask</span><span class="p">(</span><span class="n">luigi</span><span class="o">.</span><span class="n">Task</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">output</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">MockFile</span><span class="p">(</span><span class="s">&quot;BaseTask&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">out</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">output</span><span class="p">()</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s">&quot;w&quot;</span><span class="p">)</span>
+        <span class="n">TASK_LIST</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;item</span><span class="si">%d</span><span class="se">\t</span><span class="s">property</span><span class="si">%d</span><span class="se">\n</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">)]</span>
+        <span class="k">for</span> <span class="n">task</span> <span class="ow">in</span> <span class="n">TASK_LIST</span><span class="p">:</span>
+            <span class="n">out</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">task</span><span class="p">)</span>
+        <span class="n">out</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+<span class="k">class</span> <span class="nc">SQLATask</span><span class="p">(</span><span class="n">sqla</span><span class="o">.</span><span class="n">CopyToTable</span><span class="p">):</span>
+    <span class="c"># columns defines the table schema, with each element corresponding</span>
+    <span class="c"># to a column in the format (args, kwargs) which will be sent to</span>
+    <span class="c"># the sqlalchemy.Column(*args, **kwargs)</span>
+    <span class="n">columns</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="p">([</span><span class="s">&quot;item&quot;</span><span class="p">,</span> <span class="n">String</span><span class="p">(</span><span class="mi">64</span><span class="p">)],</span> <span class="p">{</span><span class="s">&quot;primary_key&quot;</span><span class="p">:</span> <span class="bp">True</span><span class="p">}),</span>
+        <span class="p">([</span><span class="s">&quot;property&quot;</span><span class="p">,</span> <span class="n">String</span><span class="p">(</span><span class="mi">64</span><span class="p">)],</span> <span class="p">{})</span>
+    <span class="p">]</span>
+    <span class="n">connection_string</span> <span class="o">=</span> <span class="s">&quot;sqlite://&quot;</span>  <span class="c"># in memory SQLite database</span>
+    <span class="n">table</span> <span class="o">=</span> <span class="s">&quot;item_property&quot;</span>  <span class="c"># name of the table to store data</span>
+
+    <span class="k">def</span> <span class="nf">requires</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">BaseTask</span><span class="p">()</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">task1</span><span class="p">,</span> <span class="n">task2</span> <span class="o">=</span> <span class="n">SQLATask</span><span class="p">(),</span> <span class="n">BaseTask</span><span class="p">()</span>
+    <span class="n">luigi</span><span class="o">.</span><span class="n">build</span><span class="p">([</span><span class="n">task1</span><span class="p">,</span> <span class="n">task2</span><span class="p">],</span> <span class="n">local_scheduler</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+</pre></div>
+<p>In the above example, the output from <cite>BaseTask</cite> is copied into the
+database. Here we did not have to implement the <cite>rows</cite> method because
+by default <cite>rows</cite> implementation assumes every line is a row with
+column values separated by a tab. One can define <cite>column_separator</cite>
+option for the task if the values are say comma separated instead of
+tab separated.</p>
+<p>The other option to <cite>sqla.CopyToTable</cite> that can be of help with performance aspect is the
+<cite>chunk_size</cite>. The default is 5000. This is the number of rows that will be inserted in
+a transaction at a time. Depending on the size of the inserts, this value can be tuned
+for performance.</p>
+
+     <br>
+     
+     <!-- article tags-->
+        <span class="glyphicon glyphicon-tags"></span>&nbsp;&nbsp;
+            <span class="label label-default"><a href="http://gouthamanbalaraman.com/tag/programming.html">Programming</a></span>&nbsp;&nbsp;
+            <span class="label label-default"><a href="http://gouthamanbalaraman.com/tag/python.html">Python</a></span>&nbsp;&nbsp;
+            <span class="label label-default"><a href="http://gouthamanbalaraman.com/tag/luigi.html">Luigi</a></span>&nbsp;&nbsp;
+            <span class="label label-default"><a href="http://gouthamanbalaraman.com/tag/sqlalchemy.html">SQLAlchemy</a></span>&nbsp;&nbsp;
+        <br>
+     <hr/>
+    
+    <strong>Related Post</strong>
+        <ul>
+            <li>
+                <a href="http://gouthamanbalaraman.com/blog/building-luigi-task-pipeline.html">Building Task Pipelines Using Luigi</a>
+            </li>
+            <li>
+                <a href="http://gouthamanbalaraman.com/blog/securing-authentication-tokens.html">Securing Authentication Tokens</a>
+            </li>
+            <li>
+                <a href="http://gouthamanbalaraman.com/blog/python-multiprocessing-as-a-task-queue.html">Python Multiprocessing as a Task Queue</a>
+            </li>
+            <li>
+                <a href="http://gouthamanbalaraman.com/blog/flask-track-usage.html">Flask Track Usage Primer</a>
+            </li>
+            <li>
+                <a href="http://gouthamanbalaraman.com/blog/asynchronous-python-logging-using-msmq.html">Asynchronous Python Logging Using MSMQ</a>
+            </li>
+        </ul>
+        <hr/>
+
+     <!-- article comments -->
+    <div class="comment">
+        <div id="disqus_thread"></div> <!-- comment app container -->
+    </div>
+	<!-- Comment BEGIN -->
+    <script type="text/javascript">
+        var disqus_shortname = 'gouthamanbalaramancom'; // required: replace example with your forum shortname
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+     <!-- Comment END -->
+</div>    
+                </div>
+               
+            </div>
+            <div class="row">
+                <div class="col-md-10 col-md-offset-1">
+                </div>
+            </div>
+            <footer id="contentinfo" class="footer">
+                    <address id="about" class="vcard body">
+                    &copy; <a href="http://gouthamanbalaraman.com">Gouthaman Balaraman</a> Proudly powered by <a href="http://getpelican.com/">Pelican</a>
+                    </address><!-- /#about -->
+            </footer><!-- /#contentinfo -->
+        </div><!-- container -->
+    </body>
+</html>
