@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>QuantLib Basics - Gouthaman Balaraman</title>
+        <!-- All the meta tags -->
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+        <meta property="og:type" content="article"/>
+        <meta property="og:title" content="QuantLib Basics"/>
+        <meta property="og:url" content="http://gouthamanbalaraman.com/blog/quantlib-basics.html"/>
+        <meta property="og:description" content="This post will walk through some of the basics of QuantLib library."/>
+        <!--link href="http://gouthamanbalaraman.com/theme/static/css/journal-bootstrap.min.css" rel="stylesheet" /-->
+        <link href="http://gouthamanbalaraman.com/theme/static/css/bootstrap.readable.min.css" rel="stylesheet" />
+        <link href="http://gouthamanbalaraman.com/theme/static/css/style.css" rel="stylesheet" />
+        
+        <!-- Google Analytics -->
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-46714334-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    /*Update Your Analytics Tracking Code to Support Display Advertising by uncommenting the following 
+    instead of the above line */    
+    /*ga.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'stats.g.doubleclick.net/dc.js';*/
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+        <!-- Using MathJax, with the delimiters $ -->
+        <!-- Conflict with pygments for the .mo and .mi -->
+        <script type="text/x-mathjax-config">
+          MathJax.Hub.Config({
+          "HTML-CSS": {
+          styles: {
+          ".MathJax .mo, .MathJax .mi": {color: "black ! important"}}
+          },
+          tex2jax: {inlineMath: [['$','$'], ['\\\\(','\\\\)']],processEscapes: true}
+          });
+        </script>
+
+        <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
+
+    
+    </head>
+
+    <body>
+      <div class="navbar navbar-default navbar-fixed-top">
+          <div class="container">
+            <div class="navbar-header">
+              <a href="http://gouthamanbalaraman.com" class="navbar-brand">Gouthaman Balaraman</a>
+              <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+            </div>
+            <div class="navbar-collapse collapse" id="navbar-main">
+              <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="http://gouthamanbalaraman.com/pages/about.html">About</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                <div class="col-md-10 col-md-offset-1">
+    <div class="page-header">
+        <h1>QuantLib Basics</h1>
+     <!--span class="glyphicon glyphicon-calendar"></span-->&nbsp;March 24, 2015 
+     &nbsp;&nbsp;
+     <!--span class="glyphicon glyphicon-user"></span--> by  
+     <a class="url fn" href="http://gouthamanbalaraman.com/author/gouthaman-balaraman.html">&nbsp;Gouthaman Balaraman </a>
+     </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-10 col-md-offset-1">
+
+<div class="bs-docs-section">
+    
+     <!-- article description -->
+         <p class="lead">This post will walk through some of the basics of QuantLib library.</p>
+      
+      <!-- article content -->
+     <p>I installed the latest version of QuantLib (V1.5) and the python wrapper to QuantLib.
+My experiments lately have been to get a feel for the QuantLib API. The library itself
+is so extensive, that it is rather hard for a new comer to get going. In this post
+we will look into some of the basic classes and functionality in QuantLib.</p>
+<p>Let us import QuantLib as:</p>
+<pre class="code python literal-block">
+<span class="kn">import</span> <span class="nn">QuantLib</span> <span class="kn">as</span> <span class="nn">ql</span>
+</pre>
+<div class="section" id="time-submodule">
+<h2>Time SubModule</h2>
+<p>The <tt class="docutils literal">ql/time</tt> sub-folder implements various time related classes. Lets take a look
+at the <tt class="docutils literal">Date</tt> object which can be constructed as <tt class="docutils literal">Date(date, month, year)</tt>.</p>
+<pre class="code python literal-block">
+<span class="o">&gt;&gt;&gt;</span> <span class="n">date</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">Date</span><span class="p">(</span><span class="mi">31</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2015</span><span class="p">)</span> <span class="c"># 31 March, 2015</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="k">print</span> <span class="n">date</span>
+<span class="n">March</span> <span class="mi">31</span><span class="n">st</span><span class="p">,</span> <span class="mi">2015</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">date</span><span class="o">.</span><span class="n">dayOfMonth</span><span class="p">()</span>
+<span class="mi">31</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">date</span><span class="o">.</span><span class="n">month</span><span class="p">()</span>
+<span class="mi">3</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">date</span><span class="o">.</span><span class="n">year</span><span class="p">()</span>
+<span class="mi">2015</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">date</span><span class="o">.</span><span class="n">weekday</span><span class="p">()</span> <span class="o">==</span> <span class="n">ql</span><span class="o">.</span><span class="n">Tuesday</span>
+<span class="bp">True</span>
+
+<span class="c"># arithmetic with dates</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">date</span> <span class="o">+</span> <span class="mi">1</span>  <span class="c"># add a day</span>
+<span class="n">Date</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">2015</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">date</span> <span class="o">-</span> <span class="mi">1</span>  <span class="c"># subtract a day</span>
+<span class="n">Date</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">2015</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">date</span> <span class="o">+</span> <span class="n">ql</span><span class="o">.</span><span class="n">Period</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">ql</span><span class="o">.</span><span class="n">Months</span><span class="p">)</span>
+<span class="n">Date</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">2015</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">date</span> <span class="o">+</span> <span class="n">ql</span><span class="o">.</span><span class="n">Period</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">ql</span><span class="o">.</span><span class="n">Weeks</span><span class="p">)</span>
+<span class="n">Date</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">2015</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">date</span> <span class="o">+</span> <span class="n">ql</span><span class="o">.</span><span class="n">Period</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">ql</span><span class="o">.</span><span class="n">Years</span><span class="p">)</span>
+<span class="n">Date</span><span class="p">(</span><span class="mi">31</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">2016</span><span class="p">)</span>
+
+<span class="c"># logical operations</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">ql</span><span class="o">.</span><span class="n">Date</span><span class="p">(</span><span class="mi">31</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2015</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">ql</span><span class="o">.</span><span class="n">Date</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2015</span><span class="p">)</span>
+<span class="bp">True</span>
+</pre>
+<p>The <tt class="docutils literal">Schedule</tt> object can be used to construct a list of dates such as coupon payments.
+Lets look at some examples.</p>
+<pre class="code python literal-block">
+<span class="o">&gt;&gt;&gt;</span> <span class="n">date1</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">Date</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2015</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">date2</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">Date</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2016</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">tenor</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">Period</span><span class="p">(</span><span class="n">ql</span><span class="o">.</span><span class="n">Monthly</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">calendar</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">UnitedStates</span><span class="p">()</span>
+<span class="o">&gt;&gt;&gt;</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">schedule</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">Schedule</span><span class="p">(</span><span class="n">date1</span><span class="p">,</span> <span class="n">date2</span><span class="p">,</span> <span class="n">tenor</span><span class="p">,</span> <span class="n">calendar</span><span class="p">,</span> <span class="n">ql</span><span class="o">.</span><span class="n">Following</span><span class="p">,</span>
+                           <span class="n">ql</span><span class="o">.</span><span class="n">Following</span><span class="p">,</span> <span class="n">ql</span><span class="o">.</span><span class="n">DateGeneration</span><span class="o">.</span><span class="n">Forward</span><span class="p">,</span> <span class="bp">False</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="nb">list</span><span class="p">(</span><span class="n">schedule</span><span class="p">)</span>
+<span class="p">[</span><span class="n">Date</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2015</span><span class="p">),</span>
+ <span class="n">Date</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2015</span><span class="p">),</span>
+ <span class="n">Date</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">2015</span><span class="p">),</span>
+ <span class="n">Date</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">2015</span><span class="p">),</span>
+ <span class="n">Date</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">2015</span><span class="p">),</span>
+ <span class="n">Date</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">2015</span><span class="p">),</span>
+ <span class="n">Date</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">2015</span><span class="p">),</span>
+ <span class="n">Date</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">2015</span><span class="p">),</span>
+ <span class="n">Date</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">9</span><span class="p">,</span><span class="mi">2015</span><span class="p">),</span>
+ <span class="n">Date</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="mi">2015</span><span class="p">),</span>
+ <span class="n">Date</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">11</span><span class="p">,</span><span class="mi">2015</span><span class="p">),</span>
+ <span class="n">Date</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">12</span><span class="p">,</span><span class="mi">2015</span><span class="p">),</span>
+ <span class="n">Date</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2016</span><span class="p">)]</span>
+</pre>
+<p>Here we have generated a <tt class="docutils literal">Schedule</tt> object that will contain dates between <tt class="docutils literal">date1</tt> and <tt class="docutils literal">date2</tt> with the
+<tt class="docutils literal">tenor</tt> specifying the <tt class="docutils literal">Period</tt> to be every Month. The <tt class="docutils literal">calendar</tt> object is used for determining holidays.
+The two arguments following the <tt class="docutils literal">calendar</tt> in the <tt class="docutils literal">Schedule</tt> constructor are the <tt class="docutils literal">BussinessDayConvention</tt>.
+Here we chose the convention to be the day following holidays. That is why we see that holidays are excluded
+in the list of dates.</p>
+</div>
+<div class="section" id="conclusion">
+<h2>Conclusion</h2>
+<p>In this post we looked at the basics of QuantLib, more specifically the time module. We learnt to
+create <tt class="docutils literal">Date</tt> objects and <tt class="docutils literal">Schedules</tt>.</p>
+</div>
+
+     <br>
+     
+     <!-- article tags-->
+        <span class="glyphicon glyphicon-tags"></span>&nbsp;&nbsp;
+            <span class="label label-default"><a href="http://gouthamanbalaraman.com/tag/python.html">python</a></span>&nbsp;&nbsp;
+            <span class="label label-default"><a href="http://gouthamanbalaraman.com/tag/finance.html">finance</a></span>&nbsp;&nbsp;
+            <span class="label label-default"><a href="http://gouthamanbalaraman.com/tag/quantlib.html">quantlib</a></span>&nbsp;&nbsp;
+        <br>
+     <hr/>
+    
+    <strong>Related Post</strong>
+        <ul>
+            <li>
+                <a href="http://gouthamanbalaraman.com/blog/zeo-as-a-windows-service.html">Running ZEO as a Windows Service</a>
+            </li>
+            <li>
+                <a href="http://gouthamanbalaraman.com/blog/flask-app-directory-structure.html">Flask App Directory Structure</a>
+            </li>
+            <li>
+                <a href="http://gouthamanbalaraman.com/blog/building-luigi-task-pipeline.html">Building Task Pipelines Using Luigi</a>
+            </li>
+            <li>
+                <a href="http://gouthamanbalaraman.com/blog/a-short-story-of-wall-street.html">A Short Story of Wall Street</a>
+            </li>
+            <li>
+                <a href="http://gouthamanbalaraman.com/blog/sending-msmq-messages-using-python.html">Sending MSMQ Messages Using Python</a>
+            </li>
+        </ul>
+        <hr/>
+
+     <!-- article comments -->
+    <div class="comment">
+        <div id="disqus_thread"></div> <!-- comment app container -->
+    </div>
+	<!-- Comment BEGIN -->
+    <script type="text/javascript">
+        var disqus_shortname = 'gouthamanbalaramancom'; // required: replace example with your forum shortname
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+     <!-- Comment END -->
+</div>    
+                </div>
+               
+            </div>
+            <div class="row">
+                <div class="col-md-10 col-md-offset-1">
+                </div>
+            </div>
+            <footer id="contentinfo" class="footer">
+                    <address id="about" class="vcard body">
+                    &copy; <a href="http://gouthamanbalaraman.com">Gouthaman Balaraman</a> Proudly powered by <a href="http://getpelican.com/">Pelican</a>
+                    </address><!-- /#about -->
+            </footer><!-- /#contentinfo -->
+        </div><!-- container -->
+    </body>
+</html>
