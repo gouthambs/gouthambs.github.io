@@ -71,10 +71,44 @@ The two arguments following the &lt;tt class="docutils literal"&gt;calendar&lt;/
 Here we chose the convention to be the day following holidays. That is why we see that holidays are excluded
 in the list of dates.&lt;/p&gt;
 &lt;/div&gt;
+&lt;div class="section" id="interest-rate"&gt;
+&lt;h2&gt;Interest Rate&lt;/h2&gt;
+&lt;p&gt;The &lt;tt class="docutils literal"&gt;InterestRate&lt;/tt&gt; class can be used to store the interest rate with the compounding type, day count and
+the frequency of compounding.&lt;/p&gt;
+&lt;pre class="code python literal-block"&gt;
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;annualRate&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mf"&gt;0.05&lt;/span&gt;
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;dayCount&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;ql&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;ActualActual&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;compoundType&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;ql&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Compounded&lt;/span&gt;
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;frequency&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;ql&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Annual&lt;/span&gt;
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;interestRate&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;ql&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;InterestRate&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;annualRate&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;dayCount&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;compoundType&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;frequency&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;
+&lt;p&gt;Here we have created an interest rate of 5.0% compounded annually, using ActualActual daycount convention.
+A given interest rate can be converted into other types using the &lt;tt class="docutils literal"&gt;equivalentRate&lt;/tt&gt; method as :&lt;/p&gt;
+&lt;pre class="code python literal-block"&gt;
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;newFrequency&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;ql&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Semiannual&lt;/span&gt;
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;effectiveRate&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;interestRate&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;equivalentRate&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;compoundType&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;newFrequency&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;effectiveRate&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;rate&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;span class="mf"&gt;0.04939015319191986&lt;/span&gt;
+&lt;/pre&gt;
+&lt;p&gt;Here we have converted into a semi-annual compounding type. A 4.939% of semi-annual compounding
+is equivalent to 5.0% annual compounding. This should mean, that both should give identical
+discount factors. Lets check that:&lt;/p&gt;
+&lt;pre class="code python literal-block"&gt;
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;interestRate&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;discountFactor&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mf"&gt;1.0&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="mf"&gt;0.9523809523809523&lt;/span&gt;
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;effectiveRate&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;discountFactor&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mf"&gt;1.0&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="mf"&gt;0.9523809523809521&lt;/span&gt;
+&lt;/pre&gt;
+&lt;p&gt;So this means that pricing bonds using either interest rate convention should give the same
+net present value (barring some precision).&lt;/p&gt;
+&lt;/div&gt;
 &lt;div class="section" id="conclusion"&gt;
 &lt;h2&gt;Conclusion&lt;/h2&gt;
-&lt;p&gt;In this post we looked at the basics of QuantLib, more specifically the time module. We learnt to
-create &lt;tt class="docutils literal"&gt;Date&lt;/tt&gt; objects and &lt;tt class="docutils literal"&gt;Schedules&lt;/tt&gt;.&lt;/p&gt;
+&lt;p&gt;In this post we looked at the basics of QuantLib:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;We learnt how to use &lt;tt class="docutils literal"&gt;Date&lt;/tt&gt; and &lt;tt class="docutils literal"&gt;Schedule&lt;/tt&gt; classes from the &lt;tt class="docutils literal"&gt;time&lt;/tt&gt; sub-module&lt;/li&gt;
+&lt;li&gt;we learnt how to use the &lt;tt class="docutils literal"&gt;InterestRate&lt;/tt&gt; class&lt;/li&gt;
+&lt;/ul&gt;
 &lt;/div&gt;
 </description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Gouthaman Balaraman</dc:creator><pubDate>Tue, 24 Mar 2015 00:00:00 -0700</pubDate><guid>tag:gouthamanbalaraman.com,2015-03-24:blog/quantlib-basics.html</guid><category>python</category><category>finance</category><category>quantlib</category></item><item><title>Using SQLAlchemy in Luigi Workflow Pipeline</title><link>http://gouthamanbalaraman.com/blog/sqlalchemy-luigi-workflow-pipeline.html</link><description>&lt;p&gt;The &lt;tt class="docutils literal"&gt;luigi.contrib.sqla&lt;/tt&gt; provides support for SQLAlchmey through the &lt;tt class="docutils literal"&gt;SQLAlchemyTarget&lt;/tt&gt;
 for storing in databases supported by SQLAlchemy. The user would be responsible for

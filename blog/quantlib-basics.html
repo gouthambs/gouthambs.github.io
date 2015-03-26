@@ -159,10 +159,44 @@ The two arguments following the <tt class="docutils literal">calendar</tt> in th
 Here we chose the convention to be the day following holidays. That is why we see that holidays are excluded
 in the list of dates.</p>
 </div>
+<div class="section" id="interest-rate">
+<h2>Interest Rate</h2>
+<p>The <tt class="docutils literal">InterestRate</tt> class can be used to store the interest rate with the compounding type, day count and
+the frequency of compounding.</p>
+<pre class="code python literal-block">
+<span class="o">&gt;&gt;&gt;</span> <span class="n">annualRate</span> <span class="o">=</span> <span class="mf">0.05</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">dayCount</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">ActualActual</span><span class="p">()</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">compoundType</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">Compounded</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">frequency</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">Annual</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">interestRate</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">InterestRate</span><span class="p">(</span><span class="n">annualRate</span><span class="p">,</span> <span class="n">dayCount</span><span class="p">,</span> <span class="n">compoundType</span><span class="p">,</span> <span class="n">frequency</span><span class="p">)</span>
+</pre>
+<p>Here we have created an interest rate of 5.0% compounded annually, using ActualActual daycount convention.
+A given interest rate can be converted into other types using the <tt class="docutils literal">equivalentRate</tt> method as :</p>
+<pre class="code python literal-block">
+<span class="o">&gt;&gt;&gt;</span> <span class="n">newFrequency</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">Semiannual</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">effectiveRate</span> <span class="o">=</span> <span class="n">interestRate</span><span class="o">.</span><span class="n">equivalentRate</span><span class="p">(</span><span class="n">compoundType</span><span class="p">,</span> <span class="n">newFrequency</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">effectiveRate</span><span class="o">.</span><span class="n">rate</span><span class="p">()</span>
+<span class="mf">0.04939015319191986</span>
+</pre>
+<p>Here we have converted into a semi-annual compounding type. A 4.939% of semi-annual compounding
+is equivalent to 5.0% annual compounding. This should mean, that both should give identical
+discount factors. Lets check that:</p>
+<pre class="code python literal-block">
+<span class="o">&gt;&gt;&gt;</span> <span class="n">interestRate</span><span class="o">.</span><span class="n">discountFactor</span><span class="p">(</span><span class="mf">1.0</span><span class="p">)</span>
+<span class="mf">0.9523809523809523</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">effectiveRate</span><span class="o">.</span><span class="n">discountFactor</span><span class="p">(</span><span class="mf">1.0</span><span class="p">)</span>
+<span class="mf">0.9523809523809521</span>
+</pre>
+<p>So this means that pricing bonds using either interest rate convention should give the same
+net present value (barring some precision).</p>
+</div>
 <div class="section" id="conclusion">
 <h2>Conclusion</h2>
-<p>In this post we looked at the basics of QuantLib, more specifically the time module. We learnt to
-create <tt class="docutils literal">Date</tt> objects and <tt class="docutils literal">Schedules</tt>.</p>
+<p>In this post we looked at the basics of QuantLib:</p>
+<ul class="simple">
+<li>We learnt how to use <tt class="docutils literal">Date</tt> and <tt class="docutils literal">Schedule</tt> classes from the <tt class="docutils literal">time</tt> sub-module</li>
+<li>we learnt how to use the <tt class="docutils literal">InterestRate</tt> class</li>
+</ul>
 </div>
 
      <br>
@@ -178,19 +212,19 @@ create <tt class="docutils literal">Date</tt> objects and <tt class="docutils li
     <strong>Related Post</strong>
         <ul>
             <li>
-                <a href="http://gouthamanbalaraman.com/blog/zeo-as-a-windows-service.html">Running ZEO as a Windows Service</a>
+                <a href="http://gouthamanbalaraman.com/blog/minimal-flask-login-example.html">Minimal Flask-Login Example</a>
+            </li>
+            <li>
+                <a href="http://gouthamanbalaraman.com/blog/sending-msmq-messages-using-python.html">Sending MSMQ Messages Using Python</a>
+            </li>
+            <li>
+                <a href="http://gouthamanbalaraman.com/blog/asynchronous-python-logging-using-msmq.html">Asynchronous Python Logging Using MSMQ</a>
             </li>
             <li>
                 <a href="http://gouthamanbalaraman.com/blog/flask-app-directory-structure.html">Flask App Directory Structure</a>
             </li>
             <li>
-                <a href="http://gouthamanbalaraman.com/blog/building-luigi-task-pipeline.html">Building Task Pipelines Using Luigi</a>
-            </li>
-            <li>
-                <a href="http://gouthamanbalaraman.com/blog/a-short-story-of-wall-street.html">A Short Story of Wall Street</a>
-            </li>
-            <li>
-                <a href="http://gouthamanbalaraman.com/blog/sending-msmq-messages-using-python.html">Sending MSMQ Messages Using Python</a>
+                <a href="http://gouthamanbalaraman.com/blog/python-multiprocessing-as-a-task-queue.html">Python Multiprocessing as a Task Queue</a>
             </li>
         </ul>
         <hr/>
