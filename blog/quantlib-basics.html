@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>QuantLib Basics - Gouthaman Balaraman</title>
+        <title>Introduction to QuantLib - Gouthaman Balaraman</title>
         <!-- All the meta tags -->
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
         <meta property="og:type" content="article"/>
-        <meta property="og:title" content="QuantLib Basics"/>
+        <meta property="og:title" content="Introduction to QuantLib"/>
         <meta property="og:url" content="http://gouthamanbalaraman.com/blog/quantlib-basics.html"/>
         <meta property="og:description" content="This post will walk through some of the basics of QuantLib library."/>
         <!--link href="http://gouthamanbalaraman.com/theme/static/css/journal-bootstrap.min.css" rel="stylesheet" /-->
@@ -70,7 +70,7 @@
             <div class="row">
                 <div class="col-md-10 col-md-offset-1">
     <div class="page-header">
-        <h1>QuantLib Basics</h1>
+        <h1>Introduction to QuantLib</h1>
      <!--span class="glyphicon glyphicon-calendar"></span-->&nbsp;March 24, 2015 
      &nbsp;&nbsp;
      <!--span class="glyphicon glyphicon-user"></span--> by  
@@ -162,7 +162,8 @@ in the list of dates.</p>
 <div class="section" id="interest-rate">
 <h2>Interest Rate</h2>
 <p>The <tt class="docutils literal">InterestRate</tt> class can be used to store the interest rate with the compounding type, day count and
-the frequency of compounding.</p>
+the frequency of compounding. Below we show how to create an interest rate of 5.0% compounded annually,
+using Actual/Actual day count convention.</p>
 <pre class="code python literal-block">
 <span class="o">&gt;&gt;&gt;</span> <span class="n">annualRate</span> <span class="o">=</span> <span class="mf">0.05</span>
 <span class="o">&gt;&gt;&gt;</span> <span class="n">dayCount</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">ActualActual</span><span class="p">()</span>
@@ -170,14 +171,38 @@ the frequency of compounding.</p>
 <span class="o">&gt;&gt;&gt;</span> <span class="n">frequency</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">Annual</span>
 <span class="o">&gt;&gt;&gt;</span> <span class="n">interestRate</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">InterestRate</span><span class="p">(</span><span class="n">annualRate</span><span class="p">,</span> <span class="n">dayCount</span><span class="p">,</span> <span class="n">compoundType</span><span class="p">,</span> <span class="n">frequency</span><span class="p">)</span>
 </pre>
-<p>Here we have created an interest rate of 5.0% compounded annually, using ActualActual daycount convention.
-A given interest rate can be converted into other types using the <tt class="docutils literal">equivalentRate</tt> method as :</p>
+<p>Lets say if you invest a dollar at the interest rate described by <tt class="docutils literal">interestRate</tt>, the
+<tt class="docutils literal">compoundFactor</tt> method gives you how much your investment will be worth after <tt class="docutils literal">t</tt> years.
+Below we show that the value returned by <tt class="docutils literal">compoundFactor</tt> for 2 years agrees with
+the expected compounding formula.</p>
+<blockquote>
+<pre class="code python literal-block">
+<span class="o">&gt;&gt;&gt;</span> <span class="n">interestRate</span><span class="o">.</span><span class="n">compoundFactor</span><span class="p">(</span><span class="mf">2.0</span><span class="p">)</span>
+<span class="mf">1.1025</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">+</span> <span class="n">annualRate</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="mf">1.0</span> <span class="o">+</span> <span class="n">annualRate</span><span class="p">)</span>  <span class="c"># Check the above calculation</span>
+<span class="mf">1.1025</span>
+</pre>
+</blockquote>
+<p>The <tt class="docutils literal">discountFactor</tt> method returns the reciprocal of the <tt class="docutils literal">compoundFactor</tt> method.
+The discount factor is useful while calculating the present value of future cashflows.</p>
+<pre class="code python literal-block">
+<span class="o">&gt;&gt;&gt;</span> <span class="n">interestRate</span><span class="o">.</span><span class="n">discountFactor</span><span class="p">(</span><span class="mf">2.0</span><span class="p">)</span>
+<span class="mf">0.9070294784580498</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="n">interestRate</span><span class="o">.</span><span class="n">compoundFactor</span><span class="p">(</span><span class="mf">2.0</span><span class="p">)</span>
+<span class="mf">0.9070294784580498</span>
+</pre>
+<p>A given interest rate can be converted into other types using the <tt class="docutils literal">equivalentRate</tt> method as :</p>
 <pre class="code python literal-block">
 <span class="o">&gt;&gt;&gt;</span> <span class="n">newFrequency</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">Semiannual</span>
 <span class="o">&gt;&gt;&gt;</span> <span class="n">effectiveRate</span> <span class="o">=</span> <span class="n">interestRate</span><span class="o">.</span><span class="n">equivalentRate</span><span class="p">(</span><span class="n">compoundType</span><span class="p">,</span> <span class="n">newFrequency</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
 <span class="o">&gt;&gt;&gt;</span> <span class="n">effectiveRate</span><span class="o">.</span><span class="n">rate</span><span class="p">()</span>
 <span class="mf">0.04939015319191986</span>
 </pre>
+<p>The <tt class="docutils literal">InterestRate</tt> class also has an <tt class="docutils literal">impliedRate</tt> method. The <tt class="docutils literal">impliedRate</tt> method
+takes compound factor to return the implied rate. The <tt class="docutils literal">impliedRate</tt> method
+is a static method in the <tt class="docutils literal">InterestRate</tt> class and can be used without an
+instance of <tt class="docutils literal">InterestRate</tt>. Internally the <tt class="docutils literal">equivalentRate</tt> method invokes
+the <tt class="docutils literal">impliedRate</tt> method in its calculations.</p>
 <p>Here we have converted into a semi-annual compounding type. A 4.939% of semi-annual compounding
 is equivalent to 5.0% annual compounding. This should mean, that both should give identical
 discount factors. Lets check that:</p>
@@ -212,19 +237,19 @@ net present value (barring some precision).</p>
     <strong>Related Post</strong>
         <ul>
             <li>
-                <a href="http://gouthamanbalaraman.com/blog/minimal-flask-login-example.html">Minimal Flask-Login Example</a>
-            </li>
-            <li>
-                <a href="http://gouthamanbalaraman.com/blog/sending-msmq-messages-using-python.html">Sending MSMQ Messages Using Python</a>
-            </li>
-            <li>
-                <a href="http://gouthamanbalaraman.com/blog/asynchronous-python-logging-using-msmq.html">Asynchronous Python Logging Using MSMQ</a>
+                <a href="http://gouthamanbalaraman.com/blog/sqlalchemy-luigi-workflow-pipeline.html">Using SQLAlchemy in Luigi Workflow Pipeline</a>
             </li>
             <li>
                 <a href="http://gouthamanbalaraman.com/blog/flask-app-directory-structure.html">Flask App Directory Structure</a>
             </li>
             <li>
-                <a href="http://gouthamanbalaraman.com/blog/python-multiprocessing-as-a-task-queue.html">Python Multiprocessing as a Task Queue</a>
+                <a href="http://gouthamanbalaraman.com/blog/sending-msmq-messages-using-python.html">Sending MSMQ Messages Using Python</a>
+            </li>
+            <li>
+                <a href="http://gouthamanbalaraman.com/blog/option-model-handbook-part-I-introduction-to-option-models.html">Option Model Handbook, Part I: Introduction to Option Models</a>
+            </li>
+            <li>
+                <a href="http://gouthamanbalaraman.com/blog/securing-authentication-tokens.html">Securing Authentication Tokens</a>
             </li>
         </ul>
         <hr/>

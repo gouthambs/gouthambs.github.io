@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Gouthaman Balaraman</title><link href="http://gouthamanbalaraman.com/" rel="alternate"></link><link href="http://gouthamanbalaraman.com/feeds/gouthaman-balaraman.atom.xml" rel="self"></link><id>http://gouthamanbalaraman.com/</id><updated>2015-03-24T00:00:00-07:00</updated><entry><title>QuantLib Basics</title><link href="http://gouthamanbalaraman.com/blog/quantlib-basics.html" rel="alternate"></link><updated>2015-03-24T00:00:00-07:00</updated><author><name>Gouthaman Balaraman</name></author><id>tag:gouthamanbalaraman.com,2015-03-24:blog/quantlib-basics.html</id><summary type="html">&lt;p&gt;I installed the latest version of QuantLib (V1.5) and the python wrapper to QuantLib.
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Gouthaman Balaraman</title><link href="http://gouthamanbalaraman.com/" rel="alternate"></link><link href="http://gouthamanbalaraman.com/feeds/gouthaman-balaraman.atom.xml" rel="self"></link><id>http://gouthamanbalaraman.com/</id><updated>2015-03-24T00:00:00-07:00</updated><entry><title>Introduction to QuantLib</title><link href="http://gouthamanbalaraman.com/blog/quantlib-basics.html" rel="alternate"></link><updated>2015-03-24T00:00:00-07:00</updated><author><name>Gouthaman Balaraman</name></author><id>tag:gouthamanbalaraman.com,2015-03-24:blog/quantlib-basics.html</id><summary type="html">&lt;p&gt;I installed the latest version of QuantLib (V1.5) and the python wrapper to QuantLib.
 My experiments lately have been to get a feel for the QuantLib API. The library itself
 is so extensive, that it is rather hard for a new comer to get going. In this post
 we will look into some of the basic classes and functionality in QuantLib.&lt;/p&gt;
@@ -74,7 +74,8 @@ in the list of dates.&lt;/p&gt;
 &lt;div class="section" id="interest-rate"&gt;
 &lt;h2&gt;Interest Rate&lt;/h2&gt;
 &lt;p&gt;The &lt;tt class="docutils literal"&gt;InterestRate&lt;/tt&gt; class can be used to store the interest rate with the compounding type, day count and
-the frequency of compounding.&lt;/p&gt;
+the frequency of compounding. Below we show how to create an interest rate of 5.0% compounded annually,
+using Actual/Actual day count convention.&lt;/p&gt;
 &lt;pre class="code python literal-block"&gt;
 &lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;annualRate&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mf"&gt;0.05&lt;/span&gt;
 &lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;dayCount&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;ql&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;ActualActual&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
@@ -82,14 +83,38 @@ the frequency of compounding.&lt;/p&gt;
 &lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;frequency&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;ql&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Annual&lt;/span&gt;
 &lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;interestRate&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;ql&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;InterestRate&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;annualRate&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;dayCount&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;compoundType&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;frequency&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 &lt;/pre&gt;
-&lt;p&gt;Here we have created an interest rate of 5.0% compounded annually, using ActualActual daycount convention.
-A given interest rate can be converted into other types using the &lt;tt class="docutils literal"&gt;equivalentRate&lt;/tt&gt; method as :&lt;/p&gt;
+&lt;p&gt;Lets say if you invest a dollar at the interest rate described by &lt;tt class="docutils literal"&gt;interestRate&lt;/tt&gt;, the
+&lt;tt class="docutils literal"&gt;compoundFactor&lt;/tt&gt; method gives you how much your investment will be worth after &lt;tt class="docutils literal"&gt;t&lt;/tt&gt; years.
+Below we show that the value returned by &lt;tt class="docutils literal"&gt;compoundFactor&lt;/tt&gt; for 2 years agrees with
+the expected compounding formula.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;pre class="code python literal-block"&gt;
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;interestRate&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;compoundFactor&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mf"&gt;2.0&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="mf"&gt;1.1025&lt;/span&gt;
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mf"&gt;1.0&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;annualRate&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mf"&gt;1.0&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;annualRate&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;  &lt;span class="c"&gt;# Check the above calculation&lt;/span&gt;
+&lt;span class="mf"&gt;1.1025&lt;/span&gt;
+&lt;/pre&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;The &lt;tt class="docutils literal"&gt;discountFactor&lt;/tt&gt; method returns the reciprocal of the &lt;tt class="docutils literal"&gt;compoundFactor&lt;/tt&gt; method.
+The discount factor is useful while calculating the present value of future cashflows.&lt;/p&gt;
+&lt;pre class="code python literal-block"&gt;
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;interestRate&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;discountFactor&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mf"&gt;2.0&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="mf"&gt;0.9070294784580498&lt;/span&gt;
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="mf"&gt;1.0&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt; &lt;span class="n"&gt;interestRate&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;compoundFactor&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mf"&gt;2.0&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="mf"&gt;0.9070294784580498&lt;/span&gt;
+&lt;/pre&gt;
+&lt;p&gt;A given interest rate can be converted into other types using the &lt;tt class="docutils literal"&gt;equivalentRate&lt;/tt&gt; method as :&lt;/p&gt;
 &lt;pre class="code python literal-block"&gt;
 &lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;newFrequency&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;ql&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Semiannual&lt;/span&gt;
 &lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;effectiveRate&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;interestRate&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;equivalentRate&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;compoundType&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;newFrequency&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 &lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;effectiveRate&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;rate&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
 &lt;span class="mf"&gt;0.04939015319191986&lt;/span&gt;
 &lt;/pre&gt;
+&lt;p&gt;The &lt;tt class="docutils literal"&gt;InterestRate&lt;/tt&gt; class also has an &lt;tt class="docutils literal"&gt;impliedRate&lt;/tt&gt; method. The &lt;tt class="docutils literal"&gt;impliedRate&lt;/tt&gt; method
+takes compound factor to return the implied rate. The &lt;tt class="docutils literal"&gt;impliedRate&lt;/tt&gt; method
+is a static method in the &lt;tt class="docutils literal"&gt;InterestRate&lt;/tt&gt; class and can be used without an
+instance of &lt;tt class="docutils literal"&gt;InterestRate&lt;/tt&gt;. Internally the &lt;tt class="docutils literal"&gt;equivalentRate&lt;/tt&gt; method invokes
+the &lt;tt class="docutils literal"&gt;impliedRate&lt;/tt&gt; method in its calculations.&lt;/p&gt;
 &lt;p&gt;Here we have converted into a semi-annual compounding type. A 4.939% of semi-annual compounding
 is equivalent to 5.0% annual compounding. This should mean, that both should give identical
 discount factors. Lets check that:&lt;/p&gt;
