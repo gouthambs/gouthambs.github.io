@@ -87,14 +87,12 @@ using Actual/Actual day count convention.&lt;/p&gt;
 &lt;tt class="docutils literal"&gt;compoundFactor&lt;/tt&gt; method gives you how much your investment will be worth after &lt;tt class="docutils literal"&gt;t&lt;/tt&gt; years.
 Below we show that the value returned by &lt;tt class="docutils literal"&gt;compoundFactor&lt;/tt&gt; for 2 years agrees with
 the expected compounding formula.&lt;/p&gt;
-&lt;blockquote&gt;
 &lt;pre class="code python literal-block"&gt;
 &lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;interestRate&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;compoundFactor&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mf"&gt;2.0&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 &lt;span class="mf"&gt;1.1025&lt;/span&gt;
 &lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mf"&gt;1.0&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;annualRate&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mf"&gt;1.0&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;annualRate&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;  &lt;span class="c"&gt;# Check the above calculation&lt;/span&gt;
 &lt;span class="mf"&gt;1.1025&lt;/span&gt;
 &lt;/pre&gt;
-&lt;/blockquote&gt;
 &lt;p&gt;The &lt;tt class="docutils literal"&gt;discountFactor&lt;/tt&gt; method returns the reciprocal of the &lt;tt class="docutils literal"&gt;compoundFactor&lt;/tt&gt; method.
 The discount factor is useful while calculating the present value of future cashflows.&lt;/p&gt;
 &lt;pre class="code python literal-block"&gt;
