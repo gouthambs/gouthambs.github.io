@@ -119,7 +119,7 @@ Now lets construct the fixed rate bond.</p>
 <pre class="code python literal-block">
 <span class="o">&gt;&gt;&gt;</span> <span class="n">issueDate</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">Date</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2015</span><span class="p">)</span>
 <span class="o">&gt;&gt;&gt;</span> <span class="n">maturityDate</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">Date</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2016</span><span class="p">)</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">tenor</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">Period</span><span class="p">(</span><span class="n">ql</span><span class="o">.</span><span class="n">Annual</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">tenor</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">Period</span><span class="p">(</span><span class="n">ql</span><span class="o">.</span><span class="n">Semiannual</span><span class="p">)</span>
 <span class="o">&gt;&gt;&gt;</span> <span class="n">calendar</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">UnitedStates</span><span class="p">()</span>
 <span class="o">&gt;&gt;&gt;</span> <span class="n">bussinessConvention</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">Unadjusted</span>
 <span class="o">&gt;&gt;&gt;</span> <span class="n">dateGeneration</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">DateGeneration</span><span class="o">.</span><span class="n">Backward</span>
@@ -140,11 +140,17 @@ Now lets construct the fixed rate bond.</p>
 <span class="o">&gt;&gt;&gt;</span> <span class="n">faceValue</span> <span class="o">=</span> <span class="mi">100</span>
 <span class="o">&gt;&gt;&gt;</span> <span class="n">fixedRateBond</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">FixedRateBond</span><span class="p">(</span><span class="n">settlementDays</span><span class="p">,</span> <span class="n">faceValue</span><span class="p">,</span> <span class="n">schedule</span><span class="p">,</span> <span class="n">coupons</span><span class="p">,</span> <span class="n">dayCount</span><span class="p">)</span>
 
+<span class="c"># create a bond engine with the term structure as input;</span>
+<span class="c"># set the bond to use this bond engine</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">bondEngine</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">DiscountingBondEngine</span><span class="p">(</span><span class="n">spotCurveHandle</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">fixedRateBond</span><span class="o">.</span><span class="n">setPricingEngine</span><span class="p">(</span><span class="n">bondEngine</span><span class="p">)</span>
+
 <span class="c"># Finally the price</span>
 <span class="o">&gt;&gt;&gt;</span> <span class="n">fixedRateBond</span><span class="o">.</span><span class="n">NPV</span><span class="p">()</span>
 <span class="mf">105.27653992490683</span>
 </pre>
 <p>Voila!</p>
+<p>Download the <a class="reference external" href="/extra/notebooks/modeling-bonds.ipynb">modeling bonds ipython notebook</a>.</p>
 
      <br>
      
@@ -162,16 +168,16 @@ Now lets construct the fixed rate bond.</p>
                 <a href="http://gouthamanbalaraman.com/blog/quantlib-basics.html">Introduction to QuantLib</a>
             </li>
             <li>
-                <a href="http://gouthamanbalaraman.com/blog/sqlalchemy-luigi-workflow-pipeline.html">Using SQLAlchemy in Luigi Workflow Pipeline</a>
+                <a href="http://gouthamanbalaraman.com/blog/python-multiprocessing-as-a-task-queue.html">Python Multiprocessing as a Task Queue</a>
             </li>
             <li>
-                <a href="http://gouthamanbalaraman.com/blog/distributed-processing-pandas.html">Multi-Processing With Pandas</a>
+                <a href="http://gouthamanbalaraman.com/blog/modern-portfolio-theory-statistics.html">Modern Portfolio Theory Statistics</a>
             </li>
             <li>
-                <a href="http://gouthamanbalaraman.com/blog/flask-app-directory-structure.html">Flask App Directory Structure</a>
+                <a href="http://gouthamanbalaraman.com/blog/zeo-as-a-windows-service.html">Running ZEO as a Windows Service</a>
             </li>
             <li>
-                <a href="http://gouthamanbalaraman.com/blog/flask-track-usage.html">Flask Track Usage Primer</a>
+                <a href="http://gouthamanbalaraman.com/blog/asynchronous-python-logging-using-msmq.html">Asynchronous Python Logging Using MSMQ</a>
             </li>
         </ul>
         <hr/>
