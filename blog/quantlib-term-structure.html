@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Modeling Fixed Rate Bonds Using QuantLib - Gouthaman Balaraman</title>
+        <!-- All the meta tags -->
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+        <meta property="og:type" content="article"/>
+        <meta property="og:title" content="Modeling Fixed Rate Bonds Using QuantLib"/>
+        <meta property="og:url" content="http://gouthamanbalaraman.com/blog/quantlib-term-structure.html"/>
+        <meta property="og:description" content="This post will walk through an example of modeling fixed rate bonds using QuantLib."/>
+        <!--link href="http://gouthamanbalaraman.com/theme/static/css/journal-bootstrap.min.css" rel="stylesheet" /-->
+        <link href="http://gouthamanbalaraman.com/theme/static/css/bootstrap.readable.min.css" rel="stylesheet" />
+        <link href="http://gouthamanbalaraman.com/theme/static/css/style.css" rel="stylesheet" />
+        
+        <!-- Google Analytics -->
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-46714334-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    /*Update Your Analytics Tracking Code to Support Display Advertising by uncommenting the following 
+    instead of the above line */    
+    /*ga.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'stats.g.doubleclick.net/dc.js';*/
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+        <!-- Using MathJax, with the delimiters $ -->
+        <!-- Conflict with pygments for the .mo and .mi -->
+        <script type="text/x-mathjax-config">
+          MathJax.Hub.Config({
+          "HTML-CSS": {
+          styles: {
+          ".MathJax .mo, .MathJax .mi": {color: "black ! important"}}
+          },
+          tex2jax: {inlineMath: [['$','$'], ['\\\\(','\\\\)']],processEscapes: true}
+          });
+        </script>
+
+        <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
+
+    
+    </head>
+
+    <body>
+      <div class="navbar navbar-default navbar-fixed-top">
+          <div class="container">
+            <div class="navbar-header">
+              <a href="http://gouthamanbalaraman.com" class="navbar-brand">Gouthaman Balaraman</a>
+              <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+            </div>
+            <div class="navbar-collapse collapse" id="navbar-main">
+              <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="http://gouthamanbalaraman.com/pages/about.html">About</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                <div class="col-md-10 col-md-offset-1">
+    <div class="page-header">
+        <h1>Modeling Fixed Rate Bonds Using QuantLib</h1>
+     <!--span class="glyphicon glyphicon-calendar"></span-->&nbsp;March 30, 2015 
+     &nbsp;&nbsp;
+     <!--span class="glyphicon glyphicon-user"></span--> by  
+     <a class="url fn" href="http://gouthamanbalaraman.com/author/gouthaman-balaraman.html">&nbsp;Gouthaman Balaraman </a>
+     </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-10 col-md-offset-1">
+
+<div class="bs-docs-section">
+    
+     <!-- article description -->
+         <p class="lead">This post will walk through an example of modeling fixed rate bonds using QuantLib.</p>
+      
+      <!-- article content -->
+     <p>Let's consider a hypothetical bond with a par value of 100, that pays 6% coupon
+semi-annually issued on January 15th, 2015 and set to mature on January 15th, 2016.
+The bond will pay a coupon on July 15th, 2015 and January 15th, 2016. The par
+amount of 100 will also be paid on the January 15th, 2016.</p>
+<p>To make things simpler, lets assume that we know the spot rates of the treasury as
+of January 15th, 2015. The annualized spot rates are 0.5% for 6 months
+and 0.7% for 1 year point. Lets calculate the fair value of this bond.</p>
+<pre class="code python literal-block">
+<span class="o">&gt;&gt;&gt;</span> <span class="mi">3</span><span class="o">/</span><span class="nb">pow</span><span class="p">(</span><span class="mi">1</span><span class="o">+</span><span class="mf">0.005</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="mi">100</span> <span class="o">+</span> <span class="mi">3</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="mi">1</span><span class="o">+</span><span class="mf">0.007</span><span class="p">)</span>
+<span class="mf">105.27653992490681</span>
+</pre>
+<p>Lets calculate the same thing using QuantLib.</p>
+<pre class="code python literal-block">
+<span class="o">&gt;&gt;&gt;</span> <span class="kn">import</span> <span class="nn">QuantLib</span> <span class="kn">as</span> <span class="nn">ql</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">todaysDate</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">Date</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2015</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">ql</span><span class="o">.</span><span class="n">Settings</span><span class="o">.</span><span class="n">instance</span><span class="p">()</span><span class="o">.</span><span class="n">evaluationDate</span> <span class="o">=</span> <span class="n">todaysDate</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">spotDates</span> <span class="o">=</span> <span class="p">[</span><span class="n">ql</span><span class="o">.</span><span class="n">Date</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2015</span><span class="p">),</span> <span class="n">ql</span><span class="o">.</span><span class="n">Date</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">2015</span><span class="p">),</span> <span class="n">ql</span><span class="o">.</span><span class="n">Date</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2016</span><span class="p">)]</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">spotRates</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.005</span><span class="p">,</span> <span class="mf">0.007</span><span class="p">]</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">dayCount</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">Thirty360</span><span class="p">()</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">calendar</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">UnitedStates</span><span class="p">()</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">interpolation</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">Linear</span><span class="p">()</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">compounding</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">Compounded</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">compoundingFrequency</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">Annual</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">spotCurve</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">ZeroCurve</span><span class="p">(</span><span class="n">spotDates</span><span class="p">,</span> <span class="n">spotRates</span><span class="p">,</span> <span class="n">dayCount</span><span class="p">,</span> <span class="n">calendar</span><span class="p">,</span> <span class="n">interpolation</span><span class="p">,</span>
+                             <span class="n">compounding</span><span class="p">,</span> <span class="n">compoundingFrequency</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">spotCurveHandle</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">YieldTermStructureHandle</span><span class="p">(</span><span class="n">spotCurve</span><span class="p">)</span>
+</pre>
+<p>So far we have created the term structure and the variables are rather self explanatory.
+Now lets construct the fixed rate bond.</p>
+<pre class="code python literal-block">
+<span class="o">&gt;&gt;&gt;</span> <span class="n">issueDate</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">Date</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">2015</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">maturityDate</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">Date</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2016</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">tenor</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">Period</span><span class="p">(</span><span class="n">ql</span><span class="o">.</span><span class="n">Semiannual</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">calendar</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">UnitedStates</span><span class="p">()</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">bussinessConvention</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">Unadjusted</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">dateGeneration</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">DateGeneration</span><span class="o">.</span><span class="n">Backward</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">monthEnd</span> <span class="o">=</span> <span class="bp">False</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">schedule</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">Schedule</span> <span class="p">(</span><span class="n">issueDate</span><span class="p">,</span> <span class="n">maturityDate</span><span class="p">,</span> <span class="n">tenor</span><span class="p">,</span> <span class="n">calendar</span><span class="p">,</span> <span class="n">bussinessConvention</span><span class="p">,</span>
+                            <span class="n">bussinessConvention</span> <span class="p">,</span> <span class="n">dateGeneration</span><span class="p">,</span> <span class="n">monthEnd</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="nb">list</span><span class="p">(</span><span class="n">schedule</span><span class="p">)</span>
+<span class="p">[</span><span class="n">Date</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">2015</span><span class="p">),</span> <span class="n">Date</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2016</span><span class="p">)]</span>
+
+
+<span class="c"># Now lets build the coupon</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">dayCount</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">Thirty360</span><span class="p">()</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">couponRate</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">InterestRate</span><span class="p">(</span><span class="o">.</span><span class="mo">06</span><span class="p">,</span> <span class="n">dayCount</span><span class="p">,</span> <span class="n">ql</span><span class="o">.</span><span class="n">Compounded</span><span class="p">,</span> <span class="n">ql</span><span class="o">.</span><span class="n">Annual</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">coupons</span> <span class="o">=</span> <span class="p">[</span><span class="n">couponRate</span><span class="p">,</span> <span class="n">couponRate</span><span class="p">]</span>
+
+<span class="c"># Now lets construct the FixedRateBond</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">settlementDays</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">faceValue</span> <span class="o">=</span> <span class="mi">100</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">fixedRateBond</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">FixedRateBond</span><span class="p">(</span><span class="n">settlementDays</span><span class="p">,</span> <span class="n">faceValue</span><span class="p">,</span> <span class="n">schedule</span><span class="p">,</span> <span class="n">coupons</span><span class="p">,</span> <span class="n">dayCount</span><span class="p">)</span>
+
+<span class="c"># Finally the price</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">fixedRateBond</span><span class="o">.</span><span class="n">NPV</span><span class="p">()</span>
+<span class="mf">105.27653992490683</span>
+</pre>
+<p>Voila!</p>
+
+     <br>
+     
+     <!-- article tags-->
+        <span class="glyphicon glyphicon-tags"></span>&nbsp;&nbsp;
+            <span class="label label-default"><a href="http://gouthamanbalaraman.com/tag/python.html">python</a></span>&nbsp;&nbsp;
+            <span class="label label-default"><a href="http://gouthamanbalaraman.com/tag/finance.html">finance</a></span>&nbsp;&nbsp;
+            <span class="label label-default"><a href="http://gouthamanbalaraman.com/tag/quantlib.html">quantlib</a></span>&nbsp;&nbsp;
+        <br>
+     <hr/>
+    
+    <strong>Related Post</strong>
+        <ul>
+            <li>
+                <a href="http://gouthamanbalaraman.com/blog/quantlib-basics.html">Introduction to QuantLib</a>
+            </li>
+            <li>
+                <a href="http://gouthamanbalaraman.com/blog/modern-portfolio-theory-statistics.html">Modern Portfolio Theory Statistics</a>
+            </li>
+            <li>
+                <a href="http://gouthamanbalaraman.com/blog/econometric-factor-model.html">Econometric Factor Model</a>
+            </li>
+            <li>
+                <a href="http://gouthamanbalaraman.com/blog/flask-app-directory-structure.html">Flask App Directory Structure</a>
+            </li>
+            <li>
+                <a href="http://gouthamanbalaraman.com/blog/sending-msmq-messages-using-python.html">Sending MSMQ Messages Using Python</a>
+            </li>
+        </ul>
+        <hr/>
+
+     <!-- article comments -->
+    <div class="comment">
+        <div id="disqus_thread"></div> <!-- comment app container -->
+    </div>
+	<!-- Comment BEGIN -->
+    <script type="text/javascript">
+        var disqus_shortname = 'gouthamanbalaramancom'; // required: replace example with your forum shortname
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+     <!-- Comment END -->
+</div>    
+                </div>
+               
+            </div>
+            <div class="row">
+                <div class="col-md-10 col-md-offset-1">
+                </div>
+            </div>
+            <footer id="contentinfo" class="footer">
+                    <address id="about" class="vcard body">
+                    &copy; <a href="http://gouthamanbalaraman.com">Gouthaman Balaraman</a> Proudly powered by <a href="http://getpelican.com/">Pelican</a>
+                    </address><!-- /#about -->
+            </footer><!-- /#contentinfo -->
+        </div><!-- container -->
+    </body>
+</html>
