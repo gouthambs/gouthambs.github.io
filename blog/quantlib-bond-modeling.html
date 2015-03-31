@@ -117,9 +117,9 @@ and 0.7% for 1 year point. Lets calculate the fair value of this bond.</p>
 <p>So far we have created the term structure and the variables are rather self explanatory.
 Now lets construct the fixed rate bond.</p>
 <pre class="code python literal-block">
-<span class="o">&gt;&gt;&gt;</span> <span class="n">issueDate</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">Date</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">2015</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">issueDate</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">Date</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2015</span><span class="p">)</span>
 <span class="o">&gt;&gt;&gt;</span> <span class="n">maturityDate</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">Date</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2016</span><span class="p">)</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">tenor</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">Period</span><span class="p">(</span><span class="n">ql</span><span class="o">.</span><span class="n">Semiannual</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">tenor</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">Period</span><span class="p">(</span><span class="n">ql</span><span class="o">.</span><span class="n">Annual</span><span class="p">)</span>
 <span class="o">&gt;&gt;&gt;</span> <span class="n">calendar</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">UnitedStates</span><span class="p">()</span>
 <span class="o">&gt;&gt;&gt;</span> <span class="n">bussinessConvention</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">Unadjusted</span>
 <span class="o">&gt;&gt;&gt;</span> <span class="n">dateGeneration</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">DateGeneration</span><span class="o">.</span><span class="n">Backward</span>
@@ -127,13 +127,13 @@ Now lets construct the fixed rate bond.</p>
 <span class="o">&gt;&gt;&gt;</span> <span class="n">schedule</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">Schedule</span> <span class="p">(</span><span class="n">issueDate</span><span class="p">,</span> <span class="n">maturityDate</span><span class="p">,</span> <span class="n">tenor</span><span class="p">,</span> <span class="n">calendar</span><span class="p">,</span> <span class="n">bussinessConvention</span><span class="p">,</span>
                             <span class="n">bussinessConvention</span> <span class="p">,</span> <span class="n">dateGeneration</span><span class="p">,</span> <span class="n">monthEnd</span><span class="p">)</span>
 <span class="o">&gt;&gt;&gt;</span> <span class="nb">list</span><span class="p">(</span><span class="n">schedule</span><span class="p">)</span>
-<span class="p">[</span><span class="n">Date</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">2015</span><span class="p">),</span> <span class="n">Date</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2016</span><span class="p">)]</span>
+<span class="p">[</span><span class="n">Date</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">12015</span><span class="p">),</span> <span class="n">Date</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">2015</span><span class="p">),</span> <span class="n">Date</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2016</span><span class="p">)]</span>
 
 
 <span class="c"># Now lets build the coupon</span>
 <span class="o">&gt;&gt;&gt;</span> <span class="n">dayCount</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">Thirty360</span><span class="p">()</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">couponRate</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">InterestRate</span><span class="p">(</span><span class="o">.</span><span class="mo">06</span><span class="p">,</span> <span class="n">dayCount</span><span class="p">,</span> <span class="n">ql</span><span class="o">.</span><span class="n">Compounded</span><span class="p">,</span> <span class="n">ql</span><span class="o">.</span><span class="n">Annual</span><span class="p">)</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">coupons</span> <span class="o">=</span> <span class="p">[</span><span class="n">couponRate</span><span class="p">,</span> <span class="n">couponRate</span><span class="p">]</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">couponRate</span> <span class="o">=</span> <span class="o">.</span><span class="mo">06</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">coupons</span> <span class="o">=</span> <span class="p">[</span><span class="n">couponRate</span><span class="p">]</span>
 
 <span class="c"># Now lets construct the FixedRateBond</span>
 <span class="o">&gt;&gt;&gt;</span> <span class="n">settlementDays</span> <span class="o">=</span> <span class="mi">0</span>
@@ -162,16 +162,16 @@ Now lets construct the fixed rate bond.</p>
                 <a href="http://gouthamanbalaraman.com/blog/quantlib-basics.html">Introduction to QuantLib</a>
             </li>
             <li>
-                <a href="http://gouthamanbalaraman.com/blog/zeo-as-a-windows-service.html">Running ZEO as a Windows Service</a>
+                <a href="http://gouthamanbalaraman.com/blog/sqlalchemy-luigi-workflow-pipeline.html">Using SQLAlchemy in Luigi Workflow Pipeline</a>
+            </li>
+            <li>
+                <a href="http://gouthamanbalaraman.com/blog/distributed-processing-pandas.html">Multi-Processing With Pandas</a>
             </li>
             <li>
                 <a href="http://gouthamanbalaraman.com/blog/flask-app-directory-structure.html">Flask App Directory Structure</a>
             </li>
             <li>
-                <a href="http://gouthamanbalaraman.com/blog/sending-msmq-messages-using-python.html">Sending MSMQ Messages Using Python</a>
-            </li>
-            <li>
-                <a href="http://gouthamanbalaraman.com/blog/securing-authentication-tokens.html">Securing Authentication Tokens</a>
+                <a href="http://gouthamanbalaraman.com/blog/flask-track-usage.html">Flask Track Usage Primer</a>
             </li>
         </ul>
         <hr/>
