@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Gouthaman Balaraman</title><link>http://gouthamanbalaraman.com/</link><description></description><atom:link href="http://gouthamanbalaraman.com/feeds/gouthaman-balaraman.rss.xml" rel="self"></atom:link><lastBuildDate>Mon, 30 Mar 2015 00:00:00 -0700</lastBuildDate><item><title>Modeling Fixed Rate Bonds Using QuantLib</title><link>http://gouthamanbalaraman.com/blog/quantlib-term-structure.html</link><description>&lt;p&gt;Let's consider a hypothetical bond with a par value of 100, that pays 6% coupon
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Gouthaman Balaraman</title><link>http://gouthamanbalaraman.com/</link><description></description><atom:link href="http://gouthamanbalaraman.com/feeds/gouthaman-balaraman.rss.xml" rel="self"></atom:link><lastBuildDate>Mon, 30 Mar 2015 00:00:00 -0700</lastBuildDate><item><title>Modeling Fixed Rate Bonds Using QuantLib</title><link>http://gouthamanbalaraman.com/blog/quantlib-bond-modeling.html</link><description>&lt;p&gt;Let's consider a hypothetical bond with a par value of 100, that pays 6% coupon
 semi-annually issued on January 15th, 2015 and set to mature on January 15th, 2016.
 The bond will pay a coupon on July 15th, 2015 and January 15th, 2016. The par
 amount of 100 will also be paid on the January 15th, 2016.&lt;/p&gt;
@@ -57,7 +57,7 @@ Now lets construct the fixed rate bond.&lt;/p&gt;
 &lt;span class="mf"&gt;105.27653992490683&lt;/span&gt;
 &lt;/pre&gt;
 &lt;p&gt;Voila!&lt;/p&gt;
-</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Gouthaman Balaraman</dc:creator><pubDate>Mon, 30 Mar 2015 00:00:00 -0700</pubDate><guid>tag:gouthamanbalaraman.com,2015-03-30:blog/quantlib-term-structure.html</guid><category>python</category><category>finance</category><category>quantlib</category></item><item><title>Introduction to QuantLib</title><link>http://gouthamanbalaraman.com/blog/quantlib-basics.html</link><description>&lt;p&gt;I installed the latest version of QuantLib (V1.5) and the python wrapper to QuantLib.
+</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Gouthaman Balaraman</dc:creator><pubDate>Mon, 30 Mar 2015 00:00:00 -0700</pubDate><guid>tag:gouthamanbalaraman.com,2015-03-30:blog/quantlib-bond-modeling.html</guid><category>python</category><category>finance</category><category>quantlib</category></item><item><title>Introduction to QuantLib</title><link>http://gouthamanbalaraman.com/blog/quantlib-basics.html</link><description>&lt;p&gt;I installed the latest version of QuantLib (V1.5) and the python wrapper to QuantLib.
 My experiments lately have been to get a feel for the QuantLib API. The library itself
 is so extensive, that it is rather hard for a new comer to get going. In this post
 we will look into some of the basic classes and functionality in QuantLib.&lt;/p&gt;
