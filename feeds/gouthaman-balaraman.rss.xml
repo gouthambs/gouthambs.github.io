@@ -525,7 +525,7 @@ ORDER BY (data_length + index_length) DESC;
 &lt;/pre&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
-</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Gouthaman Balaraman</dc:creator><pubDate>Tue, 09 Dec 2014 00:00:00 -0800</pubDate><guid>tag:gouthamanbalaraman.com,2014-12-09:blog/mysql-cheatsheet.html</guid><category>programming</category><category>linux</category><category>database</category><category>mysql</category></item><item><title>Securing Authentication Tokens</title><link>http://gouthamanbalaraman.com/blog/securing-authentication-tokens.html</link><description>&lt;p&gt;The article &lt;a class="reference external" href="http://gouthamanbalaraman.com/blog/minimal-flask-login-example.html"&gt;Minimal Flask Login Example&lt;/a&gt; provided an introduction to token
+</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Gouthaman Balaraman</dc:creator><pubDate>Tue, 09 Dec 2014 00:00:00 -0800</pubDate><guid>tag:gouthamanbalaraman.com,2014-12-09:blog/mysql-cheatsheet.html</guid><category>programming</category><category>linux</category><category>database</category><category>mysql</category></item><item><title>Securing Authentication Tokens</title><link>http://gouthamanbalaraman.com/blog/securing-authentication-tokens.html</link><description>&lt;p&gt;The article &lt;a class="reference external" href="|filename|minimal_flask_login_example.rst"&gt;Minimal Flask Login Example&lt;/a&gt; provided an introduction to token
 based authentication using the Flask-Login extension for the Flask web framework. The focus of that article was to
 highlight the crux of authentication logic. One glaring omission was that the token itself was nothing but
 the username and password passed as clear text. This clearly will not work!&lt;/p&gt;
@@ -539,7 +539,7 @@ part of the request&lt;/li&gt;
 &lt;li&gt;if the token is valid, then the server responds with an access to the secured page; should the token be invalid, then
 the access to secured page is denied.&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;In the &lt;a class="reference external" href="http://gouthamanbalaraman.com/blog/minimal-flask-login-example.html"&gt;Minimal Flask Login Example&lt;/a&gt;, we skipped the serialization part
+&lt;p&gt;In the &lt;a class="reference external" href="|filename|minimal_flask_login_example.rst"&gt;Minimal Flask Login Example&lt;/a&gt;, we skipped the serialization part
 for simplicity. A more rigorous way of doing this would be to use &lt;tt class="docutils literal"&gt;JSONWebSignatureSerializer&lt;/tt&gt; in the
 &lt;tt class="docutils literal"&gt;itsdangerous&lt;/tt&gt; package to serialize the authentication credentials.&lt;/p&gt;
 &lt;pre class="code python literal-block"&gt;
@@ -826,7 +826,7 @@ it will be blocked at the network level and the event will be logged in &lt;tt c
 &lt;div class="line"&gt;&lt;br /&gt;&lt;/div&gt;
 &lt;div class="line"&gt;May her soul rest in peace!&lt;/div&gt;
 &lt;/div&gt;
-</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Gouthaman Balaraman</dc:creator><pubDate>Sun, 26 Oct 2014 00:00:00 -0700</pubDate><guid>tag:gouthamanbalaraman.com,2014-10-26:blog/jayam-elegy.html</guid><category>personal</category></item><item><title>Understanding the Econometric Factor Model</title><link>http://gouthamanbalaraman.com/blog/understanding-econometric-factor-model.html</link><description>&lt;p&gt;The post explains the &lt;a class="reference external" href="http://gouthamanbalaraman.com/blog/econometric-factor-model.html"&gt;Econometric Factor Model&lt;/a&gt; widget
+</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Gouthaman Balaraman</dc:creator><pubDate>Sun, 26 Oct 2014 00:00:00 -0700</pubDate><guid>tag:gouthamanbalaraman.com,2014-10-26:blog/jayam-elegy.html</guid><category>personal</category></item><item><title>Understanding the Econometric Factor Model</title><link>http://gouthamanbalaraman.com/blog/understanding-econometric-factor-model.html</link><description>&lt;p&gt;The post explains the &lt;a class="reference external" href="|filename|./widgets/econometric-factor-model.rst"&gt;Econometric Factor Model&lt;/a&gt; widget
 that I have built. The factors used in the econometric factor model are: &lt;em&gt;unemployment&lt;/em&gt;,
 &lt;em&gt;consumer sentiment&lt;/em&gt;, &lt;em&gt;market&lt;/em&gt;, &lt;em&gt;size&lt;/em&gt; and &lt;em&gt;value/growth&lt;/em&gt;. A brief explanation of the factors are
 as follows.&lt;/p&gt;
@@ -1049,8 +1049,8 @@ explain the various concepts such as risk-neutral valuation, Black-Scholes formu
 and binomial tree option pricing models.&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;Contents:&lt;/strong&gt;&lt;/p&gt;
 &lt;ol class="upperroman simple"&gt;
-&lt;li&gt;&lt;a class="reference external" href="http://gouthamanbalaraman.com/blog/option-model-handbook-part-I-introduction-to-option-models.html"&gt;Introduction to Option Models&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a class="reference external" href="http://gouthamanbalaraman.com/blog/option-model-handbook-part-II-introduction-to-binomial-trees.html"&gt;Introduction to Binomial Trees&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference external" href="|filename|option_models.rst"&gt;Introduction to Option Models&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference external" href="|filename|intro_binomial_trees.rst"&gt;Introduction to Binomial Trees&lt;/a&gt;&lt;/li&gt;
 &lt;/ol&gt;
 &lt;div class="section" id="id1"&gt;
 &lt;h2&gt;Introduction to Binomial Trees&lt;/h2&gt;
@@ -1214,7 +1214,7 @@ explain the various concepts such as risk-neutral valuation, Black-Scholes formu
 and binomial tree option pricing models.&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;Contents:&lt;/strong&gt;&lt;/p&gt;
 &lt;ol class="upperroman simple"&gt;
-&lt;li&gt;&lt;a class="reference external" href="http://gouthamanbalaraman.com/blog/option-model-handbook-part-I-introduction-to-option-models.html"&gt;Introduction to Option Models&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference external" href="|filename|option_models.rst"&gt;Introduction to Option Models&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a class="reference external" href="http://gouthamanbalaraman.com/blog/option-model-handbook-part-II-introduction-to-binomial-trees.html"&gt;Introduction to Binomial Trees&lt;/a&gt;&lt;/li&gt;
 &lt;/ol&gt;
 &lt;div class="section" id="id1"&gt;
@@ -1785,7 +1785,7 @@ git branch -a
 not interfere with the performance. Default file based loggers can lead to a slow down
 because of the constand disk writes. An alternate solution that can be quite handy is
 logging into a message based logger, such as MSMQ. This post is built on my earlier post
-&lt;a class="reference external" href="http://gouthamanbalaraman.com/blog/sending-msmq-messages-using-python.html"&gt;Sending MSMQ Messages Using Python&lt;/a&gt;, where
+&lt;a class="reference external" href="|filename|sending-msmq-messages-python.rst"&gt;Sending MSMQ Messages Using Python&lt;/a&gt;, where
 I discuss how to setup, send and receive messages using MSMQ.&lt;/p&gt;
 &lt;p&gt;Here I will show how one can use the MSMQ to build a custom handler, that can be used
 with the logging module in python. Here is the &lt;tt class="docutils literal"&gt;MSMQHandler&lt;/tt&gt; class:&lt;/p&gt;
@@ -1841,7 +1841,7 @@ you can incorporate it into your workflow as shown below:&lt;/p&gt;
 &lt;span class="n"&gt;lgr&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;info&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;Test Message&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 &lt;/pre&gt;
 &lt;p&gt;And that completes the MSMQ logger using python. Now all your logs will be pushed to the KaruthQueue
-that we created. You can use the example shown &lt;a class="reference external" href="http://gouthamanbalaraman.com/blog/sending-msmq-messages-using-python.html"&gt;here&lt;/a&gt; to read the messages in a seperate application
+that we created. You can use the example shown &lt;a class="reference external" href="|filename|sending-msmq-messages-python.rst"&gt;here&lt;/a&gt; to read the messages in a seperate application
 and store any way you chose, files, database etc.&lt;/p&gt;
 </description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Gouthaman Balaraman</dc:creator><pubDate>Fri, 21 Feb 2014 00:00:00 -0800</pubDate><guid>tag:gouthamanbalaraman.com,2014-02-21:blog/asynchronous-python-logging-using-msmq.html</guid><category>python</category><category>programming</category></item><item><title>Sending MSMQ Messages Using Python</title><link>http://gouthamanbalaraman.com/blog/sending-msmq-messages-using-python.html</link><description>&lt;p&gt;MSMQ is a message queue in the Windows environment, very much like
 RabbitMQ. MSMQ can be used as a task queue or for communicating
@@ -1946,7 +1946,7 @@ calculated by computing volatility using daily returns over a 45 day window.&lt;
 &lt;a class="reference external" href="http://www.google.com/finance"&gt;GoogleFinance&lt;/a&gt; or &lt;a class="reference external" href="http://www.finance.yahoo.com/"&gt;YahooFinance&lt;/a&gt; and what does it mean from an investment perspective?
 This article will give you an introduction to the concept and demonstrate how
 you can calculate various time series measures for a stock using python. The
-&lt;a class="reference external" href="http://gouthamanbalaraman.com/blog/modern-portfolio-theory-statistics.html"&gt;Modern Portfolio Theory Statistics&lt;/a&gt;
+&lt;a class="reference external" href="|filename|./widgets/modern-portfolio-theory-statistics.rst"&gt;Modern Portfolio Theory Statistics&lt;/a&gt;
 page shows calculated betas, alpha, etc for a few thousand stocks.&lt;/p&gt;
 &lt;div class="section" id="beta-alpha-and-r-squared"&gt;
 &lt;h2&gt;Beta, Alpha and R-squared&lt;/h2&gt;
