@@ -105,7 +105,7 @@
 not interfere with the performance. Default file based loggers can lead to a slow down
 because of the constand disk writes. An alternate solution that can be quite handy is
 logging into a message based logger, such as MSMQ. This post is built on my earlier post
-<a class="reference external" href="|filename|sending-msmq-messages-python.rst">Sending MSMQ Messages Using Python</a>, where
+<a class="reference external" href="/blog/sending-msmq-messages-python.html">Sending MSMQ Messages Using Python</a>, where
 I discuss how to setup, send and receive messages using MSMQ.</p>
 <p>Here I will show how one can use the MSMQ to build a custom handler, that can be used
 with the logging module in python. Here is the <tt class="docutils literal">MSMQHandler</tt> class:</p>
@@ -161,7 +161,7 @@ you can incorporate it into your workflow as shown below:</p>
 <span class="n">lgr</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&quot;Test Message&quot;</span><span class="p">)</span>
 </pre>
 <p>And that completes the MSMQ logger using python. Now all your logs will be pushed to the KaruthQueue
-that we created. You can use the example shown <a class="reference external" href="|filename|sending-msmq-messages-python.rst">here</a> to read the messages in a seperate application
+that we created. You can use the example shown <a class="reference external" href="/blog/sending-msmq-messages-python.rst">here</a> to read the messages in a seperate application
 and store any way you chose, files, database etc.</p>
 
      <br>
@@ -179,16 +179,16 @@ and store any way you chose, files, database etc.</p>
                 <a href="http://gouthamanbalaraman.com/blog/flask-track-usage.html">Flask Track Usage Primer</a>
             </li>
             <li>
-                <a href="http://gouthamanbalaraman.com/blog/sending-msmq-messages-using-python.html">Sending MSMQ Messages Using Python</a>
-            </li>
-            <li>
                 <a href="http://gouthamanbalaraman.com/blog/sqlalchemy-luigi-workflow-pipeline.html">Using SQLAlchemy in Luigi Workflow Pipeline</a>
             </li>
             <li>
-                <a href="http://gouthamanbalaraman.com/blog/python-multiprocessing-as-a-task-queue.html">Python Multiprocessing as a Task Queue</a>
+                <a href="http://gouthamanbalaraman.com/blog/building-luigi-task-pipeline.html">Building Task Pipelines Using Luigi</a>
             </li>
             <li>
                 <a href="http://gouthamanbalaraman.com/blog/zeo-as-a-windows-service.html">Running ZEO as a Windows Service</a>
+            </li>
+            <li>
+                <a href="http://gouthamanbalaraman.com/blog/distributed-processing-pandas.html">Multi-Processing With Pandas</a>
             </li>
         </ul>
         <hr/>
