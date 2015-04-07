@@ -63,12 +63,7 @@ Now lets construct the fixed rate bond.&lt;/p&gt;
 &lt;/pre&gt;
 &lt;p&gt;Voila!&lt;/p&gt;
 &lt;p&gt;Download the &lt;a class="reference external" href="/extra/notebooks/modeling-bonds.ipynb"&gt;modeling bonds ipython notebook&lt;/a&gt;.&lt;/p&gt;
-</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Gouthaman Balaraman</dc:creator><pubDate>Mon, 30 Mar 2015 00:00:00 -0700</pubDate><guid>tag:gouthamanbalaraman.com,2015-03-30:blog/quantlib-bond-modeling.html</guid><category>python</category><category>finance</category><category>quantlib</category></item><item><title>An Introduction to Interest Rate Term Structure in QuantLib</title><link>http://gouthamanbalaraman.com/blog/quantlib-term-structure.html</link><description>&lt;p&gt;Term structure is pivotal to pricing securities. One has to know how to create a &lt;tt class="docutils literal"&gt;YieldTermStructure&lt;/tt&gt; object
-in QuantLib to use the pricing engines. Here I will give an overview of how to create an interest rate
-term structure.&lt;/p&gt;
-&lt;p&gt;The examples I found on QuantLib term structures discuss bootstrapping from treasury bills, notes and bonds.
-Such an exercise is required when you are constructing the curve yourself.&lt;/p&gt;
-</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Gouthaman Balaraman</dc:creator><pubDate>Sat, 28 Mar 2015 00:00:00 -0700</pubDate><guid>tag:gouthamanbalaraman.com,2015-03-28:blog/quantlib-term-structure.html</guid><category>python</category><category>finance</category><category>quantlib</category></item><item><title>Introduction to QuantLib</title><link>http://gouthamanbalaraman.com/blog/quantlib-basics.html</link><description>&lt;p&gt;I installed the latest version of QuantLib (V1.5) and the python wrapper to QuantLib.
+</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Gouthaman Balaraman</dc:creator><pubDate>Mon, 30 Mar 2015 00:00:00 -0700</pubDate><guid>tag:gouthamanbalaraman.com,2015-03-30:blog/quantlib-bond-modeling.html</guid><category>python</category><category>finance</category><category>quantlib</category></item><item><title>Introduction to QuantLib</title><link>http://gouthamanbalaraman.com/blog/quantlib-basics.html</link><description>&lt;p&gt;I installed the latest version of QuantLib (V1.5) and the python wrapper to QuantLib.
 My experiments lately have been to get a feel for the QuantLib API. The library itself
 is so extensive, that it is rather hard for a new comer to get going. In this post
 we will look into some of the basic classes and functionality in QuantLib.&lt;/p&gt;

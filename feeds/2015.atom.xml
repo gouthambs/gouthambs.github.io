@@ -63,11 +63,6 @@ Now lets construct the fixed rate bond.&lt;/p&gt;
 &lt;/pre&gt;
 &lt;p&gt;Voila!&lt;/p&gt;
 &lt;p&gt;Download the &lt;a class="reference external" href="/extra/notebooks/modeling-bonds.ipynb"&gt;modeling bonds ipython notebook&lt;/a&gt;.&lt;/p&gt;
-</summary><category term="python"></category><category term="finance"></category><category term="quantlib"></category></entry><entry><title>An Introduction to Interest Rate Term Structure in QuantLib</title><link href="http://gouthamanbalaraman.com/blog/quantlib-term-structure.html" rel="alternate"></link><updated>2015-03-28T00:00:00-07:00</updated><author><name>Gouthaman Balaraman</name></author><id>tag:gouthamanbalaraman.com,2015-03-28:blog/quantlib-term-structure.html</id><summary type="html">&lt;p&gt;Term structure is pivotal to pricing securities. One has to know how to create a &lt;tt class="docutils literal"&gt;YieldTermStructure&lt;/tt&gt; object
-in QuantLib to use the pricing engines. Here I will give an overview of how to create an interest rate
-term structure.&lt;/p&gt;
-&lt;p&gt;The examples I found on QuantLib term structures discuss bootstrapping from treasury bills, notes and bonds.
-Such an exercise is required when you are constructing the curve yourself.&lt;/p&gt;
 </summary><category term="python"></category><category term="finance"></category><category term="quantlib"></category></entry><entry><title>Introduction to QuantLib</title><link href="http://gouthamanbalaraman.com/blog/quantlib-basics.html" rel="alternate"></link><updated>2015-03-24T00:00:00-07:00</updated><author><name>Gouthaman Balaraman</name></author><id>tag:gouthamanbalaraman.com,2015-03-24:blog/quantlib-basics.html</id><summary type="html">&lt;p&gt;I installed the latest version of QuantLib (V1.5) and the python wrapper to QuantLib.
 My experiments lately have been to get a feel for the QuantLib API. The library itself
 is so extensive, that it is rather hard for a new comer to get going. In this post
