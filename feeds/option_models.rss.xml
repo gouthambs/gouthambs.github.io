@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Gouthaman Balaraman</title><link>http://gouthamanbalaraman.com/</link><description></description><atom:link href="http://gouthamanbalaraman.com/feeds/option_models.rss.xml" rel="self"></atom:link><lastBuildDate>Tue, 30 Sep 2014 00:00:00 -0700</lastBuildDate><item><title>Option Model Handbook, Part II: Introduction to Binomial Trees</title><link>http://gouthamanbalaraman.com/blog/option-model-handbook-part-II-introduction-to-binomial-trees.html</link><description>&lt;p&gt;This is a series of articles pertaining to option model pricing. Here I will
+explain the various concepts such as risk-neutral valuation, Black-Scholes formula,
+and binomial tree option pricing models.&lt;/p&gt;
+&lt;div class="section" id="introduction-to-binomial-trees"&gt;
+&lt;h2&gt;Introduction to Binomial Trees&lt;/h2&gt;
+&lt;img alt="BinomialTree" src="/images/binomialtree.png" /&gt;
+&lt;p&gt;Let us construct a tree whose pricing is given as shown in the figure above, restricting to time
+$t_0$ and $t_1$. Initial price of the stock is $S_0$ at $t_0$ and has the possibility of moving to
+$S_0u$ or $S_0d$ at time $t_1$. Let $p$ be the probability of the price to rise from
+$S_0$ to $S_0u$. Calculating the expected return from the stock at $t_1$
+and making use of risk-neutral valuation&lt;/p&gt;
+&lt;p&gt;$$ E(S_{t_1}) = pS_0u + (1-p)S_0d = S_0 e^{r(t_1-t_0)} $$&lt;/p&gt;
+&lt;p&gt;we get,&lt;/p&gt;
+&lt;p&gt;\begin{equation} \label{eq:btp} p = \frac{e^{r(t_1-t_0)} - d}{u - d} \end{equation}&lt;/p&gt;
+&lt;p&gt;We need to chose appropriate values for the parameters $u$ and $d$
+which can be obtained from equating the variance of the return to
+$\sigma^2 \Delta t$. The variance of the stock price return on the
+binomial tree is:&lt;/p&gt;
+&lt;p&gt;$$ pu^2 + (1−p)d^2 − [ pu+ (1−p)d]^2 = \sigma^2 \Delta t $$&lt;/p&gt;
+&lt;p&gt;On ignoring terms of order higher than $\Delta t^2$ and making use of
+$ud = 1$, we get&lt;/p&gt;
+&lt;p&gt;\begin{equation} u = e^{\sigma \sqrt{\Delta t}} \nonumber  \end{equation}
+\begin{equation} d = e^{-\sigma\sqrt{\Delta t}} \end{equation}&lt;/p&gt;
+&lt;p&gt;One can make use of the above construction to value an option. Let $f$
+be the current value of an option on a stock. Let the payoff of the option
+after one step (time T) on a binomial tree be $f_u$ and $f_d$
+for up and down movement of the stock respectively. The value of
+the option in this case is given as:&lt;/p&gt;
+&lt;p&gt;$$ f = e^{−rT}[ pf_u + (1−p)f_d] $$.&lt;/p&gt;
+&lt;/div&gt;
+</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Gouthaman Balaraman</dc:creator><pubDate>Tue, 30 Sep 2014 00:00:00 -0700</pubDate><guid>tag:gouthamanbalaraman.com,2014-09-30:blog/option-model-handbook-part-II-introduction-to-binomial-trees.html</guid><category>finance</category><category>option models</category><category>binomial tree</category></item><item><title>Option Model Handbook, Part I: Introduction to Option Models</title><link>http://gouthamanbalaraman.com/blog/option-model-handbook-part-I-introduction-to-option-models.html</link><description>&lt;p&gt;This is a series of articles pertaining to option model pricing. Here I will
+explain the various concepts such as risk-neutral valuation, Black-Scholes formula,
+and binomial tree option pricing models.&lt;/p&gt;
+&lt;div class="section" id="introduction-to-option-models"&gt;
+&lt;h2&gt;Introduction to Option Models&lt;/h2&gt;
+&lt;p&gt;The bedrock of options pricing is the risk-neutral valuation principle, which relates the expected value of a
+ﬁnancial product at a future time to its current price. This is consistent with no-arbitrage hypothesis.
+Vanilla options have a theoretical price given by the Black-Scholes formula. In this article we will
+briefly touch upon these two concepts.&lt;/p&gt;
+&lt;div class="section" id="risk-neutral-valuation"&gt;
+&lt;h3&gt;Risk-Neutral Valuation&lt;/h3&gt;
+&lt;p&gt;An important general principle in options pricing is the risk-neutral valuation. According to this principle, the
+expected return from a stock at time $T$, $E(S_T)$, is the risk free value of the current stock price:&lt;/p&gt;
+&lt;p&gt;$$ E(S_T) = S_0 e^{rT} $$&lt;/p&gt;
+&lt;p&gt;The continuous compounding risk-free rate is $r$ and the current stock price is $S_0$.
+The principal of risk-neutral valuation can be used to create a binomial model for price movement,
+and subsequently a method to value options.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="black-scholes-formula"&gt;
+&lt;h3&gt;Black-Scholes Formula&lt;/h3&gt;
+&lt;p&gt;Value of a vanilla European call option, struck at $K$ with time $T$
+to maturity, can be derived using the above mentioned risk-neutral valuation principle.
+The payoﬀ of the call at maturity on an underlying with price $V$ (at maturity)
+is $max(V − K, 0)$. The expected value of this payoﬀ can be found, assuming
+a geometric brownian motion price movement for the underlying as,&lt;/p&gt;
+&lt;p&gt;\begin{equation} E[max(V-K,0)] = \int_K^\infty (V-K)g(V)dV \end{equation}&lt;/p&gt;
+&lt;p&gt;where $g(V)$ is the probability density function of $V$
+such that $log(V)$ is normally distributed with standard deviation $w$.
+Thus the current value of the call is&lt;/p&gt;
+&lt;p&gt;$$  C = e^{-rT} E[max(V-K,0)] $$&lt;/p&gt;
+&lt;p&gt;which after a lengthy calculation comes out to be&lt;/p&gt;
+&lt;p&gt;\begin{equation} \label{eq:bs} C = S_0 N(d_1) - K e^{-rT} N(d_2)   \end{equation}&lt;/p&gt;
+&lt;p&gt;where $S_0$ is the current price of the underlying, the risk free rate $r$,
+the volatility of the underlying is $\sigma$,&lt;/p&gt;
+&lt;p&gt;$$ d_1 = \frac{ \ln(S_0/K) + (r+\sigma^2/2)T } { \sigma \sqrt{T} } $$&lt;/p&gt;
+&lt;p&gt;$$ d_2 = \frac{ \ln(S_0/K) + (r-\sigma^2/2)T } { \sigma \sqrt{T} }  = d_1 - \sigma\sqrt{T}$$&lt;/p&gt;
+&lt;p&gt;and $N(x)$ is the cumulative distribution function. The put-call parity relates the price of the
+put and call prices, and is given as:&lt;/p&gt;
+&lt;p&gt;$$ C - P = S_0 - e^{-rT}K $$&lt;/p&gt;
+&lt;p&gt;Put-Call parity and Eq. $\ref{eq:bs}$ can be used to arrive at put prices.&lt;/p&gt;
+&lt;p&gt;For the case where the underlying has a continuous payout (dividend), the
+Black-Scholes formula can be extended to yield&lt;/p&gt;
+&lt;p&gt;$$ C = S_0 e^{-qT} N(d_1^\prime) - K e^{-rT} N(d_2^\prime)  $$&lt;/p&gt;
+&lt;p&gt;where&lt;/p&gt;
+&lt;p&gt;$$ d_1^\prime  = \frac{ \ln(S_0/K) +  (r - q + \sigma^2/2)T} {\sigma\sqrt{T}} $$&lt;/p&gt;
+&lt;p&gt;$$ d_2^\prime = d_1^\prime - \sigma\sqrt{T} $$&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="conclusion"&gt;
+&lt;h3&gt;Conclusion&lt;/h3&gt;
+&lt;p&gt;In this article I explained the fundamentals of option model pricing. We looked
+at the risk neutral valuation, and how it can be used to derive the Black-Scholes
+model.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Gouthaman Balaraman</dc:creator><pubDate>Fri, 08 Aug 2014 00:00:00 -0700</pubDate><guid>tag:gouthamanbalaraman.com,2014-08-08:blog/option-model-handbook-part-I-introduction-to-option-models.html</guid><category>finance</category><category>option models</category><category>binomial tree</category></item></channel></rss>

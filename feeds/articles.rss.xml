@@ -1,0 +1,1423 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Gouthaman Balaraman</title><link>http://gouthamanbalaraman.com/</link><description></description><atom:link href="http://gouthamanbalaraman.com/feeds/articles.rss.xml" rel="self"></atom:link><lastBuildDate>Thu, 05 Feb 2015 00:00:00 -0800</lastBuildDate><item><title>Using SQLAlchemy in Luigi Workflow Pipeline</title><link>http://gouthamanbalaraman.com/blog/sqlalchemy-luigi-workflow-pipeline.html</link><description>&lt;p&gt;The &lt;tt class="docutils literal"&gt;luigi.contrib.sqla&lt;/tt&gt; provides support for SQLAlchmey through the &lt;tt class="docutils literal"&gt;SQLAlchemyTarget&lt;/tt&gt;
+for storing in databases supported by SQLAlchemy. The user would be responsible for
+installing the required database driver to connect using &lt;tt class="docutils literal"&gt;SQLAlchemy&lt;/tt&gt;.&lt;/p&gt;
+&lt;p&gt;Minimal example of a job to copy data to database using &lt;tt class="docutils literal"&gt;SQLAlchemy&lt;/tt&gt; is as shown
+below:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;sqlalchemy&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;String&lt;/span&gt;
+&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;luigi&lt;/span&gt;
+&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;luigi.contrib&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;sqla&lt;/span&gt;
+
+&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;SQLATask&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;sqla&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;CopyToTable&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="c"&gt;# columns defines the table schema, with each element corresponding&lt;/span&gt;
+    &lt;span class="c"&gt;# to a column in the format (args, kwargs) which will be sent to&lt;/span&gt;
+    &lt;span class="c"&gt;# the sqlalchemy.Column(*args, **kwargs)&lt;/span&gt;
+    &lt;span class="n"&gt;columns&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;
+        &lt;span class="p"&gt;([&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;item&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;String&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;64&lt;/span&gt;&lt;span class="p"&gt;)],&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;primary_key&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="bp"&gt;True&lt;/span&gt;&lt;span class="p"&gt;}),&lt;/span&gt;
+        &lt;span class="p"&gt;([&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;property&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;String&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;64&lt;/span&gt;&lt;span class="p"&gt;)],&lt;/span&gt; &lt;span class="p"&gt;{})&lt;/span&gt;
+    &lt;span class="p"&gt;]&lt;/span&gt;
+    &lt;span class="n"&gt;connection_string&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;sqlite://&amp;quot;&lt;/span&gt;  &lt;span class="c"&gt;# in memory SQLite database&lt;/span&gt;
+    &lt;span class="n"&gt;table&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;item_property&amp;quot;&lt;/span&gt;  &lt;span class="c"&gt;# name of the table to store data&lt;/span&gt;
+
+    &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;rows&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+        &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;row&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="p"&gt;[(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;item1&amp;quot;&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;property1&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;item2&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;property2&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)]:&lt;/span&gt;
+            &lt;span class="k"&gt;yield&lt;/span&gt; &lt;span class="n"&gt;row&lt;/span&gt;
+
+&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;__name__&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;__main__&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+    &lt;span class="n"&gt;task&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;SQLATask&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+    &lt;span class="n"&gt;luigi&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;build&lt;/span&gt;&lt;span class="p"&gt;([&lt;/span&gt;&lt;span class="n"&gt;task&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt; &lt;span class="n"&gt;local_scheduler&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="bp"&gt;True&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;If the target table where the data needs to be copied already exists, then
+the column schema definition can be skipped and instead the reflect flag
+can be set as True. Here is a modified version of the above example:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;sqlalchemy&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;String&lt;/span&gt;
+&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;luigi&lt;/span&gt;
+&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;luigi.contrib&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;sqla&lt;/span&gt;
+
+&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;SQLATask&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;sqla&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;CopyToTable&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="c"&gt;# If database table is already created, then the schema can be loaded&lt;/span&gt;
+    &lt;span class="c"&gt;# by setting the reflect flag to True&lt;/span&gt;
+    &lt;span class="n"&gt;reflect&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="bp"&gt;True&lt;/span&gt;
+    &lt;span class="n"&gt;connection_string&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;sqlite://&amp;quot;&lt;/span&gt;  &lt;span class="c"&gt;# in memory SQLite database&lt;/span&gt;
+    &lt;span class="n"&gt;table&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;item_property&amp;quot;&lt;/span&gt;  &lt;span class="c"&gt;# name of the table to store data&lt;/span&gt;
+
+    &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;rows&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+        &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;row&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="p"&gt;[(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;item1&amp;quot;&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;property1&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;item2&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;property2&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)]:&lt;/span&gt;
+            &lt;span class="k"&gt;yield&lt;/span&gt; &lt;span class="n"&gt;row&lt;/span&gt;
+
+&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;__name__&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;__main__&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+    &lt;span class="n"&gt;task&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;SQLATask&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+    &lt;span class="n"&gt;luigi&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;build&lt;/span&gt;&lt;span class="p"&gt;([&lt;/span&gt;&lt;span class="n"&gt;task&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt; &lt;span class="n"&gt;local_scheduler&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="bp"&gt;True&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;In the above examples, the data that needs to be copied was directly provided by
+overriding the rows method. Alternately, if the data comes from another task, the
+modified example would look as shown below:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;sqlalchemy&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;String&lt;/span&gt;
+&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;luigi&lt;/span&gt;
+&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;luigi.contrib&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;sqla&lt;/span&gt;
+&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;luigi.mock&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;MockFile&lt;/span&gt;
+
+&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;BaseTask&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;luigi&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Task&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;output&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+        &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;MockFile&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;BaseTask&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+    &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;run&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+        &lt;span class="n"&gt;out&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;output&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;open&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;w&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+        &lt;span class="n"&gt;TASK_LIST&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;item&lt;/span&gt;&lt;span class="si"&gt;%d&lt;/span&gt;&lt;span class="se"&gt;\t&lt;/span&gt;&lt;span class="s"&gt;property&lt;/span&gt;&lt;span class="si"&gt;%d&lt;/span&gt;&lt;span class="se"&gt;\n&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;%&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="nb"&gt;range&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;10&lt;/span&gt;&lt;span class="p"&gt;)]&lt;/span&gt;
+        &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;task&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;TASK_LIST&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+            &lt;span class="n"&gt;out&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;write&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;task&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+        &lt;span class="n"&gt;out&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;close&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+
+&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;SQLATask&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;sqla&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;CopyToTable&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="c"&gt;# columns defines the table schema, with each element corresponding&lt;/span&gt;
+    &lt;span class="c"&gt;# to a column in the format (args, kwargs) which will be sent to&lt;/span&gt;
+    &lt;span class="c"&gt;# the sqlalchemy.Column(*args, **kwargs)&lt;/span&gt;
+    &lt;span class="n"&gt;columns&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;
+        &lt;span class="p"&gt;([&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;item&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;String&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;64&lt;/span&gt;&lt;span class="p"&gt;)],&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;primary_key&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="bp"&gt;True&lt;/span&gt;&lt;span class="p"&gt;}),&lt;/span&gt;
+        &lt;span class="p"&gt;([&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;property&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;String&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;64&lt;/span&gt;&lt;span class="p"&gt;)],&lt;/span&gt; &lt;span class="p"&gt;{})&lt;/span&gt;
+    &lt;span class="p"&gt;]&lt;/span&gt;
+    &lt;span class="n"&gt;connection_string&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;sqlite://&amp;quot;&lt;/span&gt;  &lt;span class="c"&gt;# in memory SQLite database&lt;/span&gt;
+    &lt;span class="n"&gt;table&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;item_property&amp;quot;&lt;/span&gt;  &lt;span class="c"&gt;# name of the table to store data&lt;/span&gt;
+
+    &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;requires&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+        &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;BaseTask&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+
+&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;__name__&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;__main__&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+    &lt;span class="n"&gt;task1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;task2&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;SQLATask&lt;/span&gt;&lt;span class="p"&gt;(),&lt;/span&gt; &lt;span class="n"&gt;BaseTask&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+    &lt;span class="n"&gt;luigi&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;build&lt;/span&gt;&lt;span class="p"&gt;([&lt;/span&gt;&lt;span class="n"&gt;task1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;task2&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt; &lt;span class="n"&gt;local_scheduler&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="bp"&gt;True&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;In the above example, the output from &lt;cite&gt;BaseTask&lt;/cite&gt; is copied into the
+database. Here we did not have to implement the &lt;cite&gt;rows&lt;/cite&gt; method because
+by default &lt;cite&gt;rows&lt;/cite&gt; implementation assumes every line is a row with
+column values separated by a tab. One can define &lt;cite&gt;column_separator&lt;/cite&gt;
+option for the task if the values are say comma separated instead of
+tab separated.&lt;/p&gt;
+&lt;p&gt;The other option to &lt;cite&gt;sqla.CopyToTable&lt;/cite&gt; that can be of help with performance aspect is the
+&lt;cite&gt;chunk_size&lt;/cite&gt;. The default is 5000. This is the number of rows that will be inserted in
+a transaction at a time. Depending on the size of the inserts, this value can be tuned
+for performance.&lt;/p&gt;
+</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Gouthaman Balaraman</dc:creator><pubDate>Thu, 05 Feb 2015 00:00:00 -0800</pubDate><guid>tag:gouthamanbalaraman.com,2015-02-05:blog/sqlalchemy-luigi-workflow-pipeline.html</guid><category>Programming</category><category>Python</category><category>Luigi</category><category>SQLAlchemy</category></item><item><title>Building Task Pipelines Using Luigi</title><link>http://gouthamanbalaraman.com/blog/building-luigi-task-pipeline.html</link><description>&lt;p&gt;It is incredibly easy to write a script to process some data in python. But if you
+have a lot of tasks that depend on each other, and you need to create a robust work
+flow, then thinking in terms of a data pipeline is useful.&lt;/p&gt;
+&lt;p&gt;Luigi is a framework for building data pipelines, and managing workflows. The onus of
+setting up each unit of work is on you as the developer. Luigi taks care of resolving dependencies,
+manages the overall workflow, and most importantly handles failures. As a bonus Luigi provides
+a rather nice visualization tool and a command line interface.&lt;/p&gt;
+&lt;div class="section" id="luigi-basics"&gt;
+&lt;h2&gt;Luigi Basics&lt;/h2&gt;
+&lt;p&gt;In Luigi, a data pipeline is built by defining &lt;tt class="docutils literal"&gt;Task&lt;/tt&gt; instances. For every &lt;tt class="docutils literal"&gt;Task&lt;/tt&gt;, you can define
+its dependency by specifying the &lt;tt class="docutils literal"&gt;requires&lt;/tt&gt; method for the &lt;tt class="docutils literal"&gt;Task&lt;/tt&gt;. Every &lt;tt class="docutils literal"&gt;Task&lt;/tt&gt; can define
+an &lt;tt class="docutils literal"&gt;output&lt;/tt&gt; method to specify the &lt;tt class="docutils literal"&gt;Target&lt;/tt&gt; where the results of the &lt;tt class="docutils literal"&gt;Task&lt;/tt&gt; should go. Lets look at a
+simple example to get our feet wet, and gradually build complex cases.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="hello-world"&gt;
+&lt;h2&gt;Hello World!&lt;/h2&gt;
+&lt;script src="https://gist.github.com/gouthambs/873ebce21062914f038d.js"&gt;&lt;/script&gt;&lt;p&gt;This example is rather self-explanatory. I use the &lt;tt class="docutils literal"&gt;MockFile&lt;/tt&gt; class as
+the &lt;tt class="docutils literal"&gt;Target&lt;/tt&gt; just so that I can print to console. One can instead use &lt;tt class="docutils literal"&gt;luigi.LocalFileTarget(filename)&lt;/tt&gt;
+to use the file system as the target. The &lt;tt class="docutils literal"&gt;main_task_cls&lt;/tt&gt; specifies &lt;tt class="docutils literal"&gt;SimpleTask&lt;/tt&gt; as the task
+to run. The actual processing part of the task is encapsulated in the &lt;tt class="docutils literal"&gt;run&lt;/tt&gt; method of the &lt;tt class="docutils literal"&gt;SimpleTask&lt;/tt&gt;
+class.&lt;/p&gt;
+&lt;p&gt;When the script is executed, you should see an output that looks like this:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+DEBUG: Checking if SimpleTask() is complete
+INFO: Scheduled SimpleTask() (PENDING)
+INFO: Done scheduling tasks
+INFO: Running Worker with 1 processes
+DEBUG: Asking scheduler for work...
+DEBUG: Pending tasks: 1
+INFO: [pid 30338] Worker Worker(salt=329921834, host=G-ubuntu, username=myuser, pid=30338) running   SimpleTask()
+SimpleTask: Hello World!
+INFO: [pid 30338] Worker Worker(salt=329921834, host=G-ubuntu, username=myuser, pid=30338) done      SimpleTask()
+DEBUG: 1 running tasks, waiting for next task to finish
+DEBUG: Asking scheduler for work...
+INFO: Done
+INFO: There are no more tasks to run at this time
+INFO: Worker Worker(salt=329921834, host=G-ubuntu, username=myuser, pid=30338) was stopped. Shutting down Keep-Alive thread
+&lt;/pre&gt;
+&lt;p&gt;There you go! You have learnt a basic example.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="linked-task-example"&gt;
+&lt;h2&gt;Linked Task Example&lt;/h2&gt;
+&lt;p&gt;The above example was a good starter example. Though we did not really do much in terms of building a pipeline.
+Lets modify the above code a little bit, so we can build a pipeline.&lt;/p&gt;
+&lt;script src="https://gist.github.com/gouthambs/8740bf4ff5e8269fd56a.js"&gt;&lt;/script&gt;&lt;p&gt;This example is built on top of the &amp;quot;Hello World&amp;quot; example from above. The &lt;tt class="docutils literal"&gt;SimpleTask&lt;/tt&gt; outputs
+the text &amp;quot;Hello World!&amp;quot;. The &lt;tt class="docutils literal"&gt;DecoratedTask&lt;/tt&gt; takes this output from &lt;tt class="docutils literal"&gt;SimpleTask&lt;/tt&gt; and prefixes
+with the word &amp;quot;Decorated&amp;quot;.&lt;/p&gt;
+&lt;p&gt;I use the &lt;tt class="docutils literal"&gt;MockFile&lt;/tt&gt; here just as a way to see the results on the console. This is
+usually a good testing tool, though I am not sure if it is production ready approach.&lt;/p&gt;
+&lt;p&gt;The output for the above example would look like:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+DEBUG: Checking if DecoratedTask() is complete
+INFO: Scheduled DecoratedTask() (PENDING)
+DEBUG: Checking if SimpleTask() is complete
+INFO: Scheduled SimpleTask() (PENDING)
+INFO: Done scheduling tasks
+INFO: Running Worker with 1 processes
+DEBUG: Asking scheduler for work...
+DEBUG: Pending tasks: 2
+INFO: [pid 30648] Worker Worker(salt=907129510, host=G-ubuntu, username=myuser, pid=30648) running   SimpleTask()
+SimpleTask: Hello World!
+INFO: [pid 30648] Worker Worker(salt=907129510, host=G-ubuntu, username=v, pid=30648) done      SimpleTask()
+DEBUG: 1 running tasks, waiting for next task to finish
+DEBUG: Asking scheduler for work...
+DEBUG: Pending tasks: 1
+INFO: [pid 30648] Worker Worker(salt=907129510, host=G-ubuntu, username=myuser, pid=30648) running   DecoratedTask()
+DecoratedTask: Decorated Hello World!
+
+INFO: [pid 30648] Worker Worker(salt=907129510, host=G-ubuntu, username=myuser, pid=30648) done      DecoratedTask()
+DEBUG: 1 running tasks, waiting for next task to finish
+DEBUG: Asking scheduler for work...
+INFO: Done
+INFO: There are no more tasks to run at this time
+INFO: Worker Worker(salt=907129510, host=G-ubuntu, username=myuser, pid=30648) was stopped. Shutting down Keep-Alive thread
+&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div class="section" id="conclusion"&gt;
+&lt;h2&gt;Conclusion&lt;/h2&gt;
+&lt;p&gt;Here we learnt a really basic example that should give you some sense of building Luigi based task pipelines.&lt;/p&gt;
+&lt;/div&gt;
+</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Gouthaman Balaraman</dc:creator><pubDate>Wed, 31 Dec 2014 00:00:00 -0800</pubDate><guid>tag:gouthamanbalaraman.com,2014-12-31:blog/building-luigi-task-pipeline.html</guid><category>Programming</category><category>Python</category><category>Luigi</category></item><item><title>Flask App Directory Structure</title><link>http://gouthamanbalaraman.com/blog/flask-app-directory-structure.html</link><description>&lt;p&gt;This post is a summary of what I learnt perusing a lot of websites. My goal here is to:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;summarize the directory structure for a flask app&lt;/li&gt;
+&lt;li&gt;setup SQLAlchemy with migrations&lt;/li&gt;
+&lt;li&gt;outline the setup for transition to production&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class="section" id="directory-structure"&gt;
+&lt;h2&gt;Directory Structure&lt;/h2&gt;
+&lt;p&gt;If you want to build a website based on the Flask framework for python. I recommend you organize you &lt;tt class="docutils literal"&gt;app&lt;/tt&gt; as:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+~/AppHome
+        |-- run.py
+        |-- config.py
+        |__ /myapp
+                |-- __init__.py
+                |__ /subapp1
+                        |-- __init__.py
+                        |-- models.py
+                        |-- views.py
+                        |-- viewmodel.py
+                |__ /templates
+                        |-- base.html
+                        |-- index.html
+                        |__ /subapp1
+                                |-- subapp1_index.html
+                                |-- otherpage.html
+                |__ /static
+                        |__ /js
+                        |__ /css
+        |-- setup.py
+        |-- MANIFEST.in
+        |-- Requirements.txt
+        |__ /env
+        |
+        |-- manage.py
+        |__ /migrations
+                |__ ...
+        |__ /etl
+                |__ ...
+        |
+        |-- fabfile.py
+&lt;/pre&gt;
+&lt;p&gt;What I have shown above is the overall structure of a Flask application that will transition
+over to production smoothly. Let me explain the structure briefly before we dive into any code.&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;&lt;tt class="docutils literal"&gt;run.py&lt;/tt&gt; is the actual python code that will import the app and execute&lt;/li&gt;
+&lt;li&gt;&lt;tt class="docutils literal"&gt;config.py&lt;/tt&gt; is the file for storing configurations for the app&lt;/li&gt;
+&lt;li&gt;&lt;tt class="docutils literal"&gt;myapp&lt;/tt&gt; is the folder containing the python code and its dependencies such as &lt;tt class="docutils literal"&gt;templates&lt;/tt&gt; and &lt;tt class="docutils literal"&gt;static&lt;/tt&gt; files&lt;/li&gt;
+&lt;li&gt;&lt;tt class="docutils literal"&gt;myapp/__init__.py&lt;/tt&gt; is typically where I create the Flask &lt;tt class="docutils literal"&gt;app&lt;/tt&gt; instance and do all the configuration&lt;/li&gt;
+&lt;li&gt;&lt;tt class="docutils literal"&gt;myapp/subapp1&lt;/tt&gt; is a sub-package under the &lt;tt class="docutils literal"&gt;myapp&lt;/tt&gt; packages. I recommend using sub-packages to organize
+your web application with the help of &lt;tt class="docutils literal"&gt;Blueprints&lt;/tt&gt;.&lt;ul&gt;
+&lt;li&gt;&lt;tt class="docutils literal"&gt;myapp/subapp1/__init__.py&lt;/tt&gt; is the place to create the &lt;tt class="docutils literal"&gt;Blueprint&lt;/tt&gt; definition and other initializations
+corresponding to your sub-package.&lt;/li&gt;
+&lt;li&gt;&lt;tt class="docutils literal"&gt;myapp/subapp1/models.py&lt;/tt&gt; is the place to define the SQLAlchemy models.&lt;/li&gt;
+&lt;li&gt;&lt;tt class="docutils literal"&gt;myapp/subapp1/views.py&lt;/tt&gt; is the place to define the routes that the submodule will provide&lt;/li&gt;
+&lt;li&gt;&lt;tt class="docutils literal"&gt;myapp/subapp1/viewmodel.py&lt;/tt&gt; is the bridge between model and view. Use this file to create functions
+to wrap your database queries using models defined in &lt;tt class="docutils literal"&gt;models.py that ``views.py&lt;/tt&gt; can call.
+In the future, should you want to add caching support, you can directly add here and have the benefit of
+caching.&lt;/li&gt;
+&lt;li&gt;&lt;tt class="docutils literal"&gt;templates&lt;/tt&gt; folder with its sub structure contains the Flask &lt;tt class="docutils literal"&gt;html&lt;/tt&gt; templates. By mirroring the template
+sub-folders similar to the app sub-modules, it would be easier to maintain.&lt;/li&gt;
+&lt;li&gt;&lt;tt class="docutils literal"&gt;static&lt;/tt&gt; folder contains all the static resources. By isolating this folder, we could use other servers
+such as &lt;tt class="docutils literal"&gt;nginx&lt;/tt&gt; to serve static content.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;tt class="docutils literal"&gt;setup.py&lt;/tt&gt; script can contain the setup script to bundle your app.&lt;/li&gt;
+&lt;li&gt;&lt;tt class="docutils literal"&gt;MANIFEST.in&lt;/tt&gt; typically contains resources about your package, other resources that you wish to
+package.&lt;/li&gt;
+&lt;li&gt;&lt;tt class="docutils literal"&gt;Requirements.txt&lt;/tt&gt; is the place to put all your package dependencies. You can easily install all dependencies
+using &lt;tt class="docutils literal"&gt;pip&lt;/tt&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;tt class="docutils literal"&gt;env&lt;/tt&gt; can contain your virtual environment for development.&lt;/li&gt;
+&lt;li&gt;&lt;tt class="docutils literal"&gt;manage.py&lt;/tt&gt; is the place to put any kinds of &lt;tt class="docutils literal"&gt;Flask&lt;/tt&gt; related scripts, such as database migrations.&lt;/li&gt;
+&lt;li&gt;&lt;tt class="docutils literal"&gt;migrations&lt;/tt&gt; folder containing  configuration and scripts associated with database migration.&lt;/li&gt;
+&lt;li&gt;&lt;tt class="docutils literal"&gt;etl&lt;/tt&gt; is a folder to put scripts related to ETL tasks. This is something that you could move to a
+different location. Though sometimes it is convenient to group them if you do need to share code with your app.&lt;/li&gt;
+&lt;li&gt;&lt;tt class="docutils literal"&gt;fabfile.py&lt;/tt&gt; to automate local and server side tasks that need to be run often.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;... to be continued.&lt;/p&gt;
+&lt;/div&gt;
+</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Gouthaman Balaraman</dc:creator><pubDate>Mon, 29 Dec 2014 00:00:00 -0800</pubDate><guid>tag:gouthamanbalaraman.com,2014-12-29:blog/flask-app-directory-structure.html</guid><category>programming</category><category>flask</category><category>python</category></item><item><title>MySQL Cheat Sheet</title><link>http://gouthamanbalaraman.com/blog/mysql-cheatsheet.html</link><description>&lt;p&gt;Here are some notes and commands on MySQL administration&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p class="first"&gt;Create a database:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+CREATE DATABASE mydatabase;
+&lt;/pre&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;Creating a user for the database:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+CREATE USER 'testuser'&amp;#64;localhost IDENTIFIED BY 'password';
+&lt;/pre&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;Granting &lt;tt class="docutils literal"&gt;testuser&lt;/tt&gt; all privileges on a table:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+GRANT ALL PRIVILEGES ON mydatabase.* TO 'testuser'&amp;#64;localhost;
+&lt;/pre&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;Show a list of databases:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+SHOW DATABASES;
+&lt;/pre&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;Pick a database to use:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+USE mydatabase;
+&lt;/pre&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;Show a list of tables after selecting a database:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+SHOW TABLES;
+&lt;/pre&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;Updating a column with a constant value:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+UPDATE table1 SET column_a='value_a', column_b='value_b' WHERE query_id='1';
+&lt;/pre&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;Deleting rows that satisfy a criterion:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+DELETE FROM table1 WHERE query_id='1';
+&lt;/pre&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;Resetting the primary key value after any deletes that were performed:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+ALTER TABLE table1 AUTO_INCREMENT=1;
+&lt;/pre&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;Disabling safe update mode, and turning back on:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+SET SQL_SAFE_UPDATES = 0;
+DELETE FROM table1 WHERE query_id='1';
+SET SQL_SAFE_UPDATES = 1;
+&lt;/pre&gt;
+&lt;p&gt;Use the above with caution.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;Counting duplicates in a column:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+SELECT query_id, COUNT(*) c FROM table1 GROUP BY query_id HAVING c &amp;gt; 1;
+&lt;/pre&gt;
+&lt;p&gt;This would count all duplicates in query_id and list the count for each. You can drop the &lt;tt class="docutils literal"&gt;HAVING c &amp;gt; 1&lt;/tt&gt; part
+if you just want to get a count on a certain column.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;Getting size occupied by a database named &lt;tt class="docutils literal"&gt;mydatabase&lt;/tt&gt; listed for each table:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+SELECT table_name AS &amp;quot;Tables&amp;quot;,
+round(((data_length + index_length) / 1024 / 1024), 2) &amp;quot;Size in MB&amp;quot;
+FROM information_schema.TABLES
+WHERE table_schema = &amp;quot;mydatabase&amp;quot;
+ORDER BY (data_length + index_length) DESC;
+&lt;/pre&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Gouthaman Balaraman</dc:creator><pubDate>Tue, 09 Dec 2014 00:00:00 -0800</pubDate><guid>tag:gouthamanbalaraman.com,2014-12-09:blog/mysql-cheatsheet.html</guid><category>programming</category><category>linux</category><category>database</category><category>mysql</category></item><item><title>Securing Authentication Tokens</title><link>http://gouthamanbalaraman.com/blog/securing-authentication-tokens.html</link><description>&lt;p&gt;The article &lt;a class="reference external" href="/blog/minimal-flask-login-example.html"&gt;Minimal Flask Login Example&lt;/a&gt; provided an introduction to token
+based authentication using the Flask-Login extension for the Flask web framework. The focus of that article was to
+highlight the crux of authentication logic. One glaring omission was that the token itself was nothing but
+the username and password passed as clear text. This clearly will not work!&lt;/p&gt;
+&lt;p&gt;The high level control flow involving token based authentication is as follows:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;client (browser) makes a &lt;em&gt;request&lt;/em&gt; for the web token in exchange for authentication credential&lt;/li&gt;
+&lt;li&gt;the authentication credentials are serialized to create a token, and server &lt;em&gt;responds&lt;/em&gt; with this token&lt;/li&gt;
+&lt;li&gt;every time the client needs to &lt;em&gt;request&lt;/em&gt; a secured page, the client would provide the authentication token to the server
+part of the request&lt;/li&gt;
+&lt;li&gt;the server deserializes the token, fetches the authentication credentials and validates the token&lt;/li&gt;
+&lt;li&gt;if the token is valid, then the server responds with an access to the secured page; should the token be invalid, then
+the access to secured page is denied.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;In the &lt;a class="reference external" href="/blog/minimal-flask-login-example.html"&gt;Minimal Flask Login Example&lt;/a&gt;, we skipped the serialization part
+for simplicity. A more rigorous way of doing this would be to use &lt;tt class="docutils literal"&gt;JSONWebSignatureSerializer&lt;/tt&gt; in the
+&lt;tt class="docutils literal"&gt;itsdangerous&lt;/tt&gt; package to serialize the authentication credentials.&lt;/p&gt;
+&lt;pre class="code python literal-block"&gt;
+&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;itsdangerous&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;JSONWebSignatureSerializer&lt;/span&gt;
+&lt;span class="n"&gt;s&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;JSONWebSignatureSerializer&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;'secret-key'&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;token&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;s&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;dumps&lt;/span&gt;&lt;span class="p"&gt;({&lt;/span&gt;&lt;span class="s"&gt;'username'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;JaneDoe&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;'password'&lt;/span&gt; &lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s"&gt;'secret'&lt;/span&gt;&lt;span class="p"&gt;})&lt;/span&gt;
+&lt;/pre&gt;
+&lt;p&gt;The &lt;tt class="docutils literal"&gt;token&lt;/tt&gt; in the above code can be used to pass from the server side. Validating a token is
+simple as well.&lt;/p&gt;
+&lt;pre class="code python literal-block"&gt;
+&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;itsdangerous&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;JSONWebSignatureSerializer&lt;/span&gt;
+&lt;span class="n"&gt;s&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;JSONWebSignatureSerializer&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;'secret-key'&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;credential&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;s&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;loads&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;token&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;
+&lt;p&gt;The above code will get the &lt;tt class="docutils literal"&gt;credential&lt;/tt&gt; corresponding to the user which can then be checked against what is
+stored in the database.&lt;/p&gt;
+</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Gouthaman Balaraman</dc:creator><pubDate>Tue, 02 Dec 2014 00:00:00 -0800</pubDate><guid>tag:gouthamanbalaraman.com,2014-12-02:blog/securing-authentication-tokens.html</guid><category>Programming</category><category>Python</category><category>Flask</category><category>Authentication</category></item><item><title>Multi-Processing With Pandas</title><link>http://gouthamanbalaraman.com/blog/distributed-processing-pandas.html</link><description>&lt;p&gt;If you have used &lt;tt class="docutils literal"&gt;pandas&lt;/tt&gt;, you must be familiar with the awesome functionality and tools that
+it brings to data processing. I have used &lt;tt class="docutils literal"&gt;pandas&lt;/tt&gt; as a tool to read data files and transform
+them into various summaries of interest. My usual process pipeline would start with
+a text file with data in a CSV format. I would read data into a &lt;tt class="docutils literal"&gt;pandas&lt;/tt&gt; &lt;tt class="docutils literal"&gt;DataFrame&lt;/tt&gt;
+and run various transformations of interest.&lt;/p&gt;
+&lt;p&gt;Recently I stumbled into a problem with this approach. My file was big, in the 100's of MBs. I was
+running a 32-bit version of python, and I started getting &lt;tt class="docutils literal"&gt;MemoryError&lt;/tt&gt;. This happens because
+&lt;tt class="docutils literal"&gt;pandas&lt;/tt&gt; and &lt;tt class="docutils literal"&gt;numpy&lt;/tt&gt; would need to allocate contiguous memory blocks, and 32-bit system
+would have a cap at 2GB. Additionally processing a huge file took some time (more than my impatience
+could tolerate). The approach I took to solve this problem is:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;Read the large input file in smaller chunks so it wouldn't run into &lt;tt class="docutils literal"&gt;MemoryError&lt;/tt&gt;&lt;/li&gt;
+&lt;li&gt;Use multi-processing to process the input file in parallel to speed up processing&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class="section" id="sample-code"&gt;
+&lt;h2&gt;Sample Code&lt;/h2&gt;
+&lt;p&gt;&lt;tt class="docutils literal"&gt;Pandas&lt;/tt&gt; &lt;tt class="docutils literal"&gt;read_table&lt;/tt&gt; method can take &lt;tt class="docutils literal"&gt;chunksize&lt;/tt&gt; as an argument and return an &lt;tt class="docutils literal"&gt;iterator&lt;/tt&gt;
+while reading a file. This means that you can process individual &lt;tt class="docutils literal"&gt;DataFrames&lt;/tt&gt; consisting of
+&lt;tt class="docutils literal"&gt;chunksize&lt;/tt&gt; rows at a time. You can then put the individual results together.&lt;/p&gt;
+&lt;pre class="code python literal-block"&gt;
+&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;pandas&lt;/span&gt; &lt;span class="kn"&gt;as&lt;/span&gt; &lt;span class="nn"&gt;pd&lt;/span&gt;
+
+&lt;span class="n"&gt;LARGE_FILE&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;D:&lt;/span&gt;&lt;span class="se"&gt;\\&lt;/span&gt;&lt;span class="s"&gt;my_large_file.txt&amp;quot;&lt;/span&gt;
+&lt;span class="n"&gt;CHUNKSIZE&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;100000&lt;/span&gt; &lt;span class="c"&gt;# processing 100,000 rows at a time&lt;/span&gt;
+
+&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;process_frame&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;df&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+        &lt;span class="c"&gt;# process data frame&lt;/span&gt;
+        &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="nb"&gt;len&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;df&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;__name__&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="s"&gt;'__main__'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+        &lt;span class="n"&gt;reader&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;pd&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;read_table&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;LARGE_FILE&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;chunksize&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;CHUNKSIZE&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+        &lt;span class="n"&gt;result&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;
+        &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;df&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;reader&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+                &lt;span class="c"&gt;# process each data frame&lt;/span&gt;
+                &lt;span class="n"&gt;result&lt;/span&gt; &lt;span class="o"&gt;+=&lt;/span&gt; &lt;span class="n"&gt;process_frame&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;df&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+        &lt;span class="k"&gt;print&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;There are &lt;/span&gt;&lt;span class="si"&gt;%d&lt;/span&gt;&lt;span class="s"&gt; rows of data&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;%&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;result&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;
+&lt;p&gt;The code chunk above shows you how to read file in smaller chunks and process
+each chunk at a time. You can also add a &lt;tt class="docutils literal"&gt;multiprocessing&lt;/tt&gt; twist to it
+to get performance boost. Here is a &lt;tt class="docutils literal"&gt;multiprocessing&lt;/tt&gt; version of the same
+snippet from above.&lt;/p&gt;
+&lt;pre class="code python literal-block"&gt;
+&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;pandas&lt;/span&gt; &lt;span class="kn"&gt;as&lt;/span&gt; &lt;span class="nn"&gt;pd&lt;/span&gt;
+&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;multiprocessing&lt;/span&gt; &lt;span class="kn"&gt;as&lt;/span&gt; &lt;span class="nn"&gt;mp&lt;/span&gt;
+
+&lt;span class="n"&gt;LARGE_FILE&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;D:&lt;/span&gt;&lt;span class="se"&gt;\\&lt;/span&gt;&lt;span class="s"&gt;my_large_file.txt&amp;quot;&lt;/span&gt;
+&lt;span class="n"&gt;CHUNKSIZE&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;100000&lt;/span&gt; &lt;span class="c"&gt;# processing 100,000 rows at a time&lt;/span&gt;
+
+&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;process_frame&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;df&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+        &lt;span class="c"&gt;# process data frame&lt;/span&gt;
+        &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="nb"&gt;len&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;df&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;__name__&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="s"&gt;'__main__'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+        &lt;span class="n"&gt;reader&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;pd&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;read_table&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;LARGE_FILE&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;chunksize&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;CHUNKSIZE&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+        &lt;span class="n"&gt;pool&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;mp&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Pool&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;4&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="c"&gt;# use 4 processes&lt;/span&gt;
+
+        &lt;span class="n"&gt;funclist&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[]&lt;/span&gt;
+        &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;df&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;reader&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+                &lt;span class="c"&gt;# process each data frame&lt;/span&gt;
+                &lt;span class="n"&gt;f&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;pool&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;apply_async&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;process_frame&lt;/span&gt;&lt;span class="p"&gt;,[&lt;/span&gt;&lt;span class="n"&gt;df&lt;/span&gt;&lt;span class="p"&gt;])&lt;/span&gt;
+                &lt;span class="n"&gt;funclist&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;append&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;f&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+        &lt;span class="n"&gt;result&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;
+        &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;f&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;funclist&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+                &lt;span class="n"&gt;result&lt;/span&gt; &lt;span class="o"&gt;+=&lt;/span&gt; &lt;span class="n"&gt;f&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;get&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;timeout&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;10&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="c"&gt;# timeout in 10 seconds&lt;/span&gt;
+
+        &lt;span class="k"&gt;print&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;There are &lt;/span&gt;&lt;span class="si"&gt;%d&lt;/span&gt;&lt;span class="s"&gt; rows of data&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;%&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;result&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;
+&lt;p&gt;The code snippet above should be fairly self explanatory. The idea here is to
+&lt;em&gt;asynchronously&lt;/em&gt; process chunk of data by pushing it into a multiprocessing pool queue.
+Each process in pool will work on the task, and return the result.&lt;/p&gt;
+&lt;/div&gt;
+</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Gouthaman Balaraman</dc:creator><pubDate>Wed, 19 Nov 2014 00:00:00 -0800</pubDate><guid>tag:gouthamanbalaraman.com,2014-11-19:blog/distributed-processing-pandas.html</guid><category>python</category><category>programming</category><category>pandas</category></item><item><title>Setting Up Linode For The Impatient</title><link>http://gouthamanbalaraman.com/blog/setting-up-linode.html</link><description>&lt;p&gt;When you get a linode instance, you really get a barren (sort of) linux machine on the cloud. That means
+you have to take care of customizing the server based on your needs. Here are some notes based on what I
+wanted to setup.&lt;/p&gt;
+&lt;p&gt;My requirements were the following:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;Python Setup: Setup python to perform installations using &lt;tt class="docutils literal"&gt;pip&lt;/tt&gt;.&lt;/li&gt;
+&lt;li&gt;Secure Server: Enable firewall etc.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class="section" id="linode-basics"&gt;
+&lt;h2&gt;Linode Basics&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p class="first"&gt;Once I setup the linode account, I used the ssh instructions on the &amp;quot;Remote Access&amp;quot; in the linode
+dashboard to get the IP as:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+ssh root&amp;#64;&amp;lt;ip-address&amp;gt;
+&lt;/pre&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;Setup hostname:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+echo &amp;quot;ServerName&amp;quot; &amp;gt; /etc/hostname
+hostname -F /etc/hostname
+&lt;/pre&gt;
+&lt;p&gt;Try &lt;tt class="docutils literal"&gt;hostname&lt;/tt&gt; on the command line to see the hostname printed correctly.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;Add to /etc/hosts. In your &lt;em&gt;desktop&lt;/em&gt;, associate the linode IP with a custom servername of
+your liking. Edit /etc/hosts to look like:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+127.0.0.1   localhost
+127.0.1.1   G-ubuntu
+111.11.11.1 ServerName
+&lt;/pre&gt;
+&lt;p&gt;Also on you linode add an entry to associate &lt;tt class="docutils literal"&gt;127.0.0.1&lt;/tt&gt; with the server hostname. If not you will
+a error message that the &amp;lt;ServerName is not recognized when you &lt;tt class="docutils literal"&gt;sudo&lt;/tt&gt;. Add the following to /etc/hostname
+in your linode:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+127.0.0.1  ServerName
+&lt;/pre&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div class="section" id="securing-linode"&gt;
+&lt;h2&gt;Securing Linode&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p class="first"&gt;Setting up firewall: When I type &lt;tt class="docutils literal"&gt;sudo iptables &lt;span class="pre"&gt;-L&lt;/span&gt;&lt;/tt&gt; I get:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+Chain INPUT (policy ACCEPT)
+target     prot opt source               destination
+
+Chain FORWARD (policy ACCEPT)
+target     prot opt source               destination
+
+Chain OUTPUT (policy ACCEPT)
+target     prot opt source               destination
+&lt;/pre&gt;
+&lt;p&gt;Now create a file to store the firewall rules using &lt;tt class="docutils literal"&gt;sudo nano /etc/iptables.firewall.rules&lt;/tt&gt; and
+paste the following:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+*filter
+
+#  Allow all loopback (lo0) traffic and drop all traffic to 127/8 that doesn't use lo0
+-A INPUT -i lo -j ACCEPT
+-A INPUT -d 127.0.0.0/8 -j REJECT
+
+#  Accept all established inbound connections
+-A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
+
+#  Allow all outbound traffic - you can modify this to only allow certain traffic
+-A OUTPUT -j ACCEPT
+
+#  Allow HTTP and HTTPS connections from anywhere (the normal ports for websites and SSL).
+-A INPUT -p tcp --dport 80 -j ACCEPT
+-A INPUT -p tcp --dport 443 -j ACCEPT
+
+#  Allow SSH connections
+#
+#  The -dport number should be the same port number you set in sshd_config
+#
+-A INPUT -p tcp -m state --state NEW --dport 22 -j ACCEPT
+
+#  Allow ping
+-A INPUT -p icmp --icmp-type echo-request -j ACCEPT
+
+#  Log iptables denied calls
+-A INPUT -m limit --limit 5/min -j LOG --log-prefix &amp;quot;iptables denied: &amp;quot; --log-level 7
+
+#  Drop all other inbound - default deny unless explicitly allowed policy
+-A INPUT -j DROP
+-A FORWARD -j DROP
+
+COMMIT
+&lt;/pre&gt;
+&lt;p&gt;Now the firewall rules can be activated using:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+sudo iptables-restore &amp;lt; /etc/iptables.firewall.rules
+&lt;/pre&gt;
+&lt;p&gt;Now when you type &lt;tt class="docutils literal"&gt;sudo iptables &lt;span class="pre"&gt;-L&lt;/span&gt;&lt;/tt&gt;:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+Chain INPUT (policy ACCEPT)
+target     prot opt source               destination
+ACCEPT     all  --  anywhere             anywhere
+REJECT     all  --  anywhere             127.0.0.0/8          reject-with icmp-port-unreachable
+ACCEPT     all  --  anywhere             anywhere             state RELATED,ESTABLISHED
+ACCEPT     tcp  --  anywhere             anywhere             tcp dpt:http
+ACCEPT     tcp  --  anywhere             anywhere             tcp dpt:https
+ACCEPT     tcp  --  anywhere             anywhere             state NEW tcp dpt:ssh
+ACCEPT     icmp --  anywhere             anywhere
+LOG        all  --  anywhere             anywhere             limit: avg 5/min burst 5 LOG level debug prefix &amp;quot;iptables denied: &amp;quot;
+DROP       all  --  anywhere             anywhere
+
+Chain FORWARD (policy ACCEPT)
+target     prot opt source               destination
+DROP       all  --  anywhere             anywhere
+
+Chain OUTPUT (policy ACCEPT)
+target     prot opt source               destination
+ACCEPT     all  --  anywhere             anywhere
+&lt;/pre&gt;
+&lt;p&gt;Now to ensure that the firewall is going to be up and running every time you reboot your
+Linode, edit &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;/etc/network/if-pre-up.d/firewall&lt;/span&gt;&lt;/tt&gt; as &lt;tt class="docutils literal"&gt;sudo&lt;/tt&gt; to add:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+#!/bin/sh
+/sbin/iptables-restore &amp;lt; /etc/iptables.firewall.rules
+&lt;/pre&gt;
+&lt;p&gt;Once you have saved these edits, make this file executable using:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+sudo chmod +x /etc/network/if-pre-up.d/firewall
+&lt;/pre&gt;
+&lt;p&gt;This should secure your server. If you want to make sure your firewall is up and running,
+reboot the server and check what you get when you type &lt;tt class="docutils literal"&gt;sudo iptables &lt;span class="pre"&gt;-L&lt;/span&gt;&lt;/tt&gt;.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;Installing and Configuring Fail2Ban: Fail2Ban is an application that prevents
+dictionary attacks on your server. When Fail2Ban detects multiple failed login
+attempts from the same IP address, it creates temporary firewall rules that block
+traffic from the attacker’s IP address. Attempted logins can be monitored on a
+variety of protocols, including SSH, HTTP, and SMTP. By default, Fail2Ban monitors SSH only.&lt;/p&gt;
+&lt;p&gt;Here’s how to install and configure Fail2Ban:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p class="first"&gt;Install Fail2Ban by entering the following command:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+sudo apt-get install fail2ban
+&lt;/pre&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;Optionally, you can override the default Fail2Ban configuration by creating
+a new &lt;tt class="docutils literal"&gt;jail.local&lt;/tt&gt; file. Enter the following command to create the file:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+sudo nano /etc/fail2ban/jail.local
+&lt;/pre&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;To learn more about Fail2Ban configuration options, see this article on the &lt;a class="reference external" href="http://www.fail2ban.org/wiki/index.php/MANUAL_0_8#Configuration"&gt;Fail2Ban&lt;/a&gt; website.
+Fail2Ban is now installed and running on your Linode. It will monitor your log files for failed
+login attempts. After an IP address has exceeded the maximum number of authentication attempts,
+it will be blocked at the network level and the event will be logged in &lt;tt class="docutils literal"&gt;/var/log/fail2ban.log&lt;/tt&gt;.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div class="section" id="python-setup"&gt;
+&lt;h2&gt;Python Setup&lt;/h2&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Gouthaman Balaraman</dc:creator><pubDate>Thu, 13 Nov 2014 00:00:00 -0800</pubDate><guid>tag:gouthamanbalaraman.com,2014-11-13:blog/setting-up-linode.html</guid><category>programming</category><category>linux</category></item><item><title>An Elegy</title><link>http://gouthamanbalaraman.com/blog/jayam-elegy.html</link><description>&lt;div class="line-block"&gt;
+&lt;div class="line"&gt;On this day, we mourn the loss of Jayam&lt;/div&gt;
+&lt;div class="line"&gt;Mother to our dads,&lt;/div&gt;
+&lt;div class="line"&gt;Grandmother to us,&lt;/div&gt;
+&lt;div class="line"&gt;Great grandmother to our offspring&lt;/div&gt;
+&lt;div class="line"&gt;And an affectionate human being to all.&lt;/div&gt;
+&lt;div class="line"&gt;&lt;br /&gt;&lt;/div&gt;
+&lt;div class="line"&gt;May we also remember the spirit that represents the person she was&lt;/div&gt;
+&lt;div class="line"&gt;And what she has left in us - in our little genes and in  our memories.&lt;/div&gt;
+&lt;div class="line"&gt;&lt;br /&gt;&lt;/div&gt;
+&lt;div class="line"&gt;Lets us remember how her partial blindness&lt;/div&gt;
+&lt;div class="line"&gt;Did not impede her ability to fulfil her parental duties.&lt;/div&gt;
+&lt;div class="line"&gt;&lt;br /&gt;&lt;/div&gt;
+&lt;div class="line"&gt;Let us remember her love for music&lt;/div&gt;
+&lt;div class="line"&gt;And how she strived to impart the same in us.&lt;/div&gt;
+&lt;div class="line"&gt;&lt;br /&gt;&lt;/div&gt;
+&lt;div class="line"&gt;Let us remember that in her own quiet ways -&lt;/div&gt;
+&lt;div class="line"&gt;Folding clothes in a corner,&lt;/div&gt;
+&lt;div class="line"&gt;Sipping &lt;em&gt;Narasus&lt;/em&gt; coffee,&lt;/div&gt;
+&lt;div class="line"&gt;Telling bedtime stories,&lt;/div&gt;
+&lt;div class="line"&gt;She made a resonant impact in all our lives.&lt;/div&gt;
+&lt;div class="line"&gt;&lt;br /&gt;&lt;/div&gt;
+&lt;div class="line"&gt;&lt;br /&gt;&lt;/div&gt;
+&lt;div class="line"&gt;Perhaps this is the day for us to pause from all the rigmarole&lt;/div&gt;
+&lt;div class="line"&gt;And &lt;em&gt;remember&lt;/em&gt; what it means to be &lt;em&gt;remembered&lt;/em&gt;.&lt;/div&gt;
+&lt;div class="line"&gt;&lt;br /&gt;&lt;/div&gt;
+&lt;div class="line"&gt;Perhaps this is the day for us to believe&lt;/div&gt;
+&lt;div class="line"&gt;That in the face of &lt;em&gt;impossibilities&lt;/em&gt; it is &lt;em&gt;possible&lt;/em&gt; to carry on.&lt;/div&gt;
+&lt;div class="line"&gt;&lt;br /&gt;&lt;/div&gt;
+&lt;div class="line"&gt;Perhaps this day should be a reminder for us&lt;/div&gt;
+&lt;div class="line"&gt;To &lt;em&gt;live&lt;/em&gt; the gift that is the joy of &lt;em&gt;living&lt;/em&gt;.&lt;/div&gt;
+&lt;div class="line"&gt;&lt;br /&gt;&lt;/div&gt;
+&lt;div class="line"&gt;May her soul rest in peace!&lt;/div&gt;
+&lt;/div&gt;
+</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Gouthaman Balaraman</dc:creator><pubDate>Sun, 26 Oct 2014 00:00:00 -0700</pubDate><guid>tag:gouthamanbalaraman.com,2014-10-26:blog/jayam-elegy.html</guid><category>personal</category></item><item><title>Understanding the Econometric Factor Model</title><link>http://gouthamanbalaraman.com/blog/understanding-econometric-factor-model.html</link><description>&lt;p&gt;The post explains the &lt;a class="reference external" href="/blog/econometric-factor-model.html"&gt;Econometric Factor Model&lt;/a&gt;
+widget that I have built. The factors used in the econometric factor model are: &lt;em&gt;unemployment&lt;/em&gt;,
+&lt;em&gt;consumer sentiment&lt;/em&gt;, &lt;em&gt;market&lt;/em&gt;, &lt;em&gt;size&lt;/em&gt; and &lt;em&gt;value/growth&lt;/em&gt;. A brief explanation of the factors are
+as follows.&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;The &lt;em&gt;unemployment&lt;/em&gt; factor is a proxy for the state of economy, and exposure to this factor
+measures the impact the economy can have on the performance of this stock.&lt;/li&gt;
+&lt;li&gt;The &lt;em&gt;consumer sentiment&lt;/em&gt; is a voice of consumers behaviour and sentiment, and this factor
+can help understand the impact of consumer confidence on the stock's performance.&lt;/li&gt;
+&lt;li&gt;The exposure to &lt;em&gt;market&lt;/em&gt; factor captures how the stock's performance is correlated with
+that of the market.&lt;/li&gt;
+&lt;li&gt;The &lt;em&gt;size&lt;/em&gt; factor (or SML - Small Minus Large ) is a measure of the excess returns that
+the small cap has over the large cap stocks. The exposure to this factor is meant to
+capture the impact size has on the performance of this stock. Small (large) cap stock will
+typically have positive (negative) exposures to this factor.&lt;/li&gt;
+&lt;li&gt;The &lt;em&gt;value/growth&lt;/em&gt; (or HML - High book-to-value Minus Low) is meant to identify the
+value or growth aspect of a stock.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;As a use case, let us try a few examples and see if it makes sense. The following
+table is based on the factor model run using 5 years of historical returns as of
+09-30-2014.&lt;/p&gt;
+&lt;script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular.min.js"&gt;&lt;/script&gt;
+&lt;script&gt;
+    var myModule = angular.module('myApp', []);
+    myModule.controller('MyCtrl', ['$scope', function($scope){
+        $scope.mfData = [
+            {Ticker:"X", Unemployment: -0.76, ConsumerSentiment: -0.035, Market: 1.685, Size: 0.3281, Value: 1.509},
+            {Ticker:"DAL", Unemployment: -1.183, ConsumerSentiment: 0.309, Market: 0.456, Size: 1.581, Value: 0.038},
+            {Ticker:"LH", Unemployment: 0.461, ConsumerSentiment: 0.02, Market: 0.606, Size: 0.081, Value: -0.185},
+            {Ticker:"MCD", Unemployment: 0.951, ConsumerSentiment: -0.132, Market: 0.423, Size: -0.329, Value: -0.018},
+            {Ticker:"MSFT", Unemployment: -0.248, ConsumerSentiment: -0.192, Market: 1.032, Size: -0.542, Value: -0.05}
+         ];
+    }]);
+&lt;/script&gt;
+
+&lt;div ng-app="myApp"&gt;
+    &lt;div ng-controller="MyCtrl"&gt;
+        &lt;div class="col-md-12"&gt;
+            &lt;table class="table table-bordered col-md-12"&gt;
+                &lt;thead&gt;
+                    &lt;tr&gt;
+                        &lt;th&gt; &lt;span class = "pull-right key"&gt;Ticker&lt;/span&gt;&lt;/td&gt;
+                        &lt;th&gt; &lt;span class = "pull-right key"&gt;Unemployment&lt;/span&gt;&lt;/td&gt;
+                        &lt;th&gt; &lt;span class = "pull-right key"&gt; Consumer Sentiment&lt;/span&gt;&lt;/td&gt;
+                        &lt;th&gt; &lt;span class = "pull-right key"&gt; Market&lt;/span&gt;&lt;/td&gt;
+                        &lt;th&gt; &lt;span class = "pull-right key"&gt; Size&lt;/span&gt;&lt;/td&gt;
+                        &lt;th&gt; &lt;span class = "pull-right key"&gt; Value&lt;/span&gt;&lt;/td&gt;
+                    &lt;/tr&gt;
+                &lt;/thead&gt;
+                &lt;tbody&gt;
+                    &lt;tr ng-repeat="item in mfData"&gt;
+                        &lt;td&gt; &lt;span class = "pull-right value"&gt;{{item.Ticker}}&lt;/span&gt;&lt;/td&gt;
+                        &lt;td&gt; &lt;span class = "pull-right value"&gt; {{item.Unemployment}} &lt;/span&gt;&lt;/td&gt;
+                        &lt;td&gt; &lt;span class = "pull-right value"&gt; {{item.ConsumerSentiment}} &lt;/span&gt;&lt;/td&gt;
+                        &lt;td&gt; &lt;span class = "pull-right value"&gt;{{item.Market}}&lt;/span&gt;&lt;/td&gt;
+                        &lt;td&gt; &lt;span class = "pull-right value"&gt;{{item.Size}}&lt;/span&gt;&lt;/td&gt;
+                        &lt;td&gt; &lt;span class = "pull-right value"&gt;{{item.Value}}&lt;/span&gt;&lt;/td&gt;
+                    &lt;/tr&gt;
+                &lt;/tbody&gt;
+            &lt;/table&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;United States Steel Corporation (X), Delta Airlines (DAL), and MicroSoft (MSFT) have negative exposure to
+unemployment, meaning increase in unemployment (or a detiorating economy) hurts the returns of this
+company. Mc Donalds (MCD) has a positive exposure to unemployment, in a hurting economy MCD has a better
+business.&lt;/p&gt;
+&lt;p&gt;Delta Airlines has the most significant exposure to the consumer sentiment factor. This makes
+sense because travel industry benefits from a positive consumer sentiment.&lt;/p&gt;
+&lt;p&gt;The companies on the higher end of the large cap spectrum have a negative exposure to the size factor.
+The strong positive exposure of DAL to size is a little puzzling, and its history of mergers with
+Northwest might explain. This is also highlights that factor models do need more than intuition sometimes to
+make sense and make correct use of.&lt;/p&gt;
+</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Gouthaman Balaraman</dc:creator><pubDate>Sun, 26 Oct 2014 00:00:00 -0700</pubDate><guid>tag:gouthamanbalaraman.com,2014-10-26:blog/understanding-econometric-factor-model.html</guid><category>finance</category><category>investing</category><category>widget</category></item><item><title>Running ZEO as a Windows Service</title><link>http://gouthamanbalaraman.com/blog/zeo-as-a-windows-service.html</link><description>&lt;p&gt;The other day, I wanted to run ZEO as a Windows service. The &lt;tt class="docutils literal"&gt;runzeo.py&lt;/tt&gt; part of &lt;tt class="docutils literal"&gt;ZEO&lt;/tt&gt; will let you
+run the client, but it doesn't work well for deployment on a windows machine. So I used &lt;tt class="docutils literal"&gt;pywin32&lt;/tt&gt; to wrap
+the &lt;tt class="docutils literal"&gt;runzeo.py&lt;/tt&gt; into a Windows Service.&lt;/p&gt;
+&lt;div class="section" id="code"&gt;
+&lt;h2&gt;Code&lt;/h2&gt;
+&lt;p&gt;You can fetch the source from my github &lt;a class="reference external" href="https://github.com/gouthambs/ZEO-WinService"&gt;repo&lt;/a&gt;. This script requires &lt;tt class="docutils literal"&gt;pywin32&lt;/tt&gt; and &lt;tt class="docutils literal"&gt;ZEO&lt;/tt&gt; to run.
+I do intend to put it on PyPi when I have the time&lt;/p&gt;
+&lt;p&gt;You can run from &lt;tt class="docutils literal"&gt;cmd&lt;/tt&gt; as Administrator:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+&amp;gt; python zeo_winservice.py
+&lt;/pre&gt;
+&lt;p&gt;you will be given the service options, as shown below:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+Usage: 'zeo_winservice.py [options] install|update|remove|start [...]|stop|restart [...]|debug [...]'
+Options for 'install' and 'update' commands only:
+ --username domain\username : The Username the service is to run under
+ --password password : The password for the username
+ --startup [manual|auto|disabled|delayed] : How the service starts, default = manual
+ --interactive : Allow the service to interact with the desktop.
+ --perfmonini file: .ini file to use for registering performance monitor data
+ --perfmondll file: .dll file to use when querying the service for
+   performance data, default = perfmondata.dll
+Options for 'start' and 'stop' commands only:
+ --wait seconds: Wait for the service to actually start or stop.
+                 If you specify --wait with the 'stop' option, the service
+                 and all dependent services will be stopped, each waiting
+                 the specified period.
+&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div class="section" id="installing-the-service"&gt;
+&lt;h2&gt;Installing the Service&lt;/h2&gt;
+&lt;p&gt;Before you try to install, make sure you are running &lt;tt class="docutils literal"&gt;cmd&lt;/tt&gt; as Administrator.
+I like to install such that it will start up automatically, as shown below:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+&amp;gt;python zeo_winservice.py --startup=auto install
+&lt;/pre&gt;
+&lt;p&gt;which gives you the following screen with ZEO options:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+Installing service ZEO WinService
+Start the ZEO storage server.
+
+Usage: %s [-C URL] [-a ADDRESS] [-f FILENAME] [-h]
+
+Options:
+-C/--configuration URL -- configuration file or URL
+-a/--address ADDRESS -- server address of the form PORT, HOST:PORT, or PATH
+                        (a PATH must contain at least one &amp;quot;/&amp;quot;)
+-f/--filename FILENAME -- filename for FileStorage
+-t/--timeout TIMEOUT -- transaction timeout in seconds (default no timeout)
+-h/--help -- print this usage message and exit
+-m/--monitor ADDRESS -- address of monitor server ([HOST:]PORT or PATH)
+--pid-file PATH -- relative path to output file containing this process's pid;
+                   default $(INSTANCE_HOME)/var/ZEO.pid but only if envar
+                   INSTANCE_HOME is defined
+
+Unless -C is specified, -a and -f are required.
+
+Enter command line arguments for ZEO Service:
+&lt;/pre&gt;
+&lt;p&gt;Now you are prompted with the different configurations for the ZEO Service that you can pass. One thing to note here
+is that the filename option has to absolute path, and not a relative path.&lt;/p&gt;
+&lt;p&gt;An example command line argument is:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+Enter command line arguments for ZEO Service: -f D:\path\to\data\file.fs -a localhost:9999
+&lt;/pre&gt;
+&lt;p&gt;Here I am specifying that ZEO be run with the &lt;tt class="docutils literal"&gt;file.fs&lt;/tt&gt; on &lt;tt class="docutils literal"&gt;localhost&lt;/tt&gt; port &lt;tt class="docutils literal"&gt;9999&lt;/tt&gt;. After installing the
+script, you need to start it by:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+&amp;gt;python zeo_winservice.py start
+&lt;/pre&gt;
+&lt;p&gt;You will also be able to access the service from &lt;tt class="docutils literal"&gt;task manager&lt;/tt&gt; or the &lt;tt class="docutils literal"&gt;Windows Services&lt;/tt&gt; app.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="logging"&gt;
+&lt;h2&gt;Logging&lt;/h2&gt;
+&lt;p&gt;The logs from the service are sent to the windows &lt;tt class="docutils literal"&gt;Event Log&lt;/tt&gt; which can be accessed by opening
+the &lt;tt class="docutils literal"&gt;Event Viewer&lt;/tt&gt;. Once you open the &lt;tt class="docutils literal"&gt;Event Viewer&lt;/tt&gt;, the logs can be found under:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+Event Viewer-&amp;gt;Windows Logs-&amp;gt;Application
+&lt;/pre&gt;
+&lt;p&gt;The logs from this script can be found under &lt;tt class="docutils literal"&gt;ZEO WinService&lt;/tt&gt; in the Source column.&lt;/p&gt;
+&lt;/div&gt;
+</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Gouthaman Balaraman</dc:creator><pubDate>Mon, 04 Aug 2014 00:00:00 -0700</pubDate><guid>tag:gouthamanbalaraman.com,2014-08-04:blog/zeo-as-a-windows-service.html</guid><category>Programming</category><category>Python</category><category>ZEO</category><category>ZODB</category></item><item><title>Minimal Flask-Login Example</title><link>http://gouthamanbalaraman.com/blog/minimal-flask-login-example.html</link><description>&lt;p&gt;The goal of this post is to give a very basic introduction to token based authentication using Flask-Login.
+Usually the user credentials are stored in a database, with passwords hashed. However the authentication
+mechanism can be understood without having to worry about database, and various token generation algorithms.
+As a first step lets focus on just understanding the authentication mechanism. Then in a subsequent post
+we will handle other important parts.&lt;/p&gt;
+&lt;p&gt;To run this example, you will need &lt;cite&gt;flask&lt;/cite&gt; and &lt;cite&gt;flask-login&lt;/cite&gt; with their dependencies installed.
+This can be done using &lt;cite&gt;pip&lt;/cite&gt; as shown below:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+&amp;gt;pip install flask
+&amp;gt;pip install flask-login
+&lt;/pre&gt;
+&lt;div class="section" id="example-code"&gt;
+&lt;h2&gt;Example Code&lt;/h2&gt;
+&lt;p&gt;Here is the full source code that we are about to discuss:&lt;/p&gt;
+&lt;script src="https://gist.github.com/gouthambs/0a509faf231cff3cdec7.js"&gt;&lt;/script&gt;&lt;/div&gt;
+&lt;div class="section" id="code-explained"&gt;
+&lt;h2&gt;Code Explained&lt;/h2&gt;
+&lt;p&gt;Lets delve deeper into this example, and I will explain each part of the code in greater detail here.&lt;/p&gt;
+&lt;pre class="code python literal-block"&gt;
+&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;flask&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;Flask&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;Response&lt;/span&gt;
+&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;flask.ext.login&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;LoginManager&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;UserMixin&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;login_required&lt;/span&gt;
+
+&lt;span class="n"&gt;app&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;Flask&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;__name__&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;login_manager&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;LoginManager&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;span class="n"&gt;login_manager&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;init_app&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;app&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;
+&lt;p&gt;The first five lines of the code import the required modules, and initializes the Flask &lt;tt class="docutils literal"&gt;app&lt;/tt&gt;. Then
+the &lt;cite&gt;LoginManager&lt;/cite&gt; instance is created and then is configure for login. Now lets try to understand
+the &lt;cite&gt;User&lt;/cite&gt; class.&lt;/p&gt;
+&lt;pre class="code python literal-block"&gt;
+&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;User&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;UserMixin&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="c"&gt;# proxy for a database of users&lt;/span&gt;
+    &lt;span class="n"&gt;user_database&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;JohnDoe&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;JohnDoe&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;John&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
+               &lt;span class="s"&gt;&amp;quot;JaneDoe&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;JaneDoe&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;Jane&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)}&lt;/span&gt;
+
+    &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;__init__&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;username&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;password&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+        &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;id&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;username&lt;/span&gt;
+        &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;password&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;password&lt;/span&gt;
+
+    &lt;span class="nd"&gt;&amp;#64;classmethod&lt;/span&gt;
+    &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;get&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;cls&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="nb"&gt;id&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+        &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;cls&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;user_database&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;get&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;id&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;
+&lt;p&gt;Here I have created the &lt;tt class="docutils literal"&gt;User&lt;/tt&gt; class by overloading the &lt;tt class="docutils literal"&gt;UserMixin&lt;/tt&gt; class. The &lt;tt class="docutils literal"&gt;UserMixin&lt;/tt&gt; class
+implements some of the default methods, and hence is a convenient starting point. The &lt;tt class="docutils literal"&gt;dict&lt;/tt&gt; &lt;tt class="docutils literal"&gt;user_database&lt;/tt&gt;
+is a proxy for all the database code one would need. I am abstracting this away as a &lt;tt class="docutils literal"&gt;dict&lt;/tt&gt; for simplicity.
+The &lt;cite&gt;get&lt;/cite&gt; class method returns the user data from &lt;cite&gt;user_database&lt;/cite&gt;.&lt;/p&gt;
+&lt;p&gt;For the &lt;tt class="docutils literal"&gt;LoginManager&lt;/tt&gt; to handle authentication, we have to provide a method for it to load user.
+Here I use the generic &lt;tt class="docutils literal"&gt;&amp;#64;login_manager.request_loader&lt;/tt&gt; decorator to decorate the &lt;tt class="docutils literal"&gt;load_user&lt;/tt&gt; function.
+The expected behavior of a &lt;tt class="docutils literal"&gt;request_loader&lt;/tt&gt; is to return a &lt;tt class="docutils literal"&gt;User&lt;/tt&gt; instance if the provided credentials are
+valid, and return &lt;cite&gt;None&lt;/cite&gt; otherwise.&lt;/p&gt;
+&lt;pre class="code python literal-block"&gt;
+&lt;span class="nd"&gt;&amp;#64;login_manager.request_loader&lt;/span&gt;
+&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;load_user&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;request&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="n"&gt;token&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;request&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;headers&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;get&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;'Authorization'&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;token&lt;/span&gt; &lt;span class="ow"&gt;is&lt;/span&gt; &lt;span class="bp"&gt;None&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+        &lt;span class="n"&gt;token&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;request&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;args&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;get&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;'token'&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+    &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;token&lt;/span&gt; &lt;span class="ow"&gt;is&lt;/span&gt; &lt;span class="ow"&gt;not&lt;/span&gt; &lt;span class="bp"&gt;None&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+        &lt;span class="n"&gt;username&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;password&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;token&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;split&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;:&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="c"&gt;# naive token&lt;/span&gt;
+        &lt;span class="n"&gt;user_entry&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;User&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;get&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;username&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+        &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;user_entry&lt;/span&gt; &lt;span class="ow"&gt;is&lt;/span&gt; &lt;span class="ow"&gt;not&lt;/span&gt; &lt;span class="bp"&gt;None&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+            &lt;span class="n"&gt;user&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;User&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;user_entry&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt;&lt;span class="n"&gt;user_entry&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;])&lt;/span&gt;
+            &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;user&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;password&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="n"&gt;password&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+                &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;user&lt;/span&gt;
+    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="bp"&gt;None&lt;/span&gt;
+&lt;/pre&gt;
+&lt;p&gt;The &lt;tt class="docutils literal"&gt;load_user&lt;/tt&gt; looks for a token in &lt;tt class="docutils literal"&gt;Authorization&lt;/tt&gt; header, or the &lt;tt class="docutils literal"&gt;request&lt;/tt&gt; arguments. If a token
+is provided, then I return an instance of &lt;tt class="docutils literal"&gt;User&lt;/tt&gt; if the token is valid, and return &lt;tt class="docutils literal"&gt;None&lt;/tt&gt; otherwise.
+Here I assume that a valid token would be of the form &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;&amp;lt;username&amp;gt;:&amp;lt;password&amp;gt;&lt;/span&gt;&lt;/tt&gt;. This is a naive token,
+and should not be used in practice. Using serializers from &lt;tt class="docutils literal"&gt;itsdangerous&lt;/tt&gt; package can come handy. We
+will touch upon these issues in another post.&lt;/p&gt;
+&lt;p&gt;Once this setup is done, in order to require authentication for a route, use the &lt;tt class="docutils literal"&gt;&amp;#64;login_required&lt;/tt&gt;
+decorator.&lt;/p&gt;
+&lt;p&gt;Run the above script, and if you visit the &lt;a class="reference external" href="http://localhost:5000/protected/"&gt;LocalHostUnAuthenticated&lt;/a&gt; route without
+a token you will get a &lt;tt class="docutils literal"&gt;401 Unauthorized&lt;/tt&gt; message. If you pass a token to
+&lt;a class="reference external" href="http://localhost:5000/protected/?token=JohnDoe:John"&gt;LocalHostAuthenticated&lt;/a&gt;, then you will be allowed access to the protected page.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="conclusion"&gt;
+&lt;h2&gt;Conclusion&lt;/h2&gt;
+&lt;p&gt;This article explained how to write token based authentication using &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;Flask-Login&lt;/span&gt;&lt;/tt&gt; extension. The focus
+of this article was explaining the basic workings of &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;flask-login&lt;/span&gt;&lt;/tt&gt; without having to setup database or
+even the token generation. Once the basic plumbing is setup, one can extend this example in two ways:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;&lt;a class="reference external" href="/blog/securing-authentication-tokens.rst"&gt;Securing Authentication Tokens&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;have a database to store and retrive user credentials.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Gouthaman Balaraman</dc:creator><pubDate>Thu, 24 Jul 2014 00:00:00 -0700</pubDate><guid>tag:gouthamanbalaraman.com,2014-07-24:blog/minimal-flask-login-example.html</guid><category>Programming</category><category>Python</category><category>Flask</category><category>Authentication</category></item><item><title>Flask Track Usage Primer</title><link>http://gouthamanbalaraman.com/blog/flask-track-usage.html</link><description>&lt;p&gt;Recently I had a requirement to add light weight tracking for a Flask app. Tools like Google analytics was not
+an option because, I wanted raw number and data handy rather than just figures, this was a website page in the intranet, and
+I also wanted to easily track all the REST apis. That is when I stumbled upon &lt;a class="reference external" href="http://www.stevemilner.org/"&gt;Steve Milner's&lt;/a&gt;
+&lt;cite&gt;Flask-Track-Usage&lt;/cite&gt; package.&lt;/p&gt;
+&lt;p&gt;The API and usage is incredibly simple, and as of version 0.0.7 supported Mongo DB storage. Since Mongo was not an
+option for me, I added SQLAlchemy based storage, thus opening doors for a wide array of databases. These additions will
+be released as part of version 1.0.0.&lt;/p&gt;
+&lt;p&gt;Here is a quick-start version on using SQLStorage with Flask-Track-Usage:&lt;/p&gt;
+&lt;pre class="code python literal-block"&gt;
+&lt;span class="c"&gt;# mainapp.py&lt;/span&gt;
+&lt;span class="c"&gt;# Create the Flask 'app'&lt;/span&gt;
+&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;flask&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;Flask&lt;/span&gt;
+&lt;span class="n"&gt;app&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;Flask&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;__name__&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+&lt;span class="c"&gt;# Set the configuration items manually for the example&lt;/span&gt;
+&lt;span class="n"&gt;app&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;config&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s"&gt;'TRACK_USAGE_USE_FREEGEOIP'&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="bp"&gt;False&lt;/span&gt;
+&lt;span class="n"&gt;app&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;config&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s"&gt;'TRACK_USAGE_INCLUDE_OR_EXCLUDE_VIEWS'&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;'include'&lt;/span&gt;
+
+&lt;span class="c"&gt;# We will just print out the data for the example&lt;/span&gt;
+&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;flask.ext.track_usage&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;TrackUsage&lt;/span&gt;
+&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;flask.ext.track_usage.storage.sql&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;SQLStorage&lt;/span&gt;
+
+&lt;span class="c"&gt;# Make an instance of the extension&lt;/span&gt;
+&lt;span class="n"&gt;t&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;TrackUsage&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;app&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;SQLStorage&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;conn_str&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;sqlite:///D:&lt;/span&gt;&lt;span class="se"&gt;\\&lt;/span&gt;&lt;span class="s"&gt;usage_tracking.db&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+
+&lt;span class="c"&gt;# Make an instance of the extension&lt;/span&gt;
+&lt;span class="n"&gt;t&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;TrackUsage&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;app&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;storage&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+&lt;span class="c"&gt;# Include the view in the metrics&lt;/span&gt;
+&lt;span class="nd"&gt;&amp;#64;t.include&lt;/span&gt;
+&lt;span class="nd"&gt;&amp;#64;app.route&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;'/'&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;index&lt;/span&gt;&lt;span class="p"&gt;():&lt;/span&gt;
+    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;Hello&amp;quot;&lt;/span&gt;
+
+&lt;span class="c"&gt;# Run the application!&lt;/span&gt;
+&lt;span class="n"&gt;app&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;run&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;debug&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="bp"&gt;True&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;
+&lt;p&gt;In the code above, the &lt;cite&gt;SQLStorage&lt;/cite&gt; object is created with a &lt;cite&gt;conn_str&lt;/cite&gt; argument which can be
+any of the &lt;a class="reference external" href="http://docs.sqlalchemy.org/en/rel_0_9/core/engines.html"&gt;engine configurations&lt;/a&gt;
+supported by SQLAlchemy itself.&lt;/p&gt;
+&lt;p&gt;You can use Flask-Track-Usage with blueprints as well. This is how you include blueprints views:&lt;/p&gt;
+&lt;pre class="code python literal-block"&gt;
+&lt;span class="c"&gt;# Here app is the Flask app created in mainapp.py&lt;/span&gt;
+&lt;span class="n"&gt;app&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;config&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s"&gt;'TRACK_USAGE_INCLUDE_OR_EXCLUDE_VIEWS'&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;'include'&lt;/span&gt;
+
+&lt;span class="c"&gt;# Make an instance of the extension&lt;/span&gt;
+&lt;span class="n"&gt;t&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;TrackUsage&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;app&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;SQLStorage&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;conn_str&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;sqlite:///D:&lt;/span&gt;&lt;span class="se"&gt;\\&lt;/span&gt;&lt;span class="s"&gt;usage_tracking.db&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+
+&lt;span class="c"&gt;# exclude just the a_blueprint out&lt;/span&gt;
+&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;my_blueprints&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;a_blueprint&lt;/span&gt;
+&lt;span class="n"&gt;t&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;exclude_blueprint&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;a_blueprint&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;
+&lt;p&gt;What we have done here is to include all views, except for the ones in the blueprint &lt;tt class="docutils literal"&gt;a_blueprint&lt;/tt&gt;.
+You can instead exclude all by default, and include just the specific ones as shown below.&lt;/p&gt;
+&lt;pre class="code python literal-block"&gt;
+&lt;span class="c"&gt;# Here app is the Flask app created in mainapp.py&lt;/span&gt;
+&lt;span class="n"&gt;app&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;config&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s"&gt;'TRACK_USAGE_INCLUDE_OR_EXCLUDE_VIEWS'&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;'exclude'&lt;/span&gt;
+
+&lt;span class="c"&gt;# Make an instance of the extension&lt;/span&gt;
+&lt;span class="n"&gt;t&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;TrackUsage&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;app&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;SQLStorage&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;conn_str&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;sqlite:///D:&lt;/span&gt;&lt;span class="se"&gt;\\&lt;/span&gt;&lt;span class="s"&gt;usage_tracking.db&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+
+&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;my_blueprints&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;a_blueprint&lt;/span&gt;
+&lt;span class="n"&gt;t&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;include_blueprint&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;a_blueprint&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;
+&lt;p&gt;Once you have setup the extension to track usage, you can even use the &lt;tt class="docutils literal"&gt;_get_usage&lt;/tt&gt; method
+part of the &lt;tt class="docutils literal"&gt;Storage&lt;/tt&gt; object to view the usage hits. This method returns a list of JSON
+dict and has the following schema:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+[
+    {
+            'url': str,
+            'user_agent': {
+                'browser': str,
+                'language': str,
+                'platform': str,
+                'version': str,
+            },
+            'blueprint': str,
+            'view_args': dict or None
+            'status': int,
+            'remote_addr': str,
+            'authorization': bool,
+            'ip_info': str or None,
+            'path': str,
+            'speed': float,
+            'date': datetime,
+    },
+    {
+        ....
+    }
+]
+&lt;/pre&gt;
+</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Gouthaman Balaraman</dc:creator><pubDate>Wed, 26 Mar 2014 00:00:00 -0700</pubDate><guid>tag:gouthamanbalaraman.com,2014-03-26:blog/flask-track-usage.html</guid><category>Programming</category><category>Python</category></item><item><title>Git For Dummies</title><link>http://gouthamanbalaraman.com/blog/git-for-dummies.html</link><description>&lt;p&gt;Git is a version control with a ton of powerful features. This article is intended to be
+an introduction for dummies (like me). I have had to do a lot of googling lately to get familiar
+with git. My understanding of git is a work in progress. Here I summarize some of the basic
+commands and features that I learnt. I plan to keep this article updated as and when I learn
+something new.&lt;/p&gt;
+&lt;div class="section" id="git-basics"&gt;
+&lt;h2&gt;Git Basics&lt;/h2&gt;
+&lt;p&gt;One of the basic concepts in git is the notion of &lt;em&gt;upstream&lt;/em&gt; and &lt;em&gt;origin&lt;/em&gt;. The term &lt;em&gt;upstream&lt;/em&gt; refers to the main
+repository lets say the pandas on github hosted at &lt;a class="reference external" href="https://github.com/pydata/pandas"&gt;https://github.com/pydata/pandas&lt;/a&gt;. However you have forked the
+to work on an issue, then the &lt;em&gt;origin&lt;/em&gt; would refer to the user's fork of the &lt;em&gt;upstream&lt;/em&gt; repository.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;strong&gt;Initialize repository&lt;/strong&gt;: in an empty folder:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+git init
+&lt;/pre&gt;
+&lt;p&gt;You should see a message akin to:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+Initialized empty Git repository in /home/username/test/.git/
+&lt;/pre&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;strong&gt;Add remote repository&lt;/strong&gt;:  To hook up to your local repository to a remote repository, such as the &lt;tt class="docutils literal"&gt;pandas&lt;/tt&gt; repository on
+github:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+git remote add upstream https://github.com/pydata/pandas.git
+&lt;/pre&gt;
+&lt;p&gt;Note that instead of adding upstream, I could have added my fork as origin as shown below:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+git remote add origin https://github.com/gouthambs/pandas.git
+&lt;/pre&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;strong&gt;Remove remote repository&lt;/strong&gt;: You have made a mistake and added a wrong remote repository. To remove a remote repo:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+git remote remove upstream
+&lt;/pre&gt;
+&lt;p&gt;You can do the same to remove a remote origin:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+git remote remove origin
+&lt;/pre&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;strong&gt;View remote repositories&lt;/strong&gt;: Check what the remote repositories are attached to your local repo using:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+git remote -v
+&lt;/pre&gt;
+&lt;p&gt;This after adding the above pandas repo would show something like:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+upstream    https://github.com/pydata/pandas.git (fetch)
+upstream    https://github.com/pydata/pandas.git (push)
+&lt;/pre&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;strong&gt;Fetching code from remote&lt;/strong&gt;: Now that you have hooked up to a remote repository, how do you fetch the code from
+there? Lets say we have added remote upstream, and we want to fetch the code, then do the following:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+git fetch upstream
+&lt;/pre&gt;
+&lt;p&gt;What this does is it fetches the whole repository, with all its branches and tags etc. Now to actually start using
+a particular branch you have to checkout.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;strong&gt;Checkout code&lt;/strong&gt;: To checkout the master try:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+git checkout master
+&lt;/pre&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;strong&gt;Syncing origin with upstream&lt;/strong&gt;: If you have forked a project and have been working on your fork for a while,
+what will happen is that the project that you originally forked from has advanced. Then you would need
+to sync your fork with upstream to ensure that your changes are still valid. This can be done by:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+git merge upstream/master
+&lt;/pre&gt;
+&lt;p&gt;Here I am syncing the &lt;tt class="docutils literal"&gt;upstream/master&lt;/tt&gt; with the local checked out project.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div class="section" id="committing-code-changes"&gt;
+&lt;h2&gt;Committing Code Changes&lt;/h2&gt;
+&lt;p&gt;Now when you have checked out code and made some modifications. Now you want to share to the world. You have
+to go through three steps:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;strong&gt;Staging your changes&lt;/strong&gt;: This is a way to specify what you want to commit and what you want to ignore. You stage your commit by:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+git add &amp;lt;filename&amp;gt;
+&lt;/pre&gt;
+&lt;p&gt;What this does is adds your file for commit. If you type &lt;tt class="docutils literal"&gt;git status&lt;/tt&gt; you will see that your new file has been
+staged for commit. This step gives you control on what files you want to commit and what you don't want to commit.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;strong&gt;Commit your staged changes&lt;/strong&gt;: When you commit your changes, then your changes are registered in your local repository:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+git commit -m &amp;lt;message&amp;gt;
+&lt;/pre&gt;
+&lt;p&gt;This pushes your code changes to the local repository. Your changes will not be sent to the remote repository
+such as github yet.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;strong&gt;Push your commits&lt;/strong&gt;: You have to push your changes to send it up to the remote repo:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+git push origin master
+&lt;/pre&gt;
+&lt;p&gt;Here we are assuming that you want to push your changes to the master.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div class="section" id="branching-and-merging"&gt;
+&lt;h2&gt;Branching and Merging&lt;/h2&gt;
+&lt;p&gt;Say you have checked out a repository, and you want to work on a feature. Its a good idea to create a feature
+branch, to work on your modifications.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;strong&gt;To create a branch&lt;/strong&gt;:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+git checkout -b myAwesomeFeature
+Switched to a new branch &amp;quot;myAwesomeFeature&amp;quot;
+&lt;/pre&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;strong&gt;Deleting branches&lt;/strong&gt;: To delete a local branch:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+git branch -d myAwesomeFeature
+&lt;/pre&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;strong&gt;List branches&lt;/strong&gt;: To list local branches:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+git branch
+&lt;/pre&gt;
+&lt;p&gt;To list remote branches only:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+git branch -r
+&lt;/pre&gt;
+&lt;p&gt;To list all branches:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+git branch -a
+&lt;/pre&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Gouthaman Balaraman</dc:creator><pubDate>Thu, 20 Mar 2014 00:00:00 -0700</pubDate><guid>tag:gouthamanbalaraman.com,2014-03-20:blog/git-for-dummies.html</guid><category>git</category><category>programming</category><category>github</category></item><item><title>Asynchronous Python Logging Using MSMQ</title><link>http://gouthamanbalaraman.com/blog/asynchronous-python-logging-using-msmq.html</link><description>&lt;p&gt;If you have a web application running in Python, there can be a need for the logging to
+not interfere with the performance. Default file based loggers can lead to a slow down
+because of the constand disk writes. An alternate solution that can be quite handy is
+logging into a message based logger, such as MSMQ. This post is built on my earlier post
+&lt;a class="reference external" href="/blog/sending-msmq-messages-python.html"&gt;Sending MSMQ Messages Using Python&lt;/a&gt;, where
+I discuss how to setup, send and receive messages using MSMQ.&lt;/p&gt;
+&lt;p&gt;Here I will show how one can use the MSMQ to build a custom handler, that can be used
+with the logging module in python. Here is the &lt;tt class="docutils literal"&gt;MSMQHandler&lt;/tt&gt; class:&lt;/p&gt;
+&lt;pre class="code python literal-block"&gt;
+    &lt;span class="c"&gt;# customhandler.py&lt;/span&gt;
+&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;logging&lt;/span&gt;
+
+&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;MSMQHandler&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;logging&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Handler&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;__init__&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;queue_name&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;label_name&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;dest_computer&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="bp"&gt;None&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+        &lt;span class="n"&gt;logging&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Handler&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;__init__&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+        &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;os&lt;/span&gt;
+        &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;win32com.client&lt;/span&gt;
+        &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;queue_name&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;queue_name&lt;/span&gt;
+        &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;label_name&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;label_name&lt;/span&gt;
+        &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;computer_name&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;dest_computer&lt;/span&gt; &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="ow"&gt;not&lt;/span&gt; &lt;span class="n"&gt;dest_computer&lt;/span&gt; &lt;span class="ow"&gt;is&lt;/span&gt;  &lt;span class="bp"&gt;None&lt;/span&gt;\
+            &lt;span class="k"&gt;else&lt;/span&gt; &lt;span class="n"&gt;os&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;getenv&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;'COMPUTERNAME'&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+        &lt;span class="n"&gt;qinfo&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;win32com&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;client&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Dispatch&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;MSMQ.MSMQQueueInfo&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+        &lt;span class="n"&gt;qinfo&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;FormatName&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;direct=os:&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;computer_name&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;\
+            &lt;span class="s"&gt;&amp;quot;&lt;/span&gt;&lt;span class="se"&gt;\\&lt;/span&gt;&lt;span class="s"&gt;PRIVATE$&lt;/span&gt;&lt;span class="se"&gt;\\&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;queue_name&lt;/span&gt;
+        &lt;span class="k"&gt;try&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+            &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;queue&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;qinfo&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Open&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+        &lt;span class="k"&gt;except&lt;/span&gt; &lt;span class="ne"&gt;Exception&lt;/span&gt; &lt;span class="k"&gt;as&lt;/span&gt; &lt;span class="n"&gt;e&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+            &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;queue&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="bp"&gt;None&lt;/span&gt;
+            &lt;span class="k"&gt;raise&lt;/span&gt; &lt;span class="ne"&gt;RuntimeError&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;str&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;e&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+
+    &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;emit&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;record&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+        &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;win32com.client&lt;/span&gt;
+        &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;queue&lt;/span&gt; &lt;span class="p"&gt;:&lt;/span&gt;
+            &lt;span class="n"&gt;msg&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;win32com&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;client&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Dispatch&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;MSMQ.MSMQMessage&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+            &lt;span class="n"&gt;msg&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Label&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;label_name&lt;/span&gt;
+            &lt;span class="n"&gt;msg&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Body&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;format&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;record&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+            &lt;span class="n"&gt;msg&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Send&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;queue&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+    &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;close&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;        &lt;span class="p"&gt;:&lt;/span&gt;
+        &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;acquire&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+        &lt;span class="k"&gt;try&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+            &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;queue&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+                &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;queue&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;close&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+        &lt;span class="k"&gt;finally&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+            &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;release&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;/pre&gt;
+&lt;p&gt;Once you have the handler in place, and setup a private MSMQ queue, say KaruthQueue, then
+you can incorporate it into your workflow as shown below:&lt;/p&gt;
+&lt;pre class="code python literal-block"&gt;
+&lt;span class="c"&gt;# example.py&lt;/span&gt;
+&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;customhandler&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;MSMQHandler&lt;/span&gt;
+&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;logging&lt;/span&gt;
+
+&lt;span class="n"&gt;lgr&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;logging&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;getLogger&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;Test&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;hnd&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;MSMQHandler&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;KaruthQueue&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;QPyLog&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="c"&gt;# here KaruthQueue is the private queue name&lt;/span&gt;
+&lt;span class="n"&gt;lgr&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;addHandler&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;hnd&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;lgr&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;setLevel&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;logging&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;INFO&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;lgr&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;info&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;Test Message&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;
+&lt;p&gt;And that completes the MSMQ logger using python. Now all your logs will be pushed to the KaruthQueue
+that we created. You can use the example shown &lt;a class="reference external" href="/blog/sending-msmq-messages-python.rst"&gt;here&lt;/a&gt; to read the messages in a seperate application
+and store any way you chose, files, database etc.&lt;/p&gt;
+</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Gouthaman Balaraman</dc:creator><pubDate>Fri, 21 Feb 2014 00:00:00 -0800</pubDate><guid>tag:gouthamanbalaraman.com,2014-02-21:blog/asynchronous-python-logging-using-msmq.html</guid><category>python</category><category>programming</category></item><item><title>Sending MSMQ Messages Using Python</title><link>http://gouthamanbalaraman.com/blog/sending-msmq-messages-python.html</link><description>&lt;p&gt;MSMQ is a message queue in the Windows environment, very much like
+RabbitMQ. MSMQ can be used as a task queue or for communicating
+between processes. One advantage of using MSMQ rather than inter-process communication (IPC)
+is that messages have persistence. Here I show how to send and receive MSMQ messages using python.&lt;/p&gt;
+&lt;div class="section" id="setting-up-msmq-on-windows-7"&gt;
+&lt;h2&gt;Setting Up MSMQ on Windows 7&lt;/h2&gt;
+&lt;p&gt;Before we can proceed with the code, here is a quick note on set-up.
+To setup MSMQ (disabled by default) go to &lt;em&gt;Control Panel&lt;/em&gt; -&amp;gt; &lt;em&gt;Programs and Features&lt;/em&gt; -&amp;gt; &lt;em&gt;Turn Windows Features on or off&lt;/em&gt; (on the left panel). Now check &lt;em&gt;Microsoft Message Queue(MSMQ) Server&lt;/em&gt; if it is not checked. Hit OK. Now we have enabled MSMQ server.&lt;/p&gt;
+&lt;p&gt;Now that we have the MSMQ server up and running, lets create a private queue so we can use in our script. To do that, go to &lt;em&gt;Control Panel&lt;/em&gt; -&amp;gt; &lt;em&gt;Administrative Tools&lt;/em&gt; -&amp;gt; &lt;em&gt;Computer Management&lt;/em&gt;. Expand &lt;em&gt;Services and Applications&lt;/em&gt; -&amp;gt; &lt;em&gt;Message Queuing&lt;/em&gt;. Select &lt;em&gt;Private Queues&lt;/em&gt; under &lt;em&gt;Message Queuing&lt;/em&gt; and right-click and click &lt;em&gt;New&lt;/em&gt;. Now in the dialog box put a &lt;em&gt;Queue Name&lt;/em&gt;, for this example purpose, say &lt;em&gt;KaruthQueue&lt;/em&gt; and click OK.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="installing-pywin32"&gt;
+&lt;h2&gt;Installing PyWin32&lt;/h2&gt;
+&lt;p&gt;To send and receive MSMQ messages you need the awesome Python for Windows Extension module, &lt;a class="reference external" href="http://sourceforge.net/projects/pywin32/"&gt;PyWin32&lt;/a&gt; by Mark Hammond. Once you have completed installation, you can check if your installation is fine by trying &lt;tt class="docutils literal"&gt;import win32com&lt;/tt&gt;. If you don't get any errors, then you are good to go.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="sending-msmq-messages"&gt;
+&lt;h2&gt;Sending MSMQ Messages&lt;/h2&gt;
+&lt;p&gt;Here is a small code snippet that shows you how to send messages using MSMQ.&lt;/p&gt;
+&lt;pre class="code python literal-block"&gt;
+&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;win32com.client&lt;/span&gt;
+&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;os&lt;/span&gt;
+
+&lt;span class="n"&gt;qinfo&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;win32com&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;client&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Dispatch&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;MSMQ.MSMQQueueInfo&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;computer_name&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;os&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;getenv&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;'COMPUTERNAME'&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;qinfo&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;FormatName&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;direct=os:&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="n"&gt;computer_name&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;&lt;/span&gt;&lt;span class="se"&gt;\\&lt;/span&gt;&lt;span class="s"&gt;PRIVATE$&lt;/span&gt;&lt;span class="se"&gt;\\&lt;/span&gt;&lt;span class="s"&gt;KaruthQueue&amp;quot;&lt;/span&gt;
+&lt;span class="n"&gt;queue&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;qinfo&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Open&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;   &lt;span class="c"&gt;# Open a ref to queue&lt;/span&gt;
+&lt;span class="n"&gt;msg&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;win32com&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;client&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Dispatch&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;MSMQ.MSMQMessage&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;msg&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Label&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;TestMsg&amp;quot;&lt;/span&gt;
+&lt;span class="n"&gt;msg&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Body&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;The quick brown fox jumps over the lazy dog&amp;quot;&lt;/span&gt;
+&lt;span class="n"&gt;msg&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Send&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;queue&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+&lt;span class="n"&gt;queue&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Close&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;/pre&gt;
+&lt;p&gt;Voila! We have sent our message. You can check if the message was sent properly by checking under
+&lt;em&gt;Control Panel&lt;/em&gt; -&amp;gt; &lt;em&gt;Administrative Tools&lt;/em&gt; -&amp;gt; &lt;em&gt;Computer Management&lt;/em&gt; -&amp;gt; &lt;em&gt;Services and Applications&lt;/em&gt; -&amp;gt; &lt;em&gt;Message Queuing&lt;/em&gt; -&amp;gt; &lt;em&gt;Private Queues&lt;/em&gt;
+-&amp;gt; &lt;em&gt;KaruthQueue&lt;/em&gt; -&amp;gt; &lt;em&gt;Queue Messages&lt;/em&gt;. Right click and refresh after you have run the script, if you don't see any.
+You should see an entry there that corresponds to the message that was sent&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="receiving-msmq-messages"&gt;
+&lt;h2&gt;Receiving MSMQ Messages&lt;/h2&gt;
+&lt;pre class="code python literal-block"&gt;
+&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;win32com.client&lt;/span&gt;
+&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;os&lt;/span&gt;
+
+&lt;span class="n"&gt;qinfo&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;win32com&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;client&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Dispatch&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;MSMQ.MSMQQueueInfo&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;computer_name&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;os&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;getenv&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;'COMPUTERNAME'&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;qinfo&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;FormatName&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;direct=os:&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="n"&gt;computer_name&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;&lt;/span&gt;&lt;span class="se"&gt;\\&lt;/span&gt;&lt;span class="s"&gt;PRIVATE$&lt;/span&gt;&lt;span class="se"&gt;\\&lt;/span&gt;&lt;span class="s"&gt;KaruthQueue&amp;quot;&lt;/span&gt;
+&lt;span class="n"&gt;queue&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;qinfo&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Open&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;   &lt;span class="c"&gt;# Open a ref to queue to read(1)&lt;/span&gt;
+&lt;span class="n"&gt;msg&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;queue&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Receive&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;span class="k"&gt;print&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;Label:&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;msg&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Label&lt;/span&gt;
+&lt;span class="k"&gt;print&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;Body :&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;msg&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Body&lt;/span&gt;
+&lt;span class="n"&gt;queue&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Close&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;/pre&gt;
+&lt;p&gt;Run this code after you have sent the message using the above script. Now you should
+see your earlier message printed out.&lt;/p&gt;
+&lt;p&gt;Have fun messaging!&lt;/p&gt;
+&lt;/div&gt;
+</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Gouthaman Balaraman</dc:creator><pubDate>Fri, 21 Feb 2014 00:00:00 -0800</pubDate><guid>tag:gouthamanbalaraman.com,2014-02-21:blog/sending-msmq-messages-python.html</guid><category>python</category><category>programming</category></item><item><title>A Short Story of Wall Street</title><link>http://gouthamanbalaraman.com/blog/a-short-story-of-wall-street.html</link><description>&lt;p&gt;In the last couple of decades, the US market has witnessed a
+technology bubble, a housing bubble, recession, and market
+crashes. I wanted to understand the human sentiment, the fear
+when market crashes, the euphoria while riding the upside of the bubble.
+Here I narrate the story of wall-street from the view of short-term volatility.&lt;/p&gt;
+&lt;div class="section" id="volatility"&gt;
+&lt;h2&gt;Volatility&lt;/h2&gt;
+&lt;p&gt;Volatility is a finance jargon for quantifying uncertainty over a window of time.
+If the window is small (like a week),
+then one can get a view of the market's reaction to day-to-day occurrences. On the other hand
+if we measure volatility using a larger window (such as a year), then a lot of the day-to-day
+noise dies out, and you get a macroscopic view of the market.&lt;/p&gt;
+&lt;p&gt;I wanted to understand how the market reacts to the crashes, and recessions.
+Do these things just happen out of the blue? Is there a lot of uncertainty, fear or excitement
+leading up to a market collapse? Is there a way to compare the latest market crash with those that
+have come before?&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="the-voice-of-uncertainty"&gt;
+&lt;h2&gt;The Voice of Uncertainty&lt;/h2&gt;
+&lt;img alt="SandPVolatility" src="/images/SandPVolatility.png" /&gt;
+&lt;p&gt;The picture above shows the S&amp;amp;P 500 index at the top, and its short-term
+volatility over the last 33 years. The last 33 years have gone through
+4 recessions, the regions shaded in green. Here are some interesting
+observations:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;The markets prior to 1995 were less volatile, by about 24%, than
+post 1995. The average volatility was 14% for the time period of
+1980 to 1995, in contrast with a 17.3% for the period 1995 to 2013.&lt;/li&gt;
+&lt;li&gt;On pure percentage terms, the market crash on Black Monday (S&amp;amp;P 500 fell by 25.7% on Oct 19, 1987)
+was larger than the market drop in 2008 (21% drop in the week ending October 10, 2008).
+But the volatility paints a totally different picture. The uncertainty during
+2008 market crash was roughly 20% more than that during the 1987 market crash.&lt;/li&gt;
+&lt;li&gt;In August of 2011, the S&amp;amp;P downgraded US credit from AAA to AA+. This made
+the market volatile, and that is the little blip you see in 2011. The irony is,
+prior to 2008 crash, S&amp;amp;P had rated a some of the mortgage backed securities as
+high quality debt, even though a lot of them defaulted.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class="section" id="methodology"&gt;
+&lt;h3&gt;Methodology&lt;/h3&gt;
+&lt;p&gt;I use S&amp;amp;P 500 to be representative of the stock market. The short term volatility is
+calculated by computing volatility using daily returns over a 45 day window.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Gouthaman Balaraman</dc:creator><pubDate>Thu, 23 Jan 2014 00:00:00 -0800</pubDate><guid>tag:gouthamanbalaraman.com,2014-01-23:blog/a-short-story-of-wall-street.html</guid><category>finance</category><category>equity</category></item><item><title>Calculating Stock Beta, Volatility, and More</title><link>http://gouthamanbalaraman.com/blog/calculating-stock-beta.html</link><description>&lt;p&gt;Have you ever wondered how to calculate the Beta value that is shown in
+&lt;a class="reference external" href="http://www.google.com/finance"&gt;GoogleFinance&lt;/a&gt; or &lt;a class="reference external" href="http://www.finance.yahoo.com/"&gt;YahooFinance&lt;/a&gt; and what does it mean from an investment perspective?
+This article will give you an introduction to the concept and demonstrate how
+you can calculate various time series measures for a stock using python. The
+&lt;a class="reference external" href="/blog/modern-portfolio-theory-statistics.rst"&gt;Modern Portfolio Theory Statistics&lt;/a&gt;
+page shows calculated betas, alpha, etc for a few thousand stocks.&lt;/p&gt;
+&lt;div class="section" id="beta-alpha-and-r-squared"&gt;
+&lt;h2&gt;Beta, Alpha and R-squared&lt;/h2&gt;
+&lt;p&gt;Beta of a stock is a measure of relative risk of the stock with respect to the market.
+The convention (though not a rule) is to use S&amp;amp;P 500 index as the proxy for market.
+A beta value of greater than 1 means that the stock returns amplify the market returns
+on both the upside and downside. On the contrary, a beta value of less than 1 means
+that the stock returns are subdued in comparison to the market returns.
+It is very important to understand that beta is a relative measure of risk, and
+not an absolute measure of risk. That means that we are only saying how risky the stock is
+vis-a-vis the market. If the stock market itself is overheated and volatile, then
+a beta of 1 means that the stock is equally volatile, and equally risky.&lt;/p&gt;
+&lt;p&gt;The beta is calculated using regression analysis. In simple terms if you plot
+the returns of stock as a function of the returns of the market benchmark (such as S&amp;amp;P 500)
+and fit it with a straight line, then beta is nothing but the slope of the fitted line.
+The regression equation is given as shown below.&lt;/p&gt;
+&lt;p&gt;$$ R^{stock}_i = \alpha + \beta \times R^{market}_i + \epsilon_i  $$&lt;/p&gt;
+&lt;p&gt;In Capital Asset Pricing Model, the returns of the stock $R^{stock}$
+and that of the market $R^{market}$ are adjusted for the risk-free
+rate. Here for simplicity I leave that out. Given the current low interest rate
+environment, this adjustment will add little value.&lt;/p&gt;
+&lt;p&gt;Alpha of a stock gives you a measure of the excess return with respect to the benchmark.
+A positive alpha for a stock or portfolio gives you sense of how well your asset
+outperformed a benchmark.&lt;/p&gt;
+&lt;p&gt;The $R^2$ is a measure of how well the the returns of a stock is explained by the
+returns of the benchmark. If your investment goal is to track a particular benchmark,
+then you should chose stocks that show a high $R^2$ with respect to the benchmark.
+The $R^2$ value of $1$ means that the benchmark completely explains the stock returns,
+while a value of $0$ means that the benchmark does not explain the  stock
+returns.&lt;/p&gt;
+&lt;p&gt;R-squared is defined as:&lt;/p&gt;
+&lt;p&gt;$$    R^2 = 1 - SS_{res}/SS_{tot} $$&lt;/p&gt;
+&lt;p&gt;where&lt;/p&gt;
+&lt;p&gt;$$    SS_{res} = \sum_i (R^{stock}_i - f^{stock}_i)^2 $$&lt;/p&gt;
+&lt;p&gt;$$    SS_{tot} = \sum_i (R^{stock}_i - &amp;lt;R^{stock}&amp;gt;)^2 $$&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="volatility-and-momentum"&gt;
+&lt;h2&gt;Volatility and Momentum&lt;/h2&gt;
+&lt;p&gt;The measures discussed in the earlier section are what I would call &lt;em&gt;relative
+measures&lt;/em&gt;, i.e., they are with respect to a proxy that is a representation of
+market. Time series measures such as volatility and momentum are what I would
+call &lt;em&gt;innate measures&lt;/em&gt;.&lt;/p&gt;
+&lt;p&gt;Volatility is nothing but the standard deviation of the returns of the stock.
+It gives us a sense of how much the stock returns fluctuate and how risky it is.
+High volatile stocks have high risk, and also have the potential to offer higher
+returns. A 3-year history of 1-month returns can be a good sample to calculate
+volatility.&lt;/p&gt;
+&lt;p&gt;Momentum is a measure of the past returns over a certain period. The 1-year
+momentum will be the 1-year return of the stock, where as a 3-year momentum
+will be the 3-year return of the stock.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="python-code"&gt;
+&lt;h2&gt;Python Code&lt;/h2&gt;
+&lt;p&gt;One can use data from yahoo finance to calculate the stock beta as shown:&lt;/p&gt;
+&lt;pre class="code python literal-block"&gt;
+&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;pandas.io.data&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;DataReader&lt;/span&gt;
+&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;datetime&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;date&lt;/span&gt;
+&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;numpy&lt;/span&gt; &lt;span class="kn"&gt;as&lt;/span&gt; &lt;span class="nn"&gt;np&lt;/span&gt;
+&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;pandas&lt;/span&gt; &lt;span class="kn"&gt;as&lt;/span&gt; &lt;span class="nn"&gt;pd&lt;/span&gt;
+
+&lt;span class="c"&gt;# Grab time series data for 5-year history for the stock (here AAPL)&lt;/span&gt;
+&lt;span class="c"&gt;# and for S&amp;amp;P-500 Index&lt;/span&gt;
+&lt;span class="n"&gt;sdate&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;date&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;2008&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;12&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;31&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;edate&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;date&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;2013&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;12&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;31&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;df&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;DataReader&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;'WFM'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="s"&gt;'yahoo'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;sdate&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;edate&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;dfb&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;DataReader&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;'^GSPC'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="s"&gt;'yahoo'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;sdate&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;edate&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+&lt;span class="c"&gt;# create a time-series of monthly data points&lt;/span&gt;
+&lt;span class="n"&gt;rts&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;df&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;resample&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;'M'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;how&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;'last'&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;rbts&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;dfb&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;resample&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;'M'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;how&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;'last'&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;dfsm&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;pd&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;DataFrame&lt;/span&gt;&lt;span class="p"&gt;({&lt;/span&gt;&lt;span class="s"&gt;'s_adjclose'&lt;/span&gt; &lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;rts&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s"&gt;'Adj Close'&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt;
+                        &lt;span class="s"&gt;'b_adjclose'&lt;/span&gt; &lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;rbts&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s"&gt;'Adj Close'&lt;/span&gt;&lt;span class="p"&gt;]},&lt;/span&gt;
+                        &lt;span class="n"&gt;index&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;rts&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;index&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+&lt;span class="c"&gt;# compute returns&lt;/span&gt;
+&lt;span class="n"&gt;dfsm&lt;/span&gt;&lt;span class="p"&gt;[[&lt;/span&gt;&lt;span class="s"&gt;'s_returns'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="s"&gt;'b_returns'&lt;/span&gt;&lt;span class="p"&gt;]]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;dfsm&lt;/span&gt;&lt;span class="p"&gt;[[&lt;/span&gt;&lt;span class="s"&gt;'s_adjclose'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="s"&gt;'b_adjclose'&lt;/span&gt;&lt;span class="p"&gt;]]&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;\
+    &lt;span class="n"&gt;dfsm&lt;/span&gt;&lt;span class="p"&gt;[[&lt;/span&gt;&lt;span class="s"&gt;'s_adjclose'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="s"&gt;'b_adjclose'&lt;/span&gt;&lt;span class="p"&gt;]]&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;shift&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;
+&lt;span class="n"&gt;dfsm&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;dfsm&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;dropna&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;span class="n"&gt;covmat&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;np&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;cov&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;dfsm&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;s_returns&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt;&lt;span class="n"&gt;dfsm&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;b_returns&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;])&lt;/span&gt;
+
+&lt;span class="c"&gt;# calculate measures now&lt;/span&gt;
+&lt;span class="n"&gt;beta&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;covmat&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;covmat&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;span class="n"&gt;alpha&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;np&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;mean&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;dfsm&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;s_returns&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;])&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;beta&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;np&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;mean&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;dfsm&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;b_returns&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;])&lt;/span&gt;
+
+&lt;span class="c"&gt;# r_squared     = 1. - SS_res/SS_tot&lt;/span&gt;
+&lt;span class="n"&gt;ypred&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;alpha&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;beta&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="n"&gt;dfsm&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;b_returns&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;span class="n"&gt;SS_res&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;np&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;sum&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;np&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;power&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;ypred&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;dfsm&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;s_returns&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+&lt;span class="n"&gt;SS_tot&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;covmat&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;len&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;dfsm&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="c"&gt;# SS_tot is sample_variance*(n-1)&lt;/span&gt;
+&lt;span class="n"&gt;r_squared&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mf"&gt;1.&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="n"&gt;SS_res&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;SS_tot&lt;/span&gt;
+&lt;span class="c"&gt;# 5- year volatiity and 1-year momentum&lt;/span&gt;
+&lt;span class="n"&gt;volatility&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;np&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;sqrt&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;covmat&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;])&lt;/span&gt;
+&lt;span class="n"&gt;momentum&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;np&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;prod&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="n"&gt;dfsm&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;s_returns&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;tail&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;12&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;values&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;
+
+&lt;span class="c"&gt;# annualize the numbers&lt;/span&gt;
+&lt;span class="n"&gt;prd&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mf"&gt;12.&lt;/span&gt; &lt;span class="c"&gt;# used monthly returns; 12 periods to annualize&lt;/span&gt;
+&lt;span class="n"&gt;alpha&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;alpha&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;prd&lt;/span&gt;
+&lt;span class="n"&gt;volatility&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;volatility&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;np&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;sqrt&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;prd&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+&lt;span class="k"&gt;print&lt;/span&gt; &lt;span class="n"&gt;beta&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;alpha&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;r_squared&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;volatility&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;momentum&lt;/span&gt;
+&lt;/pre&gt;
+&lt;p&gt;Some caveats about the sample code. The returns are calculated using the
+adjusted close from Yahoo finance data. This is because the adjusted close
+accounts for dividends and splits etc. In my personal experience I have
+found the returns calculated this way to be a reasonably close estimate
+but not always accurate. The volatility is calculated here as a simple
+standard deviation of the returns. From an option-pricing
+model perspective volatility is calculated assuming a log-normal distribution
+for the returns.&lt;/p&gt;
+&lt;p&gt;The alpha shown above is annualized by scaling by a factor of 12, the periodicity
+of returns. The same goes for volatility, which is scaled by $\sqrt{12}$
+in order to annualize.&lt;/p&gt;
+&lt;/div&gt;
+</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Gouthaman Balaraman</dc:creator><pubDate>Thu, 09 Jan 2014 00:00:00 -0800</pubDate><guid>tag:gouthamanbalaraman.com,2014-01-09:blog/calculating-stock-beta.html</guid><category>finance</category><category>investing</category></item><item><title>Python Multiprocessing as a Task Queue</title><link>http://gouthamanbalaraman.com/blog/python-multiprocessing-as-a-task-queue.html</link><description>&lt;p&gt;When you have computationally intensive tasks in your website (or scripts),
+it is conventional to use a task queue such as &lt;a class="reference external" href="http://www.celeryproject.org/"&gt;Celery&lt;/a&gt;. Using Celery requires
+some amount of setup and if you want to avoid, try using the following task
+queue based on the multiprocessing.
+Depending on the application at hand, Celery might be an overkill. An alternate approach
+is to use multiprocessing as a task queue.&lt;/p&gt;
+&lt;p&gt;Here is a simple introduction to multiprocessing:&lt;/p&gt;
+&lt;pre class="code python literal-block"&gt;
+&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;multiprocessing&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;Pool&lt;/span&gt;
+&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;expensive_function&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+        &lt;span class="c"&gt;# do your expensive time consuming process&lt;/span&gt;
+        &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt;
+&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;__name__&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="s"&gt;'__main__'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+        &lt;span class="c"&gt;# start 4 worker processes&lt;/span&gt;
+        &lt;span class="n"&gt;pool&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;Pool&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;processes&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;4&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+        &lt;span class="c"&gt;# evaluate &amp;quot;f(10)&amp;quot; asynchronously&lt;/span&gt;
+        &lt;span class="n"&gt;result&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;pool&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;apply_async&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;expensive_function&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;10&lt;/span&gt;&lt;span class="p"&gt;])&lt;/span&gt;
+        &lt;span class="k"&gt;print&lt;/span&gt; &lt;span class="n"&gt;result&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;get&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;timeout&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;
+&lt;p&gt;The above snippet is copied from the multiprocessing documentation, and is fairly self
+explanatory. In the main block we start a pool of 4 processes. Then we asynchronously
+evaluate the &lt;tt class="docutils literal"&gt;expensive_function&lt;/tt&gt;.&lt;/p&gt;
+&lt;p&gt;One can use the same idea for a website as shown below in the Flask app example:&lt;/p&gt;
+&lt;pre class="code python literal-block"&gt;
+&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;multiprocessing&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;Pool&lt;/span&gt;
+&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;flask&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;Flask&lt;/span&gt;
+
+&lt;span class="n"&gt;app&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;Flask&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;__name__&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;_pool&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="bp"&gt;None&lt;/span&gt;
+
+&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;expensive_function&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+        &lt;span class="c"&gt;# import packages that is used in this function&lt;/span&gt;
+        &lt;span class="c"&gt;# do your expensive time consuming process&lt;/span&gt;
+        &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt;
+
+&lt;span class="nd"&gt;&amp;#64;app.route&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;'/expensive_calc/&amp;lt;int:x&amp;gt;'&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;route_expcalc&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+        &lt;span class="n"&gt;f&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;_pool&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;apply_async&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;expensive_function&lt;/span&gt;&lt;span class="p"&gt;,[&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="p"&gt;])&lt;/span&gt;
+        &lt;span class="n"&gt;r&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;f&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;get&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;timeout&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+        &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="s"&gt;'Result is &lt;/span&gt;&lt;span class="si"&gt;%d&lt;/span&gt;&lt;span class="s"&gt;'&lt;/span&gt;&lt;span class="o"&gt;%&lt;/span&gt;&lt;span class="n"&gt;r&lt;/span&gt;
+
+&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;__name__&lt;/span&gt;&lt;span class="o"&gt;==&lt;/span&gt;&lt;span class="s"&gt;'__main__'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+        &lt;span class="n"&gt;_pool&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;Pool&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;processes&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;4&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+        &lt;span class="k"&gt;try&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+                &lt;span class="c"&gt;# insert production server deployment code&lt;/span&gt;
+                &lt;span class="n"&gt;app&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;run&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+        &lt;span class="k"&gt;except&lt;/span&gt; &lt;span class="ne"&gt;KeyboardInterrupt&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+                &lt;span class="n"&gt;_pool&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;close&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+                &lt;span class="n"&gt;_pool&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;join&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;/pre&gt;
+</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Gouthaman Balaraman</dc:creator><pubDate>Tue, 07 Jan 2014 00:00:00 -0800</pubDate><guid>tag:gouthamanbalaraman.com,2014-01-07:blog/python-multiprocessing-as-a-task-queue.html</guid><category>python</category><category>programming</category></item></channel></rss>

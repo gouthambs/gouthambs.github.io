@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Gouthaman Balaraman</title><link>http://gouthamanbalaraman.com/</link><description></description><atom:link href="http://gouthamanbalaraman.com/feeds/lua.rss.xml" rel="self"></atom:link><lastBuildDate>Tue, 05 Aug 2014 00:00:00 -0700</lastBuildDate><item><title>Minimal Example of Calling Lua Functions from C++</title><link>http://gouthamanbalaraman.com/blog/minimal-example-lua-function-cpp.html</link><description>&lt;p&gt;If you want to extend and customize the capabilities of a C++ application
+without requiring a full recompilation, then using a embedded scripting language
+is the way to go. Lua is one such embeddable scripting language, and is very popular
+among game developers. The main advantage of Lua, in my opinion, is that the core API
+is very minimal, has very small memory footprint. The availability of LuaJIT makes
+it a very performant alternative as well.&lt;/p&gt;
+&lt;p&gt;This article is a continuation of the earlier introductory article &lt;cite&gt;Minimal C++ Example &amp;lt;|filename|minimal-lua.rst&amp;gt;&lt;/cite&gt;.
+In this article we will discuss how to call lua functions from C++.&lt;/p&gt;
+&lt;div class="section" id="example-code"&gt;
+&lt;h2&gt;Example Code&lt;/h2&gt;
+&lt;pre class="code c++ literal-block"&gt;
+&lt;span class="k"&gt;extern&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;C&amp;quot;&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+      &lt;span class="cp"&gt;#include &amp;quot;lua.h&amp;quot;
+&lt;/span&gt;      &lt;span class="cp"&gt;#include &amp;quot;lualib.h&amp;quot;
+&lt;/span&gt;      &lt;span class="cp"&gt;#include &amp;quot;lauxlib.h&amp;quot;
+&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="cp"&gt;#include &amp;lt;string.h&amp;gt;
+&lt;/span&gt;
+&lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="n"&gt;main&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="n"&gt;argc&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="kt"&gt;char&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="n"&gt;argv&lt;/span&gt;&lt;span class="p"&gt;[])&lt;/span&gt;
+&lt;span class="p"&gt;{&lt;/span&gt;
+      &lt;span class="c1"&gt;// initialization
+&lt;/span&gt;      &lt;span class="n"&gt;lua_State&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="n"&gt;L&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;lua_open&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
+      &lt;span class="n"&gt;luaL_openlibs&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;L&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+
+      &lt;span class="c1"&gt;// execute script
+&lt;/span&gt;      &lt;span class="k"&gt;const&lt;/span&gt; &lt;span class="kt"&gt;char&lt;/span&gt; &lt;span class="n"&gt;lua_script&lt;/span&gt;&lt;span class="p"&gt;[]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;function sum(a, b) return a+b; end&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="c1"&gt;// a function that returns sum of two
+&lt;/span&gt;      &lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="n"&gt;load_stat&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;luaL_loadbuffer&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;L&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;lua_script&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;strlen&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;lua_script&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;&lt;span class="n"&gt;lua_script&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+      &lt;span class="n"&gt;lua_pcall&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;L&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+
+      &lt;span class="c1"&gt;// load the function from global
+&lt;/span&gt;      &lt;span class="n"&gt;lua_getglobal&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;L&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;sum&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+      &lt;span class="k"&gt;if&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;lua_isfunction&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;L&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;)&lt;/span&gt;
+      &lt;span class="p"&gt;{&lt;/span&gt;
+        &lt;span class="c1"&gt;// push function arguments into stack
+&lt;/span&gt;        &lt;span class="n"&gt;lua_pushnumber&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;L&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mf"&gt;5.0&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+        &lt;span class="n"&gt;lua_pushnumber&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;L&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mf"&gt;6.0&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+        &lt;span class="n"&gt;lua_pcall&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;L&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+        &lt;span class="kt"&gt;double&lt;/span&gt; &lt;span class="n"&gt;sumval&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mf"&gt;0.0&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+        &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;!&lt;/span&gt;&lt;span class="n"&gt;lua_isnil&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;L&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+        &lt;span class="p"&gt;{&lt;/span&gt;
+          &lt;span class="n"&gt;sumval&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;lua_tonumber&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;L&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+              &lt;span class="n"&gt;lua_pop&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;L&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+        &lt;span class="p"&gt;}&lt;/span&gt;
+        &lt;span class="n"&gt;printf&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;sum=%lf&lt;/span&gt;&lt;span class="se"&gt;\n&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;sumval&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+      &lt;span class="p"&gt;}&lt;/span&gt;
+
+      &lt;span class="c1"&gt;// cleanup
+&lt;/span&gt;      &lt;span class="n"&gt;lua_close&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;L&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+      &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div class="section" id="code-explained"&gt;
+&lt;h2&gt;Code Explained&lt;/h2&gt;
+&lt;p&gt;The initial part of the code initialises the &lt;tt class="docutils literal"&gt;lua_State&lt;/tt&gt; loads and executes the script with &lt;tt class="docutils literal"&gt;lua_pcall(L,0,0,0)&lt;/tt&gt;.
+Once the script is loaded, the functions are available in the global namespace. Here the script basically is a function
+that takes two numbers and returns the sum of the two. Using the &lt;tt class="docutils literal"&gt;lua_getglobal(L, &amp;quot;sum&amp;quot;)&lt;/tt&gt; call,
+we load the function into the stack. We can check if the function was loaded correctly using the &lt;tt class="docutils literal"&gt;lua_isfunction(L, &lt;span class="pre"&gt;-1)&lt;/span&gt;&lt;/tt&gt;.
+Then we pass the two arguments of the function by pushing them into the stack. Then the &lt;tt class="docutils literal"&gt;lua_pcall&lt;/tt&gt; method executes the
+function and loads the result onto the stack. The successful execution of the function can be checked by checking
+that the stack is not &lt;tt class="docutils literal"&gt;nil&lt;/tt&gt; using &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;!lua_isnil(L,-1)&lt;/span&gt;&lt;/tt&gt;. The returned value can then be accessed by casting the result
+in the top of the stack using &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;lua_tonumber(L,-1)&lt;/span&gt;&lt;/tt&gt;. We use &lt;tt class="docutils literal"&gt;lua_pop&lt;/tt&gt; to clear the result from the stack.&lt;/p&gt;
+&lt;p&gt;Running this example should print:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+sum=11.000000
+&lt;/pre&gt;
+&lt;p&gt;on the screen.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="conclusion"&gt;
+&lt;h2&gt;Conclusion&lt;/h2&gt;
+&lt;p&gt;This article gave a very minimal example explaining how to call a lua function from C++.&lt;/p&gt;
+&lt;/div&gt;
+</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Gouthaman Balaraman</dc:creator><pubDate>Tue, 05 Aug 2014 00:00:00 -0700</pubDate><guid>tag:gouthamanbalaraman.com,2014-08-05:blog/minimal-example-lua-function-cpp.html</guid><category>lua</category><category>programming</category><category>C++</category></item><item><title>Minimal Lua C++ Example</title><link>http://gouthamanbalaraman.com/blog/minimal-lua-c-example.html</link><description>&lt;p&gt;If you want to extend and customize the capabilities of a C++ application
+without requiring a full recompilation, then using a embedded scripting language
+is the way to go. Lua is one such embeddable scripting language, and is very popular
+among game developers. The main advantage of Lua, in my opinion, is that the core API
+is very minimal, has very small memory footprint. The availability of LuaJIT makes
+it a very performant alternative as well.&lt;/p&gt;
+&lt;div class="section" id="example-code"&gt;
+&lt;h2&gt;Example Code&lt;/h2&gt;
+&lt;p&gt;Here is a minimal Lua(V5.1) - C++  example to get one started.&lt;/p&gt;
+&lt;pre class="code c++ literal-block"&gt;
+&lt;span class="c1"&gt;// luaexample.cpp
+&lt;/span&gt;&lt;span class="k"&gt;extern&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;C&amp;quot;&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+  &lt;span class="cp"&gt;#include &amp;quot;lua.h&amp;quot;
+&lt;/span&gt;  &lt;span class="cp"&gt;#include &amp;quot;lualib.h&amp;quot;
+&lt;/span&gt;  &lt;span class="cp"&gt;#include &amp;quot;lauxlib.h&amp;quot;
+&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="cp"&gt;#include &amp;lt;string.h&amp;gt;
+&lt;/span&gt;
+&lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="n"&gt;main&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="n"&gt;argc&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="kt"&gt;char&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="n"&gt;argv&lt;/span&gt;&lt;span class="p"&gt;[])&lt;/span&gt;
+&lt;span class="p"&gt;{&lt;/span&gt;
+      &lt;span class="c1"&gt;// initialization
+&lt;/span&gt;      &lt;span class="n"&gt;lua_State&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="n"&gt;L&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;lua_open&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
+      &lt;span class="n"&gt;luaL_openlibs&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;L&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+
+      &lt;span class="c1"&gt;// execute script
+&lt;/span&gt;      &lt;span class="k"&gt;const&lt;/span&gt; &lt;span class="kt"&gt;char&lt;/span&gt; &lt;span class="n"&gt;lua_script&lt;/span&gt;&lt;span class="p"&gt;[]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;print('Hello World!')&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+      &lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="n"&gt;load_stat&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;luaL_loadbuffer&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;L&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;lua_script&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;strlen&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;lua_script&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;&lt;span class="n"&gt;lua_script&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+      &lt;span class="n"&gt;lua_pcall&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;L&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+
+      &lt;span class="c1"&gt;// cleanup
+&lt;/span&gt;      &lt;span class="n"&gt;lua_close&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;L&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+      &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div class="section" id="code-explained"&gt;
+&lt;h2&gt;Code Explained&lt;/h2&gt;
+&lt;p&gt;Here the &lt;tt class="docutils literal"&gt;lua_open&lt;/tt&gt; and &lt;tt class="docutils literal"&gt;luaL_openlibs&lt;/tt&gt; are initialization step in order to prepare
+the &lt;tt class="docutils literal"&gt;lua_State * L&lt;/tt&gt;. We store the script that we need to execute in the variable &lt;tt class="docutils literal"&gt;lua_script&lt;/tt&gt;.
+The &lt;tt class="docutils literal"&gt;luaL_loadbuffer&lt;/tt&gt; is used to load the script. The loaded script can be executed by
+calling &lt;tt class="docutils literal"&gt;lua_pcall(L, 0, 0, 0)&lt;/tt&gt;. The arguments passed to &lt;tt class="docutils literal"&gt;lua_pcall&lt;/tt&gt; are the &lt;tt class="docutils literal"&gt;lua_State&lt;/tt&gt; pointer,
+number of arguments to the script (which is none here), number of values returned (which is none here). The
+last argument to &lt;tt class="docutils literal"&gt;lua_pcall&lt;/tt&gt; is the error handler which we will not discuss here.&lt;/p&gt;
+&lt;p&gt;This needs to be compiled using a C++ compiler and linked to Lua library. When you run the
+executable, you should see &lt;tt class="docutils literal"&gt;Hello World!&lt;/tt&gt; printed on the screen.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="conclusion"&gt;
+&lt;h2&gt;Conclusion&lt;/h2&gt;
+&lt;p&gt;We looked at a rather simple introductory example of &lt;tt class="docutils literal"&gt;lua&lt;/tt&gt; interpreter embeded into &lt;tt class="docutils literal"&gt;C++&lt;/tt&gt; code.&lt;/p&gt;
+&lt;/div&gt;
+</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Gouthaman Balaraman</dc:creator><pubDate>Thu, 17 Jul 2014 00:00:00 -0700</pubDate><guid>tag:gouthamanbalaraman.com,2014-07-17:blog/minimal-lua-c-example.html</guid><category>lua</category><category>programming</category><category>C++</category></item></channel></rss>

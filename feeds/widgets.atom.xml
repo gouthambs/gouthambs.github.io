@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Gouthaman Balaraman</title><link href="http://gouthamanbalaraman.com/" rel="alternate"></link><link href="http://gouthamanbalaraman.com/feeds/widgets.atom.xml" rel="self"></link><id>http://gouthamanbalaraman.com/</id><updated>2014-10-20T00:00:00-07:00</updated><entry><title>Econometric Factor Model</title><link href="http://gouthamanbalaraman.com/blog/econometric-factor-model.html" rel="alternate"></link><updated>2014-10-20T00:00:00-07:00</updated><author><name>Gouthaman Balaraman</name></author><id>tag:gouthamanbalaraman.com,2014-10-20:blog/econometric-factor-model.html</id><summary type="html">&lt;p&gt;Please refer to &lt;a class="reference external" href="/blog/understanding-econometric-factor-model.html"&gt;Understanding Econometric Factor Model&lt;/a&gt;
+for details.&lt;/p&gt;
+&lt;script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular.min.js"&gt;&lt;/script&gt;
+&lt;script src="http://d3js.org/d3.v3.min.js"&gt;&lt;/script&gt;
+&lt;script&gt;
+    var myModule = angular.module('myApp', []);
+        myModule
+        .directive( 'barChart', function(){
+            var directive = {
+                restrict : 'E',
+                replace : true,
+                scope : {
+                    dataset: '=' // bidirectional data binding
+                    },
+                template :  '&lt;svg ng-attr-width="{{graph.width}}" ng-attr-height="{{graph.height}}"&gt;&lt;/svg&gt;',
+                link : function(scope, element, attrs){
+                    scope.graph = {height: 200, width: 400};
+                    scope.width = function(){
+                        dataPoints = scope.dataset.length;
+                        return scope.graph / dataPoints;
+                     };
+                     scope.height = function(data) {
+                        max = Math.max.apply(null, scope.dataset);
+                        return data / max * scope.graph.height;
+                     };
+                     scope.x = function(index) {
+                        index * scope.width();
+                     };
+                     scope.y = function(index){
+                        scope.graph.height - scope.height(data);
+                     };
+                }
+            };
+            return directive;
+    });
+
+    myModule.controller('mptCtrl', ['$scope','$http', function($scope, $http){
+                    /* Initialization steps */
+                    var url = "/extra/data/factormodels/fm_5y_latest.csv";
+        $scope.factorItems = ["Unemployment","ConsumerSentiment","Market","Size","ValueGrowth"];
+        $scope.riskItems = ["TotalRisk","DiversifiableRisk","NonDiversifiableRisk"];
+        $scope.myData = [10,20,30,40,60, 80, 20, 50];
+                    $http.get(url).success(function(respData, status, headers, config){
+                            var data = d3.csv.parse( respData );
+                            $scope.data = data;
+            $scope.ticker = 'AAPL';
+            $scope.fetchTickerData($scope.ticker);
+                    });
+                    $scope.fetchTickerData = function(ticker){
+                            $scope.message = "";
+                            ticker = ticker.toUpperCase();
+                            for (var d = 0, len = $scope.data.length; d &lt; len; d += 1) {
+                        if ($scope.data[d].Ticker == ticker) {
+                                var data = $scope.data[d];
+                    var factors = ["Alpha","Unemployment","ConsumerSentiment","Market","Size","ValueGrowth"];
+                    var datalist = {};
+                    for(var i = 0; i &lt; factors.length; i+=1){
+                        datalist[factors[i]] = {exposure: data[factors[i]], std:data[factors[i]+"Std"]};
+                    }
+                    datalist.Ticker = data.Ticker;
+                    datalist.Date = data.Date;
+                    datalist.TotalRisk = data.TotalRisk;
+                    datalist.DiversifiableRisk = data.DiversifiableRisk;
+                    datalist.NonDiversifiableRisk = data.NonDiversifiableRisk;
+                    $scope.tickerData = datalist;
+                    return;
+                        }
+            }
+            $scope.message = "Ticker not found";
+            $scope.tickerData = null;
+                    };
+            }]);
+&lt;/script&gt;
+&lt;div ng-app="myApp"&gt;
+    &lt;div ng-controller="mptCtrl"&gt;
+        &lt;form class="form-inline" ng-submit="fetchTickerData(ticker)"&gt;
+                            &lt;fieldset&gt;
+                                    &lt;!-- Form Name --&gt;
+                                    &lt;!-- Text input--&gt;
+                                    &lt;div class="form-group col-md-2 "&gt;
+                                      &lt;div class=""&gt;
+                                            &lt;input id="ticker" name="ticker" type="text" placeholder="TICKER" class="form-control input-md" ng-model="ticker"&gt;
+                                      &lt;/div&gt;
+                                    &lt;/div&gt;
+
+                                    &lt;!-- Button --&gt;
+                                    &lt;div class="form-group col-md-2 col-md-offset-2"&gt;
+                                      &lt;div class=""&gt;
+                                            &lt;button id="submit" name="submit" class="btn btn-primary"&gt;Submit&lt;/button&gt;
+                                      &lt;/div&gt;
+                                    &lt;/div&gt;
+                            &lt;/fieldset&gt;
+                    &lt;/form&gt;
+                    &lt;hr/&gt;
+
+                    &lt;div style="height:800px; "&gt;
+                            &lt;div id="results" ng-show="tickerData !=null"&gt;
+                                    &lt;div class="col-md-12"&gt;
+                    &lt;strong&gt;Factor Exposures - {{tickerData.Ticker}}&lt;/strong&gt;
+                    &lt;br/&gt;
+                                            &lt;table class="table table-bordered col-md-12"&gt;
+                        &lt;thead&gt;
+                                                            &lt;tr&gt;
+                                                                    &lt;th&gt; &lt;span class = "pull-left key"&gt;Factor&lt;/span&gt;&lt;/td&gt;
+                                                                    &lt;th&gt; &lt;span class = "pull-right key"&gt; Exposure &lt;/span&gt;&lt;/td&gt;
+                                &lt;th&gt; &lt;span class = "pull-right key"&gt; Standard Deviation &lt;/span&gt;&lt;/td&gt;
+                                                            &lt;/tr&gt;
+                                                    &lt;/thead&gt;
+                                                    &lt;tbody&gt;
+                                                            &lt;tr ng-repeat="item in factorItems"&gt;
+                                                                    &lt;td&gt; &lt;span class = "pull-left key"&gt;{{item}}&lt;/span&gt;&lt;/td&gt;
+                                                                    &lt;td&gt; &lt;span class = "pull-right value"&gt; {{tickerData[item].exposure}} &lt;/span&gt;&lt;/td&gt;
+                                &lt;td&gt; &lt;span class = "pull-right value"&gt; {{tickerData[item].std}} &lt;/span&gt;&lt;/td&gt;
+                                                            &lt;/tr&gt;
+
+                                                    &lt;/tbody&gt;
+                                            &lt;/table&gt;
+                    &lt;strong&gt;Risk - {{tickerData.Ticker}}&lt;/strong&gt;
+                    &lt;br/&gt;
+                                            &lt;table class="table table-bordered col-md-12"&gt;
+                        &lt;thead&gt;
+                                                            &lt;tr&gt;
+                                                                    &lt;th&gt; &lt;span class = "pull-right key"&gt;Total Risk (%)&lt;/span&gt;&lt;/td&gt;
+                                                                    &lt;th&gt; &lt;span class = "pull-right key"&gt;Diversifiable Risk (%)&lt;/span&gt;&lt;/td&gt;
+                                &lt;th&gt; &lt;span class = "pull-right key"&gt; Non-Diversifiable Risk (%)&lt;/span&gt;&lt;/td&gt;
+                                                            &lt;/tr&gt;
+                                                    &lt;/thead&gt;
+                                                    &lt;tbody&gt;
+                                                            &lt;tr&gt;
+                                                                    &lt;td&gt; &lt;span class = "pull-right value"&gt;{{tickerData.TotalRisk}}&lt;/span&gt;&lt;/td&gt;
+                                                                    &lt;td&gt; &lt;span class = "pull-right value"&gt; {{tickerData.DiversifiableRisk}} &lt;/span&gt;&lt;/td&gt;
+                                &lt;td&gt; &lt;span class = "pull-right value"&gt; {{tickerData.NonDiversifiableRisk}} &lt;/span&gt;&lt;/td&gt;
+                                                            &lt;/tr&gt;
+                                                    &lt;/tbody&gt;
+                                            &lt;/table&gt;
+                                    &lt;/div&gt; &lt;!-- column 1 div --&gt;
+                                    &lt;small&gt;
+                    &lt;span class="key"&gt;As of date: {{tickerData.Date}}&lt;/span&gt;
+                &lt;/small&gt;
+                            &lt;/div&gt;&lt;!-- results --&gt;
+                            &lt;div id="error" ng-if="tickerData==null"&gt;
+                                    {{message}}
+                            &lt;/div&gt;
+                    &lt;/div&gt;
+
+    &lt;/div&gt; &lt;!-- controller --&gt;
+&lt;/div&gt;&lt;!--app --&gt;</summary><category term="finance"></category><category term="investing"></category><category term="widget"></category></entry><entry><title>Modern Portfolio Theory Statistics</title><link href="http://gouthamanbalaraman.com/blog/modern-portfolio-theory-statistics.html" rel="alternate"></link><updated>2014-09-21T00:00:00-07:00</updated><author><name>Gouthaman Balaraman</name></author><id>tag:gouthamanbalaraman.com,2014-09-21:blog/modern-portfolio-theory-statistics.html</id><summary type="html">&lt;p&gt;This widget shows Modern Portfolio Theory (MPT) statistics for a selected list of stocks. The calculations were made
+using &lt;a class="reference external" href="https://www.quandl.com/"&gt;Quandl&lt;/a&gt; data in the &lt;a class="reference external" href="https://www.quandl.com/WIKI"&gt;WIKI&lt;/a&gt; dataset. The ETF SPY was used as a benchmark using a 5-year time horizon. If the time
+series is not long enough, then an N/A is shown. You can also download the &lt;a class="reference external" href="/extra/data/mptstats/mpt_5y_latest.csv"&gt;CSV_File&lt;/a&gt; containing all the metrics.&lt;/p&gt;
+&lt;script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular.min.js"&gt;&lt;/script&gt;
+&lt;script src="http://d3js.org/d3.v3.min.js"&gt;&lt;/script&gt;
+&lt;script&gt;
+    var myModule = angular.module('mptApp', []);
+    myModule.controller('mptCtrl', ['$scope','$http', function($scope, $http){
+                    /* Initialization steps */
+                    var url = "/extra/data/mptstats/mpt_5y_latest.csv";
+                    $http.get(url).success(function(respData, status, headers, config){
+                            var data = d3.csv.parse( respData );
+                            $scope.data = data;
+            $scope.ticker = 'AAPL';
+            $scope.fetchTickerData($scope.ticker);
+                    });
+                    $scope.fetchTickerData = function(ticker){
+                            $scope.message = "";
+                            ticker = ticker.toUpperCase();
+                            for (var d = 0, len = $scope.data.length; d &lt; len; d += 1) {
+                        if ($scope.data[d].Ticker == ticker) {
+                                $scope.tickerData = $scope.data[d];
+                            return;
+                        }
+            }
+            $scope.message = "Ticker not found";
+            $scope.tickerData = null;
+                    };
+            }]);
+&lt;/script&gt;
+&lt;div ng-app="mptApp"&gt;
+    &lt;div ng-controller="mptCtrl"&gt;
+        &lt;form class="form-inline" ng-submit="fetchTickerData(ticker)"&gt;
+                            &lt;fieldset&gt;
+                                    &lt;!-- Form Name --&gt;
+                                    &lt;!-- Text input--&gt;
+                                    &lt;div class="form-group col-md-2 "&gt;
+                                      &lt;div class=""&gt;
+                                            &lt;input id="ticker" name="ticker" type="text" placeholder="TICKER" class="form-control input-md" ng-model="ticker"&gt;
+                                      &lt;/div&gt;
+                                    &lt;/div&gt;
+
+                                    &lt;!-- Button --&gt;
+                                    &lt;div class="form-group col-md-2 col-md-offset-2"&gt;
+                                      &lt;div class=""&gt;
+                                            &lt;button id="submit" name="submit" class="btn btn-primary"&gt;Submit&lt;/button&gt;
+                                      &lt;/div&gt;
+                                    &lt;/div&gt;
+                            &lt;/fieldset&gt;
+                    &lt;/form&gt;
+                    &lt;hr/&gt;
+                    &lt;div style="height:800px; "&gt;
+                            &lt;div id="results" ng-show="tickerData !=null"&gt;
+                                    &lt;div class="col-md-6"&gt;
+                                            &lt;table class="table table-striped col-md-6"&gt;
+                                                    &lt;tbody&gt;
+                                                            &lt;tr&gt;
+                                                                    &lt;td&gt; &lt;span class = "pull-left key"&gt; Ticker&lt;/span&gt;&lt;/td&gt;
+                                                                    &lt;td&gt; &lt;span class = "pull-right value"&gt; {{tickerData.Ticker}} &lt;/span&gt;&lt;/td&gt;
+                                                            &lt;/tr&gt;
+                                                            &lt;tr&gt;
+                                                                    &lt;td&gt; &lt;span class = "pull-left key"&gt; Alpha (%) &lt;/span&gt;&lt;/td&gt;
+                                                                    &lt;td&gt; &lt;span class = "pull-right value"&gt; {{tickerData.Alpha}} &lt;/span&gt;&lt;/td&gt;
+                                                            &lt;/tr&gt;
+                                                            &lt;tr&gt;
+                                                                    &lt;td&gt; &lt;span class = "pull-left key"&gt; Beta &lt;/span&gt;&lt;/td&gt;
+                                                                    &lt;td&gt; &lt;span class = "pull-right value"&gt; {{tickerData.Beta}} &lt;/span&gt;&lt;/td&gt;
+                                                            &lt;/tr&gt;
+                                                            &lt;tr&gt;
+                                                                    &lt;td&gt; &lt;span class = "pull-left key"&gt; R-Squared &lt;/span&gt;&lt;/td&gt;
+                                                                    &lt;td&gt; &lt;span class = "pull-right value"&gt; {{tickerData.RSquared}} &lt;/span&gt;&lt;/td&gt;
+                                                            &lt;/tr&gt;
+                                                            &lt;tr&gt;
+                                                                    &lt;td&gt; &lt;span class = "pull-left key"&gt; Momentum (%) &lt;/span&gt;&lt;/td&gt;
+                                                                    &lt;td&gt; &lt;span class = "pull-right value"&gt; {{tickerData.Momentum}} &lt;/span&gt;&lt;/td&gt;
+                                                            &lt;/tr&gt;
+                                                            &lt;tr&gt;
+                                                                    &lt;td&gt; &lt;span class = "pull-left key"&gt; Annualized Return (%) &lt;/span&gt;&lt;/td&gt;
+                                                                    &lt;td&gt; &lt;span class = "pull-right value"&gt; {{tickerData.AnnualizedReturn}} &lt;/span&gt;&lt;/td&gt;
+                                                            &lt;/tr&gt;
+                                                            &lt;tr&gt;
+                                                                    &lt;td&gt; &lt;span class = "pull-left key"&gt; Standard Deviation (%) &lt;/span&gt;&lt;/td&gt;
+                                                                    &lt;td&gt; &lt;span class = "pull-right value"&gt; {{tickerData.StandardDeviation}} &lt;/span&gt;&lt;/td&gt;
+                                                            &lt;/tr&gt;
+                                                    &lt;/tbody&gt;
+                                            &lt;/table&gt;
+                                    &lt;/div&gt; &lt;!-- column 1 div --&gt;
+                                    &lt;div class="col-md-6"&gt;
+                                            &lt;table class="table table-striped "&gt;
+                                                    &lt;tbody&gt;
+                                                            &lt;tr&gt;
+                                                                    &lt;td&gt; &lt;span class = "pull-left key"&gt; Sharpe Ratio &lt;/span&gt;&lt;/td&gt;
+                                                                    &lt;td&gt; &lt;span class = "pull-right value"&gt; {{tickerData.SharpeRatio}} &lt;/span&gt;&lt;/td&gt;
+                                                            &lt;/tr&gt;
+                                                                                                            &lt;tr&gt;
+                                                                    &lt;td&gt; &lt;span class = "pull-left key"&gt; Sortino Ratio &lt;/span&gt;&lt;/td&gt;
+                                                                    &lt;td&gt; &lt;span class = "pull-right value"&gt; {{tickerData.SortinoRatio}} &lt;/span&gt;&lt;/td&gt;
+                                                            &lt;/tr&gt;
+                                                            &lt;tr&gt;
+                                                                    &lt;td&gt; &lt;span class = "pull-left key"&gt; Information Ratio &lt;/span&gt;&lt;/td&gt;
+                                                                    &lt;td&gt; &lt;span class = "pull-right value"&gt; {{tickerData.InformationRatio}} &lt;/span&gt;&lt;/td&gt;
+                                                            &lt;/tr&gt;
+                                                            &lt;tr&gt;
+                                                                    &lt;td&gt; &lt;span class = "pull-left key"&gt; Treynor Ratio &lt;/span&gt;&lt;/td&gt;
+                                                                    &lt;td&gt; &lt;span class = "pull-right value"&gt; {{tickerData.TreynorRatio}} &lt;/span&gt;&lt;/td&gt;
+                                                            &lt;/tr&gt;
+
+                                                            &lt;tr&gt;
+                                                                    &lt;td&gt; &lt;span class = "pull-left key"&gt; Tracking Error (%) &lt;/span&gt;&lt;/td&gt;
+                                                                    &lt;td&gt; &lt;span class = "pull-right value"&gt; {{tickerData.TrackingError}} &lt;/span&gt;&lt;/td&gt;
+                                                            &lt;/tr&gt;
+                                                            &lt;tr&gt;
+                                                                    &lt;td&gt; &lt;span class = "pull-left key"&gt; Upside Capture (%) &lt;/span&gt;&lt;/td&gt;
+                                                                    &lt;td&gt; &lt;span class = "pull-right value"&gt; {{tickerData.UpsideCapture}} &lt;/span&gt;&lt;/td&gt;
+                                                            &lt;/tr&gt;
+                                                            &lt;tr&gt;
+                                                                    &lt;td&gt; &lt;span class = "pull-left key"&gt; Downside Capture (%)&lt;/span&gt;&lt;/td&gt;
+                                                                    &lt;td&gt; &lt;span class = "pull-right value"&gt; {{tickerData.DownsideCapture}} &lt;/span&gt;&lt;/td&gt;
+                                                            &lt;/tr&gt;
+                                                    &lt;/tbody&gt;
+                                            &lt;/table&gt;
+                                    &lt;/div&gt; &lt;!-- column 2 div--&gt;
+                                    &lt;small&gt;&lt;span class="key"&gt;As of date: {{tickerData.Date}}&lt;/span&gt;&lt;/small&gt;
+                            &lt;/div&gt;&lt;!-- results --&gt;
+                            &lt;div id="error" ng-if="tickerData==null"&gt;
+                                    {{message}}
+                            &lt;/div&gt;
+                    &lt;/div&gt;
+
+    &lt;/div&gt; &lt;!-- controller --&gt;
+&lt;/div&gt;&lt;!--app --&gt;</summary><category term="finance"></category><category term="investing"></category><category term="widget"></category></entry></feed>
