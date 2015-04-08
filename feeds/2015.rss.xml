@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Gouthaman Balaraman</title><link>http://gouthamanbalaraman.com/</link><description></description><atom:link href="http://gouthamanbalaraman.com/feeds/2015.rss.xml" rel="self"></atom:link><lastBuildDate>Wed, 08 Apr 2015 00:00:00 -0700</lastBuildDate><item><title>An Introduction to Interest Rate Term Structure in QuantLib</title><link>http://gouthamanbalaraman.com/blog/quantlib-term-structure-bootstrap-yield-curve.html</link><description>&lt;p&gt;Term structure is pivotal to pricing securities. One would need a &lt;tt class="docutils literal"&gt;YieldTermStructure&lt;/tt&gt; object
 created in &lt;tt class="docutils literal"&gt;QuantLib&lt;/tt&gt; to use with pricing engines. In an earlier post on
-&lt;a class="reference external" href="blog/quantlib-bond-modeling.html"&gt;modeling bonds using QuantLib&lt;/a&gt; we discussed how to use
+&lt;a class="reference external" href="/blog/quantlib-bond-modeling.html"&gt;modeling bonds using QuantLib&lt;/a&gt; we discussed how to use
 spot rates directly with bond pricing engine. Here in this post we will show how to
 bootstrap yield curve using &lt;tt class="docutils literal"&gt;QuantLib&lt;/tt&gt;.&lt;/p&gt;
 &lt;p&gt;As usual lets import &lt;tt class="docutils literal"&gt;QuantLib&lt;/tt&gt; and do some initialization.&lt;/p&gt;
