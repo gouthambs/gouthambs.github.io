@@ -196,6 +196,9 @@ as the YTM.&lt;/p&gt;
 &lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
+&lt;p&gt;Once we have the spots, the zero coupon curve can be directly constructed the next time as show in the
+&lt;a class="reference external" href="quantlib-bond-modeling.html"&gt;bond pricing example&lt;/a&gt;. The &lt;tt class="docutils literal"&gt;yieldcurve.dates()&lt;/tt&gt; and
+&lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;yieldcuve.zeroRate(...)&lt;/span&gt;&lt;/tt&gt; methods would provide for the necessary rates as shown above.&lt;/p&gt;
 &lt;div class="section" id="conclusion"&gt;
 &lt;h2&gt;Conclusion&lt;/h2&gt;
 &lt;p&gt;In this post we showed how to bootstrap yield curve to get spot rates.&lt;/p&gt;
