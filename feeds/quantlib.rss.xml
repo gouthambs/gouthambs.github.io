@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Gouthaman Balaraman</title><link>http://gouthamanbalaraman.com/</link><description></description><atom:link href="http://gouthamanbalaraman.com/feeds/quantlib.rss.xml" rel="self"></atom:link><lastBuildDate>Wed, 22 Apr 2015 00:00:00 -0700</lastBuildDate><item><title>Hull White Term Structure Simulations with QuantLib</title><link>http://gouthamanbalaraman.com/blog/hull-white-simulation-quantlib-python.html</link><description>&lt;p&gt;
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Gouthaman Balaraman</title><link>http://gouthamanbalaraman.com/</link><description></description><atom:link href="http://gouthamanbalaraman.com/feeds/quantlib.rss.xml" rel="self"></atom:link><lastBuildDate>Fri, 01 May 2015 00:00:00 -0700</lastBuildDate><item><title>Hull White Term Structure Simulations with QuantLib</title><link>http://gouthamanbalaraman.com/blog/hull-white-simulation-quantlib-python.html</link><description>&lt;p&gt;
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;
 &lt;div class="prompt input_prompt"&gt;
 &lt;/div&gt;
@@ -1695,4 +1695,408 @@ AABJRU5ErkJggg==
 
 &lt;/div&gt;&lt;/p&gt;
 &lt;h1&gt;Conclusion&lt;/h1&gt;
-&lt;p&gt;This post shows how to simulate Hull-White short rate model using QuantLib.&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Gouthaman Balaraman</dc:creator><pubDate>Wed, 22 Apr 2015 00:00:00 -0700</pubDate><guid>tag:gouthamanbalaraman.com,2015-04-22:blog/hull-white-simulation-quantlib-python.html</guid><category>quantlib</category><category>python</category><category>finance</category></item></channel></rss>
+&lt;p&gt;This post shows how to simulate Hull-White short rate model using QuantLib. You can
+download the &lt;a href="/extra/notebooks/hull_white_simulations.ipynb"&gt;ipython notebook on Hull-White simulations&lt;/a&gt;.&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Gouthaman Balaraman</dc:creator><pubDate>Fri, 01 May 2015 00:00:00 -0700</pubDate><guid>tag:gouthamanbalaraman.com,2015-05-01:blog/hull-white-simulation-quantlib-python.html</guid><category>quantlib</category><category>python</category><category>finance</category></item><item><title>An Introduction to Interest Rate Term Structure in QuantLib</title><link>http://gouthamanbalaraman.com/blog/quantlib-term-structure-bootstrap-yield-curve.html</link><description>&lt;p&gt;Term structure is pivotal to pricing securities. One would need a &lt;tt class="docutils literal"&gt;YieldTermStructure&lt;/tt&gt; object
+created in &lt;tt class="docutils literal"&gt;QuantLib&lt;/tt&gt; to use with pricing engines. In an earlier post on
+&lt;a class="reference external" href="/blog/quantlib-bond-modeling.html"&gt;modeling bonds using QuantLib&lt;/a&gt; we discussed how to use
+spot rates directly with bond pricing engine. Here in this post we will show how to
+bootstrap yield curve using &lt;tt class="docutils literal"&gt;QuantLib&lt;/tt&gt;.&lt;/p&gt;
+&lt;p&gt;As usual lets import &lt;tt class="docutils literal"&gt;QuantLib&lt;/tt&gt; and do some initialization.&lt;/p&gt;
+&lt;pre class="code python literal-block"&gt;
+&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;QuantLib&lt;/span&gt; &lt;span class="kn"&gt;as&lt;/span&gt; &lt;span class="nn"&gt;ql&lt;/span&gt;
+
+&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;print_curve&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;xlist&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;ylist&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;precision&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="sd"&gt;&amp;quot;&amp;quot;&amp;quot;
+    Method to print curve in a nice format
+    &amp;quot;&amp;quot;&amp;quot;&lt;/span&gt;
+    &lt;span class="k"&gt;print&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;----------------------&amp;quot;&lt;/span&gt;
+    &lt;span class="k"&gt;print&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;Maturities&lt;/span&gt;&lt;span class="se"&gt;\t&lt;/span&gt;&lt;span class="s"&gt;Curve&amp;quot;&lt;/span&gt;
+    &lt;span class="k"&gt;print&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;----------------------&amp;quot;&lt;/span&gt;
+    &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;y&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="nb"&gt;zip&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;xlist&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;ylist&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+        &lt;span class="k"&gt;print&lt;/span&gt; &lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;&lt;/span&gt;&lt;span class="se"&gt;\t\t&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nb"&gt;round&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;y&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;precision&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="k"&gt;print&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;----------------------&amp;quot;&lt;/span&gt;
+&lt;/pre&gt;
+&lt;p&gt;The deposit rates and fixed rate bond rates are provided below. This example is based on
+Exhibit 5-5 given in Frank Fabozzi's Bond Markets, Analysis and Strategies, Sixth Edition.&lt;/p&gt;
+&lt;pre class="code python literal-block"&gt;
+&lt;span class="c"&gt;# Deposit rates&lt;/span&gt;
+&lt;span class="n"&gt;depo_maturities&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;ql&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Period&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;6&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;ql&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Months&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt; &lt;span class="n"&gt;ql&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Period&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;12&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;ql&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Months&lt;/span&gt;&lt;span class="p"&gt;)]&lt;/span&gt;
+&lt;span class="n"&gt;depo_rates&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mf"&gt;5.25&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mf"&gt;5.5&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+
+&lt;span class="c"&gt;# Bond rates&lt;/span&gt;
+&lt;span class="n"&gt;bond_maturities&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;ql&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Period&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;6&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;ql&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Months&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="nb"&gt;range&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;21&lt;/span&gt;&lt;span class="p"&gt;)]&lt;/span&gt;
+&lt;span class="n"&gt;bond_rates&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mf"&gt;5.75&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mf"&gt;6.0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mf"&gt;6.25&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mf"&gt;6.5&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mf"&gt;6.75&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mf"&gt;6.80&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mf"&gt;7.00&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mf"&gt;7.1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mf"&gt;7.15&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+              &lt;span class="mf"&gt;7.2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mf"&gt;7.3&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mf"&gt;7.35&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mf"&gt;7.4&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mf"&gt;7.5&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mf"&gt;7.6&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mf"&gt;7.6&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mf"&gt;7.7&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mf"&gt;7.8&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+
+&lt;span class="n"&gt;print_curve&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;depo_maturities&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="n"&gt;bond_maturities&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;depo_rates&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="n"&gt;bond_rates&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;
+&lt;p&gt;Lets define some of the constants required for the rest of the objects
+needed below.&lt;/p&gt;
+&lt;pre class="code python literal-block"&gt;
+&lt;span class="c"&gt;# some constants and conventions&lt;/span&gt;
+&lt;span class="c"&gt;# here we just assume for the sake of example&lt;/span&gt;
+&lt;span class="c"&gt;# that some of the constants are the same for&lt;/span&gt;
+&lt;span class="c"&gt;# depo rates and bond rates&lt;/span&gt;
+
+&lt;span class="n"&gt;calc_date&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;ql&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Date&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;15&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;2015&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;ql&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Settings&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;instance&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;evaluationDate&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;calc_date&lt;/span&gt;
+
+&lt;span class="n"&gt;calendar&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;ql&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;UnitedStates&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;span class="n"&gt;bussiness_convention&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;ql&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Unadjusted&lt;/span&gt;
+&lt;span class="n"&gt;day_count&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;ql&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Thirty360&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;span class="n"&gt;end_of_month&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="bp"&gt;True&lt;/span&gt;
+&lt;span class="n"&gt;settlement_days&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;
+&lt;span class="n"&gt;face_amount&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;100&lt;/span&gt;
+&lt;span class="n"&gt;coupon_frequency&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;ql&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Period&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;ql&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Semiannual&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;settlement_days&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;
+&lt;/pre&gt;
+&lt;p&gt;The basic idea of bootstrapping using &lt;tt class="docutils literal"&gt;QuantLib&lt;/tt&gt; is to use the
+deposit rates and bond rates to create individual helpers. Then
+use the combination of the two helpers to construct the yield curve.&lt;/p&gt;
+&lt;pre class="code python literal-block"&gt;
+&lt;span class="c"&gt;# create deposit rate helpers from depo_rates&lt;/span&gt;
+&lt;span class="n"&gt;depo_helpers&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;ql&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;DepositRateHelper&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;ql&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;QuoteHandle&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;ql&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;SimpleQuote&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;r&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="mf"&gt;100.0&lt;/span&gt;&lt;span class="p"&gt;)),&lt;/span&gt;
+                                     &lt;span class="n"&gt;m&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+                                     &lt;span class="n"&gt;settlement_days&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+                                     &lt;span class="n"&gt;calendar&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+                                     &lt;span class="n"&gt;bussiness_convention&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+                                     &lt;span class="n"&gt;end_of_month&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+                                     &lt;span class="n"&gt;day_count&lt;/span&gt; &lt;span class="p"&gt;)&lt;/span&gt;
+                &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;r&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;m&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="nb"&gt;zip&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;depo_rates&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;depo_maturities&lt;/span&gt;&lt;span class="p"&gt;)]&lt;/span&gt;
+&lt;/pre&gt;
+&lt;p&gt;The rest of the points are coupon bonds. We assume that the YTM given
+for the bonds are all par rates. So we have bonds with coupon rate same
+as the YTM.&lt;/p&gt;
+&lt;pre class="code python literal-block"&gt;
+&lt;span class="c"&gt;# create fixed rate bond helpers from fixed rate bonds&lt;/span&gt;
+&lt;span class="n"&gt;bond_helpers&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[]&lt;/span&gt;
+&lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;r&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;m&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="nb"&gt;zip&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;bond_rates&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;bond_maturities&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="n"&gt;termination_date&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;calc_date&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;m&lt;/span&gt;
+    &lt;span class="n"&gt;schedule&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;ql&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Schedule&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;calc_date&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+                   &lt;span class="n"&gt;termination_date&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+                   &lt;span class="n"&gt;coupon_frequency&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+                   &lt;span class="n"&gt;calendar&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+                   &lt;span class="n"&gt;bussiness_convention&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+                   &lt;span class="n"&gt;bussiness_convention&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+                   &lt;span class="n"&gt;ql&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;DateGeneration&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Backward&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+                   &lt;span class="n"&gt;end_of_month&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+    &lt;span class="n"&gt;helper&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;ql&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;FixedRateBondHelper&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;ql&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;QuoteHandle&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;ql&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;SimpleQuote&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;face_amount&lt;/span&gt;&lt;span class="p"&gt;)),&lt;/span&gt;
+                                        &lt;span class="n"&gt;settlement_days&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+                                        &lt;span class="n"&gt;face_amount&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+                                        &lt;span class="n"&gt;schedule&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+                                        &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;r&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="mf"&gt;100.0&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt;
+                                        &lt;span class="n"&gt;day_count&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+                                        &lt;span class="n"&gt;bussiness_convention&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+                                        &lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="n"&gt;bond_helpers&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;append&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;helper&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;
+&lt;p&gt;The yield curve is constructed by putting the two helpers together.&lt;/p&gt;
+&lt;pre class="code python literal-block"&gt;
+&lt;span class="n"&gt;rate_helpers&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;depo_helpers&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;bond_helpers&lt;/span&gt;
+&lt;span class="n"&gt;yieldcurve&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;ql&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;PiecewiseLogCubicDiscount&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;calc_date&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+                             &lt;span class="n"&gt;rate_helpers&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+                             &lt;span class="n"&gt;day_count&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;
+&lt;p&gt;The spot rates is obtined from &lt;tt class="docutils literal"&gt;yieldcurve&lt;/tt&gt; object using the &lt;tt class="docutils literal"&gt;zeroRate&lt;/tt&gt; method.&lt;/p&gt;
+&lt;pre class="code python literal-block"&gt;
+&lt;span class="c"&gt;# get spot rates&lt;/span&gt;
+&lt;span class="n"&gt;spots&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[]&lt;/span&gt;
+&lt;span class="n"&gt;tenors&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[]&lt;/span&gt;
+&lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;d&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;yieldcurve&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;dates&lt;/span&gt;&lt;span class="p"&gt;():&lt;/span&gt;
+    &lt;span class="n"&gt;yrs&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;day_count&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;yearFraction&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;calc_date&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;d&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="n"&gt;compounding&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;ql&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Compounded&lt;/span&gt;
+    &lt;span class="n"&gt;freq&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;ql&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Semiannual&lt;/span&gt;
+    &lt;span class="n"&gt;zero_rate&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;yieldcurve&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;zeroRate&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;yrs&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;compounding&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;freq&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="n"&gt;tenors&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;append&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;yrs&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="n"&gt;eq_rate&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;zero_rate&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;equivalentRate&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;day_count&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+                                       &lt;span class="n"&gt;compounding&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+                                       &lt;span class="n"&gt;freq&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+                                       &lt;span class="n"&gt;calc_date&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+                                       &lt;span class="n"&gt;d&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;rate&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+    &lt;span class="n"&gt;spots&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;append&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;100&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;eq_rate&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;
+&lt;p&gt;The bootstrap curve looks as shown below:&lt;/p&gt;
+&lt;table border="1" class="docutils"&gt;
+&lt;colgroup&gt;
+&lt;col width="44%" /&gt;
+&lt;col width="56%" /&gt;
+&lt;/colgroup&gt;
+&lt;thead valign="bottom"&gt;
+&lt;tr&gt;&lt;th class="head"&gt;Maturity&lt;/th&gt;
+&lt;th class="head"&gt;Spots&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody valign="top"&gt;
+&lt;tr&gt;&lt;td&gt;0.0&lt;/td&gt;
+&lt;td&gt;0.0&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;0.5&lt;/td&gt;
+&lt;td&gt;5.25&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;1.0&lt;/td&gt;
+&lt;td&gt;5.426&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;1.5&lt;/td&gt;
+&lt;td&gt;5.761&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;2.0&lt;/td&gt;
+&lt;td&gt;6.02&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;2.5&lt;/td&gt;
+&lt;td&gt;6.283&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;3.0&lt;/td&gt;
+&lt;td&gt;6.55&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;3.5&lt;/td&gt;
+&lt;td&gt;6.822&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;4.0&lt;/td&gt;
+&lt;td&gt;6.87&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;4.5&lt;/td&gt;
+&lt;td&gt;7.095&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;5.0&lt;/td&gt;
+&lt;td&gt;7.205&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;5.5&lt;/td&gt;
+&lt;td&gt;7.257&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;6.0&lt;/td&gt;
+&lt;td&gt;7.31&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;6.5&lt;/td&gt;
+&lt;td&gt;7.429&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;7.0&lt;/td&gt;
+&lt;td&gt;7.485&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;7.5&lt;/td&gt;
+&lt;td&gt;7.543&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;8.0&lt;/td&gt;
+&lt;td&gt;7.671&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;8.5&lt;/td&gt;
+&lt;td&gt;7.802&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;9.0&lt;/td&gt;
+&lt;td&gt;7.791&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;9.5&lt;/td&gt;
+&lt;td&gt;7.929&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;10.0&lt;/td&gt;
+&lt;td&gt;8.072&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;Once we have the spots, the zero coupon curve can be directly constructed the next time as show in the
+&lt;a class="reference external" href="quantlib-bond-modeling.html"&gt;bond pricing example&lt;/a&gt;. The &lt;tt class="docutils literal"&gt;yieldcurve.dates()&lt;/tt&gt; and
+&lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;yieldcuve.zeroRate(...)&lt;/span&gt;&lt;/tt&gt; methods would provide for the necessary rates as shown above.&lt;/p&gt;
+&lt;div class="section" id="conclusion"&gt;
+&lt;h2&gt;Conclusion&lt;/h2&gt;
+&lt;p&gt;In this post we showed how to bootstrap yield curve to get spot rates.&lt;/p&gt;
+&lt;p&gt;Download the &lt;a class="reference external" href="/extra/notebooks/term-structures.ipynb"&gt;bootstrap yield curve ipython notebook&lt;/a&gt;.&lt;/p&gt;
+&lt;/div&gt;
+</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Gouthaman Balaraman</dc:creator><pubDate>Wed, 08 Apr 2015 00:00:00 -0700</pubDate><guid>tag:gouthamanbalaraman.com,2015-04-08:blog/quantlib-term-structure-bootstrap-yield-curve.html</guid><category>python</category><category>finance</category><category>quantlib</category></item><item><title>Modeling Fixed Rate Bonds Using QuantLib</title><link>http://gouthamanbalaraman.com/blog/quantlib-bond-modeling.html</link><description>&lt;p&gt;Let's consider a hypothetical bond with a par value of 100, that pays 6% coupon
+semi-annually issued on January 15th, 2015 and set to mature on January 15th, 2016.
+The bond will pay a coupon on July 15th, 2015 and January 15th, 2016. The par
+amount of 100 will also be paid on the January 15th, 2016.&lt;/p&gt;
+&lt;p&gt;To make things simpler, lets assume that we know the spot rates of the treasury as
+of January 15th, 2015. The annualized spot rates are 0.5% for 6 months
+and 0.7% for 1 year point. Lets calculate the fair value of this bond.&lt;/p&gt;
+&lt;pre class="code python literal-block"&gt;
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="nb"&gt;pow&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="mf"&gt;0.005&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mf"&gt;0.5&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;100&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="mf"&gt;0.007&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="mf"&gt;105.27653992490681&lt;/span&gt;
+&lt;/pre&gt;
+&lt;p&gt;Lets calculate the same thing using QuantLib.&lt;/p&gt;
+&lt;pre class="code python literal-block"&gt;
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;QuantLib&lt;/span&gt; &lt;span class="kn"&gt;as&lt;/span&gt; &lt;span class="nn"&gt;ql&lt;/span&gt;
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;todaysDate&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;ql&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Date&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;15&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;2015&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;ql&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Settings&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;instance&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;evaluationDate&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;todaysDate&lt;/span&gt;
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;spotDates&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;ql&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Date&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;15&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;2015&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt; &lt;span class="n"&gt;ql&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Date&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;15&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;7&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;2015&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt; &lt;span class="n"&gt;ql&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Date&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;15&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;2016&lt;/span&gt;&lt;span class="p"&gt;)]&lt;/span&gt;
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;spotRates&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mf"&gt;0.0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mf"&gt;0.005&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mf"&gt;0.007&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;dayCount&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;ql&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Thirty360&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;calendar&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;ql&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;UnitedStates&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;interpolation&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;ql&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Linear&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;compounding&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;ql&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Compounded&lt;/span&gt;
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;compoundingFrequency&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;ql&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Annual&lt;/span&gt;
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;spotCurve&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;ql&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;ZeroCurve&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;spotDates&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;spotRates&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;dayCount&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;calendar&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;interpolation&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+                             &lt;span class="n"&gt;compounding&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;compoundingFrequency&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;spotCurveHandle&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;ql&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;YieldTermStructureHandle&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;spotCurve&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;
+&lt;p&gt;So far we have created the term structure and the variables are rather self explanatory.
+Now lets construct the fixed rate bond.&lt;/p&gt;
+&lt;pre class="code python literal-block"&gt;
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;issueDate&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;ql&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Date&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;15&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;2015&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;maturityDate&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;ql&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Date&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;15&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;2016&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;tenor&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;ql&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Period&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;ql&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Semiannual&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;calendar&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;ql&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;UnitedStates&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;bussinessConvention&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;ql&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Unadjusted&lt;/span&gt;
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;dateGeneration&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;ql&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;DateGeneration&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Backward&lt;/span&gt;
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;monthEnd&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="bp"&gt;False&lt;/span&gt;
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;schedule&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;ql&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Schedule&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;issueDate&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;maturityDate&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;tenor&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;calendar&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;bussinessConvention&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+                            &lt;span class="n"&gt;bussinessConvention&lt;/span&gt; &lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;dateGeneration&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;monthEnd&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="nb"&gt;list&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;schedule&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;Date&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;15&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;12015&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt; &lt;span class="n"&gt;Date&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;15&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;7&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;2015&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt; &lt;span class="n"&gt;Date&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;15&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;2016&lt;/span&gt;&lt;span class="p"&gt;)]&lt;/span&gt;
+
+
+&lt;span class="c"&gt;# Now lets build the coupon&lt;/span&gt;
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;dayCount&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;ql&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Thirty360&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;couponRate&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="mo"&gt;06&lt;/span&gt;
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;coupons&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;couponRate&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+
+&lt;span class="c"&gt;# Now lets construct the FixedRateBond&lt;/span&gt;
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;settlementDays&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;faceValue&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;100&lt;/span&gt;
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;fixedRateBond&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;ql&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;FixedRateBond&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;settlementDays&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;faceValue&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;schedule&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;coupons&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;dayCount&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+&lt;span class="c"&gt;# create a bond engine with the term structure as input;&lt;/span&gt;
+&lt;span class="c"&gt;# set the bond to use this bond engine&lt;/span&gt;
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;bondEngine&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;ql&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;DiscountingBondEngine&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;spotCurveHandle&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;fixedRateBond&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;setPricingEngine&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;bondEngine&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+&lt;span class="c"&gt;# Finally the price&lt;/span&gt;
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;fixedRateBond&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;NPV&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;span class="mf"&gt;105.27653992490683&lt;/span&gt;
+&lt;/pre&gt;
+&lt;p&gt;Voila!&lt;/p&gt;
+&lt;p&gt;Download the &lt;a class="reference external" href="/extra/notebooks/modeling-bonds.ipynb"&gt;modeling bonds ipython notebook&lt;/a&gt;.&lt;/p&gt;
+</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Gouthaman Balaraman</dc:creator><pubDate>Mon, 30 Mar 2015 00:00:00 -0700</pubDate><guid>tag:gouthamanbalaraman.com,2015-03-30:blog/quantlib-bond-modeling.html</guid><category>python</category><category>finance</category><category>quantlib</category></item><item><title>Introduction to QuantLib</title><link>http://gouthamanbalaraman.com/blog/quantlib-basics.html</link><description>&lt;p&gt;I installed the latest version of QuantLib (V1.5) and the python wrapper to QuantLib.
+My experiments lately have been to get a feel for the QuantLib API. The library itself
+is so extensive, that it is rather hard for a new comer to get going. In this post
+we will look into some of the basic classes and functionality in QuantLib.&lt;/p&gt;
+&lt;p&gt;Let us import QuantLib as:&lt;/p&gt;
+&lt;pre class="code python literal-block"&gt;
+&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;QuantLib&lt;/span&gt; &lt;span class="kn"&gt;as&lt;/span&gt; &lt;span class="nn"&gt;ql&lt;/span&gt;
+&lt;/pre&gt;
+&lt;div class="section" id="time-submodule"&gt;
+&lt;h2&gt;Time SubModule&lt;/h2&gt;
+&lt;p&gt;The &lt;tt class="docutils literal"&gt;ql/time&lt;/tt&gt; sub-folder implements various time related classes. Lets take a look
+at the &lt;tt class="docutils literal"&gt;Date&lt;/tt&gt; object which can be constructed as &lt;tt class="docutils literal"&gt;Date(date, month, year)&lt;/tt&gt;.&lt;/p&gt;
+&lt;pre class="code python literal-block"&gt;
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;date&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;ql&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Date&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;31&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;2015&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="c"&gt;# 31 March, 2015&lt;/span&gt;
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="k"&gt;print&lt;/span&gt; &lt;span class="n"&gt;date&lt;/span&gt;
+&lt;span class="n"&gt;March&lt;/span&gt; &lt;span class="mi"&gt;31&lt;/span&gt;&lt;span class="n"&gt;st&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;2015&lt;/span&gt;
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;date&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;dayOfMonth&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;span class="mi"&gt;31&lt;/span&gt;
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;date&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;month&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;span class="mi"&gt;3&lt;/span&gt;
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;date&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;year&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;span class="mi"&gt;2015&lt;/span&gt;
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;date&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;weekday&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="n"&gt;ql&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Tuesday&lt;/span&gt;
+&lt;span class="bp"&gt;True&lt;/span&gt;
+
+&lt;span class="c"&gt;# arithmetic with dates&lt;/span&gt;
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;date&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;  &lt;span class="c"&gt;# add a day&lt;/span&gt;
+&lt;span class="n"&gt;Date&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;4&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;2015&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;date&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;  &lt;span class="c"&gt;# subtract a day&lt;/span&gt;
+&lt;span class="n"&gt;Date&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;30&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;2015&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;date&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;ql&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Period&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;ql&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Months&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;Date&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;30&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;4&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;2015&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;date&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;ql&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Period&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;ql&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Weeks&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;Date&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;7&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;4&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;2015&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;date&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;ql&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Period&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;ql&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Years&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;Date&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;31&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;2016&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+&lt;span class="c"&gt;# logical operations&lt;/span&gt;
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;ql&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Date&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;31&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;2015&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;ql&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Date&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;2015&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="bp"&gt;True&lt;/span&gt;
+&lt;/pre&gt;
+&lt;p&gt;The &lt;tt class="docutils literal"&gt;Schedule&lt;/tt&gt; object can be used to construct a list of dates such as coupon payments.
+Lets look at some examples.&lt;/p&gt;
+&lt;pre class="code python literal-block"&gt;
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;date1&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;ql&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Date&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;2015&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;date2&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;ql&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Date&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;2016&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;tenor&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;ql&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Period&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;ql&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Monthly&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;calendar&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;ql&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;UnitedStates&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt;
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;schedule&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;ql&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Schedule&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;date1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;date2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;tenor&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;calendar&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;ql&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Following&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+                           &lt;span class="n"&gt;ql&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Following&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;ql&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;DateGeneration&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Forward&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="bp"&gt;False&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="nb"&gt;list&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;schedule&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;Date&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;2015&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
+ &lt;span class="n"&gt;Date&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;2015&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
+ &lt;span class="n"&gt;Date&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;2015&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
+ &lt;span class="n"&gt;Date&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;4&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;2015&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
+ &lt;span class="n"&gt;Date&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;5&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;2015&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
+ &lt;span class="n"&gt;Date&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;6&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;2015&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
+ &lt;span class="n"&gt;Date&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;7&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;2015&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
+ &lt;span class="n"&gt;Date&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;8&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;2015&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
+ &lt;span class="n"&gt;Date&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;9&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;2015&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
+ &lt;span class="n"&gt;Date&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;10&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;2015&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
+ &lt;span class="n"&gt;Date&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;11&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;2015&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
+ &lt;span class="n"&gt;Date&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;12&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;2015&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
+ &lt;span class="n"&gt;Date&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;4&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;2016&lt;/span&gt;&lt;span class="p"&gt;)]&lt;/span&gt;
+&lt;/pre&gt;
+&lt;p&gt;Here we have generated a &lt;tt class="docutils literal"&gt;Schedule&lt;/tt&gt; object that will contain dates between &lt;tt class="docutils literal"&gt;date1&lt;/tt&gt; and &lt;tt class="docutils literal"&gt;date2&lt;/tt&gt; with the
+&lt;tt class="docutils literal"&gt;tenor&lt;/tt&gt; specifying the &lt;tt class="docutils literal"&gt;Period&lt;/tt&gt; to be every Month. The &lt;tt class="docutils literal"&gt;calendar&lt;/tt&gt; object is used for determining holidays.
+The two arguments following the &lt;tt class="docutils literal"&gt;calendar&lt;/tt&gt; in the &lt;tt class="docutils literal"&gt;Schedule&lt;/tt&gt; constructor are the &lt;tt class="docutils literal"&gt;BussinessDayConvention&lt;/tt&gt;.
+Here we chose the convention to be the day following holidays. That is why we see that holidays are excluded
+in the list of dates.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="interest-rate"&gt;
+&lt;h2&gt;Interest Rate&lt;/h2&gt;
+&lt;p&gt;The &lt;tt class="docutils literal"&gt;InterestRate&lt;/tt&gt; class can be used to store the interest rate with the compounding type, day count and
+the frequency of compounding. Below we show how to create an interest rate of 5.0% compounded annually,
+using Actual/Actual day count convention.&lt;/p&gt;
+&lt;pre class="code python literal-block"&gt;
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;annualRate&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mf"&gt;0.05&lt;/span&gt;
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;dayCount&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;ql&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;ActualActual&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;compoundType&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;ql&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Compounded&lt;/span&gt;
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;frequency&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;ql&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Annual&lt;/span&gt;
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;interestRate&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;ql&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;InterestRate&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;annualRate&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;dayCount&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;compoundType&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;frequency&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;
+&lt;p&gt;Lets say if you invest a dollar at the interest rate described by &lt;tt class="docutils literal"&gt;interestRate&lt;/tt&gt;, the
+&lt;tt class="docutils literal"&gt;compoundFactor&lt;/tt&gt; method gives you how much your investment will be worth after &lt;tt class="docutils literal"&gt;t&lt;/tt&gt; years.
+Below we show that the value returned by &lt;tt class="docutils literal"&gt;compoundFactor&lt;/tt&gt; for 2 years agrees with
+the expected compounding formula.&lt;/p&gt;
+&lt;pre class="code python literal-block"&gt;
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;interestRate&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;compoundFactor&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mf"&gt;2.0&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="mf"&gt;1.1025&lt;/span&gt;
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mf"&gt;1.0&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;annualRate&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mf"&gt;1.0&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;annualRate&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;  &lt;span class="c"&gt;# Check the above calculation&lt;/span&gt;
+&lt;span class="mf"&gt;1.1025&lt;/span&gt;
+&lt;/pre&gt;
+&lt;p&gt;The &lt;tt class="docutils literal"&gt;discountFactor&lt;/tt&gt; method returns the reciprocal of the &lt;tt class="docutils literal"&gt;compoundFactor&lt;/tt&gt; method.
+The discount factor is useful while calculating the present value of future cashflows.&lt;/p&gt;
+&lt;pre class="code python literal-block"&gt;
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;interestRate&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;discountFactor&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mf"&gt;2.0&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="mf"&gt;0.9070294784580498&lt;/span&gt;
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="mf"&gt;1.0&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt; &lt;span class="n"&gt;interestRate&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;compoundFactor&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mf"&gt;2.0&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="mf"&gt;0.9070294784580498&lt;/span&gt;
+&lt;/pre&gt;
+&lt;p&gt;A given interest rate can be converted into other types using the &lt;tt class="docutils literal"&gt;equivalentRate&lt;/tt&gt; method as :&lt;/p&gt;
+&lt;pre class="code python literal-block"&gt;
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;newFrequency&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;ql&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Semiannual&lt;/span&gt;
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;effectiveRate&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;interestRate&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;equivalentRate&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;compoundType&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;newFrequency&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;effectiveRate&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;rate&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;span class="mf"&gt;0.04939015319191986&lt;/span&gt;
+&lt;/pre&gt;
+&lt;p&gt;The &lt;tt class="docutils literal"&gt;InterestRate&lt;/tt&gt; class also has an &lt;tt class="docutils literal"&gt;impliedRate&lt;/tt&gt; method. The &lt;tt class="docutils literal"&gt;impliedRate&lt;/tt&gt; method
+takes compound factor to return the implied rate. The &lt;tt class="docutils literal"&gt;impliedRate&lt;/tt&gt; method
+is a static method in the &lt;tt class="docutils literal"&gt;InterestRate&lt;/tt&gt; class and can be used without an
+instance of &lt;tt class="docutils literal"&gt;InterestRate&lt;/tt&gt;. Internally the &lt;tt class="docutils literal"&gt;equivalentRate&lt;/tt&gt; method invokes
+the &lt;tt class="docutils literal"&gt;impliedRate&lt;/tt&gt; method in its calculations.&lt;/p&gt;
+&lt;p&gt;Here we have converted into a semi-annual compounding type. A 4.939% of semi-annual compounding
+is equivalent to 5.0% annual compounding. This should mean, that both should give identical
+discount factors. Lets check that:&lt;/p&gt;
+&lt;pre class="code python literal-block"&gt;
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;interestRate&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;discountFactor&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mf"&gt;1.0&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="mf"&gt;0.9523809523809523&lt;/span&gt;
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;effectiveRate&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;discountFactor&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mf"&gt;1.0&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="mf"&gt;0.9523809523809521&lt;/span&gt;
+&lt;/pre&gt;
+&lt;p&gt;So this means that pricing bonds using either interest rate convention should give the same
+net present value (barring some precision).&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="conclusion"&gt;
+&lt;h2&gt;Conclusion&lt;/h2&gt;
+&lt;p&gt;In this post we looked at the basics of QuantLib:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;We learnt how to use &lt;tt class="docutils literal"&gt;Date&lt;/tt&gt; and &lt;tt class="docutils literal"&gt;Schedule&lt;/tt&gt; classes from the &lt;tt class="docutils literal"&gt;time&lt;/tt&gt; sub-module&lt;/li&gt;
+&lt;li&gt;we learnt how to use the &lt;tt class="docutils literal"&gt;InterestRate&lt;/tt&gt; class&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Gouthaman Balaraman</dc:creator><pubDate>Tue, 24 Mar 2015 00:00:00 -0700</pubDate><guid>tag:gouthamanbalaraman.com,2015-03-24:blog/quantlib-basics.html</guid><category>python</category><category>finance</category><category>quantlib</category></item></channel></rss>
