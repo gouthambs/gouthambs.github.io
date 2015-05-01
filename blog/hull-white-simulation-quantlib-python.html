@@ -1,22 +1,22 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>A Short Story of Wall Street - Gouthaman Balaraman</title>
+        <title>Hull White Term Structure Simulations with QuantLib - Gouthaman Balaraman</title>
         <!-- All the meta tags -->
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
         <meta property="og:type" content="article"/>
-        <meta property="og:title" content="A Short Story of Wall Street"/>
-        <meta property="og:url" content="http://gouthamanbalaraman.com/blog/a-short-story-of-wall-street.html"/>
-        <meta property="og:description" content="A look at the volatility of the market from a historical perspective. This gives us a view of understanding market sentiment historically."/>
+        <meta property="og:title" content="Hull White Term Structure Simulations with QuantLib"/>
+        <meta property="og:url" content="http://gouthamanbalaraman.com/blog/hull-white-simulation-quantlib-python.html"/>
+        <meta property="og:description" content="Discusses simulation of the Hull White interest rate term structure model"/>
         <!--link href="http://gouthamanbalaraman.com/theme/static/css/journal-bootstrap.min.css" rel="stylesheet" /-->
         <link href="http://gouthamanbalaraman.com/theme/static/css/bootstrap.readable.min.css" rel="stylesheet" />
         <link href="http://gouthamanbalaraman.com/theme/static/css/style.css" rel="stylesheet" />
         
         <link href="http://gouthamanbalaraman.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Gouthaman Balaraman Full Atom Feed" />
         <link href="http://gouthamanbalaraman.com/feeds/all.rss.xml" type="application/rss+xml" rel="alternate" title="Gouthaman Balaraman RSS Feed" />
-        <link href="http://gouthamanbalaraman.com/feeds/articles.atom.xml" type="application/atom+xml" rel="alternate" title="Gouthaman Balaraman Categories Atom Feed" />
-        <link href="http://gouthamanbalaraman.com/feeds/articles.rss.xml" type="application/rss+xml" rel="alternate" title="Gouthaman Balaraman Categories RSS Feed" />
+        <link href="http://gouthamanbalaraman.com/feeds/quantlib.atom.xml" type="application/atom+xml" rel="alternate" title="Gouthaman Balaraman Categories Atom Feed" />
+        <link href="http://gouthamanbalaraman.com/feeds/quantlib.rss.xml" type="application/rss+xml" rel="alternate" title="Gouthaman Balaraman Categories RSS Feed" />
         <!-- Google Analytics -->
 <script type="text/javascript">
   var _gaq = _gaq || [];
@@ -74,24 +74,24 @@
             <div class="row">
                 <div class="col-md-10 col-md-offset-1">
     <div class="page-header">
-        <h1>A Short Story of Wall Street</h1>
+        <h1>Hull White Term Structure Simulations with QuantLib</h1>
      <!--span class="glyphicon glyphicon-calendar"></span-->
-     &nbsp;January 23, 2014
+     &nbsp;April 22, 2015
      &nbsp;
      <!--span class="glyphicon glyphicon-user"></span--> by  
      <a class="url fn" href="http://gouthamanbalaraman.com/author/gouthaman-balaraman.html">&nbsp;Gouthaman Balaraman </a>
 
         <p id="post-share-links">
             &nbsp;Share on:
-            <a href="https://sharetodiaspora.github.io/?title=A%20Short%20Story%20of%20Wall%20Street&url=http%3A//gouthamanbalaraman.com/blog/a-short-story-of-wall-street.html" target="_blank" title="Share on Diaspora">Diaspora*</a>
+            <a href="https://sharetodiaspora.github.io/?title=Hull%20White%20Term%20Structure%20Simulations%20with%20QuantLib&url=http%3A//gouthamanbalaraman.com/blog/hull-white-simulation-quantlib-python.html" target="_blank" title="Share on Diaspora">Diaspora*</a>
             /
-            <a href="http://twitter.com/home?status=A%20Short%20Story%20of%20Wall%20Street%20http%3A//gouthamanbalaraman.com/blog/a-short-story-of-wall-street.html" target="_blank" title="Share on Twitter">Twitter</a>
+            <a href="http://twitter.com/home?status=Hull%20White%20Term%20Structure%20Simulations%20with%20QuantLib%20http%3A//gouthamanbalaraman.com/blog/hull-white-simulation-quantlib-python.html" target="_blank" title="Share on Twitter">Twitter</a>
             /
-            <a href="http://www.facebook.com/sharer/sharer.php?s=100&amp;p%5Burl%5D=http%3A//gouthamanbalaraman.com/blog/a-short-story-of-wall-street.html" target="_blank" title="Share on Facebook">Facebook</a>
+            <a href="http://www.facebook.com/sharer/sharer.php?s=100&amp;p%5Burl%5D=http%3A//gouthamanbalaraman.com/blog/hull-white-simulation-quantlib-python.html" target="_blank" title="Share on Facebook">Facebook</a>
             /
-            <a href="https://plus.google.com/share?url=http%3A//gouthamanbalaraman.com/blog/a-short-story-of-wall-street.html" target="_blank" title="Share on Google Plus">Google+</a>
+            <a href="https://plus.google.com/share?url=http%3A//gouthamanbalaraman.com/blog/hull-white-simulation-quantlib-python.html" target="_blank" title="Share on Google Plus">Google+</a>
             /
-            <a href="mailto:?subject=A%20Short%20Story%20of%20Wall%20Street&amp;body=http%3A//gouthamanbalaraman.com/blog/a-short-story-of-wall-street.html" target="_blank" title="Share via Email">Email</a>
+            <a href="mailto:?subject=Hull%20White%20Term%20Structure%20Simulations%20with%20QuantLib&amp;body=http%3A//gouthamanbalaraman.com/blog/hull-white-simulation-quantlib-python.html" target="_blank" title="Share via Email">Email</a>
         </p>
      </div>
                 </div>
@@ -102,60 +102,19 @@
 <div class="bs-docs-section">
     
      <!-- article description -->
-         <p class="lead">A look at the volatility of the market from a historical perspective. This
-gives us a view of understanding market sentiment historically.</p>
+         <p class="lead">Discusses simulation of the Hull White interest rate term structure model</p>
       
       <!-- article content -->
-     <p>In the last couple of decades, the US market has witnessed a
-technology bubble, a housing bubble, recession, and market
-crashes. I wanted to understand the human sentiment, the fear
-when market crashes, the euphoria while riding the upside of the bubble.
-Here I narrate the story of wall-street from the view of short-term volatility.</p>
-<div class="section" id="volatility">
-<h2>Volatility</h2>
-<p>Volatility is a finance jargon for quantifying uncertainty over a window of time.
-If the window is small (like a week),
-then one can get a view of the market's reaction to day-to-day occurrences. On the other hand
-if we measure volatility using a larger window (such as a year), then a lot of the day-to-day
-noise dies out, and you get a macroscopic view of the market.</p>
-<p>I wanted to understand how the market reacts to the crashes, and recessions.
-Do these things just happen out of the blue? Is there a lot of uncertainty, fear or excitement
-leading up to a market collapse? Is there a way to compare the latest market crash with those that
-have come before?</p>
-</div>
-<div class="section" id="the-voice-of-uncertainty">
-<h2>The Voice of Uncertainty</h2>
-<img alt="SandPVolatility" src="/images/SandPVolatility.png" />
-<p>The picture above shows the S&amp;P 500 index at the top, and its short-term
-volatility over the last 33 years. The last 33 years have gone through
-4 recessions, the regions shaded in green. Here are some interesting
-observations:</p>
-<ul class="simple">
-<li>The markets prior to 1995 were less volatile, by about 24%, than
-post 1995. The average volatility was 14% for the time period of
-1980 to 1995, in contrast with a 17.3% for the period 1995 to 2013.</li>
-<li>On pure percentage terms, the market crash on Black Monday (S&amp;P 500 fell by 25.7% on Oct 19, 1987)
-was larger than the market drop in 2008 (21% drop in the week ending October 10, 2008).
-But the volatility paints a totally different picture. The uncertainty during
-2008 market crash was roughly 20% more than that during the 1987 market crash.</li>
-<li>In August of 2011, the S&amp;P downgraded US credit from AAA to AA+. This made
-the market volatile, and that is the little blip you see in 2011. The irony is,
-prior to 2008 crash, S&amp;P had rated a some of the mortgage backed securities as
-high quality debt, even though a lot of them defaulted.</li>
-</ul>
-<div class="section" id="methodology">
-<h3>Methodology</h3>
-<p>I use S&amp;P 500 to be representative of the stock market. The short term volatility is
-calculated by computing volatility using daily returns over a 45 day window.</p>
-</div>
-</div>
-
+     <p>{% notebook  hull_white_simulations.ipynb  %}</p>
+<h1>Conclusion</h1>
+<p>This post shows how to simulate Hull-White short rate model using QuantLib.</p>
      <br>
      
      <!-- article tags-->
         <span class="glyphicon glyphicon-tags"></span>&nbsp;&nbsp;
+            <span class="label label-default"><a href="http://gouthamanbalaraman.com/tag/quantlib.html">quantlib</a></span>&nbsp;&nbsp;
+            <span class="label label-default"><a href="http://gouthamanbalaraman.com/tag/python.html">python</a></span>&nbsp;&nbsp;
             <span class="label label-default"><a href="http://gouthamanbalaraman.com/tag/finance.html">finance</a></span>&nbsp;&nbsp;
-            <span class="label label-default"><a href="http://gouthamanbalaraman.com/tag/equity.html">equity</a></span>&nbsp;&nbsp;
         <br>
      <hr/>
     
@@ -165,16 +124,16 @@ calculated by computing volatility using daily returns over a 45 day window.</p>
                 <a href="http://gouthamanbalaraman.com/blog/quantlib-basics.html">Introduction to QuantLib</a>
             </li>
             <li>
-                <a href="http://gouthamanbalaraman.com/blog/econometric-factor-model.html">Econometric Factor Model</a>
-            </li>
-            <li>
-                <a href="http://gouthamanbalaraman.com/blog/option-model-handbook-part-I-introduction-to-option-models.html">Option Model Handbook, Part I: Introduction to Option Models</a>
-            </li>
-            <li>
-                <a href="http://gouthamanbalaraman.com/blog/option-model-handbook-part-II-introduction-to-binomial-trees.html">Option Model Handbook, Part II: Introduction to Binomial Trees</a>
-            </li>
-            <li>
                 <a href="http://gouthamanbalaraman.com/blog/quantlib-term-structure-bootstrap-yield-curve.html">An Introduction to Interest Rate Term Structure in QuantLib</a>
+            </li>
+            <li>
+                <a href="http://gouthamanbalaraman.com/blog/quantlib-bond-modeling.html">Modeling Fixed Rate Bonds Using QuantLib</a>
+            </li>
+            <li>
+                <a href="http://gouthamanbalaraman.com/blog/modern-portfolio-theory-statistics.html">Modern Portfolio Theory Statistics</a>
+            </li>
+            <li>
+                <a href="http://gouthamanbalaraman.com/blog/asynchronous-python-logging-using-msmq.html">Asynchronous Python Logging Using MSMQ</a>
             </li>
         </ul>
         <hr/>
