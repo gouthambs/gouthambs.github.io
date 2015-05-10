@@ -1,5 +1,538 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Gouthaman Balaraman</title><link>http://gouthamanbalaraman.com/</link><description></description><atom:link href="http://gouthamanbalaraman.com/feeds/all.rss.xml" rel="self"></atom:link><lastBuildDate>Fri, 01 May 2015 00:00:00 -0700</lastBuildDate><item><title>Hull White Term Structure Simulations with QuantLib</title><link>http://gouthamanbalaraman.com/blog/hull-white-simulation-quantlib-python.html</link><description>&lt;p&gt;
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Gouthaman Balaraman</title><link>http://gouthamanbalaraman.com/</link><description></description><atom:link href="http://gouthamanbalaraman.com/feeds/all.rss.xml" rel="self"></atom:link><lastBuildDate>Fri, 08 May 2015 00:00:00 -0700</lastBuildDate><item><title>Option Model Handbook, Part III: European Option Pricing With QuantLib</title><link>http://gouthamanbalaraman.com/blog/european-option-binomial-tree-quantlib-python.html</link><description>&lt;p&gt;Black-Scholes-Merton formula and binomial tree will be discussed.&lt;/p&gt;
+&lt;p&gt;
+&lt;div class="cell border-box-sizing text_cell rendered"&gt;
+&lt;div class="prompt input_prompt"&gt;
+&lt;/div&gt;
+&lt;div class="inner_cell"&gt;
+&lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
+&lt;p&gt;I have written about option pricing earlier. The &lt;a href="http://gouthamanbalaraman.com/blog/option-model-handbook-part-I-introduction-to-option-models.html"&gt;introduction to option pricing&lt;/a&gt; gave an overview of the theory behind option pricing. The post on &lt;a href="http://gouthamanbalaraman.com/blog/option-model-handbook-part-II-introduction-to-binomial-trees.html"&gt;introduction to binomial trees&lt;/a&gt; outlined the binomial tree method to price options.&lt;/p&gt;
+&lt;p&gt;In this post, we will use QuantLib and the Python extension to illustrate a very simple example. Here we are going to price a European option using the Black-Scholes-Merton formula. We will price them again using the Binomial tree and understand the agreement between the two. &lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="cell border-box-sizing code_cell rendered"&gt;
+&lt;div class="input"&gt;
+&lt;div class="prompt input_prompt"&gt;In&amp;nbsp;[1]:&lt;/div&gt;
+&lt;div class="inner_cell"&gt;
+    &lt;div class="input_area"&gt;
+&lt;div class="highlight-ipynb"&gt;&lt;pre class="ipynb"&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;QuantLib&lt;/span&gt; &lt;span class="kn"&gt;as&lt;/span&gt; &lt;span class="nn"&gt;ql&lt;/span&gt; &lt;span class="c"&gt;# version 1.5&lt;/span&gt;
+&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;matplotlib.pyplot&lt;/span&gt; &lt;span class="kn"&gt;as&lt;/span&gt; &lt;span class="nn"&gt;plt&lt;/span&gt;
+&lt;span class="o"&gt;%&lt;/span&gt;&lt;span class="k"&gt;matplotlib&lt;/span&gt; &lt;span class="n"&gt;inline&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;/div&gt;
+&lt;div class="cell border-box-sizing text_cell rendered"&gt;
+&lt;div class="prompt input_prompt"&gt;
+&lt;/div&gt;
+&lt;div class="inner_cell"&gt;
+&lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
+&lt;p&gt;Let us consider a European call option for AAPL with a strike price of \$130 maturing on 15th Jan, 2016. Let the spot price be \$127.62. The volatility of the underlying stock is know to be 20%, and has a dividend yield of 1.63%. Lets value this option as of 8th May, 2015.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="cell border-box-sizing code_cell rendered"&gt;
+&lt;div class="input"&gt;
+&lt;div class="prompt input_prompt"&gt;In&amp;nbsp;[2]:&lt;/div&gt;
+&lt;div class="inner_cell"&gt;
+    &lt;div class="input_area"&gt;
+&lt;div class="highlight-ipynb"&gt;&lt;pre class="ipynb"&gt;&lt;span class="c"&gt;# option data&lt;/span&gt;
+&lt;span class="n"&gt;maturity_date&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;ql&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Date&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;15&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;2016&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;spot_price&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mf"&gt;127.62&lt;/span&gt;
+&lt;span class="n"&gt;strike_price&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;130&lt;/span&gt;
+&lt;span class="n"&gt;volatility&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mf"&gt;0.20&lt;/span&gt; &lt;span class="c"&gt;# the historical vols for a year&lt;/span&gt;
+&lt;span class="n"&gt;dividend_rate&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt;  &lt;span class="mf"&gt;0.0163&lt;/span&gt;
+&lt;span class="n"&gt;option_type&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;ql&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Option&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Call&lt;/span&gt;
+
+&lt;span class="n"&gt;risk_free_rate&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mf"&gt;0.001&lt;/span&gt;
+&lt;span class="n"&gt;day_count&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;ql&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Actual365Fixed&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;span class="n"&gt;calendar&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;ql&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;UnitedStates&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+
+&lt;span class="n"&gt;calculation_date&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;ql&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Date&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;8&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;5&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;2015&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;ql&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Settings&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;instance&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;evaluationDate&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;calculation_date&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;/div&gt;
+&lt;div class="cell border-box-sizing text_cell rendered"&gt;
+&lt;div class="prompt input_prompt"&gt;
+&lt;/div&gt;
+&lt;div class="inner_cell"&gt;
+&lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
+&lt;p&gt;We construct the European option here.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="cell border-box-sizing code_cell rendered"&gt;
+&lt;div class="input"&gt;
+&lt;div class="prompt input_prompt"&gt;In&amp;nbsp;[3]:&lt;/div&gt;
+&lt;div class="inner_cell"&gt;
+    &lt;div class="input_area"&gt;
+&lt;div class="highlight-ipynb"&gt;&lt;pre class="ipynb"&gt;&lt;span class="c"&gt;# construct the European Option&lt;/span&gt;
+&lt;span class="n"&gt;payoff&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;ql&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;PlainVanillaPayoff&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;option_type&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;strike_price&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;exercise&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;ql&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;EuropeanExercise&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;maturity_date&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;european_option&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;ql&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;VanillaOption&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;payoff&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;exercise&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;/div&gt;
+&lt;div class="cell border-box-sizing text_cell rendered"&gt;
+&lt;div class="prompt input_prompt"&gt;
+&lt;/div&gt;
+&lt;div class="inner_cell"&gt;
+&lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
+&lt;p&gt;The Black-Scholes-Merto process is constructed here.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="cell border-box-sizing code_cell rendered"&gt;
+&lt;div class="input"&gt;
+&lt;div class="prompt input_prompt"&gt;In&amp;nbsp;[4]:&lt;/div&gt;
+&lt;div class="inner_cell"&gt;
+    &lt;div class="input_area"&gt;
+&lt;div class="highlight-ipynb"&gt;&lt;pre class="ipynb"&gt;&lt;span class="n"&gt;spot_handle&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;ql&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;QuoteHandle&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;
+    &lt;span class="n"&gt;ql&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;SimpleQuote&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;spot_price&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;flat_ts&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;ql&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;YieldTermStructureHandle&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;
+    &lt;span class="n"&gt;ql&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;FlatForward&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;calculation_date&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;risk_free_rate&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;day_count&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;dividend_yield&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;ql&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;YieldTermStructureHandle&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;
+    &lt;span class="n"&gt;ql&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;FlatForward&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;calculation_date&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;dividend_rate&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;day_count&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;flat_vol_ts&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;ql&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;BlackVolTermStructureHandle&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;
+    &lt;span class="n"&gt;ql&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;BlackConstantVol&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;calculation_date&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;calendar&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;volatility&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;day_count&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;bsm_process&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;ql&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;BlackScholesMertonProcess&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;spot_handle&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; 
+                                           &lt;span class="n"&gt;dividend_yield&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; 
+                                           &lt;span class="n"&gt;flat_ts&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; 
+                                           &lt;span class="n"&gt;flat_vol_ts&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;/div&gt;
+&lt;div class="cell border-box-sizing text_cell rendered"&gt;
+&lt;div class="prompt input_prompt"&gt;
+&lt;/div&gt;
+&lt;div class="inner_cell"&gt;
+&lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
+&lt;p&gt;Lets compute the theoretical price using the &lt;code&gt;AnalyticEuropeanEngine&lt;/code&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="cell border-box-sizing code_cell rendered"&gt;
+&lt;div class="input"&gt;
+&lt;div class="prompt input_prompt"&gt;In&amp;nbsp;[5]:&lt;/div&gt;
+&lt;div class="inner_cell"&gt;
+    &lt;div class="input_area"&gt;
+&lt;div class="highlight-ipynb"&gt;&lt;pre class="ipynb"&gt;&lt;span class="n"&gt;european_option&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;setPricingEngine&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;ql&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;AnalyticEuropeanEngine&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;bsm_process&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+&lt;span class="n"&gt;bs_price&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;european_option&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;NPV&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;span class="k"&gt;print&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;The theoretical price is &amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;bs_price&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div class="output_wrapper"&gt;
+&lt;div class="output"&gt;
+
+
+&lt;div class="output_area"&gt;&lt;div class="prompt"&gt;&lt;/div&gt;
+&lt;div class="output_subarea output_stream output_stdout output_text"&gt;
+&lt;pre&gt;
+The theoretical price is  6.74927181246
+
+&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;/div&gt;
+&lt;div class="cell border-box-sizing text_cell rendered"&gt;
+&lt;div class="prompt input_prompt"&gt;
+&lt;/div&gt;
+&lt;div class="inner_cell"&gt;
+&lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
+&lt;p&gt;Lets compute the price using the binomial-tree approach.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="cell border-box-sizing code_cell rendered"&gt;
+&lt;div class="input"&gt;
+&lt;div class="prompt input_prompt"&gt;In&amp;nbsp;[6]:&lt;/div&gt;
+&lt;div class="inner_cell"&gt;
+    &lt;div class="input_area"&gt;
+&lt;div class="highlight-ipynb"&gt;&lt;pre class="ipynb"&gt;&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;binomial_price&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;bsm_process&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;steps&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="n"&gt;binomial_engine&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;ql&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;BinomialVanillaEngine&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;bsm_process&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;crr&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;steps&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="n"&gt;european_option&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;setPricingEngine&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;binomial_engine&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;european_option&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;NPV&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+
+&lt;span class="n"&gt;steps&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;range&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;100&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;prices&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;binomial_price&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;bsm_process&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;step&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;step&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;steps&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;/div&gt;
+&lt;div class="cell border-box-sizing text_cell rendered"&gt;
+&lt;div class="prompt input_prompt"&gt;
+&lt;/div&gt;
+&lt;div class="inner_cell"&gt;
+&lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
+&lt;p&gt;In the plot below, we show the convergence of binomial-tree approach by comparing its price with the BSM price.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="cell border-box-sizing code_cell rendered"&gt;
+&lt;div class="input"&gt;
+&lt;div class="prompt input_prompt"&gt;In&amp;nbsp;[8]:&lt;/div&gt;
+&lt;div class="inner_cell"&gt;
+    &lt;div class="input_area"&gt;
+&lt;div class="highlight-ipynb"&gt;&lt;pre class="ipynb"&gt;&lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;plot&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;steps&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;prices&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;label&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;Binomial Tree Price&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;lw&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;alpha&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mf"&gt;0.6&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;plot&lt;/span&gt;&lt;span class="p"&gt;([&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;100&lt;/span&gt;&lt;span class="p"&gt;],[&lt;/span&gt;&lt;span class="n"&gt;bs_price&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;bs_price&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;r--&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;label&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;BSM Price&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;lw&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;alpha&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mf"&gt;0.6&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;xlabel&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;Steps&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;ylabel&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;Price&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;title&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;Binomial Tree Price For Varying Steps&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;legend&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div class="output_wrapper"&gt;
+&lt;div class="output"&gt;
+
+
+&lt;div class="output_area"&gt;&lt;div class="prompt output_prompt"&gt;Out[8]:&lt;/div&gt;
+
+
+&lt;div class="output_text output_subarea output_pyout"&gt;
+&lt;pre&gt;
+&amp;lt;matplotlib.legend.Legend at 0x7f0b85fa7510&amp;gt;
+&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;/div&gt;
+
+&lt;div class="output_area"&gt;&lt;div class="prompt"&gt;&lt;/div&gt;
+
+
+&lt;div class="output_png output_subarea "&gt;
+&lt;img src="data:image/png;base64,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
+wKLIpxhYA5wV57gy509dvNhxrrjCca66qnLzrwpRlezpft2XdOnSxXn//fcdx3Gc7du3OyNHjnTO
+Pvtsx3EcZ+PGjU6zZs2c559/3gmHw862bducqVOnOl9//bXjOI4zYcIEp0ePHk7Hjh2dkpKS0jSH
+DBni7L///s5ll10W95wffvih07Fjx9L11157zUlLS3Pmzp0bc6w/XVF+Et1z1PA5pC8EnkuwrxvQ
+NfKZCFwJvF7RE8hyEKLiBKcJXbBgAaFQiPPPP59QKESjRo045ZRTOPjgg0t/07ZtWw4++ODSln1R
+URGffPIJZ511VrnHkxo8eDDZ2dnMmzcvajrRli1bMmbMGCZMmMAJJ5xQevx3333HKaecQosWLWjb
+ti333HMPYPMb/PWvf6VHjx60bNmS888/v3T+B7H3JDsg3QQLRl/u2+ZOlFhl05644hAO22cfDX8u
+RPlINFdoopmA4h2/F7MGOQmmCe3ZsyepqamMGDGCCy64gKOPPprs7OyY311yySU8+eSTnHHGGTz/
+/PMMHjw4ZoazRITDYSZNmsQvv/zCwQcfzMcff8zMmTO56KKLWLt2LTt37oya7ay4uJj+/ftz4403
+8uabb7Jz585SMXv44Yd5/fXXmT59Oq1atWL06NH8/ve/59ln44U3RUVJdjW6BWiJuYxcCogvDJcB
+r1TmJK44gKwHIcrCKWOa0KZNm/LRRx8RCoW4/PLLad26NYMHD2bt2rVRaQwZMoTCwkI2bdrEU089
+xaWXXrrH865cuZLs7GxatWrFnXfeydNPP81+++0H2NSYv//970lJSaFRo0ZRv3vjjTdo37491113
+HQ0aNCAzM5OjjjoKgIKCAu666y7at29Peno6d9xxBxMnTiwddlvsHXViJjj/vVBSAg0a7Lu8CLFH
+Ktrqr8K5RRNNEzp37lzatGnDAQccwPjx4wGYP38+w4YN49prr41qjTdq1IiBAwdy5513UlRURJ8+
+fXjzzTfLPG/79u1ZtixeT/bo6TuDLFu2jG7dusXdt3jxYoYMGRI1U1paWhpr1qyJml5TVI464YCR
+5SBExXGnCU1NTeXjjz+O2b///vtz6aWX8u2338bsGz58OA888EClZ34L5iMRubm5/PTTTwn3TZky
+hQ0bNpR+tm7dKmGoIuqcOOzate/yIURtwEkwTej8+fO5//77WbFiBWCt9ueee640JuGnb9++vPfe
+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
+"
+&gt;
+&lt;/div&gt;
+
+&lt;/div&gt;
+
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;/div&gt;&lt;/p&gt;
+&lt;h1&gt;Conclusion&lt;/h1&gt;
+&lt;p&gt;This post shows how to price European Optinos using the theoretical and binomial-tree methods in
+QuantLib. You can download the &lt;a href="/extra/notebooks/european-option-models.ipynb"&gt;ipython notebook on European option pricing with QuantLib&lt;/a&gt;.&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Gouthaman Balaraman</dc:creator><pubDate>Fri, 08 May 2015 00:00:00 -0700</pubDate><guid>tag:gouthamanbalaraman.com,2015-05-08:blog/european-option-binomial-tree-quantlib-python.html</guid><category>quantlib</category><category>python</category><category>finance</category></item><item><title>Hull White Term Structure Simulations with QuantLib</title><link>http://gouthamanbalaraman.com/blog/hull-white-simulation-quantlib-python.html</link><description>&lt;p&gt;
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;
 &lt;div class="prompt input_prompt"&gt;
 &lt;/div&gt;
@@ -1927,7 +2460,7 @@ AAAAAElFTkSuQmCC
 &lt;/div&gt;&lt;/p&gt;
 &lt;h1&gt;Conclusion&lt;/h1&gt;
 &lt;p&gt;This post shows how to simulate Hull-White short rate model using QuantLib. You can
-download the &lt;a href="/extra/notebooks/hull_white_simulations.ipynb"&gt;ipython notebook on Hull-White simulations&lt;/a&gt;.&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Gouthaman Balaraman</dc:creator><pubDate>Fri, 01 May 2015 00:00:00 -0700</pubDate><guid>tag:gouthamanbalaraman.com,2015-05-01:blog/hull-white-simulation-quantlib-python.html</guid><category>quantlib</category><category>python</category><category>finance</category></item><item><title>An Introduction to Interest Rate Term Structure in QuantLib</title><link>http://gouthamanbalaraman.com/blog/quantlib-term-structure-bootstrap-yield-curve.html</link><description>&lt;p&gt;Term structure is pivotal to pricing securities. One would need a &lt;tt class="docutils literal"&gt;YieldTermStructure&lt;/tt&gt; object
+download the &lt;a href="/extra/notebooks/hull-white-simulations.ipynb"&gt;ipython notebook on Hull-White simulations&lt;/a&gt;.&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Gouthaman Balaraman</dc:creator><pubDate>Fri, 01 May 2015 00:00:00 -0700</pubDate><guid>tag:gouthamanbalaraman.com,2015-05-01:blog/hull-white-simulation-quantlib-python.html</guid><category>quantlib</category><category>python</category><category>finance</category></item><item><title>An Introduction to Interest Rate Term Structure in QuantLib</title><link>http://gouthamanbalaraman.com/blog/quantlib-term-structure-bootstrap-yield-curve.html</link><description>&lt;p&gt;Term structure is pivotal to pricing securities. One would need a &lt;tt class="docutils literal"&gt;YieldTermStructure&lt;/tt&gt; object
 created in &lt;tt class="docutils literal"&gt;QuantLib&lt;/tt&gt; to use with pricing engines. In an earlier post on
 &lt;a class="reference external" href="/blog/quantlib-bond-modeling.html"&gt;modeling bonds using QuantLib&lt;/a&gt; we discussed how to use
 spot rates directly with bond pricing engine. Here in this post we will show how to
