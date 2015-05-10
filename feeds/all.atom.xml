@@ -530,8 +530,8 @@ EEIIIYQQQgghhBBCCCGEEEIIIYQQQgghhBBVxf8HS2Sg2lqUPnoAAAAASUVORK5CYII=
 
 &lt;/div&gt;&lt;/p&gt;
 &lt;h1&gt;Conclusion&lt;/h1&gt;
-&lt;p&gt;This post shows how to price European Optinos using the theoretical and binomial-tree methods in
-QuantLib. You can download the &lt;a href="/extra/notebooks/european-option-models.ipynb"&gt;ipython notebook on European option pricing with QuantLib&lt;/a&gt;.&lt;/p&gt;</summary><category term="quantlib"></category><category term="python"></category><category term="finance"></category></entry><entry><title>Hull White Term Structure Simulations with QuantLib</title><link href="http://gouthamanbalaraman.com/blog/hull-white-simulation-quantlib-python.html" rel="alternate"></link><updated>2015-05-01T00:00:00-07:00</updated><author><name>Gouthaman Balaraman</name></author><id>tag:gouthamanbalaraman.com,2015-05-01:blog/hull-white-simulation-quantlib-python.html</id><summary type="html">&lt;p&gt;
+&lt;p&gt;This post shows how to price European Options using the theoretical and binomial-tree methods in
+QuantLib. You can download the &lt;a href="/extra/notebooks/european-option-models.ipynb"&gt;ipython notebook on European option pricing with QuantLib&lt;/a&gt;.&lt;/p&gt;</summary><category term="quantlib"></category><category term="python"></category><category term="finance"></category><category term="option models"></category></entry><entry><title>Hull White Term Structure Simulations with QuantLib</title><link href="http://gouthamanbalaraman.com/blog/hull-white-simulation-quantlib-python.html" rel="alternate"></link><updated>2015-05-01T00:00:00-07:00</updated><author><name>Gouthaman Balaraman</name></author><id>tag:gouthamanbalaraman.com,2015-05-01:blog/hull-white-simulation-quantlib-python.html</id><summary type="html">&lt;p&gt;
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;
 &lt;div class="prompt input_prompt"&gt;
 &lt;/div&gt;
