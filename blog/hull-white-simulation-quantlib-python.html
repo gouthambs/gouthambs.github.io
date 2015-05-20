@@ -1519,7 +1519,7 @@ EpxTfyIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIilev/HAcDiefdGyoAAAAASUVORK5CYII=
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>The short rate $r(t)$ is given a distribution with the properties:</p>
 <p>$$ E\{r(t) | F_s\} = r(s)e^{-a(t-s)}  + \alpha(t) - \alpha(s)e^{-a(t-s)} $$
-   $$ Var\{ r(t) | F_s \} = \frac{\sigma^2}{2a} [1 - e^{2a(t-s)}] $$
+   $$ Var\{ r(t) | F_s \} = \frac{\sigma^2}{2a} [1 - e^{-2a(t-s)}] $$
    where 
    $$ \alpha(t) = f^M(0, t) + \frac{\sigma^2} {2a^2}(1-e^{-at})^2$$</p>
 <p>as shown in Brigo &amp; Mercurio&#39;s book on Interest Rate Models.</p>
@@ -2047,19 +2047,19 @@ download the <a href="/extra/notebooks/hull-white-simulations.ipynb">ipython not
     <strong>Related Post</strong>
         <ul>
             <li>
-                <a href="http://gouthamanbalaraman.com/blog/quantlib-basics.html">Introduction to QuantLib</a>
-            </li>
-            <li>
                 <a href="http://gouthamanbalaraman.com/blog/quantlib-bond-modeling.html">Modeling Fixed Rate Bonds Using QuantLib</a>
-            </li>
-            <li>
-                <a href="http://gouthamanbalaraman.com/blog/european-option-binomial-tree-quantlib-python.html">Option Model Handbook, Part III: European Option Pricing With QuantLib</a>
             </li>
             <li>
                 <a href="http://gouthamanbalaraman.com/blog/quantlib-term-structure-bootstrap-yield-curve.html">An Introduction to Interest Rate Term Structure in QuantLib</a>
             </li>
             <li>
-                <a href="http://gouthamanbalaraman.com/blog/modern-portfolio-theory-statistics.html">Modern Portfolio Theory Statistics</a>
+                <a href="http://gouthamanbalaraman.com/blog/european-option-binomial-tree-quantlib-python.html">Option Model Handbook, Part III: European Option Pricing With QuantLib</a>
+            </li>
+            <li>
+                <a href="http://gouthamanbalaraman.com/blog/quantlib-basics.html">Introduction to QuantLib</a>
+            </li>
+            <li>
+                <a href="http://gouthamanbalaraman.com/blog/calculating-stock-beta.html">Calculating Stock Beta, Volatility, and More</a>
             </li>
         </ul>
         <hr/>
