@@ -180,7 +180,8 @@ and investigate some of the properties.</p>
 <div class="input">
 <div class="prompt input_prompt">In&nbsp;[3]:</div>
 
-<div class="input_area box-flex1">
+<div class="collapseheader box-flex1"><span style="font-weight: bold;">Expand Code</span>
+<div class="input_area box-flex1" style="display:none">
 <div class="highlight-ipynb"><pre class="ipynb"><span class="k">def</span> <span class="nf">get_path_generator</span><span class="p">(</span><span class="n">timestep</span><span class="p">,</span> <span class="n">hw_process</span><span class="p">,</span> <span class="n">length</span><span class="p">,</span> 
                        <span class="n">low_discrepancy</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">brownian_bridge</span><span class="o">=</span><span class="bp">True</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
@@ -197,6 +198,7 @@ and investigate some of the properties.</p>
     <span class="k">return</span> <span class="n">seq</span>
 </pre></div>
 
+</div>
 </div>
 
 </div>
@@ -215,7 +217,8 @@ and investigate some of the properties.</p>
 <div class="input">
 <div class="prompt input_prompt">In&nbsp;[4]:</div>
 
-<div class="input_area box-flex1">
+<div class="collapseheader box-flex1"><span style="font-weight: bold;">Expand Code</span>
+<div class="input_area box-flex1" style="display:none">
 <div class="highlight-ipynb"><pre class="ipynb"><span class="k">def</span> <span class="nf">generate_paths</span><span class="p">(</span><span class="n">num_paths</span><span class="p">,</span> <span class="n">timestep</span><span class="p">,</span> <span class="n">seq</span><span class="p">):</span>
     <span class="n">arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">num_paths</span><span class="p">,</span> <span class="n">timestep</span><span class="o">+</span><span class="mi">1</span><span class="p">))</span>
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_paths</span><span class="p">):</span>
@@ -227,6 +230,7 @@ and investigate some of the properties.</p>
     <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">time</span><span class="p">),</span> <span class="n">arr</span>
 </pre></div>
 
+</div>
 </div>
 
 </div>
@@ -245,7 +249,8 @@ and investigate some of the properties.</p>
 <div class="input">
 <div class="prompt input_prompt">In&nbsp;[5]:</div>
 
-<div class="input_area box-flex1">
+<div class="collapseheader box-flex1"><span style="font-weight: bold;">Expand Code</span>
+<div class="input_area box-flex1" style="display:none">
 <div class="highlight-ipynb"><pre class="ipynb"><span class="k">def</span> <span class="nf">generate_paths_zero_price</span><span class="p">(</span><span class="n">spot_curve_handle</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">timestep</span><span class="p">,</span> <span class="n">length</span><span class="p">,</span> 
                               <span class="n">num_paths</span><span class="p">,</span> <span class="n">avg_grid_array</span><span class="p">,</span> <span class="n">low_discrepancy</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> 
                               <span class="n">brownian_bridge</span><span class="o">=</span><span class="bp">True</span><span class="p">):</span>
@@ -283,6 +288,7 @@ and investigate some of the properties.</p>
     <span class="k">return</span> <span class="n">t_array</span><span class="p">,</span> <span class="n">arr</span>
 </pre></div>
 
+</div>
 </div>
 
 </div>
@@ -1678,19 +1684,19 @@ Hull-White model</a>.</p>
     <strong>Related Post</strong>
         <ul>
             <li>
-                <a href="http://gouthamanbalaraman.com/blog/quantlib-basics.html">Introduction to QuantLib</a>
+                <a href="http://gouthamanbalaraman.com/blog/european-option-binomial-tree-quantlib-python.html">Option Model Handbook, Part III: European Option Pricing With QuantLib</a>
+            </li>
+            <li>
+                <a href="http://gouthamanbalaraman.com/blog/quantlib-term-structure-bootstrap-yield-curve.html">An Introduction to Interest Rate Term Structure in QuantLib</a>
             </li>
             <li>
                 <a href="http://gouthamanbalaraman.com/blog/quantlib-bond-modeling.html">Modeling Fixed Rate Bonds Using QuantLib</a>
             </li>
             <li>
-                <a href="http://gouthamanbalaraman.com/blog/european-option-binomial-tree-quantlib-python.html">Option Model Handbook, Part III: European Option Pricing With QuantLib</a>
+                <a href="http://gouthamanbalaraman.com/blog/quantlib-basics.html">Introduction to QuantLib</a>
             </li>
             <li>
                 <a href="http://gouthamanbalaraman.com/blog/hull-white-simulation-quantlib-python.html">Hull White Term Structure Simulations with QuantLib</a>
-            </li>
-            <li>
-                <a href="http://gouthamanbalaraman.com/blog/quantlib-term-structure-bootstrap-yield-curve.html">An Introduction to Interest Rate Term Structure in QuantLib</a>
             </li>
         </ul>
         <hr/>
