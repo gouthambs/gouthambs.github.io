@@ -1302,13 +1302,13 @@ B(t,T) &amp;=&amp; \frac{1}{a} \left[ 1 - e^{-a(T-t)}\right] \\
 V(t,T) &amp;=&amp; \frac{\sigma^2}{a^2}\left[ T - t + \frac{2}{a}e^{-a(T-t)} - \frac{1}{2a}e^{-2a(T-t)} - \frac{3}{2a}\right]
 \end{eqnarray}</p>
 <p>Based on this result, the discount factor from the Monte-Carlo simulation of short rates</p>
-<p>$$ P^{MC}(t, T) = \exp\left( \int_t^T r(u) du | \mathcal{F}_t  \right)$$</p>
+<p>$$ P^{MC}(t, T) = \exp\left(- \int_t^T r(u) du | \mathcal{F}_t  \right)$$</p>
 <p>will have a log-normal distribution with a standard deviation </p>
 <p>$$ \sigma_D(t,T) = P^M(t,T)\sqrt{e^{V(t,T)} -1 }$$</p>
-<p>This result follows from the fact that if $X$ is a random process with a normal distribution with mean $\mu$ and standard deviation $\sigma$, then <a href="http://en.wikipedia.org/wiki/Log-normal_distribution">log-normal distribution</a> will satisfy:
+<p>This result follows from the fact that if $X$ is a random process with a normal distribution having mean $\mu$ and standard deviation $\sigma$, then <a href="http://en.wikipedia.org/wiki/Log-normal_distribution">log-normal distribution</a> $Y=e^X$ will satisfy:
 \begin{eqnarray}
-E(X) &amp;=&amp; e^{\mu+\sigma/2}\\
-Var(X) &amp;=&amp; (e^{\sigma^2} -1 )E(X)^2
+E(Y) &amp;=&amp; e^{\mu+\sigma^2/2}\\
+Var(Y) &amp;=&amp; (e^{\sigma^2} -1 )E(Y)^2
 \end{eqnarray}</p>
 </div>
 </div>
@@ -1690,19 +1690,19 @@ Hull-White model</a>.</p>
     <strong>Related Post</strong>
         <ul>
             <li>
-                <a href="http://gouthamanbalaraman.com/blog/quantlib-basics.html">Introduction to QuantLib</a>
-            </li>
-            <li>
                 <a href="http://gouthamanbalaraman.com/blog/quantlib-bond-modeling.html">Modeling Fixed Rate Bonds Using QuantLib</a>
-            </li>
-            <li>
-                <a href="http://gouthamanbalaraman.com/blog/european-option-binomial-tree-quantlib-python.html">Option Model Handbook, Part III: European Option Pricing With QuantLib</a>
             </li>
             <li>
                 <a href="http://gouthamanbalaraman.com/blog/hull-white-simulation-quantlib-python.html">Hull White Term Structure Simulations with QuantLib</a>
             </li>
             <li>
                 <a href="http://gouthamanbalaraman.com/blog/quantlib-term-structure-bootstrap-yield-curve.html">An Introduction to Interest Rate Term Structure in QuantLib</a>
+            </li>
+            <li>
+                <a href="http://gouthamanbalaraman.com/blog/european-option-binomial-tree-quantlib-python.html">Option Model Handbook, Part III: European Option Pricing With QuantLib</a>
+            </li>
+            <li>
+                <a href="http://gouthamanbalaraman.com/blog/quantlib-basics.html">Introduction to QuantLib</a>
             </li>
         </ul>
         <hr/>

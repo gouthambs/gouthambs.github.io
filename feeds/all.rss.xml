@@ -1201,13 +1201,13 @@ B(t,T) &amp;amp;=&amp;amp; \frac{1}{a} \left[ 1 - e^{-a(T-t)}\right] \\
 V(t,T) &amp;amp;=&amp;amp; \frac{\sigma^2}{a^2}\left[ T - t + \frac{2}{a}e^{-a(T-t)} - \frac{1}{2a}e^{-2a(T-t)} - \frac{3}{2a}\right]
 \end{eqnarray}&lt;/p&gt;
 &lt;p&gt;Based on this result, the discount factor from the Monte-Carlo simulation of short rates&lt;/p&gt;
-&lt;p&gt;$$ P^{MC}(t, T) = \exp\left( \int_t^T r(u) du | \mathcal{F}_t  \right)$$&lt;/p&gt;
+&lt;p&gt;$$ P^{MC}(t, T) = \exp\left(- \int_t^T r(u) du | \mathcal{F}_t  \right)$$&lt;/p&gt;
 &lt;p&gt;will have a log-normal distribution with a standard deviation &lt;/p&gt;
 &lt;p&gt;$$ \sigma_D(t,T) = P^M(t,T)\sqrt{e^{V(t,T)} -1 }$$&lt;/p&gt;
-&lt;p&gt;This result follows from the fact that if $X$ is a random process with a normal distribution with mean $\mu$ and standard deviation $\sigma$, then &lt;a href="http://en.wikipedia.org/wiki/Log-normal_distribution"&gt;log-normal distribution&lt;/a&gt; will satisfy:
+&lt;p&gt;This result follows from the fact that if $X$ is a random process with a normal distribution having mean $\mu$ and standard deviation $\sigma$, then &lt;a href="http://en.wikipedia.org/wiki/Log-normal_distribution"&gt;log-normal distribution&lt;/a&gt; $Y=e^X$ will satisfy:
 \begin{eqnarray}
-E(X) &amp;amp;=&amp;amp; e^{\mu+\sigma/2}\\
-Var(X) &amp;amp;=&amp;amp; (e^{\sigma^2} -1 )E(X)^2
+E(Y) &amp;amp;=&amp;amp; e^{\mu+\sigma^2/2}\\
+Var(Y) &amp;amp;=&amp;amp; (e^{\sigma^2} -1 )E(Y)^2
 \end{eqnarray}&lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
