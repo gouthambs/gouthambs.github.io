@@ -1667,8 +1667,8 @@ JWOMMWHDkpIxxpiwYUnJGGNM2LCkZIwxJmz8PzbQEqPbsg+kAAAAAElFTkSuQmCC
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>The plot above compares the standard deviation of the discount factors $\sigma_D$ from the closed form expression with a Monte-Carlo estimate. The plot above shows that the estimate is in agreement with the theoretical expectation. We can estimate the value of $\sigma_D$ for the asymptotic limit of $T\rightarrow\infty$:</p>
 <p>$$ \sigma_D(0, T) \approx P^M(0,T)e^{f^M(0,T)/a-\sigma^2/(4a^3)}\sqrt{e^{\sigma^2T/a^2} - 1}$$</p>
-<p>The term in the exponential $e^{\sigma^2T/a^2}$  can become very large when $\sigma^2T/a^2$ is large, and will be small enough if this
-term remains bounded.</p>
+<p>The term in the exponential $e^{\sigma^2T/a^2}$  can become very large when $\sigma^2T/a^2$ is large.
+Thus we can expect good convergence when  $\sigma^2T/a^2$ remains small for the time $T$ of interest to us.</p>
 <p>The above result suggests that if the parameters $\sigma$ and $a$ are not chosen carefully, (i.e. $\sigma/a &gt;1$) then the convergence of the simulation would be poor and the results untrustworthy.</p>
 </div>
 </div>
@@ -1690,19 +1690,19 @@ Hull-White model</a>.</p>
     <strong>Related Post</strong>
         <ul>
             <li>
-                <a href="http://gouthamanbalaraman.com/blog/hull-white-simulation-quantlib-python.html">Hull White Term Structure Simulations with QuantLib</a>
+                <a href="http://gouthamanbalaraman.com/blog/quantlib-basics.html">Introduction to QuantLib</a>
             </li>
             <li>
                 <a href="http://gouthamanbalaraman.com/blog/quantlib-bond-modeling.html">Modeling Fixed Rate Bonds Using QuantLib</a>
             </li>
             <li>
-                <a href="http://gouthamanbalaraman.com/blog/quantlib-basics.html">Introduction to QuantLib</a>
+                <a href="http://gouthamanbalaraman.com/blog/european-option-binomial-tree-quantlib-python.html">Option Model Handbook, Part III: European Option Pricing With QuantLib</a>
+            </li>
+            <li>
+                <a href="http://gouthamanbalaraman.com/blog/hull-white-simulation-quantlib-python.html">Hull White Term Structure Simulations with QuantLib</a>
             </li>
             <li>
                 <a href="http://gouthamanbalaraman.com/blog/quantlib-term-structure-bootstrap-yield-curve.html">An Introduction to Interest Rate Term Structure in QuantLib</a>
-            </li>
-            <li>
-                <a href="http://gouthamanbalaraman.com/blog/european-option-binomial-tree-quantlib-python.html">Option Model Handbook, Part III: European Option Pricing With QuantLib</a>
             </li>
         </ul>
         <hr/>
