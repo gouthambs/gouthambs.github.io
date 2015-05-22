@@ -138,8 +138,8 @@ and investigate some of the properties.</p>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">In&nbsp;[1]:</div>
-<div class="inner_cell">
-    <div class="input_area">
+
+<div class="input_area box-flex1">
 <div class="highlight-ipynb"><pre class="ipynb"><span class="kn">import</span> <span class="nn">QuantLib</span> <span class="kn">as</span> <span class="nn">ql</span>
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
@@ -149,21 +149,21 @@ and investigate some of the properties.</p>
 </pre></div>
 
 </div>
-</div>
+
 </div>
 
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">In&nbsp;[2]:</div>
-<div class="inner_cell">
-    <div class="input_area">
+
+<div class="input_area box-flex1">
 <div class="highlight-ipynb"><pre class="ipynb"><span class="n">todays_date</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">Date</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2015</span><span class="p">)</span>
 <span class="n">ql</span><span class="o">.</span><span class="n">Settings</span><span class="o">.</span><span class="n">instance</span><span class="p">()</span><span class="o">.</span><span class="n">evaluationDate</span> <span class="o">=</span> <span class="n">todays_date</span>
 </pre></div>
 
 </div>
-</div>
+
 </div>
 
 </div>
@@ -179,8 +179,8 @@ and investigate some of the properties.</p>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">In&nbsp;[3]:</div>
-<div class="inner_cell">
-    <div class="input_area">
+
+<div class="input_area box-flex1">
 <div class="highlight-ipynb"><pre class="ipynb"><span class="k">def</span> <span class="nf">get_path_generator</span><span class="p">(</span><span class="n">timestep</span><span class="p">,</span> <span class="n">hw_process</span><span class="p">,</span> <span class="n">length</span><span class="p">,</span> 
                        <span class="n">low_discrepancy</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">brownian_bridge</span><span class="o">=</span><span class="bp">True</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
@@ -198,7 +198,7 @@ and investigate some of the properties.</p>
 </pre></div>
 
 </div>
-</div>
+
 </div>
 
 </div>
@@ -214,8 +214,8 @@ and investigate some of the properties.</p>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">In&nbsp;[4]:</div>
-<div class="inner_cell">
-    <div class="input_area">
+
+<div class="input_area box-flex1">
 <div class="highlight-ipynb"><pre class="ipynb"><span class="k">def</span> <span class="nf">generate_paths</span><span class="p">(</span><span class="n">num_paths</span><span class="p">,</span> <span class="n">timestep</span><span class="p">,</span> <span class="n">seq</span><span class="p">):</span>
     <span class="n">arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">num_paths</span><span class="p">,</span> <span class="n">timestep</span><span class="o">+</span><span class="mi">1</span><span class="p">))</span>
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_paths</span><span class="p">):</span>
@@ -228,7 +228,7 @@ and investigate some of the properties.</p>
 </pre></div>
 
 </div>
-</div>
+
 </div>
 
 </div>
@@ -244,8 +244,8 @@ and investigate some of the properties.</p>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">In&nbsp;[5]:</div>
-<div class="inner_cell">
-    <div class="input_area">
+
+<div class="input_area box-flex1">
 <div class="highlight-ipynb"><pre class="ipynb"><span class="k">def</span> <span class="nf">generate_paths_zero_price</span><span class="p">(</span><span class="n">spot_curve_handle</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">timestep</span><span class="p">,</span> <span class="n">length</span><span class="p">,</span> 
                               <span class="n">num_paths</span><span class="p">,</span> <span class="n">avg_grid_array</span><span class="p">,</span> <span class="n">low_discrepancy</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> 
                               <span class="n">brownian_bridge</span><span class="o">=</span><span class="bp">True</span><span class="p">):</span>
@@ -284,22 +284,22 @@ and investigate some of the properties.</p>
 </pre></div>
 
 </div>
-</div>
+
 </div>
 
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">In&nbsp;[6]:</div>
-<div class="inner_cell">
-    <div class="input_area">
+
+<div class="input_area box-flex1">
 <div class="highlight-ipynb"><pre class="ipynb"><span class="k">def</span> <span class="nf">V</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">T</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">sigma</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">sigma</span><span class="o">*</span><span class="n">sigma</span><span class="o">/</span><span class="n">a</span><span class="o">/</span><span class="n">a</span><span class="o">*</span><span class="p">(</span><span class="n">T</span><span class="o">-</span><span class="n">t</span> <span class="o">+</span> <span class="mf">2.0</span><span class="o">/</span><span class="n">a</span><span class="o">*</span><span class="n">math</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">a</span><span class="o">*</span><span class="p">(</span><span class="n">T</span><span class="o">-</span><span class="n">t</span><span class="p">))</span> <span class="o">-</span> <span class="mf">1.0</span><span class="o">/</span><span class="p">(</span><span class="mf">2.0</span><span class="o">*</span><span class="n">a</span><span class="p">)</span><span class="o">*</span><span class="n">math</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="mf">2.0</span><span class="o">*</span><span class="n">a</span><span class="o">*</span><span class="p">(</span><span class="n">T</span><span class="o">-</span><span class="n">t</span><span class="p">))</span> <span class="o">-</span> <span class="mf">3.0</span><span class="o">/</span><span class="p">(</span><span class="mf">2.0</span><span class="o">*</span><span class="n">a</span><span class="p">)</span> <span class="p">)</span>
     
 </pre></div>
 
 </div>
-</div>
+
 </div>
 
 </div>
@@ -323,10 +323,10 @@ Monte-Carlo simulations. The error in the Monte-Carlo simulation can be defined 
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">In&nbsp;[7]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class="highlight-ipynb"><pre class="ipynb"><span class="c"># &lt;!-- collapse=True --&gt;</span>
-<span class="c"># Here we vary sigma with fixed a and observe the error epsilon</span>
+
+<div class="collapseheader box-flex1"><span style="font-weight: bold;">Expand Code</span>
+<div class="input_area box-flex1" style="display:none">
+<div class="highlight-ipynb"><pre class="ipynb"><span class="c"># Here we vary sigma with fixed a and observe the error epsilon</span>
 <span class="c"># define constants </span>
 <span class="n">num_paths</span> <span class="o">=</span> <span class="mi">500</span>
 <span class="n">sigma_array</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mf">0.01</span><span class="p">,</span><span class="mf">0.1</span><span class="p">,</span><span class="mf">0.03</span><span class="p">)</span>
@@ -371,6 +371,7 @@ Monte-Carlo simulations. The error in the Monte-Carlo simulation can be defined 
 
 </div>
 </div>
+
 </div>
 
 <div class="output_wrapper">
@@ -741,10 +742,10 @@ EokkhBBCKf8DywqYXEuU5QgAAAAASUVORK5CYII=
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">In&nbsp;[8]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class="highlight-ipynb"><pre class="ipynb"><span class="c"># &lt;!-- collapse=True --&gt;</span>
-<span class="c"># Here we vary a with fixed sigma and observe the error epsilon</span>
+
+<div class="collapseheader box-flex1"><span style="font-weight: bold;">Expand Code</span>
+<div class="input_area box-flex1" style="display:none">
+<div class="highlight-ipynb"><pre class="ipynb"><span class="c"># Here we vary a with fixed sigma and observe the error epsilon</span>
 <span class="c">#define constants</span>
 <span class="n">num_paths</span> <span class="o">=</span> <span class="mi">500</span>
 <span class="n">sigma</span> <span class="o">=</span> <span class="mf">0.1</span>
@@ -789,6 +790,7 @@ EokkhBBCKf8DywqYXEuU5QgAAAAASUVORK5CYII=
 
 </div>
 </div>
+
 </div>
 
 <div class="output_wrapper">
@@ -1302,10 +1304,10 @@ Var(X) &amp;=&amp; (e^{\sigma^2} -1 )E(X)^2
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">In&nbsp;[9]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class="highlight-ipynb"><pre class="ipynb"><span class="c"># &lt;!-- collapse=True --&gt;</span>
-<span class="c">#define constants</span>
+
+<div class="collapseheader box-flex1"><span style="font-weight: bold;">Expand Code</span>
+<div class="input_area box-flex1" style="display:none">
+<div class="highlight-ipynb"><pre class="ipynb"><span class="c">#define constants</span>
 <span class="n">num_paths</span> <span class="o">=</span> <span class="mi">500</span>
 <span class="n">sigma</span> <span class="o">=</span> <span class="mf">0.02</span>
 <span class="n">a</span> <span class="o">=</span> <span class="mf">0.1</span>
@@ -1342,6 +1344,7 @@ Var(X) &amp;=&amp; (e^{\sigma^2} -1 )E(X)^2
 
 </div>
 </div>
+
 </div>
 
 <div class="output_wrapper">
@@ -1351,11 +1354,7 @@ Var(X) &amp;=&amp; (e^{\sigma^2} -1 )E(X)^2
 <div class="output_area"><div class="prompt output_prompt">Out[9]:</div>
 
 
-<div class="output_text output_subarea output_pyout">
-<pre>
-&lt;matplotlib.text.Text at 0x6906350&gt;
-</pre>
-</div>
+<pre class="ipynb">&lt;matplotlib.text.Text at 0x6906350&gt;</pre>
 
 </div>
 
@@ -1679,19 +1678,19 @@ Hull-White model</a>.</p>
     <strong>Related Post</strong>
         <ul>
             <li>
+                <a href="http://gouthamanbalaraman.com/blog/quantlib-basics.html">Introduction to QuantLib</a>
+            </li>
+            <li>
                 <a href="http://gouthamanbalaraman.com/blog/quantlib-bond-modeling.html">Modeling Fixed Rate Bonds Using QuantLib</a>
+            </li>
+            <li>
+                <a href="http://gouthamanbalaraman.com/blog/european-option-binomial-tree-quantlib-python.html">Option Model Handbook, Part III: European Option Pricing With QuantLib</a>
             </li>
             <li>
                 <a href="http://gouthamanbalaraman.com/blog/hull-white-simulation-quantlib-python.html">Hull White Term Structure Simulations with QuantLib</a>
             </li>
             <li>
                 <a href="http://gouthamanbalaraman.com/blog/quantlib-term-structure-bootstrap-yield-curve.html">An Introduction to Interest Rate Term Structure in QuantLib</a>
-            </li>
-            <li>
-                <a href="http://gouthamanbalaraman.com/blog/european-option-binomial-tree-quantlib-python.html">Option Model Handbook, Part III: European Option Pricing With QuantLib</a>
-            </li>
-            <li>
-                <a href="http://gouthamanbalaraman.com/blog/quantlib-basics.html">Introduction to QuantLib</a>
             </li>
         </ul>
         <hr/>

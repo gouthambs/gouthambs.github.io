@@ -114,15 +114,15 @@
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">In&nbsp;[1]:</div>
-<div class="inner_cell">
-    <div class="input_area">
+
+<div class="input_area box-flex1">
 <div class="highlight-ipynb"><pre class="ipynb"><span class="kn">import</span> <span class="nn">QuantLib</span> <span class="kn">as</span> <span class="nn">ql</span> <span class="c"># version 1.5</span>
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
 <span class="o">%</span><span class="k">matplotlib</span> <span class="n">inline</span>
 </pre></div>
 
 </div>
-</div>
+
 </div>
 
 </div>
@@ -138,8 +138,8 @@
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">In&nbsp;[2]:</div>
-<div class="inner_cell">
-    <div class="input_area">
+
+<div class="input_area box-flex1">
 <div class="highlight-ipynb"><pre class="ipynb"><span class="c"># option data</span>
 <span class="n">maturity_date</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">Date</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2016</span><span class="p">)</span>
 <span class="n">spot_price</span> <span class="o">=</span> <span class="mf">127.62</span>
@@ -157,7 +157,7 @@
 </pre></div>
 
 </div>
-</div>
+
 </div>
 
 </div>
@@ -173,8 +173,8 @@
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">In&nbsp;[3]:</div>
-<div class="inner_cell">
-    <div class="input_area">
+
+<div class="input_area box-flex1">
 <div class="highlight-ipynb"><pre class="ipynb"><span class="c"># construct the European Option</span>
 <span class="n">payoff</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">PlainVanillaPayoff</span><span class="p">(</span><span class="n">option_type</span><span class="p">,</span> <span class="n">strike_price</span><span class="p">)</span>
 <span class="n">exercise</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">EuropeanExercise</span><span class="p">(</span><span class="n">maturity_date</span><span class="p">)</span>
@@ -182,7 +182,7 @@
 </pre></div>
 
 </div>
-</div>
+
 </div>
 
 </div>
@@ -198,8 +198,8 @@
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">In&nbsp;[4]:</div>
-<div class="inner_cell">
-    <div class="input_area">
+
+<div class="input_area box-flex1">
 <div class="highlight-ipynb"><pre class="ipynb"><span class="n">spot_handle</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">QuoteHandle</span><span class="p">(</span>
     <span class="n">ql</span><span class="o">.</span><span class="n">SimpleQuote</span><span class="p">(</span><span class="n">spot_price</span><span class="p">)</span>
 <span class="p">)</span>
@@ -219,7 +219,7 @@
 </pre></div>
 
 </div>
-</div>
+
 </div>
 
 </div>
@@ -235,15 +235,15 @@
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">In&nbsp;[5]:</div>
-<div class="inner_cell">
-    <div class="input_area">
+
+<div class="input_area box-flex1">
 <div class="highlight-ipynb"><pre class="ipynb"><span class="n">european_option</span><span class="o">.</span><span class="n">setPricingEngine</span><span class="p">(</span><span class="n">ql</span><span class="o">.</span><span class="n">AnalyticEuropeanEngine</span><span class="p">(</span><span class="n">bsm_process</span><span class="p">))</span>
 <span class="n">bs_price</span> <span class="o">=</span> <span class="n">european_option</span><span class="o">.</span><span class="n">NPV</span><span class="p">()</span>
 <span class="k">print</span> <span class="s">&quot;The theoretical price is &quot;</span><span class="p">,</span> <span class="n">bs_price</span>
 </pre></div>
 
 </div>
-</div>
+
 </div>
 
 <div class="output_wrapper">
@@ -251,10 +251,8 @@
 
 
 <div class="output_area"><div class="prompt"></div>
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>
-The theoretical price is  6.74927181246
-
+<div class="box-flex1 output_subarea output_stream output_stdout">
+<pre class="ipynb">The theoretical price is  6.74927181246
 </pre>
 </div>
 </div>
@@ -275,8 +273,8 @@ The theoretical price is  6.74927181246
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">In&nbsp;[6]:</div>
-<div class="inner_cell">
-    <div class="input_area">
+
+<div class="input_area box-flex1">
 <div class="highlight-ipynb"><pre class="ipynb"><span class="k">def</span> <span class="nf">binomial_price</span><span class="p">(</span><span class="n">bsm_process</span><span class="p">,</span> <span class="n">steps</span><span class="p">):</span>
     <span class="n">binomial_engine</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">BinomialVanillaEngine</span><span class="p">(</span><span class="n">bsm_process</span><span class="p">,</span> <span class="s">&quot;crr&quot;</span><span class="p">,</span> <span class="n">steps</span><span class="p">)</span>
     <span class="n">european_option</span><span class="o">.</span><span class="n">setPricingEngine</span><span class="p">(</span><span class="n">binomial_engine</span><span class="p">)</span>
@@ -287,7 +285,7 @@ The theoretical price is  6.74927181246
 </pre></div>
 
 </div>
-</div>
+
 </div>
 
 </div>
@@ -303,8 +301,8 @@ The theoretical price is  6.74927181246
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">In&nbsp;[8]:</div>
-<div class="inner_cell">
-    <div class="input_area">
+
+<div class="input_area box-flex1">
 <div class="highlight-ipynb"><pre class="ipynb"><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">steps</span><span class="p">,</span> <span class="n">prices</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s">&quot;Binomial Tree Price&quot;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.6</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="mi">100</span><span class="p">],[</span><span class="n">bs_price</span><span class="p">,</span> <span class="n">bs_price</span><span class="p">],</span> <span class="s">&quot;r--&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s">&quot;BSM Price&quot;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.6</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s">&quot;Steps&quot;</span><span class="p">)</span>
@@ -314,7 +312,7 @@ The theoretical price is  6.74927181246
 </pre></div>
 
 </div>
-</div>
+
 </div>
 
 <div class="output_wrapper">
@@ -324,11 +322,7 @@ The theoretical price is  6.74927181246
 <div class="output_area"><div class="prompt output_prompt">Out[8]:</div>
 
 
-<div class="output_text output_subarea output_pyout">
-<pre>
-&lt;matplotlib.legend.Legend at 0x7f0b85fa7510&gt;
-</pre>
-</div>
+<pre class="ipynb">&lt;matplotlib.legend.Legend at 0x7f0b85fa7510&gt;</pre>
 
 </div>
 
@@ -647,7 +641,7 @@ QuantLib. You can download the <a href="/extra/notebooks/european-option-models.
     <strong>Related Post</strong>
         <ul>
             <li>
-                <a href="http://gouthamanbalaraman.com/blog/hull-white-simulation-monte-carlo-convergence.html">On the Convergence of Hull White Monte Carlo Simulations</a>
+                <a href="http://gouthamanbalaraman.com/blog/quantlib-basics.html">Introduction to QuantLib</a>
             </li>
             <li>
                 <a href="http://gouthamanbalaraman.com/blog/quantlib-bond-modeling.html">Modeling Fixed Rate Bonds Using QuantLib</a>
@@ -659,7 +653,7 @@ QuantLib. You can download the <a href="/extra/notebooks/european-option-models.
                 <a href="http://gouthamanbalaraman.com/blog/quantlib-term-structure-bootstrap-yield-curve.html">An Introduction to Interest Rate Term Structure in QuantLib</a>
             </li>
             <li>
-                <a href="http://gouthamanbalaraman.com/blog/quantlib-basics.html">Introduction to QuantLib</a>
+                <a href="http://gouthamanbalaraman.com/blog/hull-white-simulation-monte-carlo-convergence.html">On the Convergence of Hull White Monte Carlo Simulations</a>
             </li>
         </ul>
         <hr/>

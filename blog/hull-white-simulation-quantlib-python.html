@@ -119,8 +119,8 @@ and investigate some of the properties.</p>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">In&nbsp;[1]:</div>
-<div class="inner_cell">
-    <div class="input_area">
+
+<div class="input_area box-flex1">
 <div class="highlight-ipynb"><pre class="ipynb"><span class="kn">import</span> <span class="nn">QuantLib</span> <span class="kn">as</span> <span class="nn">ql</span>
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
@@ -128,7 +128,7 @@ and investigate some of the properties.</p>
 </pre></div>
 
 </div>
-</div>
+
 </div>
 
 </div>
@@ -149,8 +149,8 @@ input. It is straight forward to swap with another term structure here.</p>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">In&nbsp;[2]:</div>
-<div class="inner_cell">
-    <div class="input_area">
+
+<div class="input_area box-flex1">
 <div class="highlight-ipynb"><pre class="ipynb"><span class="n">sigma</span> <span class="o">=</span> <span class="mf">0.1</span>
 <span class="n">a</span> <span class="o">=</span> <span class="mf">0.1</span>
 <span class="n">timestep</span> <span class="o">=</span> <span class="mi">360</span>
@@ -161,15 +161,15 @@ input. It is straight forward to swap with another term structure here.</p>
 </pre></div>
 
 </div>
-</div>
+
 </div>
 
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">In&nbsp;[3]:</div>
-<div class="inner_cell">
-    <div class="input_area">
+
+<div class="input_area box-flex1">
 <div class="highlight-ipynb"><pre class="ipynb"><span class="n">ql</span><span class="o">.</span><span class="n">Settings</span><span class="o">.</span><span class="n">instance</span><span class="p">()</span><span class="o">.</span><span class="n">evaluationDate</span> <span class="o">=</span> <span class="n">todays_date</span>
 
 <span class="n">spot_curve</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">FlatForward</span><span class="p">(</span><span class="n">todays_date</span><span class="p">,</span> <span class="n">ql</span><span class="o">.</span><span class="n">QuoteHandle</span><span class="p">(</span><span class="n">ql</span><span class="o">.</span><span class="n">SimpleQuote</span><span class="p">(</span><span class="n">forward_rate</span><span class="p">)),</span> <span class="n">day_count</span><span class="p">)</span>
@@ -177,22 +177,22 @@ input. It is straight forward to swap with another term structure here.</p>
 </pre></div>
 
 </div>
-</div>
+
 </div>
 
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">In&nbsp;[4]:</div>
-<div class="inner_cell">
-    <div class="input_area">
+
+<div class="input_area box-flex1">
 <div class="highlight-ipynb"><pre class="ipynb"><span class="n">hw_process</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">HullWhiteProcess</span><span class="p">(</span><span class="n">spot_curve_handle</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">sigma</span><span class="p">)</span>
 <span class="n">rng</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">GaussianRandomSequenceGenerator</span><span class="p">(</span><span class="n">ql</span><span class="o">.</span><span class="n">UniformRandomSequenceGenerator</span><span class="p">(</span><span class="n">timestep</span><span class="p">,</span> <span class="n">ql</span><span class="o">.</span><span class="n">UniformRandomGenerator</span><span class="p">()))</span>
 <span class="n">seq</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">GaussianPathGenerator</span><span class="p">(</span><span class="n">hw_process</span><span class="p">,</span> <span class="n">length</span><span class="p">,</span> <span class="n">timestep</span><span class="p">,</span> <span class="n">rng</span><span class="p">,</span> <span class="bp">False</span><span class="p">)</span>
 </pre></div>
 
 </div>
-</div>
+
 </div>
 
 </div>
@@ -211,8 +211,8 @@ along with other simulation inputs such as <code>timestep</code> and `length.</p
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">In&nbsp;[5]:</div>
-<div class="inner_cell">
-    <div class="input_area">
+
+<div class="input_area box-flex1">
 <div class="highlight-ipynb"><pre class="ipynb"><span class="k">def</span> <span class="nf">generate_paths</span><span class="p">(</span><span class="n">num_paths</span><span class="p">,</span> <span class="n">timestep</span><span class="p">):</span>
     <span class="n">arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">num_paths</span><span class="p">,</span> <span class="n">timestep</span><span class="o">+</span><span class="mi">1</span><span class="p">))</span>
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_paths</span><span class="p">):</span>
@@ -225,7 +225,7 @@ along with other simulation inputs such as <code>timestep</code> and `length.</p
 </pre></div>
 
 </div>
-</div>
+
 </div>
 
 </div>
@@ -241,8 +241,8 @@ along with other simulation inputs such as <code>timestep</code> and `length.</p
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">In&nbsp;[6]:</div>
-<div class="inner_cell">
-    <div class="input_area">
+
+<div class="input_area box-flex1">
 <div class="highlight-ipynb"><pre class="ipynb"><span class="n">num_paths</span> <span class="o">=</span> <span class="mi">10</span>
 <span class="n">time</span><span class="p">,</span> <span class="n">paths</span> <span class="o">=</span> <span class="n">generate_paths</span><span class="p">(</span><span class="n">num_paths</span><span class="p">,</span> <span class="n">timestep</span><span class="p">)</span>
 <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_paths</span><span class="p">):</span>
@@ -252,7 +252,7 @@ along with other simulation inputs such as <code>timestep</code> and `length.</p
 </pre></div>
 
 </div>
-</div>
+
 </div>
 
 <div class="output_wrapper">
@@ -1524,14 +1524,14 @@ EpxTfyIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIilev/HAcDiefdGyoAAAAASUVORK5CYII=
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">In&nbsp;[7]:</div>
-<div class="inner_cell">
-    <div class="input_area">
+
+<div class="input_area box-flex1">
 <div class="highlight-ipynb"><pre class="ipynb"><span class="n">num_paths</span> <span class="o">=</span> <span class="mi">1000</span>
 <span class="n">time</span><span class="p">,</span> <span class="n">paths</span> <span class="o">=</span> <span class="n">generate_paths</span><span class="p">(</span><span class="n">num_paths</span><span class="p">,</span> <span class="n">timestep</span><span class="p">)</span>
 </pre></div>
 
 </div>
-</div>
+
 </div>
 
 </div>
@@ -1547,8 +1547,8 @@ EpxTfyIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIilev/HAcDiefdGyoAAAAASUVORK5CYII=
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">In&nbsp;[8]:</div>
-<div class="inner_cell">
-    <div class="input_area">
+
+<div class="input_area box-flex1">
 <div class="highlight-ipynb"><pre class="ipynb"><span class="n">vol</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">var</span><span class="p">(</span><span class="n">paths</span><span class="p">[:,</span> <span class="n">i</span><span class="p">])</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">timestep</span><span class="o">+</span><span class="mi">1</span><span class="p">)]</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">time</span><span class="p">,</span> <span class="n">vol</span><span class="p">,</span> <span class="s">&quot;r-.&quot;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.6</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">time</span><span class="p">,</span><span class="n">sigma</span><span class="o">*</span><span class="n">sigma</span><span class="o">/</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">a</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="mf">1.0</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="mf">2.0</span><span class="o">*</span><span class="n">a</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">time</span><span class="p">))),</span> <span class="s">&quot;b-&quot;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
@@ -1556,7 +1556,7 @@ EpxTfyIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIilev/HAcDiefdGyoAAAAASUVORK5CYII=
 </pre></div>
 
 </div>
-</div>
+
 </div>
 
 <div class="output_wrapper">
@@ -1566,11 +1566,7 @@ EpxTfyIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIilev/HAcDiefdGyoAAAAASUVORK5CYII=
 <div class="output_area"><div class="prompt output_prompt">Out[8]:</div>
 
 
-<div class="output_text output_subarea output_pyout">
-<pre>
-&lt;matplotlib.text.Text at 0x7f555d561ad0&gt;
-</pre>
-</div>
+<pre class="ipynb">&lt;matplotlib.text.Text at 0x7f555d561ad0&gt;</pre>
 
 </div>
 
@@ -1801,8 +1797,8 @@ rkJggg==
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">In&nbsp;[9]:</div>
-<div class="inner_cell">
-    <div class="input_area">
+
+<div class="input_area box-flex1">
 <div class="highlight-ipynb"><pre class="ipynb"><span class="k">def</span> <span class="nf">alpha</span><span class="p">(</span><span class="n">forward</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">t</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">forward</span> <span class="o">+</span> <span class="mf">0.5</span><span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">power</span><span class="p">(</span><span class="n">sigma</span><span class="o">/</span><span class="n">a</span><span class="o">*</span><span class="p">(</span><span class="mf">1.0</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">a</span><span class="o">*</span><span class="n">t</span><span class="p">)),</span> <span class="mi">2</span><span class="p">)</span>
 
@@ -1813,7 +1809,7 @@ rkJggg==
 </pre></div>
 
 </div>
-</div>
+
 </div>
 
 <div class="output_wrapper">
@@ -1823,11 +1819,7 @@ rkJggg==
 <div class="output_area"><div class="prompt output_prompt">Out[9]:</div>
 
 
-<div class="output_text output_subarea output_pyout">
-<pre>
-&lt;matplotlib.text.Text at 0x7f555d6a9e10&gt;
-</pre>
-</div>
+<pre class="ipynb">&lt;matplotlib.text.Text at 0x7f555d6a9e10&gt;</pre>
 
 </div>
 
@@ -2042,19 +2034,19 @@ download the <a href="/extra/notebooks/hull_white_simulations.ipynb">ipython not
     <strong>Related Post</strong>
         <ul>
             <li>
-                <a href="http://gouthamanbalaraman.com/blog/hull-white-simulation-monte-carlo-convergence.html">On the Convergence of Hull White Monte Carlo Simulations</a>
+                <a href="http://gouthamanbalaraman.com/blog/quantlib-basics.html">Introduction to QuantLib</a>
             </li>
             <li>
                 <a href="http://gouthamanbalaraman.com/blog/quantlib-bond-modeling.html">Modeling Fixed Rate Bonds Using QuantLib</a>
             </li>
             <li>
-                <a href="http://gouthamanbalaraman.com/blog/quantlib-term-structure-bootstrap-yield-curve.html">An Introduction to Interest Rate Term Structure in QuantLib</a>
-            </li>
-            <li>
                 <a href="http://gouthamanbalaraman.com/blog/european-option-binomial-tree-quantlib-python.html">Option Model Handbook, Part III: European Option Pricing With QuantLib</a>
             </li>
             <li>
-                <a href="http://gouthamanbalaraman.com/blog/quantlib-basics.html">Introduction to QuantLib</a>
+                <a href="http://gouthamanbalaraman.com/blog/quantlib-term-structure-bootstrap-yield-curve.html">An Introduction to Interest Rate Term Structure in QuantLib</a>
+            </li>
+            <li>
+                <a href="http://gouthamanbalaraman.com/blog/hull-white-simulation-monte-carlo-convergence.html">On the Convergence of Hull White Monte Carlo Simulations</a>
             </li>
         </ul>
         <hr/>
