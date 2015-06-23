@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Gouthaman Balaraman</title><link href="http://gouthamanbalaraman.com/" rel="alternate"></link><link href="http://gouthamanbalaraman.com/feeds/finance.atom.xml" rel="self"></link><id>http://gouthamanbalaraman.com/</id><updated>2015-06-22T00:00:00-07:00</updated><entry><title>How to Build a Fundamental Factor Model</title><link href="http://gouthamanbalaraman.com/blog/build-fundamental-factor-model.html" rel="alternate"></link><updated>2015-06-22T00:00:00-07:00</updated><author><name>Gouthaman Balaraman</name></author><id>tag:gouthamanbalaraman.com,2015-06-22:blog/build-fundamental-factor-model.html</id><summary type="html">&lt;p&gt;In a multi-factor model, the return of a stock can be broken out 
+into multiple factors.
+$$ r_i = \alpha_i + \sum_{j=1}{K} \beta_{ij} f_j + \epsilon_i $$
+The term $\epsilon_i$ is the error term which is assumed to have a 
+distribution with zero mean. Now we can write the average return as
+$$ E(r_i) = E(\alpha_i) + \sum_{j=1}{K} \beta_{ij} E(f_j) $$
+This can be expressed concisely using the matrix representation:
+$$ r_i = \mathbf{\beta}^T_i \mathbf{f}  + \epsilon_i $$
+where:&lt;/p&gt;
+&lt;p&gt;\begin{eqarray}
+\mathbf{\beta}&lt;em i1="i1"&gt;i &amp;amp;=&amp;amp; (\alpha_i, \beta&lt;/em&gt;, \beta_{i2}, ..., \beta_{iK})^T \ 
+\mathbf(f) &amp;amp;=&amp;amp; (1, f_1, f_2, ..., f_K)^T
+\end{eqarray}&lt;/p&gt;
+&lt;p&gt;Using this notation, the average return can then be written as:
+$$ E(r_i) = \mathbf{\beta}_i^T E(\mathbf{f}) $$
+We see that the average return on the stock is the product of factor
+exposures ($\mathbf{\beta}_i$) and factor premium ($\mathbf{f}$). 
+In a fundamental factor model, the &lt;em&gt;factor exposures&lt;/em&gt;  are characteristics 
+of an investment (such as a stock) that is known, such as the Price to 
+Earnings ratio, or momentum of the stock, or market capitalization. 
+The &lt;em&gt;factor premium&lt;/em&gt; is the unknown that we wish to determine empirically. &lt;/p&gt;
+&lt;p&gt;One of the tenets of quantitative portfolio management is:
+&lt;em&gt;the average return of an investment is the payoff
+for taking risk&lt;/em&gt;. So what is the risk associated with 
+this average return? The risk of a stock has two components:&lt;/p&gt;
+&lt;p&gt;Total Risk = Non-Diversifiable Risk + Diversifiable Risk&lt;/p&gt;
+&lt;p&gt;Risk can be measured using the variance of the returns:
+$$ V(r_i) = V(\alpha + \beta_{i1}f_1 + ... + \beta_{iK}f_K) + V(\epsilon_i) + V(\epsilon_i)$$.
+This can be expressed in the matrix notation as:
+$$ V(r_i) = \mathbf{\beta}_i^T V(\mathbf{f}) \mathbf{\beta}_i + V(\epsilon_i) $$
+where $V(\mathbf{f})$ is a $(K+1) \times (K+1)$-dimensional variance-covariance matrix. 
+The diversifiable component which an investor can mitigate by diversification
+is the term $V(\epsilon_i)$. The non-diversifiable componenent which the market 
+rewards is obtained from factor exposures $\mathbf{\beta}_i$ and factor premium
+risk $V(\mathbf{f})$.&lt;/p&gt;
+&lt;p&gt;... to be continued&lt;/p&gt;</summary><category term="finance"></category></entry></feed>
