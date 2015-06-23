@@ -76,6 +76,6 @@ immediately translate into risk-free rates because a lot of countries (developin
 and developed) have risk of default as well. &lt;/p&gt;
 &lt;p&gt;Once the risk-free rate $r_{ft}$ has been identified, the excess return can be defined
 as &lt;/p&gt;
-&lt;p&gt;$$ r*&lt;em it="it"&gt;{it} = r&lt;/em&gt; - r_{ft} $$&lt;/p&gt;
+&lt;p&gt;$$ r_{it}^* = r_{it} - r_{ft} $$&lt;/p&gt;
 &lt;h3&gt;Building the Data Sample&lt;/h3&gt;
 &lt;p&gt;... to be continued&lt;/p&gt;</summary><category term="finance"></category></entry></feed>

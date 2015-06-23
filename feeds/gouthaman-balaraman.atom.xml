@@ -76,7 +76,7 @@ immediately translate into risk-free rates because a lot of countries (developin
 and developed) have risk of default as well. &lt;/p&gt;
 &lt;p&gt;Once the risk-free rate $r_{ft}$ has been identified, the excess return can be defined
 as &lt;/p&gt;
-&lt;p&gt;$$ r*&lt;em it="it"&gt;{it} = r&lt;/em&gt; - r_{ft} $$&lt;/p&gt;
+&lt;p&gt;$$ r_{it}^* = r_{it} - r_{ft} $$&lt;/p&gt;
 &lt;h3&gt;Building the Data Sample&lt;/h3&gt;
 &lt;p&gt;... to be continued&lt;/p&gt;</summary><category term="finance"></category></entry><entry><title>On the Convergence of Hull White Monte Carlo Simulations</title><link href="http://gouthamanbalaraman.com/blog/hull-white-simulation-monte-carlo-convergence.html" rel="alternate"></link><updated>2015-05-22T00:00:00-07:00</updated><author><name>Gouthaman Balaraman</name></author><id>tag:gouthamanbalaraman.com,2015-05-22:blog/hull-white-simulation-monte-carlo-convergence.html</id><summary type="html">&lt;p&gt;
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;
