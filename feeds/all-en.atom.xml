@@ -1,39 +1,83 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom"><title>Gouthaman Balaraman</title><link href="http://gouthamanbalaraman.com/" rel="alternate"></link><link href="http://gouthamanbalaraman.com/feeds/all-en.atom.xml" rel="self"></link><id>http://gouthamanbalaraman.com/</id><updated>2015-06-22T00:00:00-07:00</updated><entry><title>How to Build a Fundamental Factor Model</title><link href="http://gouthamanbalaraman.com/blog/build-fundamental-factor-model.html" rel="alternate"></link><updated>2015-06-22T00:00:00-07:00</updated><author><name>Gouthaman Balaraman</name></author><id>tag:gouthamanbalaraman.com,2015-06-22:blog/build-fundamental-factor-model.html</id><summary type="html">&lt;p&gt;In a multi-factor model, the return of a stock can be broken out 
-into multiple factors.
-$$ r_i = \alpha_i + \sum_{j=1}{K} \beta_{ij} f_j + \epsilon_i $$
-The term $\epsilon_i$ is the error term which is assumed to have a 
-distribution with zero mean. Now we can write the average return as
-$$ E(r_i) = E(\alpha_i) + \sum_{j=1}{K} \beta_{ij} E(f_j) $$
-This can be expressed concisely using the matrix representation:
-$$ r_i = \mathbf{\beta}^T_i \mathbf{f}  + \epsilon_i $$
-where:&lt;/p&gt;
+into multiple factors.&lt;/p&gt;
+&lt;p&gt;$$ r_i = \alpha_i + \sum_{j=1}{K} \beta_{ij} f_j + \epsilon_i $$&lt;/p&gt;
+&lt;p&gt;The term $\epsilon_i$ is the error term which is assumed to have a 
+distribution with zero mean. Now we can write the average return as&lt;/p&gt;
+&lt;p&gt;$$ E(r_i) = E(\alpha_i) + \sum_{j=1}{K} \beta_{ij} E(f_j) $$&lt;/p&gt;
+&lt;p&gt;This can be expressed concisely using the matrix representation:&lt;/p&gt;
+&lt;p&gt;$$ r_i = \mathbf{\beta}^T_i \mathbf{f}  + \epsilon_i $$&lt;/p&gt;
+&lt;p&gt;where:&lt;/p&gt;
 &lt;p&gt;\begin{eqarray}
 \mathbf{\beta}&lt;em i1="i1"&gt;i &amp;amp;=&amp;amp; (\alpha_i, \beta&lt;/em&gt;, \beta_{i2}, ..., \beta_{iK})^T \ 
 \mathbf(f) &amp;amp;=&amp;amp; (1, f_1, f_2, ..., f_K)^T
 \end{eqarray}&lt;/p&gt;
-&lt;p&gt;Using this notation, the average return can then be written as:
-$$ E(r_i) = \mathbf{\beta}_i^T E(\mathbf{f}) $$
-We see that the average return on the stock is the product of factor
-exposures ($\mathbf{\beta}_i$) and factor premium ($\mathbf{f}$). 
-In a fundamental factor model, the &lt;em&gt;factor exposures&lt;/em&gt;  are characteristics 
-of an investment (such as a stock) that is known, such as the Price to 
-Earnings ratio, or momentum of the stock, or market capitalization. 
-The &lt;em&gt;factor premium&lt;/em&gt; is the unknown that we wish to determine empirically. &lt;/p&gt;
+&lt;p&gt;Using this notation, the average return can then be written as:&lt;/p&gt;
+&lt;p&gt;$$ E(r_i) = \mathbf{\beta}_i^T E(\mathbf{f}) $$&lt;/p&gt;
+&lt;p&gt;We see that the average return on the stock is the product of factor exposures ($\mathbf{\beta}_i$) and factor premium ($\mathbf{f}$). In a fundamental factor model, the &lt;em&gt;factor exposures&lt;/em&gt;  are characteristics of an investment (such as a stock) that is known, such as the Price to Earnings ratio, or momentum of the stock, or market capitalization. The &lt;em&gt;factor premium&lt;/em&gt; is the unknown that we wish to determine empirically. &lt;/p&gt;
 &lt;p&gt;One of the tenets of quantitative portfolio management is:
 &lt;em&gt;the average return of an investment is the payoff
-for taking risk&lt;/em&gt;. So what is the risk associated with 
-this average return? The risk of a stock has two components:&lt;/p&gt;
+for taking risk&lt;/em&gt;. The risk of a stock has two components:&lt;/p&gt;
 &lt;p&gt;Total Risk = Non-Diversifiable Risk + Diversifiable Risk&lt;/p&gt;
-&lt;p&gt;Risk can be measured using the variance of the returns:
-$$ V(r_i) = V(\alpha + \beta_{i1}f_1 + ... + \beta_{iK}f_K) + V(\epsilon_i) + V(\epsilon_i)$$.
-This can be expressed in the matrix notation as:
-$$ V(r_i) = \mathbf{\beta}_i^T V(\mathbf{f}) \mathbf{\beta}_i + V(\epsilon_i) $$
-where $V(\mathbf{f})$ is a $(K+1) \times (K+1)$-dimensional variance-covariance matrix. 
-The diversifiable component which an investor can mitigate by diversification
+&lt;p&gt;Risk can be measured using the variance of the returns:&lt;/p&gt;
+&lt;p&gt;$$ V(r_i) = V(\alpha + \beta_{i1}f_1 + ... + \beta_{iK}f_K) + V(\epsilon_i) + V(\epsilon_i)$$.&lt;/p&gt;
+&lt;p&gt;This can be expressed in the matrix notation as:&lt;/p&gt;
+&lt;p&gt;$$ V(r_i) = \mathbf{\beta}_i^T V(\mathbf{f}) \mathbf{\beta}_i + V(\epsilon_i) $$&lt;/p&gt;
+&lt;p&gt;where $V(\mathbf{f})$ is a $(K+1) \times (K+1)$-dimensional variance-covariance matrix. The diversifiable component which an investor can mitigate by diversification
 is the term $V(\epsilon_i)$. The non-diversifiable componenent which the market 
 rewards is obtained from factor exposures $\mathbf{\beta}_i$ and factor premium
 risk $V(\mathbf{f})$.&lt;/p&gt;
+&lt;h2&gt;Preparatory Work&lt;/h2&gt;
+&lt;p&gt;There are a series of steps that one has to do before we can run a 
+multi-variable regression to determine the factor premiums. &lt;/p&gt;
+&lt;h3&gt;Choosing the factors&lt;/h3&gt;
+&lt;p&gt;We need to choose the factors that we wish to include in the model. This step 
+is usually driven by the intuition an investor has on the market, and 
+characteristics of the stock that are important. For instance, some fundamental factors that would make sense for equity investments include:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;em&gt;Valuation Factors&lt;/em&gt;: Market capitalization (size), price-to-book ratio (P/B),
+price-to-earnings ratio (P/E), price-to-sales ratio (P/S).&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;Solvency Factors&lt;/em&gt;: Debt-to-equity ratio (D/E), current ratio (CUR, a metric
+of short term solvency), interest coverage ratio.&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;Growth Potential Factors&lt;/em&gt;: Capital-expenditure-to-sales ratio, R&amp;amp;D-expenditure-to-sales ratio, advertising-expenditure-to-sales ratio.&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;Technical factors&lt;/em&gt;: Momentum, trading volume, short interest shares shorted&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;Analyst factors&lt;/em&gt;: Analyst rating changes, earnings revision etc.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Similarly some fundamental factors that would make sense for fixed income investments 
+include:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;em&gt;Credit Factors&lt;/em&gt;: Credit quality, different vendor ratings&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;Interest Rate Sensitivity Factors&lt;/em&gt;: Effective duration, key rate duration at
+various tenors, convexity&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;Asset Type Factors&lt;/em&gt;: Some factors can be asset specific, such as:&lt;ol&gt;
+&lt;li&gt;&lt;em&gt;Municipals&lt;/em&gt;: &lt;ol&gt;
+&lt;li&gt;State or issuer&lt;/li&gt;
+&lt;li&gt;Purpose such as revenue or general obligation&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;Mortgages&lt;/em&gt;:&lt;ol&gt;
+&lt;li&gt;Coupon&lt;/li&gt;
+&lt;li&gt;Amortization type&lt;/li&gt;
+&lt;li&gt;Issuer&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3&gt;Treatment of the Risk-Free Rate&lt;/h3&gt;
+&lt;p&gt;Since we are building a model to measure the payoff for undertaking risk, it is
+conventional to subtract the risk-free rate from the returns of the investment. The
+rational is that the risk-free rate is the return that can be obtained on any
+investment without any risk. In order to do this, we need to define what is
+considered risk-free. In the U.S. markets, the U.S. treasury bills are used
+as a proxy for the risk free rate. In other markets, one has to exercise care
+in identifying a risk free rate. All sovereign bond/bill  rates do not 
+immediately translate into risk-free rates because a lot of countries (developing 
+and developed) have risk of default as well. &lt;/p&gt;
+&lt;p&gt;Once the risk-free rate $r_{ft}$ has been identified, the excess return can be defined
+as &lt;/p&gt;
+&lt;p&gt;$$ r*&lt;em it="it"&gt;{it} = r&lt;/em&gt; - r_{ft} $$&lt;/p&gt;
+&lt;h3&gt;Building the Data Sample&lt;/h3&gt;
 &lt;p&gt;... to be continued&lt;/p&gt;</summary><category term="finance"></category></entry><entry><title>On the Convergence of Hull White Monte Carlo Simulations</title><link href="http://gouthamanbalaraman.com/blog/hull-white-simulation-monte-carlo-convergence.html" rel="alternate"></link><updated>2015-05-22T00:00:00-07:00</updated><author><name>Gouthaman Balaraman</name></author><id>tag:gouthamanbalaraman.com,2015-05-22:blog/hull-white-simulation-monte-carlo-convergence.html</id><summary type="html">&lt;p&gt;
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;
 &lt;div class="prompt input_prompt"&gt;

@@ -101,40 +101,84 @@
       
       <!-- article content -->
      <p>In a multi-factor model, the return of a stock can be broken out 
-into multiple factors.
-$$ r_i = \alpha_i + \sum_{j=1}{K} \beta_{ij} f_j + \epsilon_i $$
-The term $\epsilon_i$ is the error term which is assumed to have a 
-distribution with zero mean. Now we can write the average return as
-$$ E(r_i) = E(\alpha_i) + \sum_{j=1}{K} \beta_{ij} E(f_j) $$
-This can be expressed concisely using the matrix representation:
-$$ r_i = \mathbf{\beta}^T_i \mathbf{f}  + \epsilon_i $$
-where:</p>
+into multiple factors.</p>
+<p>$$ r_i = \alpha_i + \sum_{j=1}{K} \beta_{ij} f_j + \epsilon_i $$</p>
+<p>The term $\epsilon_i$ is the error term which is assumed to have a 
+distribution with zero mean. Now we can write the average return as</p>
+<p>$$ E(r_i) = E(\alpha_i) + \sum_{j=1}{K} \beta_{ij} E(f_j) $$</p>
+<p>This can be expressed concisely using the matrix representation:</p>
+<p>$$ r_i = \mathbf{\beta}^T_i \mathbf{f}  + \epsilon_i $$</p>
+<p>where:</p>
 <p>\begin{eqarray}
 \mathbf{\beta}<em i1="i1">i &amp;=&amp; (\alpha_i, \beta</em>, \beta_{i2}, ..., \beta_{iK})^T \ 
 \mathbf(f) &amp;=&amp; (1, f_1, f_2, ..., f_K)^T
 \end{eqarray}</p>
-<p>Using this notation, the average return can then be written as:
-$$ E(r_i) = \mathbf{\beta}_i^T E(\mathbf{f}) $$
-We see that the average return on the stock is the product of factor
-exposures ($\mathbf{\beta}_i$) and factor premium ($\mathbf{f}$). 
-In a fundamental factor model, the <em>factor exposures</em>  are characteristics 
-of an investment (such as a stock) that is known, such as the Price to 
-Earnings ratio, or momentum of the stock, or market capitalization. 
-The <em>factor premium</em> is the unknown that we wish to determine empirically. </p>
+<p>Using this notation, the average return can then be written as:</p>
+<p>$$ E(r_i) = \mathbf{\beta}_i^T E(\mathbf{f}) $$</p>
+<p>We see that the average return on the stock is the product of factor exposures ($\mathbf{\beta}_i$) and factor premium ($\mathbf{f}$). In a fundamental factor model, the <em>factor exposures</em>  are characteristics of an investment (such as a stock) that is known, such as the Price to Earnings ratio, or momentum of the stock, or market capitalization. The <em>factor premium</em> is the unknown that we wish to determine empirically. </p>
 <p>One of the tenets of quantitative portfolio management is:
 <em>the average return of an investment is the payoff
-for taking risk</em>. So what is the risk associated with 
-this average return? The risk of a stock has two components:</p>
+for taking risk</em>. The risk of a stock has two components:</p>
 <p>Total Risk = Non-Diversifiable Risk + Diversifiable Risk</p>
-<p>Risk can be measured using the variance of the returns:
-$$ V(r_i) = V(\alpha + \beta_{i1}f_1 + ... + \beta_{iK}f_K) + V(\epsilon_i) + V(\epsilon_i)$$.
-This can be expressed in the matrix notation as:
-$$ V(r_i) = \mathbf{\beta}_i^T V(\mathbf{f}) \mathbf{\beta}_i + V(\epsilon_i) $$
-where $V(\mathbf{f})$ is a $(K+1) \times (K+1)$-dimensional variance-covariance matrix. 
-The diversifiable component which an investor can mitigate by diversification
+<p>Risk can be measured using the variance of the returns:</p>
+<p>$$ V(r_i) = V(\alpha + \beta_{i1}f_1 + ... + \beta_{iK}f_K) + V(\epsilon_i) + V(\epsilon_i)$$.</p>
+<p>This can be expressed in the matrix notation as:</p>
+<p>$$ V(r_i) = \mathbf{\beta}_i^T V(\mathbf{f}) \mathbf{\beta}_i + V(\epsilon_i) $$</p>
+<p>where $V(\mathbf{f})$ is a $(K+1) \times (K+1)$-dimensional variance-covariance matrix. The diversifiable component which an investor can mitigate by diversification
 is the term $V(\epsilon_i)$. The non-diversifiable componenent which the market 
 rewards is obtained from factor exposures $\mathbf{\beta}_i$ and factor premium
 risk $V(\mathbf{f})$.</p>
+<h2>Preparatory Work</h2>
+<p>There are a series of steps that one has to do before we can run a 
+multi-variable regression to determine the factor premiums. </p>
+<h3>Choosing the factors</h3>
+<p>We need to choose the factors that we wish to include in the model. This step 
+is usually driven by the intuition an investor has on the market, and 
+characteristics of the stock that are important. For instance, some fundamental factors that would make sense for equity investments include:</p>
+<ol>
+<li><em>Valuation Factors</em>: Market capitalization (size), price-to-book ratio (P/B),
+price-to-earnings ratio (P/E), price-to-sales ratio (P/S).</li>
+<li><em>Solvency Factors</em>: Debt-to-equity ratio (D/E), current ratio (CUR, a metric
+of short term solvency), interest coverage ratio.</li>
+<li><em>Growth Potential Factors</em>: Capital-expenditure-to-sales ratio, R&amp;D-expenditure-to-sales ratio, advertising-expenditure-to-sales ratio.</li>
+<li><em>Technical factors</em>: Momentum, trading volume, short interest shares shorted</li>
+<li><em>Analyst factors</em>: Analyst rating changes, earnings revision etc.</li>
+</ol>
+<p>Similarly some fundamental factors that would make sense for fixed income investments 
+include:</p>
+<ol>
+<li><em>Credit Factors</em>: Credit quality, different vendor ratings</li>
+<li><em>Interest Rate Sensitivity Factors</em>: Effective duration, key rate duration at
+various tenors, convexity</li>
+<li><em>Asset Type Factors</em>: Some factors can be asset specific, such as:<ol>
+<li><em>Municipals</em>: <ol>
+<li>State or issuer</li>
+<li>Purpose such as revenue or general obligation</li>
+</ol>
+</li>
+<li><em>Mortgages</em>:<ol>
+<li>Coupon</li>
+<li>Amortization type</li>
+<li>Issuer</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+<h3>Treatment of the Risk-Free Rate</h3>
+<p>Since we are building a model to measure the payoff for undertaking risk, it is
+conventional to subtract the risk-free rate from the returns of the investment. The
+rational is that the risk-free rate is the return that can be obtained on any
+investment without any risk. In order to do this, we need to define what is
+considered risk-free. In the U.S. markets, the U.S. treasury bills are used
+as a proxy for the risk free rate. In other markets, one has to exercise care
+in identifying a risk free rate. All sovereign bond/bill  rates do not 
+immediately translate into risk-free rates because a lot of countries (developing 
+and developed) have risk of default as well. </p>
+<p>Once the risk-free rate $r_{ft}$ has been identified, the excess return can be defined
+as </p>
+<p>$$ r*<em it="it">{it} = r</em> - r_{ft} $$</p>
+<h3>Building the Data Sample</h3>
 <p>... to be continued</p>
      <br>
      
