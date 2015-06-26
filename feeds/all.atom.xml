@@ -76,8 +76,50 @@ immediately translate into risk-free rates because a lot of countries (developin
 and developed) have risk of default as well. &lt;/p&gt;
 &lt;p&gt;Once the risk-free rate $r_{ft}$ has been identified, the excess return can be defined
 as &lt;/p&gt;
-&lt;p&gt;$$ r_{it}^* = r_{it} - r_{ft} $$&lt;/p&gt;
+&lt;p&gt;$$ \hat{r}&lt;em it="it"&gt;{it} = r&lt;/em&gt; - r_{ft} $$&lt;/p&gt;
 &lt;h3&gt;Building the Data Sample&lt;/h3&gt;
+&lt;p&gt;One of the crucial components in the factor model building process is 
+to create a data sample that can then be used to deduce the model 
+parameters. For example, to model the U.S. equity market one can use
+the top 2000 to 3000 stocks by market cap. Depending on where we cutoff, 
+this will include stocks in the large-cap and mid-cap range. This would mean
+that the model may not precisely model the effects in the small-cap stocks.
+On the other hand, limiting to stocks in the mid-cap or large-cap range can
+provide more stability to the model, and that could be a desirable thing.  &lt;/p&gt;
+&lt;p&gt;Once we have a filter for deciding how we want to build the basket of 
+instruments for model building, we also have to decide the frequency and 
+period for which we need to collect the data. What do we mean by that? The
+regression step involved in the model building will fit the stock returns
+$r_{it}$ for a period (such as one day returns or monthly returns) as 
+a function of various factors $f$. The return data is collected over multiple
+periods, such as 3 years or 5 years. For instance, our data sample could
+be top 3000 stocks by market cap with monthly returns collected for 3 years.
+A rule of thumb is that the frequency of the investor's re-balancing strategy
+should determine the frequency of the returns used in the model building.
+If the re-balances  monthly, then one should use monthly returns in the 
+model fitting. There should be sufficient time periods included in order
+to avoid spurious fitting effects and to improve robustness of fit. 
+It is conventional to use 3 to 5 years worth of data while using monthly 
+returns, and 2 to 3 years while using weekly returns.  &lt;/p&gt;
+&lt;p&gt;Another factor that one should keep in mind is to include companies
+that are not only alive at the time of model building but also to include
+companies that may have gotten delisted or bankrupt. Failure to do 
+so will introduce what is called as &lt;em&gt;survivorship bias&lt;/em&gt; in your model. &lt;/p&gt;
+&lt;h2&gt;Fitting the Model&lt;/h2&gt;
+&lt;p&gt;Once we have the data sample assembled, one can use regression utilities
+in statistical packages such as &lt;em&gt;R&lt;/em&gt;, Python's &lt;em&gt;Statsmodels&lt;/em&gt; package, &lt;em&gt;Matlab&lt;/em&gt;,
+SAS to perform a panel regression. The goal of the panel regression is 
+to estimate factor premium $\mathbf{f}$ given by the equation &lt;/p&gt;
+&lt;p&gt;$$ r_i = \mathbf{\beta}^T_i \mathbf{f}  + \epsilon_i $$&lt;/p&gt;
+&lt;p&gt;where the returns $r_i$ and the factor exposures $\mathbf{\beta}_i$
+are known. A simple way to estimate factor premiums is by using 
+Ordinary Least Squares (OLS). This will also give us an estimate
+of the variance matrix $V(\mathbf{\hat{f}}$.&lt;/p&gt;
+&lt;h2&gt;Robustness Considerations&lt;/h2&gt;
+&lt;p&gt;It is important that the estimates of the factor premium and 
+the variance of factor premiums are fairly robust. &lt;/p&gt;
+&lt;h2&gt;Conclusions&lt;/h2&gt;
+&lt;h2&gt;Further Reading&lt;/h2&gt;
 &lt;p&gt;... to be continued&lt;/p&gt;</summary><category term="finance"></category></entry><entry><title>On the Convergence of Hull White Monte Carlo Simulations</title><link href="http://gouthamanbalaraman.com/blog/hull-white-simulation-monte-carlo-convergence.html" rel="alternate"></link><updated>2015-05-22T00:00:00-07:00</updated><author><name>Gouthaman Balaraman</name></author><id>tag:gouthamanbalaraman.com,2015-05-22:blog/hull-white-simulation-monte-carlo-convergence.html</id><summary type="html">&lt;p&gt;
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;
 &lt;div class="prompt input_prompt"&gt;
