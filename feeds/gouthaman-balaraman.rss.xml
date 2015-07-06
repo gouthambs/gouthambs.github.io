@@ -133,10 +133,10 @@ a flask blog engine to your flask site.&lt;/p&gt;
 &lt;/div&gt;
 </description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Gouthaman Balaraman</dc:creator><pubDate>Sat, 04 Jul 2015 00:00:00 -0700</pubDate><guid>tag:gouthamanbalaraman.com,2015-07-04:blog/flask-blogging-python-flask-blog-engine-extension.html</guid><category>python</category><category>flask</category></item><item><title>How to Build a Fundamental Factor Model</title><link>http://gouthamanbalaraman.com/blog/build-fundamental-factor-model.html</link><description>&lt;p&gt;In a multi-factor model, the return of a stock can be broken out 
 into multiple factors.&lt;/p&gt;
-&lt;p&gt;$$ r_i = \alpha_i + \sum_{j=1}{K} \beta_{ij} f_j + \epsilon_i $$&lt;/p&gt;
+&lt;p&gt;$$ r_i = \alpha_i + \sum_{j=1}^{K} \beta_{ij} f_j + \epsilon_i $$&lt;/p&gt;
 &lt;p&gt;The term $\epsilon_i$ is the error term which is assumed to have a 
 distribution with zero mean. Now we can write the average return as&lt;/p&gt;
-&lt;p&gt;$$ E(r_i) = E(\alpha_i) + \sum_{j=1}{K} \beta_{ij} E(f_j) $$&lt;/p&gt;
+&lt;p&gt;$$ E(r_i) = E(\alpha_i) + \sum_{j=1}^{K} \beta_{ij} E(f_j) $$&lt;/p&gt;
 &lt;p&gt;This can be expressed concisely using the matrix representation:&lt;/p&gt;
 &lt;p&gt;$$ r_i = \mathbf{\beta}^T_i \mathbf{f}  + \epsilon_i $$&lt;/p&gt;
 &lt;p&gt;where:&lt;/p&gt;
@@ -208,7 +208,7 @@ immediately translate into risk-free rates because a lot of countries (developin
 and developed) have risk of default as well. &lt;/p&gt;
 &lt;p&gt;Once the risk-free rate $r_{ft}$ has been identified, the excess return can be defined
 as &lt;/p&gt;
-&lt;p&gt;$$ \hat{r}&lt;em it="it"&gt;{it} = r&lt;/em&gt; - r_{ft} $$&lt;/p&gt;
+&lt;p&gt;$$ r_{it}' = r_{it} - r_{ft} $$&lt;/p&gt;
 &lt;h3&gt;Building the Data Sample&lt;/h3&gt;
 &lt;p&gt;One of the crucial components in the factor model building process is 
 to create a data sample that can then be used to deduce the model 
@@ -246,13 +246,56 @@ to estimate factor premium $\mathbf{f}$ given by the equation &lt;/p&gt;
 &lt;p&gt;where the returns $r_i$ and the factor exposures $\mathbf{\beta}_i$
 are known. A simple way to estimate factor premiums is by using 
 Ordinary Least Squares (OLS). This will also give us an estimate
-of the variance matrix $V(\mathbf{\hat{f}}$.&lt;/p&gt;
+of the sample variance-covariance matrix $V(\mathbf{\hat{f}})$.&lt;/p&gt;
+&lt;p&gt;\begin{eqnarray} 
+\mathbf{f} &amp;amp;=&amp;amp; \left( \sum_{t=1}^T \sum_{i=1}^N  (\mathbf{\beta}_{it} - \bar{\mathbf{\beta}} ) (  \mathbf{\beta}_{it} - \bar{\mathbf{\beta}} )^T
+\right)^{-1}
+  \sum_{t=1}^{T} \sum_{i=1}^{N} (\mathbf{\beta}_{it} - \bar{\mathbf{\beta}} ) (r_{it} - \bar{r})
+\end{eqnarray}
+where &lt;/p&gt;
+&lt;p&gt;$$
+\bar{\mathbf{\beta}} = \frac{1}{NT} \sum_{t=1}^{T} \sum_{i=1}^{N} \mathbf{\beta}_{it} 
+$$
+and
+$$
+\bar{r} = \frac{1}{NT} \sum_{t=1}^{T} \sum_{i=1}^{N} r_{it} 
+$$ &lt;/p&gt;
+&lt;p&gt;The variance-covariance matrix of the factor premium estimate is given as:&lt;/p&gt;
+&lt;p&gt;\begin{eqnarray}
+\hat{V}(\hat{f}) &amp;amp;=&amp;amp; \hat{\sigma}^2 
+\left(
+ \sum_{t=1}^T \sum_{i=1}^N&lt;br /&gt;
+  (\mathbf{\beta}_{it} - \bar{\mathbf{\beta}} ) 
+  (  \mathbf{\beta}_{it} - \bar{\mathbf{\beta}} )^T
+\right)
+\end{eqnarray}&lt;/p&gt;
+&lt;p&gt;where $\hat{\sigma}^2$ is the variance of the error term $\epsilon_{it}$
+$$
+\hat{\sigma}^2 = \frac{1}{NT} \sum_{t=1}^T \sum_{i=1}^N&lt;br /&gt;
+ (r_{it} - \mathbf{\beta}_{it}\hat{f})
+$$&lt;/p&gt;
 &lt;h2&gt;Robustness Considerations&lt;/h2&gt;
 &lt;p&gt;It is important that the estimates of the factor premium and 
-the variance of factor premiums are fairly robust. &lt;/p&gt;
+the variance of factor premiums are robust. One way to accomplish
+that is by  using generalized least squares (GLS). 
+Corrections for heteroskedasticity and autocorrelation can be
+incorporated by using the &lt;a href="https://en.wikipedia.org/wiki/Newey%E2%80%93West_estimator"&gt;Newey-West Estimator&lt;/a&gt; to correct for heteroskedacity and auto correlation.
+The statistical package R has an implementation of Newey-West in the 
+&lt;a href="http://cran.r-project.org/web/packages/sandwich/index.html"&gt;sandwich&lt;/a&gt; package.
+&lt;a href="http://www.ledoit.net/honey.pdf"&gt;Covariance Shrinkage&lt;/a&gt; was suggested by Ledoit
+and Wolf as a way to reduce estimation error in the Covariance Matrix. This technique
+helps reduce the extremes in the covariance matrix coefficients towards a 
+central value, and is necessary in the portfolio optimization process. &lt;/p&gt;
 &lt;h2&gt;Conclusions&lt;/h2&gt;
+&lt;p&gt;Here we gave an introduction to the process of building a factor model. This text
+is informative for some one to get started. There are lots of nuances that one 
+needs to consider to incorporate the intuition of investment managers and 
+follow the wind as the market currents change.&lt;/p&gt;
 &lt;h2&gt;Further Reading&lt;/h2&gt;
-&lt;p&gt;... to be continued&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Gouthaman Balaraman</dc:creator><pubDate>Mon, 22 Jun 2015 00:00:00 -0700</pubDate><guid>tag:gouthamanbalaraman.com,2015-06-22:blog/build-fundamental-factor-model.html</guid><category>finance</category></item><item><title>On the Convergence of Hull White Monte Carlo Simulations</title><link>http://gouthamanbalaraman.com/blog/hull-white-simulation-monte-carlo-convergence.html</link><description>&lt;p&gt;
+&lt;ol&gt;
+&lt;li&gt;Ludwig B. Chincarini &amp;amp; Daehwan Kim, &lt;em&gt;Quantitative Equity Portfolio Management&lt;/em&gt;, McGraw Hill&lt;/li&gt;
+&lt;li&gt;Olivier Ledoit &amp;amp; Michael Wolf, &lt;em&gt;Honey, I Shrunk the Sample Covariance Matrix&lt;/em&gt;, &lt;a href="http://www.ledoit.net/honey.pdf"&gt;http://www.ledoit.net/honey.pdf&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Gouthaman Balaraman</dc:creator><pubDate>Mon, 22 Jun 2015 00:00:00 -0700</pubDate><guid>tag:gouthamanbalaraman.com,2015-06-22:blog/build-fundamental-factor-model.html</guid><category>finance</category></item><item><title>On the Convergence of Hull White Monte Carlo Simulations</title><link>http://gouthamanbalaraman.com/blog/hull-white-simulation-monte-carlo-convergence.html</link><description>&lt;p&gt;
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;
 &lt;div class="prompt input_prompt"&gt;
 &lt;/div&gt;

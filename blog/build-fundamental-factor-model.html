@@ -102,10 +102,10 @@
       <!-- article content -->
      <p>In a multi-factor model, the return of a stock can be broken out 
 into multiple factors.</p>
-<p>$$ r_i = \alpha_i + \sum_{j=1}{K} \beta_{ij} f_j + \epsilon_i $$</p>
+<p>$$ r_i = \alpha_i + \sum_{j=1}^{K} \beta_{ij} f_j + \epsilon_i $$</p>
 <p>The term $\epsilon_i$ is the error term which is assumed to have a 
 distribution with zero mean. Now we can write the average return as</p>
-<p>$$ E(r_i) = E(\alpha_i) + \sum_{j=1}{K} \beta_{ij} E(f_j) $$</p>
+<p>$$ E(r_i) = E(\alpha_i) + \sum_{j=1}^{K} \beta_{ij} E(f_j) $$</p>
 <p>This can be expressed concisely using the matrix representation:</p>
 <p>$$ r_i = \mathbf{\beta}^T_i \mathbf{f}  + \epsilon_i $$</p>
 <p>where:</p>
@@ -177,7 +177,7 @@ immediately translate into risk-free rates because a lot of countries (developin
 and developed) have risk of default as well. </p>
 <p>Once the risk-free rate $r_{ft}$ has been identified, the excess return can be defined
 as </p>
-<p>$$ \hat{r}<em it="it">{it} = r</em> - r_{ft} $$</p>
+<p>$$ r_{it}' = r_{it} - r_{ft} $$</p>
 <h3>Building the Data Sample</h3>
 <p>One of the crucial components in the factor model building process is 
 to create a data sample that can then be used to deduce the model 
@@ -215,13 +215,56 @@ to estimate factor premium $\mathbf{f}$ given by the equation </p>
 <p>where the returns $r_i$ and the factor exposures $\mathbf{\beta}_i$
 are known. A simple way to estimate factor premiums is by using 
 Ordinary Least Squares (OLS). This will also give us an estimate
-of the variance matrix $V(\mathbf{\hat{f}}$.</p>
+of the sample variance-covariance matrix $V(\mathbf{\hat{f}})$.</p>
+<p>\begin{eqnarray} 
+\mathbf{f} &amp;=&amp; \left( \sum_{t=1}^T \sum_{i=1}^N  (\mathbf{\beta}_{it} - \bar{\mathbf{\beta}} ) (  \mathbf{\beta}_{it} - \bar{\mathbf{\beta}} )^T
+\right)^{-1}
+  \sum_{t=1}^{T} \sum_{i=1}^{N} (\mathbf{\beta}_{it} - \bar{\mathbf{\beta}} ) (r_{it} - \bar{r})
+\end{eqnarray}
+where </p>
+<p>$$
+\bar{\mathbf{\beta}} = \frac{1}{NT} \sum_{t=1}^{T} \sum_{i=1}^{N} \mathbf{\beta}_{it} 
+$$
+and
+$$
+\bar{r} = \frac{1}{NT} \sum_{t=1}^{T} \sum_{i=1}^{N} r_{it} 
+$$ </p>
+<p>The variance-covariance matrix of the factor premium estimate is given as:</p>
+<p>\begin{eqnarray}
+\hat{V}(\hat{f}) &amp;=&amp; \hat{\sigma}^2 
+\left(
+ \sum_{t=1}^T \sum_{i=1}^N<br />
+  (\mathbf{\beta}_{it} - \bar{\mathbf{\beta}} ) 
+  (  \mathbf{\beta}_{it} - \bar{\mathbf{\beta}} )^T
+\right)
+\end{eqnarray}</p>
+<p>where $\hat{\sigma}^2$ is the variance of the error term $\epsilon_{it}$
+$$
+\hat{\sigma}^2 = \frac{1}{NT} \sum_{t=1}^T \sum_{i=1}^N<br />
+ (r_{it} - \mathbf{\beta}_{it}\hat{f})
+$$</p>
 <h2>Robustness Considerations</h2>
 <p>It is important that the estimates of the factor premium and 
-the variance of factor premiums are fairly robust. </p>
+the variance of factor premiums are robust. One way to accomplish
+that is by  using generalized least squares (GLS). 
+Corrections for heteroskedasticity and autocorrelation can be
+incorporated by using the <a href="https://en.wikipedia.org/wiki/Newey%E2%80%93West_estimator">Newey-West Estimator</a> to correct for heteroskedacity and auto correlation.
+The statistical package R has an implementation of Newey-West in the 
+<a href="http://cran.r-project.org/web/packages/sandwich/index.html">sandwich</a> package.
+<a href="http://www.ledoit.net/honey.pdf">Covariance Shrinkage</a> was suggested by Ledoit
+and Wolf as a way to reduce estimation error in the Covariance Matrix. This technique
+helps reduce the extremes in the covariance matrix coefficients towards a 
+central value, and is necessary in the portfolio optimization process. </p>
 <h2>Conclusions</h2>
+<p>Here we gave an introduction to the process of building a factor model. This text
+is informative for some one to get started. There are lots of nuances that one 
+needs to consider to incorporate the intuition of investment managers and 
+follow the wind as the market currents change.</p>
 <h2>Further Reading</h2>
-<p>... to be continued</p>
+<ol>
+<li>Ludwig B. Chincarini &amp; Daehwan Kim, <em>Quantitative Equity Portfolio Management</em>, McGraw Hill</li>
+<li>Olivier Ledoit &amp; Michael Wolf, <em>Honey, I Shrunk the Sample Covariance Matrix</em>, <a href="http://www.ledoit.net/honey.pdf">http://www.ledoit.net/honey.pdf</a></li>
+</ol>
      <br>
      
      <!-- article tags-->
@@ -233,19 +276,19 @@ the variance of factor premiums are fairly robust. </p>
     <strong>Related Post</strong>
         <ul>
             <li>
-                <a href="http://gouthamanbalaraman.com/blog/european-option-binomial-tree-quantlib-python.html">Option Model Handbook, Part III: European Option Pricing With QuantLib</a>
-            </li>
-            <li>
                 <a href="http://gouthamanbalaraman.com/blog/option-model-handbook-part-II-introduction-to-binomial-trees.html">Option Model Handbook, Part II: Introduction to Binomial Trees</a>
             </li>
             <li>
+                <a href="http://gouthamanbalaraman.com/blog/hull-white-simulation-monte-carlo-convergence.html">On the Convergence of Hull White Monte Carlo Simulations</a>
+            </li>
+            <li>
+                <a href="http://gouthamanbalaraman.com/blog/quantlib-bond-modeling.html">Modeling Fixed Rate Bonds Using QuantLib</a>
+            </li>
+            <li>
+                <a href="http://gouthamanbalaraman.com/blog/modern-portfolio-theory-statistics.html">Modern Portfolio Theory Statistics</a>
+            </li>
+            <li>
                 <a href="http://gouthamanbalaraman.com/blog/hull-white-simulation-quantlib-python.html">Hull White Term Structure Simulations with QuantLib</a>
-            </li>
-            <li>
-                <a href="http://gouthamanbalaraman.com/blog/understanding-econometric-factor-model.html">Understanding the Econometric Factor Model</a>
-            </li>
-            <li>
-                <a href="http://gouthamanbalaraman.com/blog/quantlib-basics.html">Introduction to QuantLib</a>
             </li>
         </ul>
         <hr/>
