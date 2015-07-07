@@ -148,25 +148,27 @@ As you can see, it uses Disqus for comments.</p>
 <p>Here is a minimal example for getting a blog up and running. There is no
 security in the authentication here. But if you have authentication
 setup using either Flask-Login or Flask-Security, it should be straight forward
-to configure authentication.</p>
+to configure authentication. This example uses version 0.2.0.</p>
 <pre class="code python literal-block">
 <span class="kn">from</span> <span class="nn">flask</span> <span class="kn">import</span> <span class="n">Flask</span><span class="p">,</span> <span class="n">render_template_string</span><span class="p">,</span> <span class="n">redirect</span>
 <span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">create_engine</span>
-<span class="kn">from</span> <span class="nn">flask.ext.login</span> <span class="kn">import</span> <span class="n">UserMixin</span><span class="p">,</span> <span class="n">LoginManager</span><span class="p">,</span> <span class="n">login_user</span><span class="p">,</span> <span class="n">logout_user</span>
+<span class="kn">from</span> <span class="nn">flask.ext.login</span> <span class="kn">import</span> <span class="n">UserMixin</span><span class="p">,</span> <span class="n">LoginManager</span><span class="p">,</span> \
+    <span class="n">login_user</span><span class="p">,</span> <span class="n">logout_user</span>
 <span class="kn">from</span> <span class="nn">flask.ext.blogging</span> <span class="kn">import</span> <span class="n">SQLAStorage</span><span class="p">,</span> <span class="n">BloggingEngine</span>
 
 <span class="n">app</span> <span class="o">=</span> <span class="n">Flask</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
 <span class="n">app</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s">&quot;SECRET_KEY&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&quot;secret&quot;</span>  <span class="c"># for WTF-forms and login</span>
+<span class="n">app</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s">&quot;BLOGGING_URL_PREFIX&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&quot;/blog&quot;</span>
+<span class="n">app</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s">&quot;BLOGGING_DISQUS_SITENAME&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&quot;test&quot;</span>
+<span class="n">app</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s">&quot;BLOGGING_SITEURL&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&quot;http://localhost:8000&quot;</span>
 
 <span class="c"># extensions</span>
 <span class="n">engine</span> <span class="o">=</span> <span class="n">create_engine</span><span class="p">(</span><span class="s">'sqlite:////tmp/blog.db'</span><span class="p">)</span>
 <span class="n">sql_storage</span> <span class="o">=</span> <span class="n">SQLAStorage</span><span class="p">(</span><span class="n">engine</span><span class="p">)</span>
-<span class="n">blog_engine</span> <span class="o">=</span> <span class="n">BloggingEngine</span><span class="p">(</span><span class="n">app</span><span class="p">,</span> <span class="n">sql_storage</span><span class="p">,</span> <span class="n">url_prefix</span><span class="o">=</span><span class="s">&quot;/blog&quot;</span><span class="p">,</span>
-                             <span class="n">config</span><span class="o">=</span><span class="p">{</span><span class="s">&quot;DISQUS_SITENAME&quot;</span><span class="p">:</span> <span class="s">&quot;test&quot;</span><span class="p">,</span>
-                                     <span class="s">&quot;SITEURL&quot;</span><span class="p">:</span> <span class="s">&quot;http://localhost:8000&quot;</span><span class="p">})</span>
+<span class="n">blog_engine</span> <span class="o">=</span> <span class="n">BloggingEngine</span><span class="p">(</span><span class="n">app</span><span class="p">,</span> <span class="n">sql_storage</span><span class="p">)</span>
 <span class="n">login_manager</span> <span class="o">=</span> <span class="n">LoginManager</span><span class="p">(</span><span class="n">app</span><span class="p">)</span>
 
-
+<span class="c"># user class for providing authentication</span>
 <span class="k">class</span> <span class="nc">User</span><span class="p">(</span><span class="n">UserMixin</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user_id</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">id</span> <span class="o">=</span> <span class="n">user_id</span>
@@ -185,11 +187,11 @@ to configure authentication.</p>
     &lt;head&gt; &lt;/head&gt;
     &lt;body&gt;
         {</span><span class="si">% i</span><span class="s">f current_user.is_authenticated() %}
-            &lt;a href=&quot;/logout/&quot;&gt; Logout &lt;/a&gt;
+            &lt;a href=&quot;/logout/&quot;&gt;Logout&lt;/a&gt;
         {</span><span class="si">% e</span><span class="s">lse %}
-            &lt;a href=&quot;/login/&quot;&gt; Login &lt;/a&gt;
+            &lt;a href=&quot;/login/&quot;&gt;Login&lt;/a&gt;
         {</span><span class="si">% e</span><span class="s">ndif %}
-        &amp;nbsp&amp;nbsp&lt;a href=&quot;/blog/&quot;&gt; Blog &lt;/a&gt;
+        &amp;nbsp&amp;nbsp&lt;a href=&quot;/blog/&quot;&gt;Blog&lt;/a&gt;
         &amp;nbsp&amp;nbsp&lt;a href=&quot;/blog/sitemap.xml&quot;&gt;Sitemap&lt;/a&gt;
         &amp;nbsp&amp;nbsp&lt;a href=&quot;/blog/feeds/all.atom.xml&quot;&gt;ATOM&lt;/a&gt;
     &lt;/body&gt;
@@ -245,16 +247,16 @@ a flask blog engine to your flask site.</p>
     <strong>Related Post</strong>
         <ul>
             <li>
-                <a href="http://gouthamanbalaraman.com/blog/securing-authentication-tokens.html">Securing Authentication Tokens</a>
+                <a href="http://gouthamanbalaraman.com/blog/minimal-flask-login-example.html">Minimal Flask-Login Example</a>
             </li>
             <li>
-                <a href="http://gouthamanbalaraman.com/blog/minimal-flask-login-example.html">Minimal Flask-Login Example</a>
+                <a href="http://gouthamanbalaraman.com/blog/securing-authentication-tokens.html">Securing Authentication Tokens</a>
             </li>
             <li>
                 <a href="http://gouthamanbalaraman.com/blog/flask-app-directory-structure.html">Flask App Directory Structure</a>
             </li>
             <li>
-                <a href="http://gouthamanbalaraman.com/blog/hull-white-simulation-quantlib-python.html">Hull White Term Structure Simulations with QuantLib</a>
+                <a href="http://gouthamanbalaraman.com/blog/european-option-binomial-tree-quantlib-python.html">Option Model Handbook, Part III: European Option Pricing With QuantLib</a>
             </li>
             <li>
                 <a href="http://gouthamanbalaraman.com/blog/flask-track-usage.html">Flask Track Usage Primer</a>
