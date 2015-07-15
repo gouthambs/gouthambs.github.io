@@ -133,7 +133,7 @@ $ pip install flask-blogging
 &lt;p&gt;Here I introduced the Flask-Blogging extension that can be used as
 a flask blog engine to your flask site.&lt;/p&gt;
 &lt;/div&gt;
-</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Gouthaman Balaraman</dc:creator><pubDate>Sat, 04 Jul 2015 00:00:00 -0700</pubDate><guid>tag:gouthamanbalaraman.com,2015-07-04:blog/flask-blogging-python-flask-blog-engine-extension.html</guid><category>python</category><category>flask</category></item><item><title>How to Build a Fundamental Factor Model</title><link>http://gouthamanbalaraman.com/blog/build-fundamental-factor-model.html</link><description>&lt;p&gt;In a multi-factor model, the return of a stock can be broken out 
+</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Gouthaman Balaraman</dc:creator><pubDate>Sat, 04 Jul 2015 00:00:00 -0700</pubDate><guid>tag:gouthamanbalaraman.com,2015-07-04:blog/flask-blogging-python-flask-blog-engine-extension.html</guid><category>python</category><category>flask</category><category>programming</category></item><item><title>How to Build a Fundamental Factor Model</title><link>http://gouthamanbalaraman.com/blog/build-fundamental-factor-model.html</link><description>&lt;p&gt;In a multi-factor model, the return of a stock can be broken out 
 into multiple factors.&lt;/p&gt;
 &lt;p&gt;$$ r_i = \alpha_i + \sum_{j=1}^{K} \beta_{ij} f_j + \epsilon_i $$&lt;/p&gt;
 &lt;p&gt;The term $\epsilon_i$ is the error term which is assumed to have a 
