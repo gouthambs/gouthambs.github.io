@@ -142,7 +142,7 @@ to configure authentication. This example uses version 0.3.2.</p>
 <span class="c"># extensions</span>
 <span class="n">engine</span> <span class="o">=</span> <span class="n">create_engine</span><span class="p">(</span><span class="s">'sqlite:////tmp/blog.db'</span><span class="p">)</span>
 <span class="n">meta</span> <span class="o">=</span> <span class="n">MetaData</span><span class="p">()</span>
-<span class="n">sql_storage</span> <span class="o">=</span> <span class="n">SQLAStorage</span><span class="p">(</span><span class="n">engine</span><span class="p">,</span> <span class="n">meta</span><span class="o">=</span><span class="n">meta</span><span class="p">)</span>
+<span class="n">sql_storage</span> <span class="o">=</span> <span class="n">SQLAStorage</span><span class="p">(</span><span class="n">engine</span><span class="p">,</span> <span class="n">metadata</span><span class="o">=</span><span class="n">meta</span><span class="p">)</span>
 <span class="n">blog_engine</span> <span class="o">=</span> <span class="n">BloggingEngine</span><span class="p">(</span><span class="n">app</span><span class="p">,</span> <span class="n">sql_storage</span><span class="p">)</span>
 <span class="n">login_manager</span> <span class="o">=</span> <span class="n">LoginManager</span><span class="p">(</span><span class="n">app</span><span class="p">)</span>
 <span class="n">meta</span><span class="o">.</span><span class="n">create_all</span><span class="p">(</span><span class="n">bind</span><span class="o">=</span><span class="n">engine</span><span class="p">)</span>
