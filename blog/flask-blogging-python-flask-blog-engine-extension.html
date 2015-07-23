@@ -125,10 +125,10 @@ Please see:</p>
 <p>Here is a minimal example for getting a blog up and running. There is no
 security in the authentication here. But if you have authentication
 setup using either Flask-Login or Flask-Security, it should be straight forward
-to configure authentication. This example uses version 0.2.0.</p>
+to configure authentication. This example uses version 0.3.2.</p>
 <pre class="code python literal-block">
 <span class="kn">from</span> <span class="nn">flask</span> <span class="kn">import</span> <span class="n">Flask</span><span class="p">,</span> <span class="n">render_template_string</span><span class="p">,</span> <span class="n">redirect</span>
-<span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">create_engine</span>
+<span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">create_engine</span><span class="p">,</span> <span class="n">MetaData</span>
 <span class="kn">from</span> <span class="nn">flask.ext.login</span> <span class="kn">import</span> <span class="n">UserMixin</span><span class="p">,</span> <span class="n">LoginManager</span><span class="p">,</span> \
     <span class="n">login_user</span><span class="p">,</span> <span class="n">logout_user</span>
 <span class="kn">from</span> <span class="nn">flask.ext.blogging</span> <span class="kn">import</span> <span class="n">SQLAStorage</span><span class="p">,</span> <span class="n">BloggingEngine</span>
@@ -141,9 +141,11 @@ to configure authentication. This example uses version 0.2.0.</p>
 
 <span class="c"># extensions</span>
 <span class="n">engine</span> <span class="o">=</span> <span class="n">create_engine</span><span class="p">(</span><span class="s">'sqlite:////tmp/blog.db'</span><span class="p">)</span>
-<span class="n">sql_storage</span> <span class="o">=</span> <span class="n">SQLAStorage</span><span class="p">(</span><span class="n">engine</span><span class="p">)</span>
+<span class="n">meta</span> <span class="o">=</span> <span class="n">MetaData</span><span class="p">()</span>
+<span class="n">sql_storage</span> <span class="o">=</span> <span class="n">SQLAStorage</span><span class="p">(</span><span class="n">engine</span><span class="p">,</span> <span class="n">meta</span><span class="o">=</span><span class="n">meta</span><span class="p">)</span>
 <span class="n">blog_engine</span> <span class="o">=</span> <span class="n">BloggingEngine</span><span class="p">(</span><span class="n">app</span><span class="p">,</span> <span class="n">sql_storage</span><span class="p">)</span>
 <span class="n">login_manager</span> <span class="o">=</span> <span class="n">LoginManager</span><span class="p">(</span><span class="n">app</span><span class="p">)</span>
+<span class="n">meta</span><span class="o">.</span><span class="n">create_all</span><span class="p">(</span><span class="n">bind</span><span class="o">=</span><span class="n">engine</span><span class="p">)</span>
 
 <span class="c"># user class for providing authentication</span>
 <span class="k">class</span> <span class="nc">User</span><span class="p">(</span><span class="n">UserMixin</span><span class="p">):</span>
@@ -248,19 +250,19 @@ a flask blog engine to your flask site.</p>
     <strong>Related Post</strong>
         <ul>
             <li>
-                <a href="http://gouthamanbalaraman.com/blog/securing-authentication-tokens.html">Securing Authentication Tokens</a>
-            </li>
-            <li>
                 <a href="http://gouthamanbalaraman.com/blog/flask-app-directory-structure.html">Flask App Directory Structure</a>
             </li>
             <li>
                 <a href="http://gouthamanbalaraman.com/blog/minimal-flask-login-example.html">Minimal Flask-Login Example</a>
             </li>
             <li>
-                <a href="http://gouthamanbalaraman.com/blog/asynchronous-python-logging-using-msmq.html">Asynchronous Python Logging Using MSMQ</a>
+                <a href="http://gouthamanbalaraman.com/blog/securing-authentication-tokens.html">Securing Authentication Tokens</a>
             </li>
             <li>
                 <a href="http://gouthamanbalaraman.com/blog/flask-track-usage.html">Flask Track Usage Primer</a>
+            </li>
+            <li>
+                <a href="http://gouthamanbalaraman.com/blog/building-luigi-task-pipeline.html">Building Task Pipelines Using Luigi</a>
             </li>
         </ul>
         <hr/>
