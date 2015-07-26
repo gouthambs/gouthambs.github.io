@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Adding Caching to Python Flask-Blogging Engine - Gouthaman Balaraman</title>
+        <!-- All the meta tags -->
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+        <meta property="og:type" content="article"/>
+        <meta property="og:title" content="Adding Caching to Python Flask-Blogging Engine"/>
+        <meta property="og:url" content="http://gouthamanbalaraman.com/blog/adding-caching-to-python-flask-blogging-extension.html"/>
+        <meta property="og:description" content="This post will discuss caching support to Flask-Blogging"/>
+        <link href="http://gouthamanbalaraman.com/theme/static/css/bootstrap.readable.min.css" rel="stylesheet" />
+        <link href="http://gouthamanbalaraman.com/theme/static/css/style.css" rel="stylesheet" />
+        
+        <link href="http://gouthamanbalaraman.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Gouthaman Balaraman Full Atom Feed" />
+        <link href="http://gouthamanbalaraman.com/feeds/all.rss.xml" type="application/rss+xml" rel="alternate" title="Gouthaman Balaraman RSS Feed" />
+        <link href="http://gouthamanbalaraman.com/feeds/python.atom.xml" type="application/atom+xml" rel="alternate" title="Gouthaman Balaraman Categories Atom Feed" />
+        <link href="http://gouthamanbalaraman.com/feeds/python.rss.xml" type="application/rss+xml" rel="alternate" title="Gouthaman Balaraman Categories RSS Feed" />
+        <!-- Google Analytics -->
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-46714334-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    /*Update Your Analytics Tracking Code to Support Display Advertising by uncommenting the following 
+    instead of the above line */    
+    /*ga.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'stats.g.doubleclick.net/dc.js';*/
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+        <!-- Using MathJax, with the delimiters $ -->
+        <!-- Conflict with pygments for the .mo and .mi -->
+        <script type="text/x-mathjax-config">
+          MathJax.Hub.Config({
+          "HTML-CSS": {
+          styles: {
+          ".MathJax .mo, .MathJax .mi": {color: "black ! important"}}
+          },
+          tex2jax: {inlineMath: [['$','$'], ['\\\\(','\\\\)']],processEscapes: true}
+          });
+        </script>
+    </head>
+
+    <body>
+      <div class="navbar navbar-default navbar-fixed-top">
+          <div class="container">
+            <div class="navbar-header">
+              <a href="http://gouthamanbalaraman.com" class="navbar-brand">Gouthaman Balaraman</a>
+              <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+            </div>
+            <div class="navbar-collapse collapse" id="navbar-main">
+              <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="http://gouthamanbalaraman.com/pages/about.html">About</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                <div class="col-md-10 col-md-offset-1">
+    <div class="page-header">
+        <h1>Adding Caching to Python Flask-Blogging Engine</h1>
+     <!--span class="glyphicon glyphicon-calendar"></span-->
+     &nbsp;July 25, 2015
+     &nbsp;
+     <!--span class="glyphicon glyphicon-user"></span--> by  
+     <a class="url fn" href="http://gouthamanbalaraman.com/author/gouthaman-balaraman.html">&nbsp;Gouthaman Balaraman </a>
+
+        <p id="post-share-links">
+            &nbsp;Share on:
+            <a href="https://sharetodiaspora.github.io/?title=Adding%20Caching%20to%20Python%20Flask-Blogging%20Engine&url=http%3A//gouthamanbalaraman.com/blog/adding-caching-to-python-flask-blogging-extension.html" target="_blank" title="Share on Diaspora">Diaspora*</a>
+            /
+            <a href="http://twitter.com/home?status=Adding%20Caching%20to%20Python%20Flask-Blogging%20Engine%20http%3A//gouthamanbalaraman.com/blog/adding-caching-to-python-flask-blogging-extension.html" target="_blank" title="Share on Twitter">Twitter</a>
+            /
+            <a href="http://www.facebook.com/sharer/sharer.php?s=100&amp;p%5Burl%5D=http%3A//gouthamanbalaraman.com/blog/adding-caching-to-python-flask-blogging-extension.html" target="_blank" title="Share on Facebook">Facebook</a>
+            /
+            <a href="https://plus.google.com/share?url=http%3A//gouthamanbalaraman.com/blog/adding-caching-to-python-flask-blogging-extension.html" target="_blank" title="Share on Google Plus">Google+</a>
+            /
+            <a href="mailto:?subject=Adding%20Caching%20to%20Python%20Flask-Blogging%20Engine&amp;body=http%3A//gouthamanbalaraman.com/blog/adding-caching-to-python-flask-blogging-extension.html" target="_blank" title="Share via Email">Email</a>
+        </p>
+     </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-10 col-md-offset-1">
+
+<div class="bs-docs-section">
+    
+     <!-- article description -->
+         <p class="lead">This post will discuss caching support to Flask-Blogging</p>
+      
+      <!-- article content -->
+     <p>I deployed my blog (using <a class="reference external" href="https://github.com/gouthambs/Flask-Blogging">Flask-Blogging</a> extension)
+to a site I am building. I am currently hosting the test version on the free instance
+of <a class="reference external" href="https://openshift.com">Openshift</a>. So these are not very powerful servers, and
+I wasn't expecting any great performance. Here is what I saw while
+using Version 0.3.2 of <tt class="docutils literal"><span class="pre">Flask-Blogging</span></tt>:</p>
+<pre class="literal-block">
+$&gt; ab -kc 30 -t 10 https://ucarpool.org/blog/
+
+Benchmarking ucarpool.org (be patient)
+Finished 267 requests
+
+Document Path:          /blog/
+Document Length:        4882 bytes
+
+Concurrency Level:      30
+Time taken for tests:   10.061 seconds
+Complete requests:      267
+Failed requests:        0
+Keep-Alive requests:    267
+Total transferred:      1428480 bytes
+HTML transferred:       1303494 bytes
+Requests per second:    26.54 [#/sec] (mean)
+Time per request:       1130.451 [ms] (mean)
+Time per request:       37.682 [ms] (mean, across all concurrent requests)
+Transfer rate:          138.65 [Kbytes/sec] received
+
+Connection Times (ms)
+              min  mean[+/-sd] median   max
+Connect:        0   34  95.5      0     353
+Processing:   272 1040 374.4    936    2166
+Waiting:      267 1037 374.5    933    2163
+Total:        546 1074 349.5    968    2166
+
+Percentage of the requests served within a certain time (ms)
+  50%    964
+  66%   1039
+  75%   1133
+  80%   1248
+  90%   1812
+  95%   1910
+  98%   2030
+  99%   2070
+ 100%   2166 (longest request)
+</pre>
+<p>Thats a measely 26 requests/sec!</p>
+<p>One of the features I have wanted to add to this extension is the ability to
+cache the pages. Blogs are typically heavy on reads, and light on writes. This
+makes an excellent case for caching.</p>
+<p>In order to enable caching support, I am using <tt class="docutils literal"><span class="pre">Flask-Cache</span></tt> the caching
+extension for <tt class="docutils literal">Flask</tt>. The version 0.4.0 of <tt class="docutils literal"><span class="pre">Flask-Blogging</span></tt> is released with
+caching support built in. <tt class="docutils literal"><span class="pre">Flask-Cache</span></tt> makes the caching backend
+configurable. It has support for various backends such as filesystem,
+redis, and memcache.</p>
+<p>Here is resulting performance after using a filesystem based cache:</p>
+<pre class="literal-block">
+$&gt; ab -kc 30 -t 10 https://ucarpool.org/blog/
+This is ApacheBench, Version 2.3 &lt;$Revision: 1528965 $&gt;
+Copyright 1996 Adam Twiss, Zeus Technology Ltd, http://www.zeustech.net/
+Licensed to The Apache Software Foundation, http://www.apache.org/
+
+Benchmarking ucarpool.org (be patient)
+Finished 1815 requests
+
+Document Path:          /blog/
+Document Length:        4882 bytes
+
+Concurrency Level:      30
+Time taken for tests:   10.004 seconds
+Complete requests:      1815
+Failed requests:        0
+Keep-Alive requests:    1815
+Total transferred:      9710280 bytes
+HTML transferred:       8860830 bytes
+Requests per second:    181.43 [#/sec] (mean)
+Time per request:       165.351 [ms] (mean)
+Time per request:       5.512 [ms] (mean, across all concurrent requests)
+Transfer rate:          947.92 [Kbytes/sec] received
+
+Connection Times (ms)
+              min  mean[+/-sd] median   max
+Connect:        0    6  44.3      0     400
+Processing:    80  158  46.1    150     411
+Waiting:       79  156  46.1    147     410
+Total:         83  164  58.9    152     518
+
+Percentage of the requests served within a certain time (ms)
+  50%    152
+  66%    173
+  75%    183
+  80%    190
+  90%    217
+  95%    277
+  98%    357
+  99%    420
+ 100%    518 (longest request)
+</pre>
+<p>Now we are able to serve 180 requests/second. A good 7X performance gain for using a
+filesystem cache. Using in memory like Redis, or SSD filesystem should be even better.</p>
+<div class="section" id="conclusion">
+<h2>Conclusion</h2>
+<p>Flask-Blogging, the Flask extension to add Markdown based blog support to Flask sites, incorporates
+caching support which has greatly improved its performance.</p>
+</div>
+
+     <br>
+     
+     <!-- article tags-->
+        <span class="glyphicon glyphicon-tags"></span>&nbsp;&nbsp;
+            <span class="label label-default"><a href="http://gouthamanbalaraman.com/tag/python.html">python</a></span>&nbsp;&nbsp;
+            <span class="label label-default"><a href="http://gouthamanbalaraman.com/tag/flask.html">flask</a></span>&nbsp;&nbsp;
+            <span class="label label-default"><a href="http://gouthamanbalaraman.com/tag/programming.html">programming</a></span>&nbsp;&nbsp;
+        <br>
+     <hr/>
+    
+    <strong>Related Post</strong>
+        <ul>
+            <li>
+                <a href="http://gouthamanbalaraman.com/blog/flask-blogging-python-flask-blog-engine-extension.html">Flask-Blogging: A Python Flask Blog Engine as an Extension</a>
+            </li>
+            <li>
+                <a href="http://gouthamanbalaraman.com/blog/securing-authentication-tokens.html">Securing Authentication Tokens</a>
+            </li>
+            <li>
+                <a href="http://gouthamanbalaraman.com/blog/flask-app-directory-structure.html">Flask App Directory Structure</a>
+            </li>
+            <li>
+                <a href="http://gouthamanbalaraman.com/blog/minimal-flask-login-example.html">Minimal Flask-Login Example</a>
+            </li>
+            <li>
+                <a href="http://gouthamanbalaraman.com/blog/flask-track-usage.html">Flask Track Usage Primer</a>
+            </li>
+        </ul>
+        <hr/>
+
+     <!-- article comments -->
+    <div class="comment">
+        <div id="disqus_thread"></div> <!-- comment app container -->
+    </div>
+	<!-- Comment BEGIN -->
+    <script type="text/javascript">
+        var disqus_shortname = 'gouthamanbalaramancom'; // required: replace example with your forum shortname
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+     <!-- Comment END -->
+</div>    
+                </div>
+               
+            </div>
+            <div class="row">
+                <div class="col-md-10 col-md-offset-1">
+                </div>
+            </div>
+            <footer id="contentinfo" class="footer">
+                <address id="about" class="vcard body">
+                    &copy; <a href="http://gouthamanbalaraman.com">Gouthaman Balaraman</a> Proudly powered by <a href="http://getpelican.com/">Pelican</a>
+                    <div class="pull-right">
+			            <a href="http://gouthamanbalaraman.com/feeds/all.atom.xml">Atom</a>
+			        &nbsp
+			            <a href="http://gouthamanbalaraman.com/feeds/all.rss.xml">RSS</a>
+		            </div>
+                </address><!-- /#about -->
+            </footer>
+        </div><!-- container -->
+        <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
+        <script src="http://gouthamanbalaraman.com/theme/static/js/jquery.1.11.2.min.js"></script>
+        <script src="http://gouthamanbalaraman.com/theme/static/js/bootstrap.min.js"></script>
+        <script type="text/javascript">
+	jQuery(document).ready(function($) {
+	    $("div.collapseheader").click(function () {
+	    $header = $(this).children("span").first();
+	    $codearea = $(this).children(".input_area");
+	    console.log($(this).children());
+	    $codearea.slideToggle(500, function () {
+	        $header.text(function () {
+	            return $codearea.is(":visible") ? "Collapse Code" : "Expand Code";
+	        });
+	    });
+	});
+	});
+	</script>
+    </body>
+</html>
