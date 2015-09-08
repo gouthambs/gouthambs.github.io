@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Valuing European Option Using the Heston Model in QuantLib and Python - Gouthaman Balaraman</title>
+        <!-- All the meta tags -->
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+        <meta property="og:type" content="article"/>
+        <meta property="og:title" content="Valuing European Option Using the Heston Model in QuantLib and Python"/>
+        <meta property="og:url" content="http://gouthamanbalaraman.com/blog/valuing-european-option-heston-model-quantLib.html"/>
+        <meta property="og:description" content="Introduces an example on how to value European options using Heston model in Quantlib"/>
+        <link href="http://gouthamanbalaraman.com/theme/static/css/bootstrap.readable.min.css" rel="stylesheet" />
+        <link href="http://gouthamanbalaraman.com/theme/static/css/style.css" rel="stylesheet" />
+        
+        <link href="http://gouthamanbalaraman.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Gouthaman Balaraman Full Atom Feed" />
+        <link href="http://gouthamanbalaraman.com/feeds/all.rss.xml" type="application/rss+xml" rel="alternate" title="Gouthaman Balaraman RSS Feed" />
+        <link href="http://gouthamanbalaraman.com/feeds/quantlib-finance.atom.xml" type="application/atom+xml" rel="alternate" title="Gouthaman Balaraman Categories Atom Feed" />
+        <link href="http://gouthamanbalaraman.com/feeds/quantlib-finance.rss.xml" type="application/rss+xml" rel="alternate" title="Gouthaman Balaraman Categories RSS Feed" />
+        <!-- Google Analytics -->
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-46714334-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    /*Update Your Analytics Tracking Code to Support Display Advertising by uncommenting the following 
+    instead of the above line */    
+    /*ga.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'stats.g.doubleclick.net/dc.js';*/
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+        <!-- Using MathJax, with the delimiters $ -->
+        <!-- Conflict with pygments for the .mo and .mi -->
+        <script type="text/x-mathjax-config">
+          MathJax.Hub.Config({
+          "HTML-CSS": {
+          styles: {
+          ".MathJax .mo, .MathJax .mi": {color: "black ! important"}}
+          },
+          tex2jax: {inlineMath: [['$','$'], ['\\\\(','\\\\)']],processEscapes: true}
+          });
+        </script>
+    </head>
+
+    <body>
+      <div class="navbar navbar-default navbar-fixed-top">
+          <div class="container">
+            <div class="navbar-header">
+              <a href="http://gouthamanbalaraman.com" class="navbar-brand">Gouthaman Balaraman</a>
+              <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+            </div>
+            <div class="navbar-collapse collapse" id="navbar-main">
+              <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="http://gouthamanbalaraman.com/pages/about.html">About</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                <div class="col-md-10 col-md-offset-1">
+    <div class="page-header">
+        <h1>Valuing European Option Using the Heston Model in QuantLib and Python</h1>
+     <!--span class="glyphicon glyphicon-calendar"></span-->
+     &nbsp;September 08, 2015
+     &nbsp;
+     <!--span class="glyphicon glyphicon-user"></span--> by  
+     <a class="url fn" href="http://gouthamanbalaraman.com/author/gouthaman-balaraman.html">&nbsp;Gouthaman Balaraman </a>
+
+        <p id="post-share-links">
+            &nbsp;Share on:
+            <a href="https://sharetodiaspora.github.io/?title=Valuing%20European%20Option%20Using%20the%20Heston%20Model%20in%20QuantLib%20and%20Python&url=http%3A//gouthamanbalaraman.com/blog/valuing-european-option-heston-model-quantLib.html" target="_blank" title="Share on Diaspora">Diaspora*</a>
+            /
+            <a href="http://twitter.com/home?status=Valuing%20European%20Option%20Using%20the%20Heston%20Model%20in%20QuantLib%20and%20Python%20http%3A//gouthamanbalaraman.com/blog/valuing-european-option-heston-model-quantLib.html" target="_blank" title="Share on Twitter">Twitter</a>
+            /
+            <a href="http://www.facebook.com/sharer/sharer.php?s=100&amp;p%5Burl%5D=http%3A//gouthamanbalaraman.com/blog/valuing-european-option-heston-model-quantLib.html" target="_blank" title="Share on Facebook">Facebook</a>
+            /
+            <a href="https://plus.google.com/share?url=http%3A//gouthamanbalaraman.com/blog/valuing-european-option-heston-model-quantLib.html" target="_blank" title="Share on Google Plus">Google+</a>
+            /
+            <a href="mailto:?subject=Valuing%20European%20Option%20Using%20the%20Heston%20Model%20in%20QuantLib%20and%20Python&amp;body=http%3A//gouthamanbalaraman.com/blog/valuing-european-option-heston-model-quantLib.html" target="_blank" title="Share via Email">Email</a>
+        </p>
+     </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-10 col-md-offset-1">
+
+<div class="bs-docs-section">
+    
+     <!-- article description -->
+         <p class="lead">Introduces an example on how to value European options using Heston model in Quantlib</p>
+      
+      <!-- article content -->
+     <p>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Heston model can be used to value options by modeling the underlying asset such as the stock of a company. The one major feature of the Heston model is that it inocrporates a stochastic volatility term.</p>
+<p>\begin{eqnarray}
+dS_t &amp;=&amp; \mu S_tdt + \sqrt{V_t} S_t dW_t^1 \\
+dV_t &amp;=&amp; \kappa(\theta-V_t) + \sigma \sqrt{V_t} dW_t^2
+\end{eqnarray}</p>
+<p>Here :</p>
+<ul>
+<li>$S_t$ is the asset&#39;s value at time $t$</li>
+<li>$\mu$ is the expected growth rate of the log normal stock value</li>
+<li>$V_t$ is the variance of the asset $S_t$</li>
+<li>$W_t^1$ is the stochastic process governing the $S_t$ process</li>
+<li>$\theta$ is the value of mean reversion for the variance $V_t$</li>
+<li>$\kappa$ is the strengh of mean reversion</li>
+<li>$\sigma$ is the volatility of volatility</li>
+<li>$W_t^2$ is the stochastic process governing the $V_t$ process</li>
+<li>The correlation between $W_t^1$ and $W_t^2$ is $\rho$</li>
+</ul>
+<p>In contrast, the Black-Scholes-Merton process assumes that the volatility is constant.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[1]:</div>
+
+<div class="collapseheader box-flex1"><span style="font-weight: bold;">Expand Code</span>
+<div class="input_area box-flex1" style="display:none">
+<div class="highlight-ipynb"><pre class="ipynb"><span class="kn">import</span> <span class="nn">QuantLib</span> <span class="kn">as</span> <span class="nn">ql</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">scipy.integrate</span> <span class="kn">import</span> <span class="n">simps</span><span class="p">,</span> <span class="n">cumtrapz</span><span class="p">,</span> <span class="n">romb</span>
+<span class="o">%</span> <span class="n">matplotlib</span> <span class="n">inline</span>
+<span class="kn">import</span> <span class="nn">math</span>
+</pre></div>
+
+</div>
+</div>
+
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Let us consider a European call option for AAPL with a strike price of \$130 maturing on 15th Jan, 2016. Let the spot price be \$127.62. The volatility of the underlying stock is know to be 20%, and has a dividend yield of 1.63%. We assume a short term risk free rate of 0.1%. Lets value this option as of 8th May, 2015. </p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[2]:</div>
+
+<div class="collapseheader box-flex1"><span style="font-weight: bold;">Expand Code</span>
+<div class="input_area box-flex1" style="display:none">
+<div class="highlight-ipynb"><pre class="ipynb"><span class="c"># option parameters</span>
+<span class="n">strike_price</span> <span class="o">=</span> <span class="mf">110.0</span>
+<span class="n">payoff</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">PlainVanillaPayoff</span><span class="p">(</span><span class="n">ql</span><span class="o">.</span><span class="n">Option</span><span class="o">.</span><span class="n">Call</span><span class="p">,</span> <span class="n">strike_price</span><span class="p">)</span>
+
+<span class="c"># option data</span>
+<span class="n">maturity_date</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">Date</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2016</span><span class="p">)</span>
+<span class="n">spot_price</span> <span class="o">=</span> <span class="mf">127.62</span>
+<span class="n">strike_price</span> <span class="o">=</span> <span class="mi">130</span>
+<span class="n">volatility</span> <span class="o">=</span> <span class="mf">0.20</span> <span class="c"># the historical vols for a year</span>
+<span class="n">dividend_rate</span> <span class="o">=</span>  <span class="mf">0.0163</span>
+<span class="n">option_type</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">Option</span><span class="o">.</span><span class="n">Call</span>
+
+<span class="n">risk_free_rate</span> <span class="o">=</span> <span class="mf">0.001</span>
+<span class="n">day_count</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">Actual365Fixed</span><span class="p">()</span>
+<span class="n">calendar</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">UnitedStates</span><span class="p">()</span>
+
+<span class="n">calculation_date</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">Date</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">2015</span><span class="p">)</span>
+<span class="n">ql</span><span class="o">.</span><span class="n">Settings</span><span class="o">.</span><span class="n">instance</span><span class="p">()</span><span class="o">.</span><span class="n">evaluationDate</span> <span class="o">=</span> <span class="n">calculation_date</span>
+</pre></div>
+
+</div>
+</div>
+
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Using the above inputs, we construct the European option as shown below.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[3]:</div>
+
+<div class="input_area box-flex1">
+<div class="highlight-ipynb"><pre class="ipynb"><span class="c"># construct the European Option</span>
+<span class="n">payoff</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">PlainVanillaPayoff</span><span class="p">(</span><span class="n">option_type</span><span class="p">,</span> <span class="n">strike_price</span><span class="p">)</span>
+<span class="n">exercise</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">EuropeanExercise</span><span class="p">(</span><span class="n">maturity_date</span><span class="p">)</span>
+<span class="n">european_option</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">VanillaOption</span><span class="p">(</span><span class="n">payoff</span><span class="p">,</span> <span class="n">exercise</span><span class="p">)</span>
+</pre></div>
+
+</div>
+
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>In order to price the option using the Heston model, we first create the Heston process. In order to create the Heston process, we use the parameter values: mean reversion strength <code>kappa = 0.1</code>, the spot variance <code>v0 = volatility*volatility = 0.04</code>, the mean reversion variance <code>theta=v0</code>, volatility of volatility <code>sigma = 0.1</code> and the correlation between the asset price and its variance is <code>rho = -0.75</code>.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[4]:</div>
+
+<div class="collapseheader box-flex1"><span style="font-weight: bold;">Expand Code</span>
+<div class="input_area box-flex1" style="display:none">
+<div class="highlight-ipynb"><pre class="ipynb"><span class="c"># construct the Heston process</span>
+
+<span class="n">v0</span> <span class="o">=</span> <span class="n">volatility</span><span class="o">*</span><span class="n">volatility</span>  <span class="c"># spot variance</span>
+<span class="n">kappa</span> <span class="o">=</span> <span class="mf">0.1</span>
+<span class="n">theta</span> <span class="o">=</span> <span class="n">v0</span>
+<span class="n">sigma</span> <span class="o">=</span> <span class="mf">0.1</span>
+<span class="n">rho</span> <span class="o">=</span> <span class="o">-</span><span class="mf">0.75</span>
+
+<span class="n">spot_handle</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">QuoteHandle</span><span class="p">(</span>
+    <span class="n">ql</span><span class="o">.</span><span class="n">SimpleQuote</span><span class="p">(</span><span class="n">spot_price</span><span class="p">)</span>
+<span class="p">)</span>
+<span class="n">flat_ts</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">YieldTermStructureHandle</span><span class="p">(</span>
+    <span class="n">ql</span><span class="o">.</span><span class="n">FlatForward</span><span class="p">(</span><span class="n">calculation_date</span><span class="p">,</span> <span class="n">risk_free_rate</span><span class="p">,</span> <span class="n">day_count</span><span class="p">)</span>
+<span class="p">)</span>
+<span class="n">dividend_yield</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">YieldTermStructureHandle</span><span class="p">(</span>
+    <span class="n">ql</span><span class="o">.</span><span class="n">FlatForward</span><span class="p">(</span><span class="n">calculation_date</span><span class="p">,</span> <span class="n">dividend_rate</span><span class="p">,</span> <span class="n">day_count</span><span class="p">)</span>
+<span class="p">)</span>
+<span class="n">heston_process</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">HestonProcess</span><span class="p">(</span><span class="n">flat_ts</span><span class="p">,</span>
+                                  <span class="n">dividend_yield</span><span class="p">,</span>
+                                  <span class="n">spot_handle</span><span class="p">,</span>
+                                  <span class="n">v0</span><span class="p">,</span>
+                                  <span class="n">kappa</span><span class="p">,</span>
+                                  <span class="n">theta</span><span class="p">,</span>
+                                  <span class="n">sigma</span><span class="p">,</span>
+                                  <span class="n">rho</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>On valuing the option using the Heston model, we get the net present value as:</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[5]:</div>
+
+<div class="input_area box-flex1">
+<div class="highlight-ipynb"><pre class="ipynb"><span class="n">engine</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">AnalyticHestonEngine</span><span class="p">(</span><span class="n">ql</span><span class="o">.</span><span class="n">HestonModel</span><span class="p">(</span><span class="n">heston_process</span><span class="p">),</span><span class="mf">0.01</span><span class="p">,</span> <span class="mi">1000</span><span class="p">)</span>
+<span class="n">european_option</span><span class="o">.</span><span class="n">setPricingEngine</span><span class="p">(</span><span class="n">engine</span><span class="p">)</span>
+<span class="n">h_price</span> <span class="o">=</span> <span class="n">european_option</span><span class="o">.</span><span class="n">NPV</span><span class="p">()</span>
+<span class="k">print</span> <span class="s">&quot;The Heston model price is&quot;</span><span class="p">,</span><span class="n">h_price</span>
+</pre></div>
+
+</div>
+
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="box-flex1 output_subarea output_stream output_stdout">
+<pre class="ipynb">The Heston model price is 6.5308651372
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Performing the same calculation using the Black-Scholes-Merton process, we get:</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[6]:</div>
+
+<div class="collapseheader box-flex1"><span style="font-weight: bold;">Expand Code</span>
+<div class="input_area box-flex1" style="display:none">
+<div class="highlight-ipynb"><pre class="ipynb"><span class="n">flat_vol_ts</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">BlackVolTermStructureHandle</span><span class="p">(</span>
+    <span class="n">ql</span><span class="o">.</span><span class="n">BlackConstantVol</span><span class="p">(</span><span class="n">calculation_date</span><span class="p">,</span> <span class="n">calendar</span><span class="p">,</span> <span class="n">volatility</span><span class="p">,</span> <span class="n">day_count</span><span class="p">)</span>
+<span class="p">)</span>
+<span class="n">bsm_process</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">BlackScholesMertonProcess</span><span class="p">(</span><span class="n">spot_handle</span><span class="p">,</span> 
+                                           <span class="n">dividend_yield</span><span class="p">,</span> 
+                                           <span class="n">flat_ts</span><span class="p">,</span> 
+                                           <span class="n">flat_vol_ts</span><span class="p">)</span>
+<span class="n">european_option</span><span class="o">.</span><span class="n">setPricingEngine</span><span class="p">(</span><span class="n">ql</span><span class="o">.</span><span class="n">AnalyticEuropeanEngine</span><span class="p">(</span><span class="n">bsm_process</span><span class="p">))</span>
+<span class="n">bs_price</span> <span class="o">=</span> <span class="n">european_option</span><span class="o">.</span><span class="n">NPV</span><span class="p">()</span>
+<span class="k">print</span> <span class="s">&quot;The Black-Scholes-Merton model price is &quot;</span><span class="p">,</span> <span class="n">bs_price</span>
+</pre></div>
+
+</div>
+</div>
+
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="box-flex1 output_subarea output_stream output_stdout">
+<pre class="ipynb">The Black-Scholes-Merton model price is  6.74927181246
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The difference in the price between the two models is: <code>bs_price - h_price = 0.21840667525992163</code>. This difference is due to the stochastic modeling of the volatility as a CIR-process.</p>
+</div>
+</div>
+</div></p>
+<h1>Conclusion</h1>
+<p>This post provided a minimal example of valuing European options using the Heston model. 
+Comparison with the Black-Scholes-Merton model is shown for instructional purpose.</p>
+     <br>
+     
+     <!-- article tags-->
+        <span class="glyphicon glyphicon-tags"></span>&nbsp;&nbsp;
+            <span class="label label-default"><a href="http://gouthamanbalaraman.com/tag/quantlib.html">quantlib</a></span>&nbsp;&nbsp;
+            <span class="label label-default"><a href="http://gouthamanbalaraman.com/tag/python.html">python</a></span>&nbsp;&nbsp;
+            <span class="label label-default"><a href="http://gouthamanbalaraman.com/tag/finance.html">finance</a></span>&nbsp;&nbsp;
+        <br>
+     <hr/>
+    
+    <strong>Related Post</strong>
+        <ul>
+            <li>
+                <a href="http://gouthamanbalaraman.com/blog/quantlib-term-structure-bootstrap-yield-curve.html">An Introduction to Interest Rate Term Structure in QuantLib</a>
+            </li>
+            <li>
+                <a href="http://gouthamanbalaraman.com/blog/quantlib-basics.html">Introduction to QuantLib</a>
+            </li>
+            <li>
+                <a href="http://gouthamanbalaraman.com/blog/quantlib-bond-modeling.html">Modeling Fixed Rate Bonds Using QuantLib</a>
+            </li>
+            <li>
+                <a href="http://gouthamanbalaraman.com/blog/hull-white-simulation-monte-carlo-convergence.html">On the Convergence of Hull White Monte Carlo Simulations</a>
+            </li>
+            <li>
+                <a href="http://gouthamanbalaraman.com/blog/european-option-binomial-tree-quantlib-python.html">Option Model Handbook, Part III: European Option Pricing With QuantLib</a>
+            </li>
+        </ul>
+        <hr/>
+
+     <!-- article comments -->
+    <div class="comment">
+        <div id="disqus_thread"></div> <!-- comment app container -->
+    </div>
+	<!-- Comment BEGIN -->
+    <script type="text/javascript">
+        var disqus_shortname = 'gouthamanbalaramancom'; // required: replace example with your forum shortname
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+     <!-- Comment END -->
+</div>    
+                </div>
+               
+            </div>
+            <div class="row">
+                <div class="col-md-10 col-md-offset-1">
+                </div>
+            </div>
+            <footer id="contentinfo" class="footer">
+                <address id="about" class="vcard body">
+                    &copy; <a href="http://gouthamanbalaraman.com">Gouthaman Balaraman</a> Proudly powered by <a href="http://getpelican.com/">Pelican</a>
+                    <div class="pull-right">
+			            <a href="http://gouthamanbalaraman.com/feeds/all.atom.xml">Atom</a>
+			        &nbsp
+			            <a href="http://gouthamanbalaraman.com/feeds/all.rss.xml">RSS</a>
+		            </div>
+                </address><!-- /#about -->
+            </footer>
+        </div><!-- container -->
+        <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
+        <script src="http://gouthamanbalaraman.com/theme/static/js/jquery.1.11.2.min.js"></script>
+        <script src="http://gouthamanbalaraman.com/theme/static/js/bootstrap.min.js"></script>
+        <script type="text/javascript">
+	jQuery(document).ready(function($) {
+	    $("div.collapseheader").click(function () {
+	    $header = $(this).children("span").first();
+	    $codearea = $(this).children(".input_area");
+	    console.log($(this).children());
+	    $codearea.slideToggle(500, function () {
+	        $header.text(function () {
+	            return $codearea.is(":visible") ? "Collapse Code" : "Expand Code";
+	        });
+	    });
+	});
+	});
+	</script>
+    </body>
+</html>
