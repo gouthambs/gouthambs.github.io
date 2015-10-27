@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Short Interest Rate Model Calibration - Gouthaman Balaraman</title>
+        <!-- All the meta tags -->
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+        <meta property="og:type" content="article"/>
+        <meta property="og:title" content="Short Interest Rate Model Calibration"/>
+        <meta property="og:url" content="http://gouthamanbalaraman.com/blog/short-interest-rate-model-calibration-quantlib.html"/>
+        <meta property="og:description" content="Provides examples of short interest rate model calibration to swaption volatilities"/>
+        <link href="http://gouthamanbalaraman.com/theme/static/css/bootstrap.readable.min.css" rel="stylesheet" />
+        <link href="http://gouthamanbalaraman.com/theme/static/css/style.css" rel="stylesheet" />
+        
+        <link href="http://gouthamanbalaraman.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Gouthaman Balaraman Full Atom Feed" />
+        <link href="http://gouthamanbalaraman.com/feeds/all.rss.xml" type="application/rss+xml" rel="alternate" title="Gouthaman Balaraman RSS Feed" />
+        <link href="http://gouthamanbalaraman.com/feeds/quantlib.atom.xml" type="application/atom+xml" rel="alternate" title="Gouthaman Balaraman Categories Atom Feed" />
+        <link href="http://gouthamanbalaraman.com/feeds/quantlib.rss.xml" type="application/rss+xml" rel="alternate" title="Gouthaman Balaraman Categories RSS Feed" />
+        <!-- Google Analytics -->
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-46714334-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    /*Update Your Analytics Tracking Code to Support Display Advertising by uncommenting the following 
+    instead of the above line */    
+    /*ga.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'stats.g.doubleclick.net/dc.js';*/
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+        <!-- Using MathJax, with the delimiters $ -->
+        <!-- Conflict with pygments for the .mo and .mi -->
+        <script type="text/x-mathjax-config">
+          MathJax.Hub.Config({
+          "HTML-CSS": {
+          styles: {
+          ".MathJax .mo, .MathJax .mi": {color: "black ! important"}}
+          },
+          tex2jax: {inlineMath: [['$','$'], ['\\\\(','\\\\)']],processEscapes: true}
+          });
+        </script>
+    </head>
+
+    <body>
+      <div class="navbar navbar-default navbar-fixed-top">
+          <div class="container">
+            <div class="navbar-header">
+              <a href="http://gouthamanbalaraman.com" class="navbar-brand">Gouthaman Balaraman</a>
+              <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+            </div>
+            <div class="navbar-collapse collapse" id="navbar-main">
+              <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="http://gouthamanbalaraman.com/pages/about.html">About</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                <div class="col-md-10 col-md-offset-1">
+    <div class="page-header">
+        <h1>Short Interest Rate Model Calibration</h1>
+     <!--span class="glyphicon glyphicon-calendar"></span-->
+     &nbsp;October 27, 2015
+     &nbsp;
+     <!--span class="glyphicon glyphicon-user"></span--> by  
+     <a class="url fn" href="http://gouthamanbalaraman.com/author/gouthaman-balaraman.html">&nbsp;Gouthaman Balaraman </a>
+
+        <p id="post-share-links">
+            &nbsp;Share on:
+            <a href="https://sharetodiaspora.github.io/?title=Short%20Interest%20Rate%20Model%20Calibration&url=http%3A//gouthamanbalaraman.com/blog/short-interest-rate-model-calibration-quantlib.html" target="_blank" title="Share on Diaspora">Diaspora*</a>
+            /
+            <a href="http://twitter.com/home?status=Short%20Interest%20Rate%20Model%20Calibration%20http%3A//gouthamanbalaraman.com/blog/short-interest-rate-model-calibration-quantlib.html" target="_blank" title="Share on Twitter">Twitter</a>
+            /
+            <a href="http://www.facebook.com/sharer/sharer.php?s=100&amp;p%5Burl%5D=http%3A//gouthamanbalaraman.com/blog/short-interest-rate-model-calibration-quantlib.html" target="_blank" title="Share on Facebook">Facebook</a>
+            /
+            <a href="https://plus.google.com/share?url=http%3A//gouthamanbalaraman.com/blog/short-interest-rate-model-calibration-quantlib.html" target="_blank" title="Share on Google Plus">Google+</a>
+            /
+            <a href="mailto:?subject=Short%20Interest%20Rate%20Model%20Calibration&amp;body=http%3A//gouthamanbalaraman.com/blog/short-interest-rate-model-calibration-quantlib.html" target="_blank" title="Share via Email">Email</a>
+        </p>
+     </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-10 col-md-offset-1">
+
+<div class="bs-docs-section">
+    
+     <!-- article description -->
+         <p class="lead">Provides examples of short interest rate model calibration to swaption volatilities</p>
+      
+      <!-- article content -->
+     <p>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>I have talked about Hull-White model in my earlier blog posts. The focus of those posts was to see how to use the model classes. The model parameters were assumed to be given. However in practice, the model parameters need to calibrated from market data. Typically instruments such as swaptions, caps or floors and their market prices / volatilities are taken as inputs. Then the model parameters are fit in such a way that the model prices these options close enough. The goodness of fit depends, apart from the choice of the numerical methods, on the type of model itself. This is because models such as Hull-White 1 factor cannot fit some of the humped volatility term structures observed in the market. Never the less, Hull-White is usually a good starting point to understand calibration process.</p>
+<p>Here we will discuss Hull-White model in detail. Then we will also show how the same procedure can be applied to calibrate other short rate models.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[1]:</div>
+
+<div class="input_area box-flex1">
+<div class="highlight-ipynb"><pre class="ipynb"><span class="kn">import</span> <span class="nn">QuantLib</span> <span class="kn">as</span> <span class="nn">ql</span>
+<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">namedtuple</span>
+<span class="kn">import</span> <span class="nn">math</span>
+</pre></div>
+
+</div>
+
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="hull-white-1-factor-model">Hull-White 1 Factor Model</h2>
+<p>Hull-White model was one of the first practical exogenous models that attempted to fit to the market interest rate term structures. The model is described as:</p>
+<p>\begin{equation}
+dr_t = (\theta(t) - a r_t) dt + \sigma dW_t
+\end{equation}</p>
+<p>where $a$ is the mean reversion constant, $\sigma$ is the volatility parameter. The parameter $\theta(t)$ is chosen in order to fit the input term structure of interest rates. </p>
+<p>What is the &quot;right&quot; value for parameters $a$ and $\sigma$? This is the question that we address by calibrating to market instruments.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[2]:</div>
+
+<div class="input_area box-flex1">
+<div class="highlight-ipynb"><pre class="ipynb"><span class="n">today</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">Date</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="n">ql</span><span class="o">.</span><span class="n">February</span><span class="p">,</span> <span class="mi">2002</span><span class="p">);</span>
+<span class="n">settlement</span><span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">Date</span><span class="p">(</span><span class="mi">19</span><span class="p">,</span> <span class="n">ql</span><span class="o">.</span><span class="n">February</span><span class="p">,</span> <span class="mi">2002</span><span class="p">);</span>
+<span class="n">ql</span><span class="o">.</span><span class="n">Settings</span><span class="o">.</span><span class="n">instance</span><span class="p">()</span><span class="o">.</span><span class="n">evaluationDate</span> <span class="o">=</span> <span class="n">today</span><span class="p">;</span>
+<span class="n">term_structure</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">YieldTermStructureHandle</span><span class="p">(</span>
+    <span class="n">ql</span><span class="o">.</span><span class="n">FlatForward</span><span class="p">(</span><span class="n">settlement</span><span class="p">,</span><span class="mf">0.04875825</span><span class="p">,</span><span class="n">ql</span><span class="o">.</span><span class="n">Actual365Fixed</span><span class="p">())</span>
+    <span class="p">)</span>
+<span class="n">index</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">Euribor1Y</span><span class="p">(</span><span class="n">term_structure</span><span class="p">)</span>
+</pre></div>
+
+</div>
+
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>In this example we are going to calibrate to the swaption volatilities as shown below. </p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[3]:</div>
+
+<div class="input_area box-flex1">
+<div class="highlight-ipynb"><pre class="ipynb"><span class="n">CalibrationData</span> <span class="o">=</span> <span class="n">namedtuple</span><span class="p">(</span><span class="s">&quot;CalibrationData&quot;</span><span class="p">,</span> 
+                             <span class="s">&quot;start, length, volatility&quot;</span><span class="p">)</span>
+<span class="n">data</span> <span class="o">=</span> <span class="p">[</span><span class="n">CalibrationData</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mf">0.1148</span><span class="p">),</span>
+        <span class="n">CalibrationData</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mf">0.1108</span><span class="p">),</span>
+        <span class="n">CalibrationData</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mf">0.1070</span><span class="p">),</span>
+        <span class="n">CalibrationData</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mf">0.1021</span><span class="p">),</span>
+        <span class="n">CalibrationData</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mf">0.1000</span> <span class="p">)]</span>
+</pre></div>
+
+</div>
+
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[4]:</div>
+
+<div class="input_area box-flex1">
+<div class="highlight-ipynb"><pre class="ipynb"><span class="c">#&lt;!-- collapse=True --&gt;</span>
+<span class="k">def</span> <span class="nf">create_swaption_helpers</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">term_structure</span><span class="p">,</span> <span class="n">engine</span><span class="p">):</span>
+    <span class="n">swaptions</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">fixed_leg_tenor</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">Period</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">ql</span><span class="o">.</span><span class="n">Years</span><span class="p">)</span>
+    <span class="n">fixed_leg_daycounter</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">Actual360</span><span class="p">()</span>
+    <span class="n">floating_leg_daycounter</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">Actual360</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
+        <span class="n">vol_handle</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">QuoteHandle</span><span class="p">(</span><span class="n">ql</span><span class="o">.</span><span class="n">SimpleQuote</span><span class="p">(</span><span class="n">d</span><span class="o">.</span><span class="n">volatility</span><span class="p">))</span>
+        <span class="n">helper</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">SwaptionHelper</span><span class="p">(</span><span class="n">ql</span><span class="o">.</span><span class="n">Period</span><span class="p">(</span><span class="n">d</span><span class="o">.</span><span class="n">start</span><span class="p">,</span> <span class="n">ql</span><span class="o">.</span><span class="n">Years</span><span class="p">),</span>
+                                   <span class="n">ql</span><span class="o">.</span><span class="n">Period</span><span class="p">(</span><span class="n">d</span><span class="o">.</span><span class="n">length</span><span class="p">,</span> <span class="n">ql</span><span class="o">.</span><span class="n">Years</span><span class="p">),</span>
+                                   <span class="n">vol_handle</span><span class="p">,</span>
+                                   <span class="n">index</span><span class="p">,</span>
+                                   <span class="n">fixed_leg_tenor</span><span class="p">,</span>
+                                   <span class="n">fixed_leg_daycounter</span><span class="p">,</span>
+                                   <span class="n">floating_leg_daycounter</span><span class="p">,</span>
+                                   <span class="n">term_structure</span>
+                                   <span class="p">)</span>
+        <span class="n">helper</span><span class="o">.</span><span class="n">setPricingEngine</span><span class="p">(</span><span class="n">engine</span><span class="p">)</span>
+        <span class="n">swaptions</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">helper</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">swaptions</span>    
+
+<span class="k">def</span> <span class="nf">calibration_report</span><span class="p">(</span><span class="n">swaptions</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+    <span class="k">print</span> <span class="s">&quot;-&quot;</span><span class="o">*</span><span class="mi">82</span>
+    <span class="k">print</span> <span class="s">&quot;</span><span class="si">%15s</span><span class="s"> </span><span class="si">%15s</span><span class="s"> </span><span class="si">%15s</span><span class="s"> </span><span class="si">%15s</span><span class="s"> </span><span class="si">%15s</span><span class="s">&quot;</span> <span class="o">%</span> \
+    <span class="p">(</span><span class="s">&quot;Model Price&quot;</span><span class="p">,</span> <span class="s">&quot;Market Price&quot;</span><span class="p">,</span> <span class="s">&quot;Implied Vol&quot;</span><span class="p">,</span> <span class="s">&quot;Market Vol&quot;</span><span class="p">,</span> <span class="s">&quot;Rel Error&quot;</span><span class="p">)</span>
+    <span class="k">print</span> <span class="s">&quot;-&quot;</span><span class="o">*</span><span class="mi">82</span>
+    <span class="n">cum_err</span> <span class="o">=</span> <span class="mf">0.0</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">s</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">swaptions</span><span class="p">):</span>
+        <span class="n">model_price</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">modelValue</span><span class="p">()</span>
+        <span class="n">market_vol</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">volatility</span>
+        <span class="n">black_price</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">blackPrice</span><span class="p">(</span><span class="n">market_vol</span><span class="p">)</span>
+        <span class="n">rel_error</span> <span class="o">=</span> <span class="n">model_price</span><span class="o">/</span><span class="n">black_price</span> <span class="o">-</span> <span class="mf">1.0</span>
+        <span class="n">implied_vol</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">impliedVolatility</span><span class="p">(</span><span class="n">model_price</span><span class="p">,</span>
+                                          <span class="mf">1e-5</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.50</span><span class="p">)</span>
+        <span class="n">rel_error2</span> <span class="o">=</span> <span class="n">implied_vol</span><span class="o">/</span><span class="n">market_vol</span><span class="o">-</span><span class="mf">1.0</span>
+        <span class="n">cum_err</span> <span class="o">+=</span> <span class="n">rel_error2</span><span class="o">*</span><span class="n">rel_error2</span>
+        
+        <span class="k">print</span> <span class="s">&quot;</span><span class="si">%15.5f</span><span class="s"> </span><span class="si">%15.5f</span><span class="s"> </span><span class="si">%15.5f</span><span class="s"> </span><span class="si">%15.5f</span><span class="s"> </span><span class="si">%15.5f</span><span class="s">&quot;</span> <span class="o">%</span> \
+        <span class="p">(</span><span class="n">model_price</span><span class="p">,</span> <span class="n">black_price</span><span class="p">,</span> <span class="n">implied_vol</span><span class="p">,</span> <span class="n">market_vol</span><span class="p">,</span> <span class="n">rel_error</span><span class="p">)</span>
+    <span class="k">print</span> <span class="s">&quot;-&quot;</span><span class="o">*</span><span class="mi">82</span>
+    <span class="k">print</span> <span class="s">&quot;Cumulative Error : </span><span class="si">%15.5f</span><span class="s">&quot;</span> <span class="o">%</span> <span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">cum_err</span><span class="p">)</span>
+</pre></div>
+
+</div>
+
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="calibrating-reversion-and-volaitility">Calibrating Reversion and Volaitility</h3>
+<p>Here we use the <code>JamshidianSwaptionEngine</code> to value the swaptions as part of calibration. The <code>JamshidianSwaptionEngine</code> requires one-factor affine models as input. For other interest rate models, we need a pricing engine that is more suited to those models.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[5]:</div>
+
+<div class="input_area box-flex1">
+<div class="highlight-ipynb"><pre class="ipynb"><span class="n">model</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">HullWhite</span><span class="p">(</span><span class="n">term_structure</span><span class="p">);</span>
+<span class="n">engine</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">JamshidianSwaptionEngine</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
+<span class="n">swaptions</span> <span class="o">=</span> <span class="n">create_swaption_helpers</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">term_structure</span><span class="p">,</span> <span class="n">engine</span><span class="p">)</span>
+
+<span class="n">optimization_method</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">LevenbergMarquardt</span><span class="p">(</span><span class="mf">1.0e-8</span><span class="p">,</span><span class="mf">1.0e-8</span><span class="p">,</span><span class="mf">1.0e-8</span><span class="p">)</span>
+<span class="n">end_criteria</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">EndCriteria</span><span class="p">(</span><span class="mi">10000</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mf">1e-6</span><span class="p">,</span> <span class="mf">1e-8</span><span class="p">,</span> <span class="mf">1e-8</span><span class="p">)</span>
+<span class="n">model</span><span class="o">.</span><span class="n">calibrate</span><span class="p">(</span><span class="n">swaptions</span><span class="p">,</span> <span class="n">optimization_method</span><span class="p">,</span> <span class="n">end_criteria</span><span class="p">)</span>
+
+<span class="n">a</span><span class="p">,</span> <span class="n">sigma</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">params</span><span class="p">()</span>
+<span class="k">print</span> <span class="s">&quot;a = </span><span class="si">%6.5f</span><span class="s">, sigma = </span><span class="si">%6.5f</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">sigma</span><span class="p">)</span>
+</pre></div>
+
+</div>
+
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="box-flex1 output_subarea output_stream output_stdout">
+<pre class="ipynb">a = 0.04642, sigma = 0.00580
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[6]:</div>
+
+<div class="input_area box-flex1">
+<div class="highlight-ipynb"><pre class="ipynb"><span class="n">calibration_report</span><span class="p">(</span><span class="n">swaptions</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
+</pre></div>
+
+</div>
+
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="box-flex1 output_subarea output_stream output_stdout">
+<pre class="ipynb">----------------------------------------------------------------------------------
+    Model Price    Market Price     Implied Vol      Market Vol       Rel Error
+----------------------------------------------------------------------------------
+        0.00878         0.00949         0.10620         0.11480        -0.07485
+        0.00967         0.01008         0.10629         0.11080        -0.04061
+        0.00866         0.00872         0.10634         0.10700        -0.00614
+        0.00649         0.00623         0.10644         0.10210         0.04237
+        0.00354         0.00332         0.10661         0.10000         0.06582
+----------------------------------------------------------------------------------
+Cumulative Error :         0.11614
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[7]:</div>
+
+<div class="input_area box-flex1">
+<div class="highlight-ipynb"><pre class="ipynb"><span class="n">model</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">HullWhite</span><span class="p">(</span><span class="n">term_structure</span><span class="p">);</span>
+<span class="n">engine</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">JamshidianSwaptionEngine</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
+<span class="n">swaptions</span> <span class="o">=</span> <span class="n">create_swaption_helpers</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">term_structure</span><span class="p">,</span> <span class="n">engine</span><span class="p">)</span>
+
+<span class="n">optimization_method</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">LevenbergMarquardt</span><span class="p">(</span><span class="mf">1.0e-8</span><span class="p">,</span><span class="mf">1.0e-8</span><span class="p">,</span><span class="mf">1.0e-8</span><span class="p">)</span>
+<span class="n">end_criteria</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">EndCriteria</span><span class="p">(</span><span class="mi">10000</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mf">1e-6</span><span class="p">,</span> <span class="mf">1e-8</span><span class="p">,</span> <span class="mf">1e-8</span><span class="p">)</span>
+<span class="n">model</span><span class="o">.</span><span class="n">calibrate</span><span class="p">(</span><span class="n">swaptions</span><span class="p">,</span> <span class="n">optimization_method</span><span class="p">,</span> <span class="n">end_criteria</span><span class="p">)</span>
+
+<span class="n">a</span><span class="p">,</span> <span class="n">sigma</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">params</span><span class="p">()</span>
+<span class="k">print</span> <span class="s">&quot;a = </span><span class="si">%6.5f</span><span class="s">, sigma = </span><span class="si">%6.5f</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">sigma</span><span class="p">)</span>
+<span class="n">calibration_report</span><span class="p">(</span><span class="n">swaptions</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
+</pre></div>
+
+</div>
+
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="box-flex1 output_subarea output_stream output_stdout">
+<pre class="ipynb">a = 0.04642, sigma = 0.00580
+----------------------------------------------------------------------------------
+    Model Price    Market Price     Implied Vol      Market Vol       Rel Error
+----------------------------------------------------------------------------------
+        0.00878         0.00949         0.10620         0.11480        -0.07485
+        0.00967         0.01008         0.10629         0.11080        -0.04061
+        0.00866         0.00872         0.10634         0.10700        -0.00614
+        0.00649         0.00623         0.10644         0.10210         0.04237
+        0.00354         0.00332         0.10661         0.10000         0.06582
+----------------------------------------------------------------------------------
+Cumulative Error :         0.11614
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="calibrating-volatility-with-fixed-reversion">Calibrating Volatility With Fixed Reversion</h3>
+<p>Some times we need to calibrate with one parameter held fixed. This can be done in the QuantLib libraries. However, this ability is not exposed in the SWIG wrappers as of version 1.6. I have created a <a href="https://github.com/lballabio/quantlib/issues/336">github issue</a> and provided a patch to address this issue. You will need this patch to execute the following cells. Below, the model is calibrated with a fixed reversion value of 5%.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[8]:</div>
+
+<div class="input_area box-flex1">
+<div class="highlight-ipynb"><pre class="ipynb"><span class="n">constrained_model</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">HullWhite</span><span class="p">(</span><span class="n">term_structure</span><span class="p">,</span> <span class="mf">0.05</span><span class="p">,</span> <span class="mf">0.001</span><span class="p">);</span>
+<span class="n">engine</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">JamshidianSwaptionEngine</span><span class="p">(</span><span class="n">constrained_model</span><span class="p">)</span>
+<span class="n">swaptions</span> <span class="o">=</span> <span class="n">create_swaption_helpers</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">term_structure</span><span class="p">,</span> <span class="n">engine</span><span class="p">)</span>
+
+<span class="n">optimization_method</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">LevenbergMarquardt</span><span class="p">(</span><span class="mf">1.0e-8</span><span class="p">,</span><span class="mf">1.0e-8</span><span class="p">,</span><span class="mf">1.0e-8</span><span class="p">)</span>
+<span class="n">end_criteria</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">EndCriteria</span><span class="p">(</span><span class="mi">10000</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mf">1e-6</span><span class="p">,</span> <span class="mf">1e-8</span><span class="p">,</span> <span class="mf">1e-8</span><span class="p">)</span>
+<span class="n">constrained_model</span><span class="o">.</span><span class="n">calibrate</span><span class="p">(</span><span class="n">swaptions</span><span class="p">,</span> <span class="n">optimization_method</span><span class="p">,</span> <span class="n">end_criteria</span><span class="p">,</span> <span class="n">ql</span><span class="o">.</span><span class="n">NoConstraint</span><span class="p">(),</span> <span class="p">[],</span> <span class="p">[</span><span class="bp">True</span><span class="p">,</span> <span class="bp">False</span><span class="p">])</span>
+
+<span class="n">a</span><span class="p">,</span> <span class="n">sigma</span> <span class="o">=</span> <span class="n">constrained_model</span><span class="o">.</span><span class="n">params</span><span class="p">()</span>
+<span class="k">print</span> <span class="s">&quot;a = </span><span class="si">%6.5f</span><span class="s">, sigma = </span><span class="si">%6.5f</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">sigma</span><span class="p">)</span>
+</pre></div>
+
+</div>
+
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="box-flex1 output_subarea output_stream output_stdout">
+<pre class="ipynb">a = 0.05000, sigma = 0.00586
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[9]:</div>
+
+<div class="input_area box-flex1">
+<div class="highlight-ipynb"><pre class="ipynb"><span class="n">calibration_report</span><span class="p">(</span><span class="n">swaptions</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
+</pre></div>
+
+</div>
+
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="box-flex1 output_subarea output_stream output_stdout">
+<pre class="ipynb">----------------------------------------------------------------------------------
+    Model Price    Market Price     Implied Vol      Market Vol       Rel Error
+----------------------------------------------------------------------------------
+        0.00878         0.00949         0.10621         0.11480        -0.07474
+        0.00967         0.01008         0.10628         0.11080        -0.04068
+        0.00866         0.00872         0.10633         0.10700        -0.00626
+        0.00649         0.00623         0.10644         0.10210         0.04231
+        0.00354         0.00332         0.10663         0.10000         0.06595
+----------------------------------------------------------------------------------
+Cumulative Error :         0.11615
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="black-karasinski-model">Black Karasinski Model</h2>
+<p>The Black Karasinski model is described as:</p>
+<p>\begin{equation}
+d\ln(r_t) = (\theta_t - a \ln(r_t)) dt + \sigma dW_t
+\end{equation}</p>
+<p>In order to calibrate, we use the <code>TreeSwaptionEngine</code> which will work with all short rate models. The calibration is shown below. </p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[10]:</div>
+
+<div class="input_area box-flex1">
+<div class="highlight-ipynb"><pre class="ipynb"><span class="n">model</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">BlackKarasinski</span><span class="p">(</span><span class="n">term_structure</span><span class="p">);</span>
+<span class="n">engine</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">TreeSwaptionEngine</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+<span class="n">swaptions</span> <span class="o">=</span> <span class="n">create_swaption_helpers</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">term_structure</span><span class="p">,</span> <span class="n">engine</span><span class="p">)</span>
+
+<span class="n">optimization_method</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">LevenbergMarquardt</span><span class="p">(</span><span class="mf">1.0e-8</span><span class="p">,</span><span class="mf">1.0e-8</span><span class="p">,</span><span class="mf">1.0e-8</span><span class="p">)</span>
+<span class="n">end_criteria</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">EndCriteria</span><span class="p">(</span><span class="mi">10000</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mf">1e-6</span><span class="p">,</span> <span class="mf">1e-8</span><span class="p">,</span> <span class="mf">1e-8</span><span class="p">)</span>
+<span class="n">model</span><span class="o">.</span><span class="n">calibrate</span><span class="p">(</span><span class="n">swaptions</span><span class="p">,</span> <span class="n">optimization_method</span><span class="p">,</span> <span class="n">end_criteria</span><span class="p">)</span>
+
+<span class="n">a</span><span class="p">,</span> <span class="n">sigma</span> <span class="o">=</span>  <span class="n">model</span><span class="o">.</span><span class="n">params</span><span class="p">()</span>
+<span class="k">print</span> <span class="s">&quot;a = </span><span class="si">%6.5f</span><span class="s">, sigma = </span><span class="si">%6.5f</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">sigma</span><span class="p">)</span>
+</pre></div>
+
+</div>
+
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="box-flex1 output_subarea output_stream output_stdout">
+<pre class="ipynb">a = 0.03902, sigma = 0.11695
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[11]:</div>
+
+<div class="input_area box-flex1">
+<div class="highlight-ipynb"><pre class="ipynb"><span class="n">calibration_report</span><span class="p">(</span><span class="n">swaptions</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
+</pre></div>
+
+</div>
+
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="box-flex1 output_subarea output_stream output_stdout">
+<pre class="ipynb">----------------------------------------------------------------------------------
+    Model Price    Market Price     Implied Vol      Market Vol       Rel Error
+----------------------------------------------------------------------------------
+        0.00872         0.00949         0.10550         0.11480        -0.08095
+        0.00967         0.01008         0.10631         0.11080        -0.04045
+        0.00868         0.00872         0.10654         0.10700        -0.00430
+        0.00650         0.00623         0.10666         0.10210         0.04446
+        0.00355         0.00332         0.10676         0.10000         0.06733
+----------------------------------------------------------------------------------
+Cumulative Error :         0.12163
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="g2-model">G2++ Model</h2>
+<p>As a final example, let us look at a calibration example of the 2-factor G2++ model.
+\begin{equation}
+dr_t = \varphi(t) + x_t + y_t
+\end{equation}</p>
+<p>where $ x_t $ and $ y_t $ are defined by</p>
+<p>\begin{eqnarray}
+dx_t &amp;=&amp; -a x_t dt + \sigma dW^1_t\nonumber \\
+dy_t &amp;=&amp; -b y_t dt + \eta dW^2_t \nonumber \\
+\left&lt;dW^1_t dW^2_t\right&gt; &amp;=&amp; \rho dt 
+\end{eqnarray}</p>
+<p>Once again, we use the <code>TreeSwaptionEngine</code> to value the swaptions in the calibration step. </p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[12]:</div>
+
+<div class="input_area box-flex1">
+<div class="highlight-ipynb"><pre class="ipynb"><span class="n">model</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">G2</span><span class="p">(</span><span class="n">term_structure</span><span class="p">);</span>
+<span class="n">engine</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">TreeSwaptionEngine</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="mi">25</span><span class="p">)</span>
+<span class="c"># engine = ql.G2SwaptionEngine(model, 10, 400)</span>
+<span class="c"># engine = ql.FdG2SwaptionEngine(model)</span>
+<span class="n">swaptions</span> <span class="o">=</span> <span class="n">create_swaption_helpers</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">term_structure</span><span class="p">,</span> <span class="n">engine</span><span class="p">)</span>
+
+<span class="n">optimization_method</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">LevenbergMarquardt</span><span class="p">(</span><span class="mf">1.0e-8</span><span class="p">,</span><span class="mf">1.0e-8</span><span class="p">,</span><span class="mf">1.0e-8</span><span class="p">)</span>
+<span class="n">end_criteria</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">EndCriteria</span><span class="p">(</span><span class="mi">1000</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mf">1e-6</span><span class="p">,</span> <span class="mf">1e-8</span><span class="p">,</span> <span class="mf">1e-8</span><span class="p">)</span>
+<span class="n">model</span><span class="o">.</span><span class="n">calibrate</span><span class="p">(</span><span class="n">swaptions</span><span class="p">,</span> <span class="n">optimization_method</span><span class="p">,</span> <span class="n">end_criteria</span><span class="p">)</span>
+
+<span class="n">a</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">eta</span><span class="p">,</span> <span class="n">rho</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">params</span><span class="p">()</span>
+<span class="k">print</span> <span class="s">&quot;a = </span><span class="si">%6.5f</span><span class="s">, sigma = </span><span class="si">%6.5f</span><span class="s">, b = </span><span class="si">%6.5f</span><span class="s">, eta = </span><span class="si">%6.5f</span><span class="s">, rho = </span><span class="si">%6.5f</span><span class="s"> &quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">eta</span><span class="p">,</span> <span class="n">rho</span><span class="p">)</span>
+</pre></div>
+
+</div>
+
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="box-flex1 output_subarea output_stream output_stdout">
+<pre class="ipynb">a = 0.04050, sigma = 0.00474, b = 0.04438, eta = 0.00301, rho = 0.03541 
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[13]:</div>
+
+<div class="input_area box-flex1">
+<div class="highlight-ipynb"><pre class="ipynb"><span class="n">calibration_report</span><span class="p">(</span><span class="n">swaptions</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
+</pre></div>
+
+</div>
+
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="box-flex1 output_subarea output_stream output_stdout">
+<pre class="ipynb">----------------------------------------------------------------------------------
+    Model Price    Market Price     Implied Vol      Market Vol       Rel Error
+----------------------------------------------------------------------------------
+        0.00870         0.00949         0.10535         0.11480        -0.08228
+        0.00967         0.01008         0.10633         0.11080        -0.04029
+        0.00868         0.00872         0.10651         0.10700        -0.00456
+        0.00650         0.00623         0.10665         0.10210         0.04438
+        0.00355         0.00332         0.10680         0.10000         0.06770
+----------------------------------------------------------------------------------
+Cumulative Error :         0.12265
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="conclusion">Conclusion</h2>
+<p>In this post, we saw some simple examples of calibrating the model to the swaption volatilities. </p>
+</div>
+</div>
+</div></p>
+<p>Click here to download the <a href="/extra/notebooks/interest_rate_model_calibration.ipynb">ipython notebook</a></p>
+     <br>
+     
+     <!-- article tags-->
+        <span class="glyphicon glyphicon-tags"></span>&nbsp;&nbsp;
+            <span class="label label-default"><a href="http://gouthamanbalaraman.com/tag/quantlib.html">quantlib</a></span>&nbsp;&nbsp;
+            <span class="label label-default"><a href="http://gouthamanbalaraman.com/tag/python.html">python</a></span>&nbsp;&nbsp;
+            <span class="label label-default"><a href="http://gouthamanbalaraman.com/tag/finance.html">finance</a></span>&nbsp;&nbsp;
+        <br>
+     <hr/>
+    
+    <strong>Related Post</strong>
+        <ul>
+            <li>
+                <a href="http://gouthamanbalaraman.com/blog/quantlib-term-structure-bootstrap-yield-curve.html">An Introduction to Interest Rate Term Structure in QuantLib</a>
+            </li>
+            <li>
+                <a href="http://gouthamanbalaraman.com/blog/hull-white-simulation-monte-carlo-convergence.html">On the Convergence of Hull White Monte Carlo Simulations</a>
+            </li>
+            <li>
+                <a href="http://gouthamanbalaraman.com/blog/hull-white-simulation-quantlib-python.html">Hull White Term Structure Simulations with QuantLib</a>
+            </li>
+            <li>
+                <a href="http://gouthamanbalaraman.com/blog/quantlib-basics.html">Introduction to QuantLib</a>
+            </li>
+            <li>
+                <a href="http://gouthamanbalaraman.com/blog/interest-rate-swap-quantlib-python.html">Modeling Vanilla Interest Rate Swaps Using QuantLib</a>
+            </li>
+        </ul>
+        <hr/>
+
+     <!-- article comments -->
+    <div class="comment">
+        <div id="disqus_thread"></div> <!-- comment app container -->
+    </div>
+	<!-- Comment BEGIN -->
+    <script type="text/javascript">
+        var disqus_shortname = 'gouthamanbalaramancom'; // required: replace example with your forum shortname
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+     <!-- Comment END -->
+</div>    
+                </div>
+               
+            </div>
+            <div class="row">
+                <div class="col-md-10 col-md-offset-1">
+                </div>
+            </div>
+            <footer id="contentinfo" class="footer">
+                <address id="about" class="vcard body">
+                    &copy; <a href="http://gouthamanbalaraman.com">Gouthaman Balaraman</a> Proudly powered by <a href="http://getpelican.com/">Pelican</a>
+                    <div class="pull-right">
+			            <a href="http://gouthamanbalaraman.com/feeds/all.atom.xml">Atom</a>
+			        &nbsp
+			            <a href="http://gouthamanbalaraman.com/feeds/all.rss.xml">RSS</a>
+		            </div>
+                </address><!-- /#about -->
+            </footer>
+        </div><!-- container -->
+        <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
+        <script src="http://gouthamanbalaraman.com/theme/static/js/jquery.1.11.2.min.js"></script>
+        <script src="http://gouthamanbalaraman.com/theme/static/js/bootstrap.min.js"></script>
+        <script type="text/javascript">
+	jQuery(document).ready(function($) {
+	    $("div.collapseheader").click(function () {
+	    $header = $(this).children("span").first();
+	    $codearea = $(this).children(".input_area");
+	    console.log($(this).children());
+	    $codearea.slideToggle(500, function () {
+	        $header.text(function () {
+	            return $codearea.is(":visible") ? "Collapse Code" : "Expand Code";
+	        });
+	    });
+	});
+	});
+	</script>
+    </body>
+</html>
