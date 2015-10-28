@@ -192,9 +192,9 @@ dr_t = (\theta(t) - a r_t) dt + \sigma dW_t
 <div class="input">
 <div class="prompt input_prompt">In&nbsp;[4]:</div>
 
-<div class="input_area box-flex1">
-<div class="highlight-ipynb"><pre class="ipynb"><span class="c">#&lt;!-- collapse=True --&gt;</span>
-<span class="k">def</span> <span class="nf">create_swaption_helpers</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">term_structure</span><span class="p">,</span> <span class="n">engine</span><span class="p">):</span>
+<div class="collapseheader box-flex1"><span style="font-weight: bold;">Expand Code</span>
+<div class="input_area box-flex1" style="display:none">
+<div class="highlight-ipynb"><pre class="ipynb"><span class="k">def</span> <span class="nf">create_swaption_helpers</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">term_structure</span><span class="p">,</span> <span class="n">engine</span><span class="p">):</span>
     <span class="n">swaptions</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="n">fixed_leg_tenor</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">Period</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">ql</span><span class="o">.</span><span class="n">Years</span><span class="p">)</span>
     <span class="n">fixed_leg_daycounter</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">Actual360</span><span class="p">()</span>
@@ -236,6 +236,7 @@ dr_t = (\theta(t) - a r_t) dt + \sigma dW_t
     <span class="k">print</span> <span class="s">&quot;Cumulative Error : </span><span class="si">%15.5f</span><span class="s">&quot;</span> <span class="o">%</span> <span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">cum_err</span><span class="p">)</span>
 </pre></div>
 
+</div>
 </div>
 
 </div>
@@ -656,19 +657,19 @@ Cumulative Error :         0.12265
     <strong>Related Post</strong>
         <ul>
             <li>
-                <a href="http://gouthamanbalaraman.com/blog/quantlib-term-structure-bootstrap-yield-curve.html">An Introduction to Interest Rate Term Structure in QuantLib</a>
-            </li>
-            <li>
                 <a href="http://gouthamanbalaraman.com/blog/hull-white-simulation-monte-carlo-convergence.html">On the Convergence of Hull White Monte Carlo Simulations</a>
             </li>
             <li>
-                <a href="http://gouthamanbalaraman.com/blog/hull-white-simulation-quantlib-python.html">Hull White Term Structure Simulations with QuantLib</a>
-            </li>
-            <li>
-                <a href="http://gouthamanbalaraman.com/blog/quantlib-basics.html">Introduction to QuantLib</a>
+                <a href="http://gouthamanbalaraman.com/blog/quantlib-term-structure-bootstrap-yield-curve.html">An Introduction to Interest Rate Term Structure in QuantLib</a>
             </li>
             <li>
                 <a href="http://gouthamanbalaraman.com/blog/interest-rate-swap-quantlib-python.html">Modeling Vanilla Interest Rate Swaps Using QuantLib</a>
+            </li>
+            <li>
+                <a href="http://gouthamanbalaraman.com/blog/quantlib-bond-modeling.html">Modeling Fixed Rate Bonds Using QuantLib</a>
+            </li>
+            <li>
+                <a href="http://gouthamanbalaraman.com/blog/valuing-european-option-heston-model-quantLib.html">Valuing European Option Using the Heston Model in QuantLib and Python</a>
             </li>
         </ul>
         <hr/>
