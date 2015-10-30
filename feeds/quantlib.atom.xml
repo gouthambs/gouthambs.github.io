@@ -1,5 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Gouthaman Balaraman</title><link href="http://gouthamanbalaraman.com/" rel="alternate"></link><link href="http://gouthamanbalaraman.com/feeds/quantlib.atom.xml" rel="self"></link><id>http://gouthamanbalaraman.com/</id><updated>2015-10-27T00:00:00-07:00</updated><entry><title>Short Interest Rate Model Calibration</title><link href="http://gouthamanbalaraman.com/blog/short-interest-rate-model-calibration-quantlib.html" rel="alternate"></link><updated>2015-10-27T00:00:00-07:00</updated><author><name>Gouthaman Balaraman</name></author><id>tag:gouthamanbalaraman.com,2015-10-27:blog/short-interest-rate-model-calibration-quantlib.html</id><summary type="html">&lt;p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Gouthaman Balaraman</title><link href="http://gouthamanbalaraman.com/" rel="alternate"></link><link href="http://gouthamanbalaraman.com/feeds/quantlib.atom.xml" rel="self"></link><id>http://gouthamanbalaraman.com/</id><updated>2015-10-30T00:00:00-07:00</updated><entry><title>QuantLib Python Tutorials</title><link href="http://gouthamanbalaraman.com/blog/quantlib-python-tutorials.html" rel="alternate"></link><updated>2015-10-30T00:00:00-07:00</updated><author><name>Gouthaman Balaraman</name></author><id>tag:gouthamanbalaraman.com,2015-10-30:blog/quantlib-python-tutorials.html</id><summary type="html">
+        This is the content of my super blog post.
+        &lt;ul&gt;
+        {% for article in dates %}
+            {% if article.title != "QuantLib Python Tutorials" %}
+                {% for tag in article.tags %}
+                    {% if "quantlib" == tag.name %}
+                    &lt;li&gt; &lt;b&gt;&lt;a href="{{ SITEURL }}/{{article.url}}"&gt;{{ article.title }}&lt;/a&gt;&lt;/b&gt; :{% if article.description %}{{ article.description }} {% endif %}&lt;/li&gt;
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+        {% endfor %}
+        
+        &lt;/ul&gt;
+    </summary><category term="quantlib"></category><category term="python"></category></entry><entry><title>Short Interest Rate Model Calibration</title><link href="http://gouthamanbalaraman.com/blog/short-interest-rate-model-calibration-quantlib.html" rel="alternate"></link><updated>2015-10-27T00:00:00-07:00</updated><author><name>Gouthaman Balaraman</name></author><id>tag:gouthamanbalaraman.com,2015-10-27:blog/short-interest-rate-model-calibration-quantlib.html</id><summary type="html">&lt;p&gt;
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;
 &lt;div class="prompt input_prompt"&gt;
 &lt;/div&gt;
