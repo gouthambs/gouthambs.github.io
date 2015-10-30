@@ -9,7 +9,7 @@
             
                 
                     
-                    &lt;li&gt; &lt;b&gt;&lt;a href="/blog/short-interest-rate-model-calibration-quantlib.html"&gt;Short Interest Rate Model Calibration&lt;/a&gt;&lt;/b&gt; :Provides examples of short interest rate model calibration to swaption volatilities &lt;/li&gt;
+                    &lt;li&gt; &lt;b&gt;&lt;a href="/blog/short-interest-rate-model-calibration-quantlib.html"&gt;Short Interest Rate Model Calibration&lt;/a&gt;&lt;/b&gt;: Provides examples of short interest rate model calibration to swaption volatilities &lt;/li&gt;
                     
                 
                     
@@ -21,7 +21,7 @@
             
                 
                     
-                    &lt;li&gt; &lt;b&gt;&lt;a href="/blog/interest-rate-swap-quantlib-python.html"&gt;Modeling Vanilla Interest Rate Swaps Using QuantLib&lt;/a&gt;&lt;/b&gt; :Provides a basic introduction to valuing interest rate swaps using QuantLib and Python. &lt;/li&gt;
+                    &lt;li&gt; &lt;b&gt;&lt;a href="/blog/interest-rate-swap-quantlib-python.html"&gt;Modeling Vanilla Interest Rate Swaps Using QuantLib&lt;/a&gt;&lt;/b&gt;: Provides a basic introduction to valuing interest rate swaps using QuantLib and Python. &lt;/li&gt;
                     
                 
                     
@@ -33,17 +33,7 @@
             
                 
                     
-                    &lt;li&gt; &lt;b&gt;&lt;a href="/blog/valuing-european-option-heston-model-quantLib.html"&gt;Valuing European Option Using the Heston Model in QuantLib and Python&lt;/a&gt;&lt;/b&gt; :Introduces an example on how to value European options using Heston model in Quantlib &lt;/li&gt;
-                    
-                
-                    
-                
-                    
-                
-            
-        
-            
-                
+                    &lt;li&gt; &lt;b&gt;&lt;a href="/blog/valuing-european-option-heston-model-quantLib.html"&gt;Valuing European Option Using the Heston Model in QuantLib and Python&lt;/a&gt;&lt;/b&gt;: Introduces an example on how to value European options using Heston model in Quantlib &lt;/li&gt;
                     
                 
                     
@@ -66,14 +56,6 @@
                 
                     
                 
-            
-        
-            
-                
-                    
-                    &lt;li&gt; &lt;b&gt;&lt;a href="/blog/hull-white-simulation-monte-carlo-convergence.html"&gt;On the Convergence of Hull White Monte Carlo Simulations&lt;/a&gt;&lt;/b&gt; :Discusses the convergence of the Monte-Carlo simulations of the Hull-White model &lt;/li&gt;
-                    
-                
                     
                 
                     
@@ -83,21 +65,13 @@
             
                 
                     
-                    &lt;li&gt; &lt;b&gt;&lt;a href="/blog/european-option-binomial-tree-quantlib-python.html"&gt;Option Model Handbook, Part III: European Option Pricing With QuantLib&lt;/a&gt;&lt;/b&gt; :Demonstrates how to price European options using QuantLib. Methods using Black-Scholes-Merton formula and binomial tree will be discussed. &lt;/li&gt;
-                    
-                
-                    
-                
-                    
-                
-                    
                 
             
         
             
                 
                     
-                    &lt;li&gt; &lt;b&gt;&lt;a href="/blog/hull-white-simulation-quantlib-python.html"&gt;Hull White Term Structure Simulations with QuantLib&lt;/a&gt;&lt;/b&gt; :Discusses simulation of the Hull White interest rate term structure model &lt;/li&gt;
+                    &lt;li&gt; &lt;b&gt;&lt;a href="/blog/hull-white-simulation-monte-carlo-convergence.html"&gt;On the Convergence of Hull White Monte Carlo Simulations&lt;/a&gt;&lt;/b&gt;: Discusses the convergence of the Monte-Carlo simulations of the Hull-White model &lt;/li&gt;
                     
                 
                     
@@ -109,11 +83,25 @@
             
                 
                     
+                    &lt;li&gt; &lt;b&gt;&lt;a href="/blog/european-option-binomial-tree-quantlib-python.html"&gt;Option Model Handbook, Part III: European Option Pricing With QuantLib&lt;/a&gt;&lt;/b&gt;: Demonstrates how to price European options using QuantLib. Methods using Black-Scholes-Merton formula and binomial tree will be discussed. &lt;/li&gt;
+                    
+                
+                    
                 
                     
                 
                     
-                    &lt;li&gt; &lt;b&gt;&lt;a href="/blog/quantlib-term-structure-bootstrap-yield-curve.html"&gt;An Introduction to Interest Rate Term Structure in QuantLib&lt;/a&gt;&lt;/b&gt; :This post will walk through the basics of bootstrapping yield curve in QuantLib. &lt;/li&gt;
+                
+            
+        
+            
+                
+                    
+                    &lt;li&gt; &lt;b&gt;&lt;a href="/blog/hull-white-simulation-quantlib-python.html"&gt;Hull White Term Structure Simulations with QuantLib&lt;/a&gt;&lt;/b&gt;: Discusses simulation of the Hull White interest rate term structure model &lt;/li&gt;
+                    
+                
+                    
+                
                     
                 
             
@@ -125,7 +113,7 @@
                     
                 
                     
-                    &lt;li&gt; &lt;b&gt;&lt;a href="/blog/quantlib-bond-modeling.html"&gt;Modeling Fixed Rate Bonds Using QuantLib&lt;/a&gt;&lt;/b&gt; :This post will walk through an example of modeling fixed rate bonds using QuantLib. &lt;/li&gt;
+                    &lt;li&gt; &lt;b&gt;&lt;a href="/blog/quantlib-term-structure-bootstrap-yield-curve.html"&gt;An Introduction to Interest Rate Term Structure in QuantLib&lt;/a&gt;&lt;/b&gt;: This post will walk through the basics of bootstrapping yield curve in QuantLib. &lt;/li&gt;
                     
                 
             
@@ -137,7 +125,19 @@
                     
                 
                     
-                    &lt;li&gt; &lt;b&gt;&lt;a href="/blog/quantlib-basics.html"&gt;Introduction to QuantLib&lt;/a&gt;&lt;/b&gt; :This post will walk through some of the basics of QuantLib library. &lt;/li&gt;
+                    &lt;li&gt; &lt;b&gt;&lt;a href="/blog/quantlib-bond-modeling.html"&gt;Modeling Fixed Rate Bonds Using QuantLib&lt;/a&gt;&lt;/b&gt;: This post will walk through an example of modeling fixed rate bonds using QuantLib. &lt;/li&gt;
+                    
+                
+            
+        
+            
+                
+                    
+                
+                    
+                
+                    
+                    &lt;li&gt; &lt;b&gt;&lt;a href="/blog/quantlib-basics.html"&gt;Introduction to QuantLib&lt;/a&gt;&lt;/b&gt;: This post will walk through some of the basics of QuantLib library. &lt;/li&gt;
                     
                 
             
