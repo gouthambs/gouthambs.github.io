@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Gouthaman Balaraman</title><link>http://gouthamanbalaraman.com/</link><description></description><atom:link href="http://gouthamanbalaraman.com/feeds/gouthaman-balaraman.rss.xml" rel="self"></atom:link><lastBuildDate>Fri, 30 Oct 2015 00:00:00 -0700</lastBuildDate><item><title>QuantLib Python Tutorials</title><link>http://gouthamanbalaraman.com/blog/quantlib-python-tutorials.html</link><description>
-        This is the content of my super blog post.
+        I have written a lot of little tutorials on using QuantLib python bindings. In these posts I explain some
+        of the QuantLib concepts using minimal examples. Following are the links to these posts:
         &lt;ul&gt;
         {% for article in dates %}
             {% if article.title != "QuantLib Python Tutorials" %}
