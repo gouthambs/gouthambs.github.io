@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Gouthaman Balaraman</title><link href="http://gouthamanbalaraman.com/" rel="alternate"></link><link href="http://gouthamanbalaraman.com/feeds/gouthaman-balaraman.atom.xml" rel="self"></link><id>http://gouthamanbalaraman.com/</id><updated>2015-10-30T00:00:00-07:00</updated><entry><title>QuantLib Python Tutorials</title><link href="http://gouthamanbalaraman.com/blog/quantlib-python-tutorials.html" rel="alternate"></link><updated>2015-10-30T00:00:00-07:00</updated><author><name>Gouthaman Balaraman</name></author><id>tag:gouthamanbalaraman.com,2015-10-30:blog/quantlib-python-tutorials.html</id><summary type="html">
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Gouthaman Balaraman</title><link href="http://gouthamanbalaraman.com/" rel="alternate"></link><link href="http://gouthamanbalaraman.com/feeds/gouthaman-balaraman.atom.xml" rel="self"></link><id>http://gouthamanbalaraman.com/</id><updated>2015-10-30T00:00:00-07:00</updated><entry><title>QuantLib Python Tutorials With Examples</title><link href="http://gouthamanbalaraman.com/blog/quantlib-python-tutorials-with-examples.html" rel="alternate"></link><updated>2015-10-30T00:00:00-07:00</updated><author><name>Gouthaman Balaraman</name></author><id>tag:gouthamanbalaraman.com,2015-10-30:blog/quantlib-python-tutorials-with-examples.html</id><summary type="html">
         I have written a lot of little tutorials on using QuantLib python bindings. In these posts I explain some
         of the QuantLib concepts using minimal examples. Following are the links to these posts:
         &lt;ul&gt;
-        {% for article in dates %}
+        {% for article in dates | reverse %}
             {% if article.title != "QuantLib Python Tutorials" %}
                 {% for tag in article.tags %}
                     {% if "quantlib" == tag.name %}

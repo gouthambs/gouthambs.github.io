@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Gouthaman Balaraman</title><link>http://gouthamanbalaraman.com/</link><description></description><atom:link href="http://gouthamanbalaraman.com/feeds/quantlib.rss.xml" rel="self"></atom:link><lastBuildDate>Fri, 30 Oct 2015 00:00:00 -0700</lastBuildDate><item><title>QuantLib Python Tutorials</title><link>http://gouthamanbalaraman.com/blog/quantlib-python-tutorials.html</link><description>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Gouthaman Balaraman</title><link>http://gouthamanbalaraman.com/</link><description></description><atom:link href="http://gouthamanbalaraman.com/feeds/quantlib.rss.xml" rel="self"></atom:link><lastBuildDate>Fri, 30 Oct 2015 00:00:00 -0700</lastBuildDate><item><title>QuantLib Python Tutorials With Examples</title><link>http://gouthamanbalaraman.com/blog/quantlib-python-tutorials-with-examples.html</link><description>
         I have written a lot of little tutorials on using QuantLib python bindings. In these posts I explain some
         of the QuantLib concepts using minimal examples. Following are the links to these posts:
         &lt;ul&gt;
-        {% for article in dates %}
+        {% for article in dates | reverse %}
             {% if article.title != "QuantLib Python Tutorials" %}
                 {% for tag in article.tags %}
                     {% if "quantlib" == tag.name %}
@@ -14,7 +14,7 @@
         {% endfor %}
         
         &lt;/ul&gt;
-    </description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Gouthaman Balaraman</dc:creator><pubDate>Fri, 30 Oct 2015 00:00:00 -0700</pubDate><guid>tag:gouthamanbalaraman.com,2015-10-30:blog/quantlib-python-tutorials.html</guid><category>quantlib</category><category>python</category></item><item><title>Short Interest Rate Model Calibration</title><link>http://gouthamanbalaraman.com/blog/short-interest-rate-model-calibration-quantlib.html</link><description>&lt;p&gt;
+    </description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Gouthaman Balaraman</dc:creator><pubDate>Fri, 30 Oct 2015 00:00:00 -0700</pubDate><guid>tag:gouthamanbalaraman.com,2015-10-30:blog/quantlib-python-tutorials-with-examples.html</guid><category>quantlib</category><category>python</category></item><item><title>Short Interest Rate Model Calibration</title><link>http://gouthamanbalaraman.com/blog/short-interest-rate-model-calibration-quantlib.html</link><description>&lt;p&gt;
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;
 &lt;div class="prompt input_prompt"&gt;
 &lt;/div&gt;

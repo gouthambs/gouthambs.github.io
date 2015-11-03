@@ -1,16 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Gouthaman Balaraman</title><link href="http://gouthamanbalaraman.com/" rel="alternate"></link><link href="http://gouthamanbalaraman.com/feeds/all.atom.xml" rel="self"></link><id>http://gouthamanbalaraman.com/</id><updated>2015-10-30T00:00:00-07:00</updated><entry><title>QuantLib Python Tutorials</title><link href="http://gouthamanbalaraman.com/blog/quantlib-python-tutorials.html" rel="alternate"></link><updated>2015-10-30T00:00:00-07:00</updated><author><name>Gouthaman Balaraman</name></author><id>tag:gouthamanbalaraman.com,2015-10-30:blog/quantlib-python-tutorials.html</id><summary type="html">
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Gouthaman Balaraman</title><link href="http://gouthamanbalaraman.com/" rel="alternate"></link><link href="http://gouthamanbalaraman.com/feeds/all.atom.xml" rel="self"></link><id>http://gouthamanbalaraman.com/</id><updated>2015-10-30T00:00:00-07:00</updated><entry><title>QuantLib Python Tutorials With Examples</title><link href="http://gouthamanbalaraman.com/blog/quantlib-python-tutorials-with-examples.html" rel="alternate"></link><updated>2015-10-30T00:00:00-07:00</updated><author><name>Gouthaman Balaraman</name></author><id>tag:gouthamanbalaraman.com,2015-10-30:blog/quantlib-python-tutorials-with-examples.html</id><summary type="html">
         I have written a lot of little tutorials on using QuantLib python bindings. In these posts I explain some
         of the QuantLib concepts using minimal examples. Following are the links to these posts:
         &lt;ul&gt;
         
             
-        
-            
-                
-                    
-                    &lt;li&gt; &lt;b&gt;&lt;a href="/blog/short-interest-rate-model-calibration-quantlib.html"&gt;Short Interest Rate Model Calibration&lt;/a&gt;&lt;/b&gt;: Provides examples of short interest rate model calibration to swaption volatilities &lt;/li&gt;
-                    
                 
                     
                 
@@ -21,8 +15,12 @@
             
                 
                     
-                    &lt;li&gt; &lt;b&gt;&lt;a href="/blog/interest-rate-swap-quantlib-python.html"&gt;Modeling Vanilla Interest Rate Swaps Using QuantLib&lt;/a&gt;&lt;/b&gt;: Provides a basic introduction to valuing interest rate swaps using QuantLib and Python. &lt;/li&gt;
+                
                     
+                
+            
+        
+            
                 
                     
                 
@@ -33,18 +31,12 @@
             
                 
                     
-                    &lt;li&gt; &lt;b&gt;&lt;a href="/blog/valuing-european-option-heston-model-quantLib.html"&gt;Valuing European Option Using the Heston Model in QuantLib and Python&lt;/a&gt;&lt;/b&gt;: Introduces an example on how to value European options using Heston model in Quantlib &lt;/li&gt;
-                    
-                
-                    
                 
                     
                 
             
         
             
-                
-                    
                 
                     
                 
@@ -66,12 +58,224 @@
                 
                     
                 
+                    
+                
             
         
             
                 
                     
-                    &lt;li&gt; &lt;b&gt;&lt;a href="/blog/hull-white-simulation-monte-carlo-convergence.html"&gt;On the Convergence of Hull White Monte Carlo Simulations&lt;/a&gt;&lt;/b&gt;: Discusses the convergence of the Monte-Carlo simulations of the Hull-White model &lt;/li&gt;
+                
+                    
+                
+                    
+                
+            
+        
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+                
+                    
+                
+            
+        
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+                
+                    
+                
+                    
+                
+                    
+                    &lt;li&gt; &lt;b&gt;&lt;a href="/blog/quantlib-basics.html"&gt;Introduction to QuantLib&lt;/a&gt;&lt;/b&gt;: This post will walk through some of the basics of QuantLib library. &lt;/li&gt;
+                    
+                
+            
+        
+            
+                
+                    
+                
+                    
+                
+                    
+                    &lt;li&gt; &lt;b&gt;&lt;a href="/blog/quantlib-bond-modeling.html"&gt;Modeling Fixed Rate Bonds Using QuantLib&lt;/a&gt;&lt;/b&gt;: This post will walk through an example of modeling fixed rate bonds using QuantLib. &lt;/li&gt;
+                    
+                
+            
+        
+            
+                
+                    
+                
+                    
+                
+                    
+                    &lt;li&gt; &lt;b&gt;&lt;a href="/blog/quantlib-term-structure-bootstrap-yield-curve.html"&gt;An Introduction to Interest Rate Term Structure in QuantLib&lt;/a&gt;&lt;/b&gt;: This post will walk through the basics of bootstrapping yield curve in QuantLib. &lt;/li&gt;
+                    
+                
+            
+        
+            
+                
+                    
+                    &lt;li&gt; &lt;b&gt;&lt;a href="/blog/hull-white-simulation-quantlib-python.html"&gt;Hull White Term Structure Simulations with QuantLib&lt;/a&gt;&lt;/b&gt;: Discusses simulation of the Hull White interest rate term structure model &lt;/li&gt;
                     
                 
                     
@@ -97,118 +301,8 @@
             
                 
                     
-                    &lt;li&gt; &lt;b&gt;&lt;a href="/blog/hull-white-simulation-quantlib-python.html"&gt;Hull White Term Structure Simulations with QuantLib&lt;/a&gt;&lt;/b&gt;: Discusses simulation of the Hull White interest rate term structure model &lt;/li&gt;
+                    &lt;li&gt; &lt;b&gt;&lt;a href="/blog/hull-white-simulation-monte-carlo-convergence.html"&gt;On the Convergence of Hull White Monte Carlo Simulations&lt;/a&gt;&lt;/b&gt;: Discusses the convergence of the Monte-Carlo simulations of the Hull-White model &lt;/li&gt;
                     
-                
-                    
-                
-                    
-                
-            
-        
-            
-                
-                    
-                
-                    
-                
-                    
-                    &lt;li&gt; &lt;b&gt;&lt;a href="/blog/quantlib-term-structure-bootstrap-yield-curve.html"&gt;An Introduction to Interest Rate Term Structure in QuantLib&lt;/a&gt;&lt;/b&gt;: This post will walk through the basics of bootstrapping yield curve in QuantLib. &lt;/li&gt;
-                    
-                
-            
-        
-            
-                
-                    
-                
-                    
-                
-                    
-                    &lt;li&gt; &lt;b&gt;&lt;a href="/blog/quantlib-bond-modeling.html"&gt;Modeling Fixed Rate Bonds Using QuantLib&lt;/a&gt;&lt;/b&gt;: This post will walk through an example of modeling fixed rate bonds using QuantLib. &lt;/li&gt;
-                    
-                
-            
-        
-            
-                
-                    
-                
-                    
-                
-                    
-                    &lt;li&gt; &lt;b&gt;&lt;a href="/blog/quantlib-basics.html"&gt;Introduction to QuantLib&lt;/a&gt;&lt;/b&gt;: This post will walk through some of the basics of QuantLib library. &lt;/li&gt;
-                    
-                
-            
-        
-            
-                
-                    
-                
-                    
-                
-                    
-                
-                    
-                
-            
-        
-            
-                
-                    
-                
-                    
-                
-                    
-                
-            
-        
-            
-                
-                    
-                
-                    
-                
-                    
-                
-            
-        
-            
-                
-                    
-                
-                    
-                
-                    
-                
-                    
-                
-            
-        
-            
-                
-                    
-                
-                    
-                
-                    
-                
-                    
-                
-            
-        
-            
-                
-                    
-                
-                    
-                
-                    
-                
-            
-        
-            
                 
                     
                 
@@ -245,15 +339,7 @@
             
                 
                     
-                
-                    
-                
-                    
-                
-            
-        
-            
-                
+                    &lt;li&gt; &lt;b&gt;&lt;a href="/blog/valuing-european-option-heston-model-quantLib.html"&gt;Valuing European Option Using the Heston Model in QuantLib and Python&lt;/a&gt;&lt;/b&gt;: Introduces an example on how to value European options using Heston model in Quantlib &lt;/li&gt;
                     
                 
                     
@@ -265,15 +351,7 @@
             
                 
                     
-                
-                    
-                
-                    
-                
-            
-        
-            
-                
+                    &lt;li&gt; &lt;b&gt;&lt;a href="/blog/interest-rate-swap-quantlib-python.html"&gt;Modeling Vanilla Interest Rate Swaps Using QuantLib&lt;/a&gt;&lt;/b&gt;: Provides a basic introduction to valuing interest rate swaps using QuantLib and Python. &lt;/li&gt;
                     
                 
                     
@@ -285,7 +363,7 @@
             
                 
                     
-                
+                    &lt;li&gt; &lt;b&gt;&lt;a href="/blog/short-interest-rate-model-calibration-quantlib.html"&gt;Short Interest Rate Model Calibration&lt;/a&gt;&lt;/b&gt;: Provides examples of short interest rate model calibration to swaption volatilities &lt;/li&gt;
                     
                 
                     
@@ -297,77 +375,7 @@
             
                 
                     
-                
-                    
-                
-                    
-                
-                    
-                
-            
-        
-            
-                
-                    
-                
-                    
-                
-                    
-                
-            
-        
-            
-                
-                    
-                
-                    
-                
-            
-        
-            
-                
-                    
-                
-                    
-                
-                    
-                
-            
-        
-            
-                
-                    
-                
-                    
-                
-            
-        
-            
-                
-                    
-                
-                    
-                
-            
-        
-            
-                
-                    
-                
-                    
-                
-            
-        
-            
-                
-                    
-                
-                    
-                
-            
-        
-            
-                
+                    &lt;li&gt; &lt;b&gt;&lt;a href="/blog/quantlib-python-tutorials-with-examples.html"&gt;QuantLib Python Tutorials With Examples&lt;/a&gt;&lt;/b&gt;: This post is a collection of links to all my quantlib python tutorial &lt;/li&gt;
                     
                 
                     
