@@ -7957,6 +7957,21 @@ git branch -a
 &lt;/li&gt;
 &lt;/ul&gt;
 &lt;/div&gt;
+&lt;div class="section" id="tagging"&gt;
+&lt;h2&gt;Tagging&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;strong&gt;List all the tags&lt;/strong&gt;:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+git tag
+&lt;/pre&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;strong&gt;Creating tags&lt;/strong&gt;:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+git tag -a v0.5.0 -m &amp;quot;Tagging version 0.5.0&amp;quot;
+&lt;/pre&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
 </summary><category term="git"></category><category term="programming"></category><category term="github"></category></entry><entry><title>Asynchronous Python Logging Using MSMQ</title><link href="http://gouthamanbalaraman.com/blog/asynchronous-python-logging-using-msmq.html" rel="alternate"></link><updated>2014-02-21T00:00:00-08:00</updated><author><name>Gouthaman Balaraman</name></author><id>tag:gouthamanbalaraman.com,2014-02-21:blog/asynchronous-python-logging-using-msmq.html</id><summary type="html">&lt;p&gt;If you have a web application running in Python, there can be a need for the logging to
 not interfere with the performance. Default file based loggers can lead to a slow down
 because of the constand disk writes. An alternate solution that can be quite handy is
