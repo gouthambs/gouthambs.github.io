@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Valuing Treasury Futures Using QuantLib - Gouthaman Balaraman</title>
+        <!-- All the meta tags -->
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+        <meta property="og:type" content="article"/>
+        <meta property="og:title" content="Valuing Treasury Futures Using QuantLib"/>
+        <meta property="og:url" content="http://gouthamanbalaraman.com/blog/value-treasury-futures-quantlib-python.html"/>
+        <meta property="og:description" content="Provides an introduction to valuation of treasury futures contract using minimal examples."/>
+        <link href="http://gouthamanbalaraman.com/theme/static/css/bootstrap.readable.min.css" rel="stylesheet" />
+        <link href="http://gouthamanbalaraman.com/theme/static/css/style.css" rel="stylesheet" />
+        
+        <link href="http://gouthamanbalaraman.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Gouthaman Balaraman Full Atom Feed" />
+        <link href="http://gouthamanbalaraman.com/feeds/all.rss.xml" type="application/rss+xml" rel="alternate" title="Gouthaman Balaraman RSS Feed" />
+        <link href="http://gouthamanbalaraman.com/feeds/quantlib.atom.xml" type="application/atom+xml" rel="alternate" title="Gouthaman Balaraman Categories Atom Feed" />
+        <link href="http://gouthamanbalaraman.com/feeds/quantlib.rss.xml" type="application/rss+xml" rel="alternate" title="Gouthaman Balaraman Categories RSS Feed" />
+        <!-- Google Analytics -->
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-46714334-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    /*Update Your Analytics Tracking Code to Support Display Advertising by uncommenting the following 
+    instead of the above line */    
+    /*ga.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'stats.g.doubleclick.net/dc.js';*/
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+        <!-- Using MathJax, with the delimiters $ -->
+        <!-- Conflict with pygments for the .mo and .mi -->
+        <script type="text/x-mathjax-config">
+          MathJax.Hub.Config({
+          "HTML-CSS": {
+          styles: {
+          ".MathJax .mo, .MathJax .mi": {color: "black ! important"}}
+          },
+          tex2jax: {inlineMath: [['$','$'], ['\\\\(','\\\\)']],processEscapes: true}
+          });
+        </script>
+    </head>
+
+    <body>
+      <div class="navbar navbar-default navbar-fixed-top">
+          <div class="container">
+            <div class="navbar-header">
+              <a href="http://gouthamanbalaraman.com" class="navbar-brand">Gouthaman Balaraman</a>
+              <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+            </div>
+            <div class="navbar-collapse collapse" id="navbar-main">
+              <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="http://gouthamanbalaraman.com/pages/about.html">About</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                <div class="col-md-10 col-md-offset-1">
+    <div class="page-header">
+        <h1>Valuing Treasury Futures Using QuantLib</h1>
+     <!--span class="glyphicon glyphicon-calendar"></span-->
+     &nbsp;December 02, 2015
+     &nbsp;
+     <!--span class="glyphicon glyphicon-user"></span--> by  
+     <a class="url fn" href="http://gouthamanbalaraman.com/author/gouthaman-balaraman.html">&nbsp;Gouthaman Balaraman </a>
+
+        <p id="post-share-links">
+            &nbsp;Share on:
+            <a href="https://sharetodiaspora.github.io/?title=Valuing%20Treasury%20Futures%20Using%20QuantLib&url=http%3A//gouthamanbalaraman.com/blog/value-treasury-futures-quantlib-python.html" target="_blank" title="Share on Diaspora">Diaspora*</a>
+            /
+            <a href="http://twitter.com/home?status=Valuing%20Treasury%20Futures%20Using%20QuantLib%20http%3A//gouthamanbalaraman.com/blog/value-treasury-futures-quantlib-python.html" target="_blank" title="Share on Twitter">Twitter</a>
+            /
+            <a href="http://www.facebook.com/sharer/sharer.php?s=100&amp;p%5Burl%5D=http%3A//gouthamanbalaraman.com/blog/value-treasury-futures-quantlib-python.html" target="_blank" title="Share on Facebook">Facebook</a>
+            /
+            <a href="https://plus.google.com/share?url=http%3A//gouthamanbalaraman.com/blog/value-treasury-futures-quantlib-python.html" target="_blank" title="Share on Google Plus">Google+</a>
+            /
+            <a href="mailto:?subject=Valuing%20Treasury%20Futures%20Using%20QuantLib&amp;body=http%3A//gouthamanbalaraman.com/blog/value-treasury-futures-quantlib-python.html" target="_blank" title="Share via Email">Email</a>
+            /
+            <a href="http://www.bloglovin.com/blog/14559547/?claim=cqravg9v4n2">Bloglovin</a>
+        </p>
+     </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-10 col-md-offset-1">
+
+<div class="bs-docs-section">
+    
+     <!-- article description -->
+         <p class="lead">Provides an introduction to valuation of treasury futures contract using minimal examples.</p>
+      
+      <!-- article content -->
+     <p>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>In this post, we will learn how to value treasury futures contract using QuantLib. The treasury futures contract gives the buyer the right to buy the underlying by the time the contract expires. The underlying is usually delivered from a basket of securities. So in order to properly value the futures contract, we would need to find the deliverable. Here we start by doing a naive calculation by constructing a fictional security. We will see what is wrong about this approach. As a next step we will perform the cheapest to deliver calculation and subsequently use that deliverable to value the same contract.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[1]:</div>
+
+<div class="input_area box-flex1">
+<div class="highlight-ipynb"><pre class="ipynb"><span class="kn">import</span> <span class="nn">QuantLib</span> <span class="kn">as</span> <span class="nn">ql</span>
+<span class="kn">import</span> <span class="nn">math</span>
+</pre></div>
+
+</div>
+
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[2]:</div>
+
+<div class="input_area box-flex1">
+<div class="highlight-ipynb"><pre class="ipynb"><span class="n">calc_date</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">Date</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span><span class="mi">11</span><span class="p">,</span><span class="mi">2015</span><span class="p">)</span>
+<span class="n">ql</span><span class="o">.</span><span class="n">Settings</span><span class="o">.</span><span class="n">instance</span><span class="p">()</span><span class="o">.</span><span class="n">evaluationDate</span> <span class="o">=</span> <span class="n">calc_date</span>
+<span class="n">day_count</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">ActualActual</span><span class="p">()</span>
+<span class="n">calendar</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">UnitedStates</span><span class="p">()</span>
+<span class="n">bussiness_convention</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">Following</span>
+<span class="n">end_of_month</span> <span class="o">=</span> <span class="bp">False</span>
+<span class="n">settlement_days</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">face_amount</span> <span class="o">=</span> <span class="mi">100</span>
+<span class="n">coupon_frequency</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">Period</span><span class="p">(</span><span class="n">ql</span><span class="o">.</span><span class="n">Semiannual</span><span class="p">)</span>
+</pre></div>
+
+</div>
+
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="build-yield-curve">Build Yield Curve</h2>
+<p>As a first step, we build the treasury curve out of the treasury securities such as T-Bills, T-Notes and Treasury bonds.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[3]:</div>
+
+<div class="collapseheader box-flex1"><span style="font-weight: bold;">Expand Code</span>
+<div class="input_area box-flex1" style="display:none">
+<div class="highlight-ipynb"><pre class="ipynb"><span class="c"># build curve</span>
+<span class="n">prices</span> <span class="o">=</span> <span class="p">[</span><span class="mf">99.9935</span><span class="p">,</span><span class="mf">99.9576</span><span class="p">,</span><span class="mf">99.8119</span><span class="p">,</span><span class="mf">99.5472</span><span class="p">,</span><span class="mf">99.8867</span><span class="p">,</span>
+<span class="mf">100.0664</span><span class="p">,</span><span class="mf">99.8711</span><span class="p">,</span><span class="mf">100.0547</span><span class="p">,</span><span class="mf">100.3047</span><span class="p">,</span><span class="mf">100.2266</span><span class="p">]</span>
+
+<span class="n">coupon_rates</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.0000</span><span class="p">,</span> <span class="mf">0.0000</span><span class="p">,</span> <span class="mf">0.0000</span><span class="p">,</span> <span class="mf">0.0000</span><span class="p">,</span> <span class="mf">0.00875</span><span class="p">,</span> 
+               <span class="mf">0.0125</span><span class="p">,</span> <span class="mf">0.01625</span><span class="p">,</span> <span class="mf">0.02</span><span class="p">,</span> <span class="mf">0.0225</span><span class="p">,</span> <span class="mf">0.03</span><span class="p">]</span>
+<span class="n">maturity_dates</span> <span class="o">=</span> <span class="p">[</span><span class="n">ql</span><span class="o">.</span><span class="n">Date</span><span class="p">(</span><span class="mi">24</span><span class="p">,</span><span class="mi">12</span><span class="p">,</span><span class="mi">2015</span><span class="p">),</span> <span class="n">ql</span><span class="o">.</span><span class="n">Date</span><span class="p">(</span><span class="mi">25</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2016</span><span class="p">),</span> 
+                  <span class="n">ql</span><span class="o">.</span><span class="n">Date</span><span class="p">(</span><span class="mi">26</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">2016</span><span class="p">),</span> <span class="n">ql</span><span class="o">.</span><span class="n">Date</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">11</span><span class="p">,</span><span class="mi">2016</span><span class="p">),</span>
+                  <span class="n">ql</span><span class="o">.</span><span class="n">Date</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span><span class="mi">11</span><span class="p">,</span><span class="mi">2017</span><span class="p">),</span> <span class="n">ql</span><span class="o">.</span><span class="n">Date</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span><span class="mi">11</span><span class="p">,</span><span class="mi">2018</span><span class="p">),</span> 
+                  <span class="n">ql</span><span class="o">.</span><span class="n">Date</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span><span class="mi">11</span><span class="p">,</span><span class="mi">2020</span><span class="p">),</span> <span class="n">ql</span><span class="o">.</span><span class="n">Date</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span><span class="mi">11</span><span class="p">,</span><span class="mi">2022</span><span class="p">),</span>
+                  <span class="n">ql</span><span class="o">.</span><span class="n">Date</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span><span class="mi">11</span><span class="p">,</span><span class="mi">2025</span><span class="p">),</span> <span class="n">ql</span><span class="o">.</span><span class="n">Date</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span><span class="mi">11</span><span class="p">,</span><span class="mi">2045</span><span class="p">)]</span>
+
+<span class="n">issue_dates</span> <span class="o">=</span> <span class="p">[</span><span class="n">ql</span><span class="o">.</span><span class="n">Date</span><span class="p">(</span><span class="mi">25</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">2015</span><span class="p">),</span> <span class="n">ql</span><span class="o">.</span><span class="n">Date</span><span class="p">(</span><span class="mi">27</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">2015</span><span class="p">),</span>
+               <span class="n">ql</span><span class="o">.</span><span class="n">Date</span><span class="p">(</span><span class="mi">28</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">2015</span><span class="p">),</span> <span class="n">ql</span><span class="o">.</span><span class="n">Date</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">11</span><span class="p">,</span><span class="mi">2015</span><span class="p">),</span>
+               <span class="n">ql</span><span class="o">.</span><span class="n">Date</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span><span class="mi">11</span><span class="p">,</span><span class="mi">2015</span><span class="p">),</span> <span class="n">ql</span><span class="o">.</span><span class="n">Date</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span><span class="mi">11</span><span class="p">,</span><span class="mi">2015</span><span class="p">),</span>
+               <span class="n">ql</span><span class="o">.</span><span class="n">Date</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span><span class="mi">11</span><span class="p">,</span><span class="mi">2015</span><span class="p">),</span> <span class="n">ql</span><span class="o">.</span><span class="n">Date</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span><span class="mi">11</span><span class="p">,</span><span class="mi">2015</span><span class="p">),</span>
+               <span class="n">ql</span><span class="o">.</span><span class="n">Date</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span><span class="mi">11</span><span class="p">,</span><span class="mi">2015</span><span class="p">),</span> <span class="n">ql</span><span class="o">.</span><span class="n">Date</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span><span class="mi">11</span><span class="p">,</span><span class="mi">2015</span><span class="p">)]</span>
+
+<span class="n">coupon_frequency</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">Period</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="n">ql</span><span class="o">.</span><span class="n">Months</span><span class="p">)</span>
+
+<span class="n">bond_helpers</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">coupon</span><span class="p">,</span> <span class="n">issue_date</span><span class="p">,</span> <span class="n">maturity_date</span><span class="p">,</span> <span class="n">price</span> \
+    <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">coupon_rates</span><span class="p">,</span> <span class="n">issue_dates</span><span class="p">,</span> <span class="n">maturity_dates</span><span class="p">,</span> <span class="n">prices</span><span class="p">):</span>
+    <span class="n">schedule</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">Schedule</span><span class="p">(</span><span class="n">calc_date</span><span class="p">,</span>
+                   <span class="n">maturity_date</span><span class="p">,</span>
+                   <span class="n">coupon_frequency</span><span class="p">,</span>
+                   <span class="n">calendar</span><span class="p">,</span>
+                   <span class="n">bussiness_convention</span><span class="p">,</span>
+                   <span class="n">bussiness_convention</span><span class="p">,</span>
+                   <span class="n">ql</span><span class="o">.</span><span class="n">DateGeneration</span><span class="o">.</span><span class="n">Backward</span><span class="p">,</span>
+                   <span class="bp">False</span><span class="p">)</span>
+
+    <span class="n">helper</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">FixedRateBondHelper</span><span class="p">(</span><span class="n">ql</span><span class="o">.</span><span class="n">QuoteHandle</span><span class="p">(</span><span class="n">ql</span><span class="o">.</span><span class="n">SimpleQuote</span><span class="p">(</span><span class="n">price</span><span class="p">)),</span>
+                                    <span class="n">settlement_days</span><span class="p">,</span>
+                                    <span class="n">face_amount</span><span class="p">,</span>
+                                    <span class="n">schedule</span><span class="p">,</span>
+                                    <span class="p">[</span><span class="n">coupon</span><span class="p">],</span>
+                                    <span class="n">day_count</span><span class="p">,</span>
+                                    <span class="n">bussiness_convention</span>
+                                    <span class="p">)</span>
+    <span class="n">bond_helpers</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">helper</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[4]:</div>
+
+<div class="input_area box-flex1">
+<div class="highlight-ipynb"><pre class="ipynb"><span class="n">yield_curve</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">PiecewiseCubicZero</span><span class="p">(</span><span class="n">calc_date</span><span class="p">,</span> <span class="n">bond_helpers</span><span class="p">,</span> <span class="n">day_count</span><span class="p">)</span>
+<span class="n">yield_curve_handle</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">YieldTermStructureHandle</span><span class="p">(</span><span class="n">yield_curve</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">maturity_dates</span><span class="p">:</span>
+    <span class="k">print</span> <span class="s">&quot;|</span><span class="si">%20s</span><span class="s">  </span><span class="si">%9.6f</span><span class="s">|&quot;</span><span class="o">%</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">yield_curve</span><span class="o">.</span><span class="n">discount</span><span class="p">(</span><span class="n">d</span><span class="p">))</span>
+</pre></div>
+
+</div>
+
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="box-flex1 output_subarea output_stream output_stdout">
+<pre class="ipynb">| December 24th, 2015   0.999935|
+| February 25th, 2016   0.999576|
+|      May 26th, 2016   0.998119|
+| November 10th, 2016   0.995472|
+| November 30th, 2017   0.981524|
+| November 15th, 2018   0.964278|
+| November 30th, 2020   0.920306|
+| November 30th, 2022   0.868533|
+| November 15th, 2025   0.799447|
+| November 15th, 2045   0.384829|
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="treasury-futures">Treasury Futures</h2>
+<p>Here we want to understand how to model treasury futures contract. Let us look at the TYZ5, the treasury futures on the 10 year note for delivery in December 2015. The notional deliverable is a 10-year 6% coupon note. In reality, the seller of the futures contract can deliver from a basket of securities. </p>
+<p>For now, lets assume that the deliverable is actually a 6% coupon 10-year note issued as of the calculation date. Let us construct a 10 year treasury note and value this security. The futures price for the TYZ5 is $127.0625.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[5]:</div>
+
+<div class="collapseheader box-flex1"><span style="font-weight: bold;">Expand Code</span>
+<div class="input_area box-flex1" style="display:none">
+<div class="highlight-ipynb"><pre class="ipynb"><span class="k">def</span> <span class="nf">create_tsy_security</span><span class="p">(</span><span class="n">bond_issue_date</span><span class="p">,</span> 
+                        <span class="n">bond_maturity_date</span><span class="p">,</span>
+                        <span class="n">coupon_rate</span><span class="p">,</span>
+                        <span class="n">coupon_frequency</span><span class="o">=</span><span class="n">ql</span><span class="o">.</span><span class="n">Period</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="n">ql</span><span class="o">.</span><span class="n">Months</span><span class="p">),</span>
+                        <span class="n">day_count</span><span class="o">=</span><span class="n">ql</span><span class="o">.</span><span class="n">ActualActual</span><span class="p">(),</span>
+                        <span class="n">calendar</span><span class="o">=</span><span class="n">ql</span><span class="o">.</span><span class="n">UnitedStates</span><span class="p">()</span>
+                        <span class="p">):</span>
+    <span class="n">face_value</span> <span class="o">=</span> <span class="mf">100.</span>
+    <span class="n">settlement_days</span> <span class="o">=</span> <span class="mi">0</span>
+    
+    <span class="n">schedule</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">Schedule</span><span class="p">(</span><span class="n">bond_issue_date</span><span class="p">,</span>
+                           <span class="n">bond_maturity_date</span><span class="p">,</span>
+                           <span class="n">coupon_frequency</span><span class="p">,</span>
+                           <span class="n">calendar</span><span class="p">,</span>
+                           <span class="n">ql</span><span class="o">.</span><span class="n">ModifiedFollowing</span><span class="p">,</span>
+                           <span class="n">ql</span><span class="o">.</span><span class="n">ModifiedFollowing</span><span class="p">,</span>
+                           <span class="n">ql</span><span class="o">.</span><span class="n">DateGeneration</span><span class="o">.</span><span class="n">Forward</span><span class="p">,</span>
+                           <span class="bp">False</span><span class="p">)</span>
+
+    <span class="n">security</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">FixedRateBond</span><span class="p">(</span><span class="n">settlement_days</span><span class="p">,</span>
+                                   <span class="n">face_value</span><span class="p">,</span>
+                                   <span class="n">schedule</span><span class="p">,</span>
+                                   <span class="p">[</span><span class="n">coupon_rate</span><span class="p">],</span>
+                                   <span class="n">day_count</span>
+                                   <span class="p">)</span>
+    <span class="k">return</span> <span class="n">security</span>
+</pre></div>
+
+</div>
+</div>
+
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[6]:</div>
+
+<div class="input_area box-flex1">
+<div class="highlight-ipynb"><pre class="ipynb"><span class="n">bond_issue_date</span> <span class="o">=</span> <span class="n">calc_date</span> 
+<span class="n">delivery_date</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">Date</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">12</span><span class="p">,</span><span class="mi">2015</span><span class="p">)</span>
+
+<span class="n">bond_maturity_date</span> <span class="o">=</span> <span class="n">bond_issue_date</span> <span class="o">+</span> <span class="n">ql</span><span class="o">.</span><span class="n">Period</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="n">ql</span><span class="o">.</span><span class="n">Years</span><span class="p">)</span>
+<span class="n">day_count</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">ActualActual</span><span class="p">()</span>
+<span class="n">coupon_frequency</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">Period</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="n">ql</span><span class="o">.</span><span class="n">Months</span><span class="p">)</span>
+<span class="n">coupon_rate</span> <span class="o">=</span> <span class="mi">6</span><span class="o">/</span><span class="mf">100.</span>
+
+<span class="n">deliverable</span> <span class="o">=</span> <span class="n">create_tsy_security</span><span class="p">(</span><span class="n">bond_issue_date</span><span class="p">,</span>
+                                  <span class="n">bond_maturity_date</span><span class="p">,</span>
+                                  <span class="n">coupon_rate</span><span class="p">,</span>
+                                  <span class="n">coupon_frequency</span><span class="p">,</span>
+                                  <span class="n">day_count</span><span class="p">,</span>
+                                  <span class="n">calendar</span>
+                                  <span class="p">)</span>
+<span class="n">bond_engine</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">DiscountingBondEngine</span><span class="p">(</span><span class="n">yield_curve_handle</span><span class="p">)</span>
+<span class="n">deliverable</span><span class="o">.</span><span class="n">setPricingEngine</span><span class="p">(</span><span class="n">bond_engine</span><span class="p">)</span>
+</pre></div>
+
+</div>
+
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Lets calculate the Z-Spread for this deliverable. The Z-Spread is the static spread added to the yield curve to match the price of the security. This spread is a measure of the risk associated with the security. For a treasury security, you would expect this to be zero. </p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[7]:</div>
+
+<div class="input_area box-flex1">
+<div class="highlight-ipynb"><pre class="ipynb"><span class="n">futures_price</span> <span class="o">=</span> <span class="mf">127.0625</span>
+<span class="n">clean_price</span> <span class="o">=</span> <span class="n">futures_price</span><span class="o">*</span><span class="n">yield_curve</span><span class="o">.</span><span class="n">discount</span><span class="p">(</span><span class="n">delivery_date</span><span class="p">)</span>
+
+<span class="n">zspread</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">BondFunctions</span><span class="o">.</span><span class="n">zSpread</span><span class="p">(</span><span class="n">deliverable</span><span class="p">,</span> <span class="n">clean_price</span><span class="p">,</span>
+                                   <span class="n">yield_curve</span><span class="p">,</span> <span class="n">day_count</span><span class="p">,</span> 
+                                   <span class="n">ql</span><span class="o">.</span><span class="n">Compounded</span><span class="p">,</span> <span class="n">ql</span><span class="o">.</span><span class="n">Semiannual</span><span class="p">,</span> 
+                                   <span class="n">calc_date</span><span class="p">)</span><span class="o">*</span><span class="mi">10000</span>
+<span class="k">print</span> <span class="s">&quot;Z-Spread =</span><span class="si">%3.0f</span><span class="s">bp&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">zspread</span><span class="p">)</span>
+</pre></div>
+
+</div>
+
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="box-flex1 output_subarea output_stream output_stdout">
+<pre class="ipynb">Z-Spread = 71bp
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Here we get a spread of 71 basis points. This is unusually high for a treasury futures contract. </p>
+<h3 id="cheapest-to-deliver">Cheapest To Deliver</h3>
+<p>Above we used a fictional 6% coupon bond as the deliverable. In reality, the deliverable is picked from a basket of securities based on what is the cheapest to deliver. Cheapest to deliver is not the cheapest in price. The seller of the futures contract, has to buy the delivery security from the market and sell it at an adjusted futures price. The adjusted futures price is given as:</p>
+<p><em>Adjusted Futures Price = Futures Price x Conversion Factor</em></p>
+<p>The gain or loss to the seller is given by the basis,</p>
+<p><em>Basis = Cash Price - Adjusted Futures Price</em></p>
+<p>So the cheapest to deliver is expected to be the security with the lowest basis. The conversion factor for a security is the price of the security with a 6% yield. Let us look at a basket of securities that is underlying this futures contract to understand this aspect.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[8]:</div>
+
+<div class="collapseheader box-flex1"><span style="font-weight: bold;">Expand Code</span>
+<div class="input_area box-flex1" style="display:none">
+<div class="highlight-ipynb"><pre class="ipynb"><span class="c"># basket describes the coupon rate, maturity date, price</span>
+<span class="n">day_count</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">ActualActual</span><span class="p">()</span>
+<span class="n">basket</span> <span class="o">=</span> <span class="p">[(</span><span class="mf">1.625</span><span class="p">,</span> <span class="n">ql</span><span class="o">.</span><span class="n">Date</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">2022</span><span class="p">),</span> <span class="mf">97.921875</span><span class="p">),</span> 
+          <span class="p">(</span><span class="mf">1.625</span><span class="p">,</span> <span class="n">ql</span><span class="o">.</span><span class="n">Date</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span><span class="mi">11</span><span class="p">,</span><span class="mi">2022</span><span class="p">),</span> <span class="mf">97.671875</span><span class="p">),</span>
+          <span class="p">(</span><span class="mf">1.75</span><span class="p">,</span> <span class="n">ql</span><span class="o">.</span><span class="n">Date</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span><span class="mi">9</span><span class="p">,</span><span class="mi">2022</span><span class="p">),</span> <span class="mf">98.546875</span><span class="p">),</span>
+          <span class="p">(</span><span class="mf">1.75</span><span class="p">,</span> <span class="n">ql</span><span class="o">.</span><span class="n">Date</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">2023</span><span class="p">),</span> <span class="mf">97.984375</span><span class="p">),</span>
+          <span class="p">(</span><span class="mf">1.875</span><span class="p">,</span> <span class="n">ql</span><span class="o">.</span><span class="n">Date</span><span class="p">(</span><span class="mi">31</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">2022</span><span class="p">),</span> <span class="mf">99.375</span><span class="p">),</span>
+          <span class="p">(</span><span class="mf">1.875</span><span class="p">,</span> <span class="n">ql</span><span class="o">.</span><span class="n">Date</span><span class="p">(</span><span class="mi">31</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="mi">2022</span><span class="p">),</span><span class="mf">99.296875</span><span class="p">),</span>
+          <span class="p">(</span><span class="mf">2.0</span><span class="p">,</span> <span class="n">ql</span><span class="o">.</span><span class="n">Date</span><span class="p">(</span><span class="mi">31</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">2022</span><span class="p">),</span> <span class="mf">100.265625</span><span class="p">),</span> 
+          <span class="p">(</span><span class="mf">2.0</span><span class="p">,</span> <span class="n">ql</span><span class="o">.</span><span class="n">Date</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2023</span><span class="p">),</span> <span class="mf">100.0625</span><span class="p">),</span>
+          <span class="p">(</span><span class="mf">2.0</span><span class="p">,</span> <span class="n">ql</span><span class="o">.</span><span class="n">Date</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2025</span><span class="p">),</span> <span class="mf">98.296875</span><span class="p">),</span>
+          <span class="p">(</span><span class="mf">2.0</span><span class="p">,</span> <span class="n">ql</span><span class="o">.</span><span class="n">Date</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">2025</span><span class="p">),</span> <span class="mf">98.09375</span><span class="p">),</span>
+          <span class="p">(</span><span class="mf">2.125</span><span class="p">,</span> <span class="n">ql</span><span class="o">.</span><span class="n">Date</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">2022</span><span class="p">),</span> <span class="mf">101.06250</span><span class="p">),</span>
+          <span class="p">(</span><span class="mf">2.125</span><span class="p">,</span> <span class="n">ql</span><span class="o">.</span><span class="n">Date</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">2025</span><span class="p">),</span><span class="mf">99.25</span><span class="p">),</span>
+          <span class="p">(</span><span class="mf">2.25</span><span class="p">,</span> <span class="n">ql</span><span class="o">.</span><span class="n">Date</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span><span class="mi">11</span><span class="p">,</span><span class="mi">2024</span><span class="p">),</span><span class="mf">100.546875</span><span class="p">),</span>
+          <span class="p">(</span><span class="mf">2.25</span><span class="p">,</span> <span class="n">ql</span><span class="o">.</span><span class="n">Date</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span><span class="mi">11</span><span class="p">,</span><span class="mi">2025</span><span class="p">),</span><span class="mf">100.375</span><span class="p">),</span>
+          <span class="p">(</span><span class="mf">2.375</span><span class="p">,</span> <span class="n">ql</span><span class="o">.</span><span class="n">Date</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">2024</span><span class="p">),</span><span class="mf">101.671875</span><span class="p">),</span>
+          <span class="p">(</span><span class="mf">2.5</span><span class="p">,</span> <span class="n">ql</span><span class="o">.</span><span class="n">Date</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">2023</span><span class="p">),</span><span class="mf">103.25</span><span class="p">),</span>
+          <span class="p">(</span><span class="mf">2.5</span><span class="p">,</span><span class="n">ql</span><span class="o">.</span><span class="n">Date</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">2024</span><span class="p">),</span><span class="mf">102.796875</span><span class="p">),</span>
+          <span class="p">(</span><span class="mf">2.75</span><span class="p">,</span> <span class="n">ql</span><span class="o">.</span><span class="n">Date</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span><span class="mi">11</span><span class="p">,</span><span class="mi">2023</span><span class="p">),</span><span class="mf">105.0625</span><span class="p">),</span>
+          <span class="p">(</span><span class="mf">2.75</span><span class="p">,</span><span class="n">ql</span><span class="o">.</span><span class="n">Date</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2024</span><span class="p">),</span><span class="mf">104.875</span><span class="p">)</span>
+          <span class="p">]</span>
+<span class="n">securities</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">min_basis</span> <span class="o">=</span> <span class="mi">100</span><span class="p">;</span> <span class="n">min_basis_index</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">b</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">basket</span><span class="p">):</span>
+    <span class="n">coupon</span><span class="p">,</span> <span class="n">maturity</span><span class="p">,</span> <span class="n">price</span> <span class="o">=</span> <span class="n">b</span>
+    <span class="n">issue</span> <span class="o">=</span> <span class="n">maturity</span> <span class="o">-</span> <span class="n">ql</span><span class="o">.</span><span class="n">Period</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="n">ql</span><span class="o">.</span><span class="n">Years</span><span class="p">)</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="n">create_tsy_security</span><span class="p">(</span><span class="n">issue</span><span class="p">,</span><span class="n">maturity</span><span class="p">,</span> <span class="n">coupon</span><span class="o">/</span><span class="mf">100.</span><span class="p">)</span>
+    <span class="n">bond_engine</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">DiscountingBondEngine</span><span class="p">(</span><span class="n">yield_curve_handle</span><span class="p">)</span>
+    <span class="n">s</span><span class="o">.</span><span class="n">setPricingEngine</span><span class="p">(</span><span class="n">bond_engine</span><span class="p">)</span>
+    <span class="n">cf</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">BondFunctions</span><span class="o">.</span><span class="n">cleanPrice</span><span class="p">(</span><span class="n">s</span><span class="p">,</span><span class="mf">0.06</span><span class="p">,</span>
+                                     <span class="n">day_count</span><span class="p">,</span> <span class="n">ql</span><span class="o">.</span><span class="n">Compounded</span><span class="p">,</span>
+                                     <span class="n">ql</span><span class="o">.</span><span class="n">Semiannual</span><span class="p">,</span> <span class="n">calc_date</span><span class="p">)</span><span class="o">/</span><span class="mf">100.</span>
+    <span class="n">adjusted_futures_price</span> <span class="o">=</span> <span class="n">futures_price</span> <span class="o">*</span> <span class="n">cf</span>
+    <span class="n">basis</span> <span class="o">=</span> <span class="n">price</span><span class="o">-</span><span class="n">adjusted_futures_price</span>
+    <span class="k">if</span> <span class="n">basis</span><span class="o">&lt;</span> <span class="n">min_basis</span><span class="p">:</span>
+        <span class="n">min_basis</span> <span class="o">=</span> <span class="n">basis</span> 
+        <span class="n">min_basis_index</span> <span class="o">=</span> <span class="n">i</span>
+    <span class="n">securities</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">s</span><span class="p">,</span><span class="n">cf</span><span class="p">))</span>
+    
+<span class="n">ctd_info</span> <span class="o">=</span> <span class="n">basket</span><span class="p">[</span><span class="n">min_basis_index</span><span class="p">]</span>
+<span class="n">ctd_bond</span><span class="p">,</span><span class="n">ctd_cf</span> <span class="o">=</span> <span class="n">securities</span><span class="p">[</span><span class="n">min_basis_index</span><span class="p">]</span>
+<span class="n">ctd_price</span> <span class="o">=</span> <span class="n">ctd_info</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+<span class="k">print</span> <span class="s">&quot;</span><span class="si">%-30s</span><span class="s"> = </span><span class="si">%lf</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="s">&quot;Minimum Basis&quot;</span><span class="p">,</span> <span class="n">min_basis</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&quot;</span><span class="si">%-30s</span><span class="s"> = </span><span class="si">%lf</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="s">&quot;Conversion Factor&quot;</span><span class="p">,</span> <span class="n">ctd_cf</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&quot;</span><span class="si">%-30s</span><span class="s"> = </span><span class="si">%lf</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="s">&quot;Coupon&quot;</span><span class="p">,</span> <span class="n">ctd_info</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="k">print</span> <span class="s">&quot;</span><span class="si">%-30s</span><span class="s"> = </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="s">&quot;Maturity&quot;</span><span class="p">,</span> <span class="n">ctd_info</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+<span class="k">print</span> <span class="s">&quot;</span><span class="si">%-30s</span><span class="s"> = </span><span class="si">%lf</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="s">&quot;Price&quot;</span><span class="p">,</span> <span class="n">ctd_info</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+</pre></div>
+
+</div>
+</div>
+
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="box-flex1 output_subarea output_stream output_stdout">
+<pre class="ipynb">Minimum Basis                  = 0.450601
+Conversion Factor              = 0.791830
+Coupon                         = 2.125000
+Maturity                       = June 30th, 2022
+Price                          = 101.062500
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The basis is the loss for a notional of \$100 that the seller accrues to close this contract. For a single futures contract (which has a \$100000 notional), there is a loss of \$450.60.</p>
+<p>NOTE: You will need my <a href="https://github.com/lballabio/quantlib/pull/370">pull request</a> to execute the <code>FixedRateBondForward</code> class since it is not exposed in SWIG at the moment.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[9]:</div>
+
+<div class="input_area box-flex1">
+<div class="highlight-ipynb"><pre class="ipynb"><span class="n">futures_maturity_date</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">Date</span><span class="p">(</span><span class="mi">21</span><span class="p">,</span><span class="mi">12</span><span class="p">,</span><span class="mi">2015</span><span class="p">)</span>
+<span class="n">futures</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">FixedRateBondForward</span><span class="p">(</span><span class="n">calc_date</span><span class="p">,</span> <span class="n">futures_maturity_date</span><span class="p">,</span> 
+                                  <span class="n">ql</span><span class="o">.</span><span class="n">Position</span><span class="o">.</span><span class="n">Long</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">settlement_days</span><span class="p">,</span>
+                                  <span class="n">day_count</span><span class="p">,</span> <span class="n">calendar</span><span class="p">,</span> <span class="n">bussiness_convention</span><span class="p">,</span>
+                                  <span class="n">ctd_bond</span><span class="p">,</span> <span class="n">yield_curve_handle</span><span class="p">,</span> <span class="n">yield_curve_handle</span><span class="p">)</span>
+</pre></div>
+
+</div>
+
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The valuation of the futures contract and the underlying is shown below:</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[10]:</div>
+
+<div class="collapseheader box-flex1"><span style="font-weight: bold;">Expand Code</span>
+<div class="input_area box-flex1" style="display:none">
+<div class="highlight-ipynb"><pre class="ipynb"><span class="n">model_futures_price</span> <span class="o">=</span> <span class="n">futures</span><span class="o">.</span><span class="n">cleanForwardPrice</span><span class="p">()</span><span class="o">/</span><span class="n">ctd_cf</span>
+<span class="n">implied_yield</span> <span class="o">=</span> <span class="n">futures</span><span class="o">.</span><span class="n">impliedYield</span><span class="p">(</span><span class="n">ctd_price</span><span class="o">/</span><span class="n">ctd_cf</span><span class="p">,</span> <span class="n">futures_price</span><span class="p">,</span> 
+                                     <span class="n">calc_date</span><span class="p">,</span> <span class="n">ql</span><span class="o">.</span><span class="n">Compounded</span><span class="p">,</span> <span class="n">day_count</span><span class="p">)</span><span class="o">.</span><span class="n">rate</span><span class="p">()</span>
+<span class="n">z_spread</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">BondFunctions</span><span class="o">.</span><span class="n">zSpread</span><span class="p">(</span><span class="n">ctd_bond</span><span class="p">,</span> <span class="n">ctd_price</span><span class="p">,</span> <span class="n">yield_curve</span><span class="p">,</span> 
+                                    <span class="n">day_count</span><span class="p">,</span> <span class="n">ql</span><span class="o">.</span><span class="n">Compounded</span><span class="p">,</span> <span class="n">ql</span><span class="o">.</span><span class="n">Semiannual</span><span class="p">,</span> 
+                                    <span class="n">calc_date</span><span class="p">)</span>
+<span class="n">ytm</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">BondFunctions</span><span class="o">.</span><span class="n">_yield</span><span class="p">(</span><span class="n">ctd_bond</span><span class="p">,</span> <span class="n">ctd_price</span><span class="p">,</span> <span class="n">day_count</span><span class="p">,</span>
+                              <span class="n">ql</span><span class="o">.</span><span class="n">Compounded</span><span class="p">,</span> <span class="n">ql</span><span class="o">.</span><span class="n">Semiannual</span><span class="p">,</span> <span class="n">calc_date</span><span class="p">)</span>
+
+<span class="k">print</span> <span class="s">&quot;</span><span class="si">%-30s</span><span class="s"> = </span><span class="si">%lf</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="s">&quot;Model Futures Price&quot;</span><span class="p">,</span> <span class="n">model_futures_price</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&quot;</span><span class="si">%-30s</span><span class="s"> = </span><span class="si">%lf</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="s">&quot;Market Futures Price&quot;</span><span class="p">,</span> <span class="n">futures_price</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&quot;</span><span class="si">%-30s</span><span class="s"> = </span><span class="si">%lf</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="s">&quot;Model Adjustment&quot;</span><span class="p">,</span> <span class="n">model_futures_price</span><span class="o">-</span><span class="n">futures_price</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&quot;</span><span class="si">%-30s</span><span class="s"> = </span><span class="si">%2.3f%%</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="s">&quot;Implied Yield&quot;</span><span class="p">,</span> <span class="n">implied_yield</span><span class="o">*</span><span class="mi">100</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&quot;</span><span class="si">%-30s</span><span class="s"> = </span><span class="si">%2.1f</span><span class="s">bps&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="s">&quot;Forward Z-Spread&quot;</span><span class="p">,</span> <span class="n">z_spread</span><span class="o">*</span><span class="mi">10000</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&quot;</span><span class="si">%-30s</span><span class="s"> = </span><span class="si">%2.3f%%</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="s">&quot;Forward YTM &quot;</span><span class="p">,</span> <span class="n">ytm</span><span class="o">*</span><span class="mi">100</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="box-flex1 output_subarea output_stream output_stdout">
+<pre class="ipynb">Model Futures Price            = 127.610365
+Market Futures Price           = 127.062500
+Model Adjustment               = 0.547865
+Implied Yield                  = -7.473%
+Forward Z-Spread               = 1.6bps
+Forward YTM                    = 1.952%
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="references">References</h2>
+<p>[1] <a href="https://www.cmegroup.com/education/files/understanding-treasury-futures.pdf">Understanding Treasury Futures</a>, CME Group PDF</p>
+<h2 id="conclusion">Conclusion</h2>
+<p>In this notebook, we looked into understanding and valuing treasury futures contracts. We used the QuantLib <code>FixedRateBondForward</code> class in order to model the futures contract. But, we also made a cheapest to deliver calculation to figure out the deliverable. </p>
+</div>
+</div>
+</div></p>
+<p>Click here to download the <a href="/extra/notebooks/understanding_treasury_futures.ipynb">ipython notebook on treasury futures</a>.</p>
+     <br>
+     
+     <!-- article tags-->
+        <span class="glyphicon glyphicon-tags"></span>&nbsp;&nbsp;
+            <span class="label label-default"><a href="http://gouthamanbalaraman.com/tag/quantlib.html">quantlib</a></span>&nbsp;&nbsp;
+            <span class="label label-default"><a href="http://gouthamanbalaraman.com/tag/python.html">python</a></span>&nbsp;&nbsp;
+            <span class="label label-default"><a href="http://gouthamanbalaraman.com/tag/finance.html">finance</a></span>&nbsp;&nbsp;
+        <br>
+     <hr/>
+    
+    <strong>Related Post</strong>
+        <ul>
+            <li>
+                <a href="http://gouthamanbalaraman.com/blog/interest-rate-swap-quantlib-python.html">Modeling Vanilla Interest Rate Swaps Using QuantLib</a>
+            </li>
+            <li>
+                <a href="http://gouthamanbalaraman.com/blog/quantlib-basics.html">Introduction to QuantLib</a>
+            </li>
+            <li>
+                <a href="http://gouthamanbalaraman.com/blog/european-option-binomial-tree-quantlib-python.html">Option Model Handbook, Part III: European Option Pricing With QuantLib</a>
+            </li>
+            <li>
+                <a href="http://gouthamanbalaraman.com/blog/hull-white-simulation-monte-carlo-convergence.html">On the Convergence of Hull White Monte Carlo Simulations</a>
+            </li>
+            <li>
+                <a href="http://gouthamanbalaraman.com/blog/valuing-european-option-heston-model-quantLib.html">Valuing European Option Using the Heston Model in QuantLib and Python</a>
+            </li>
+        </ul>
+        <hr/>
+
+     <!-- article comments -->
+    <div class="comment">
+        <div id="disqus_thread"></div> <!-- comment app container -->
+    </div>
+	<!-- Comment BEGIN -->
+    <script type="text/javascript">
+        var disqus_shortname = 'gouthamanbalaramancom'; // required: replace example with your forum shortname
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+     <!-- Comment END -->
+</div>    
+                </div>
+               
+            </div>
+            <div class="row">
+                <div class="col-md-10 col-md-offset-1">
+                </div>
+            </div>
+            <footer id="contentinfo" class="footer">
+                <address id="about" class="vcard body">
+                    &copy; <a href="http://gouthamanbalaraman.com">Gouthaman Balaraman</a> Proudly powered by <a href="http://getpelican.com/">Pelican</a>
+                    <div class="pull-right">
+                    	<a href="http://www.bloglovin.com/blog/14559547/?claim=cqravg9v4n2">Bloglovin</a>
+			            <a href="http://gouthamanbalaraman.com/feeds/all.atom.xml">Atom</a>
+			        &nbsp
+			            <a href="http://gouthamanbalaraman.com/feeds/all.rss.xml">RSS</a>
+		            </div>
+                </address><!-- /#about -->
+            </footer>
+        </div><!-- container -->
+        <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
+        <script src="http://gouthamanbalaraman.com/theme/static/js/jquery.1.11.2.min.js"></script>
+        <script src="http://gouthamanbalaraman.com/theme/static/js/bootstrap.min.js"></script>
+        <script type="text/javascript">
+	jQuery(document).ready(function($) {
+	    $("div.collapseheader").click(function () {
+	    $header = $(this).children("span").first();
+	    $codearea = $(this).children(".input_area");
+	    console.log($(this).children());
+	    $codearea.slideToggle(500, function () {
+	        $header.text(function () {
+	            return $codearea.is(":visible") ? "Collapse Code" : "Expand Code";
+	        });
+	    });
+	});
+	});
+	</script>
+    </body>
+</html>
