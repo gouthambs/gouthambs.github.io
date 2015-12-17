@@ -733,7 +733,7 @@ Forward YTM                    = 1.952%
         {% endfor %}
         
         &lt;/ul&gt;
-    </description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Gouthaman Balaraman</dc:creator><pubDate>Fri, 30 Oct 2015 00:00:00 -0700</pubDate><guid>tag:gouthamanbalaraman.com,2015-10-30:blog/quantlib-python-tutorials-with-examples.html</guid><category>quantlib</category><category>python</category></item><item><title>Short Interest Rate Model Calibration</title><link>http://gouthamanbalaraman.com/blog/short-interest-rate-model-calibration-quantlib.html</link><description>&lt;p&gt;
+    </description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Gouthaman Balaraman</dc:creator><pubDate>Fri, 30 Oct 2015 00:00:00 -0700</pubDate><guid>tag:gouthamanbalaraman.com,2015-10-30:blog/quantlib-python-tutorials-with-examples.html</guid><category>quantlib</category><category>python</category><category>finance</category></item><item><title>Short Interest Rate Model Calibration</title><link>http://gouthamanbalaraman.com/blog/short-interest-rate-model-calibration-quantlib.html</link><description>&lt;p&gt;
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;
 &lt;div class="prompt input_prompt"&gt;
 &lt;/div&gt;
