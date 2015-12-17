@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Valuing Options on Commodity Futures Using the Black Formula - Gouthaman Balaraman</title>
+        <!-- All the meta tags -->
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+        <meta property="og:type" content="article"/>
+        <meta property="og:title" content="Valuing Options on Commodity Futures Using the Black Formula"/>
+        <meta property="og:url" content="http://gouthamanbalaraman.com/blog/value-options-commodity-futures-black-formula-quantlib-python.html"/>
+        <meta property="og:description" content="Describes how to value options on commodity futures contract using the Black formula"/>
+        <link href="http://gouthamanbalaraman.com/theme/static/css/bootstrap.readable.min.css" rel="stylesheet" />
+        <link href="http://gouthamanbalaraman.com/theme/static/css/style.css" rel="stylesheet" />
+        
+        <link href="http://gouthamanbalaraman.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Gouthaman Balaraman Full Atom Feed" />
+        <link href="http://gouthamanbalaraman.com/feeds/all.rss.xml" type="application/rss+xml" rel="alternate" title="Gouthaman Balaraman RSS Feed" />
+        <link href="http://gouthamanbalaraman.com/feeds/quantlib.atom.xml" type="application/atom+xml" rel="alternate" title="Gouthaman Balaraman Categories Atom Feed" />
+        <link href="http://gouthamanbalaraman.com/feeds/quantlib.rss.xml" type="application/rss+xml" rel="alternate" title="Gouthaman Balaraman Categories RSS Feed" />
+        <!-- Google Analytics -->
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-46714334-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    /*Update Your Analytics Tracking Code to Support Display Advertising by uncommenting the following 
+    instead of the above line */    
+    /*ga.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'stats.g.doubleclick.net/dc.js';*/
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+        <!-- Using MathJax, with the delimiters $ -->
+        <!-- Conflict with pygments for the .mo and .mi -->
+        <script type="text/x-mathjax-config">
+          MathJax.Hub.Config({
+          "HTML-CSS": {
+          styles: {
+          ".MathJax .mo, .MathJax .mi": {color: "black ! important"}}
+          },
+          tex2jax: {inlineMath: [['$','$'], ['\\\\(','\\\\)']],processEscapes: true}
+          });
+        </script>
+    </head>
+
+    <body>
+      <div class="navbar navbar-default navbar-fixed-top">
+          <div class="container">
+            <div class="navbar-header">
+              <a href="http://gouthamanbalaraman.com" class="navbar-brand">Gouthaman Balaraman</a>
+              <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+            </div>
+            <div class="navbar-collapse collapse" id="navbar-main">
+              <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="http://gouthamanbalaraman.com/pages/about.html">About</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                <div class="col-md-10 col-md-offset-1">
+    <div class="page-header">
+        <h1>Valuing Options on Commodity Futures Using the Black Formula</h1>
+     <!--span class="glyphicon glyphicon-calendar"></span-->
+     &nbsp;December 17, 2015
+     &nbsp;
+     <!--span class="glyphicon glyphicon-user"></span--> by  
+     <a class="url fn" href="http://gouthamanbalaraman.com/author/gouthaman-balaraman.html">&nbsp;Gouthaman Balaraman </a>
+
+        <p id="post-share-links">
+            &nbsp;Share on:
+            <a href="https://sharetodiaspora.github.io/?title=Valuing%20Options%20on%20Commodity%20Futures%20Using%20the%20Black%20Formula&url=http%3A//gouthamanbalaraman.com/blog/value-options-commodity-futures-black-formula-quantlib-python.html" target="_blank" title="Share on Diaspora">Diaspora*</a>
+            /
+            <a href="http://twitter.com/home?status=Valuing%20Options%20on%20Commodity%20Futures%20Using%20the%20Black%20Formula by @gsbalaraman%20http%3A//gouthamanbalaraman.com/blog/value-options-commodity-futures-black-formula-quantlib-python.html" target="_blank" title="Share on Twitter">Twitter</a>
+            /
+            <a href="http://www.facebook.com/sharer/sharer.php?s=100&amp;p%5Burl%5D=http%3A//gouthamanbalaraman.com/blog/value-options-commodity-futures-black-formula-quantlib-python.html" target="_blank" title="Share on Facebook">Facebook</a>
+            /
+            <a href="https://plus.google.com/share?url=http%3A//gouthamanbalaraman.com/blog/value-options-commodity-futures-black-formula-quantlib-python.html" target="_blank" title="Share on Google Plus">Google+</a>
+            /
+            <a href="mailto:?subject=Valuing%20Options%20on%20Commodity%20Futures%20Using%20the%20Black%20Formula&amp;body=http%3A//gouthamanbalaraman.com/blog/value-options-commodity-futures-black-formula-quantlib-python.html" target="_blank" title="Share via Email">Email</a>
+            /
+            <a href="http://www.bloglovin.com/blog/14559547/?claim=cqravg9v4n2">Bloglovin</a>
+        </p>
+     </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-10 col-md-offset-1">
+
+<div class="bs-docs-section">
+    
+     <!-- article description -->
+         <p class="lead">Describes how to value options on commodity futures contract using the Black formula</p>
+      
+      <!-- article content -->
+     <p>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The Black-Scholes equation is the well known model to price equity European options. In the case of equities, the spot price fluctuates and hence the intuition to model as a stochastic process makes sense. In the case of commodities, however, the spot price does not fluctuate as much, and hence cannot be modeled as a stochastic process to value options on commodities. In the 1976 paper [1], Fischer Black addressed this problem by modeling the futures price, which demonstrates fluctuations, as the lognormal stochastic process.</p>
+<p>The futures price at time $t$, $F_t$ with a is modeled as:</p>
+<p>\begin{eqnarray}
+dF_t &amp;=&amp; \sigma_t F_t dW
+\end{eqnarray}</p>
+<p>where $\sigma_t$ is the volatility of the underlying, and $dW$ is the Weiner process.</p>
+<p>The value of an option at strike $K$, maturing at $T$, risk free rate $r$ with volatility $\sigma$ of the underlying is given by the closed form expression:</p>
+<p>\begin{eqnarray}
+c &amp;=&amp;  e^{-r T} [FN(d_1) - KN(d_2)] \nonumber \\
+p &amp;=&amp; e^{-r T} [KN(-d_2) - FN(-d_1)]
+\end{eqnarray}</p>
+<p>where
+\begin{eqnarray}
+d_1 &amp;=&amp; \frac{\ln(F/K) + (\sigma^2/2)T}{\sigma\sqrt{T}} \nonumber\\
+d_2 &amp;=&amp; \frac{\ln(F/K) - (\sigma^2/2)T}{\sigma\sqrt{T}} = d_1 - \sigma\sqrt{T}
+\end{eqnarray}</p>
+<p>This formula can be easily used to price caps, swaptions, futures options contract. Here we will use <code>QuantLib</code> to price the options on commodity futures.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[1]:</div>
+
+<div class="input_area box-flex1">
+<div class="highlight-ipynb"><pre class="ipynb"><span class="kn">import</span> <span class="nn">QuantLib</span> <span class="kn">as</span> <span class="nn">ql</span>
+<span class="kn">import</span> <span class="nn">math</span>
+</pre></div>
+
+</div>
+
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[2]:</div>
+
+<div class="input_area box-flex1">
+<div class="highlight-ipynb"><pre class="ipynb"><span class="n">calendar</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">UnitedStates</span><span class="p">()</span>
+<span class="n">bussiness_convention</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">ModifiedFollowing</span>
+<span class="n">settlement_days</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">day_count</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">ActualActual</span><span class="p">()</span>
+</pre></div>
+
+</div>
+
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="option-on-treasury-futures-contract">Option on Treasury Futures Contract</h2>
+<p>Options on treasury futures (10 Yr Note TYF6C 119) can be valued using the Black formula. Let us value a Call option maturing on December 24, 2015, with a strike of 119. The current futures price is  126.95, and the volatility is 11.567%. The risk free rate as of December 1, 2015 is 0.105%. Let us value this Call option as of December 1, 2015.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[3]:</div>
+
+<div class="input_area box-flex1">
+<div class="highlight-ipynb"><pre class="ipynb"><span class="n">interest_rate</span> <span class="o">=</span> <span class="mf">0.00105</span>
+<span class="n">calc_date</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">Date</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">12</span><span class="p">,</span><span class="mi">2015</span><span class="p">)</span>
+<span class="n">yield_curve</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">FlatForward</span><span class="p">(</span><span class="n">calc_date</span><span class="p">,</span> 
+                             <span class="n">interest_rate</span><span class="p">,</span>
+                             <span class="n">day_count</span><span class="p">,</span>
+                             <span class="n">ql</span><span class="o">.</span><span class="n">Compounded</span><span class="p">,</span>
+                             <span class="n">ql</span><span class="o">.</span><span class="n">Continuous</span><span class="p">)</span>
+</pre></div>
+
+</div>
+
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[4]:</div>
+
+<div class="input_area box-flex1">
+<div class="highlight-ipynb"><pre class="ipynb"><span class="n">ql</span><span class="o">.</span><span class="n">Settings</span><span class="o">.</span><span class="n">instance</span><span class="p">()</span><span class="o">.</span><span class="n">evaluationDate</span> <span class="o">=</span> <span class="n">calc_date</span>
+<span class="n">option_maturity_date</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">Date</span><span class="p">(</span><span class="mi">24</span><span class="p">,</span><span class="mi">12</span><span class="p">,</span><span class="mi">2015</span><span class="p">)</span>
+<span class="n">strike</span> <span class="o">=</span> <span class="mi">119</span>
+<span class="n">spot</span> <span class="o">=</span> <span class="mf">126.953</span><span class="c"># futures price</span>
+<span class="n">volatility</span> <span class="o">=</span> <span class="mf">11.567</span><span class="o">/</span><span class="mf">100.</span>
+<span class="n">flavor</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">Option</span><span class="o">.</span><span class="n">Call</span>
+
+<span class="n">discount</span> <span class="o">=</span> <span class="n">yield_curve</span><span class="o">.</span><span class="n">discount</span><span class="p">(</span><span class="n">option_maturity_date</span><span class="p">)</span>
+<span class="n">strikepayoff</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">PlainVanillaPayoff</span><span class="p">(</span><span class="n">flavor</span><span class="p">,</span> <span class="n">strike</span><span class="p">)</span>
+<span class="n">T</span> <span class="o">=</span> <span class="n">yield_curve</span><span class="o">.</span><span class="n">dayCounter</span><span class="p">()</span><span class="o">.</span><span class="n">yearFraction</span><span class="p">(</span><span class="n">calc_date</span><span class="p">,</span> 
+                                          <span class="n">option_maturity_date</span><span class="p">)</span>
+<span class="n">stddev</span> <span class="o">=</span> <span class="n">volatility</span><span class="o">*</span><span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">T</span><span class="p">)</span>
+
+<span class="n">black</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">BlackCalculator</span><span class="p">(</span><span class="n">strikepayoff</span><span class="p">,</span> 
+                           <span class="n">spot</span><span class="p">,</span> 
+                           <span class="n">stddev</span><span class="p">,</span> 
+                           <span class="n">discount</span><span class="p">)</span>
+</pre></div>
+
+</div>
+
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[5]:</div>
+
+<div class="input_area box-flex1">
+<div class="highlight-ipynb"><pre class="ipynb"><span class="k">print</span> <span class="s">&quot;</span><span class="si">%-20s</span><span class="s">: </span><span class="si">%4.4f</span><span class="s">&quot;</span> <span class="o">%</span><span class="p">(</span><span class="s">&quot;Option Price&quot;</span><span class="p">,</span> <span class="n">black</span><span class="o">.</span><span class="n">value</span><span class="p">()</span> <span class="p">)</span>
+<span class="k">print</span> <span class="s">&quot;</span><span class="si">%-20s</span><span class="s">: </span><span class="si">%4.4f</span><span class="s">&quot;</span> <span class="o">%</span><span class="p">(</span><span class="s">&quot;Delta&quot;</span><span class="p">,</span> <span class="n">black</span><span class="o">.</span><span class="n">delta</span><span class="p">(</span><span class="n">spot</span><span class="p">)</span> <span class="p">)</span>
+<span class="k">print</span> <span class="s">&quot;</span><span class="si">%-20s</span><span class="s">: </span><span class="si">%4.4f</span><span class="s">&quot;</span> <span class="o">%</span><span class="p">(</span><span class="s">&quot;Gamma&quot;</span><span class="p">,</span> <span class="n">black</span><span class="o">.</span><span class="n">gamma</span><span class="p">(</span><span class="n">spot</span><span class="p">)</span> <span class="p">)</span>
+<span class="k">print</span> <span class="s">&quot;</span><span class="si">%-20s</span><span class="s">: </span><span class="si">%4.4f</span><span class="s">&quot;</span> <span class="o">%</span><span class="p">(</span><span class="s">&quot;Theta&quot;</span><span class="p">,</span> <span class="n">black</span><span class="o">.</span><span class="n">theta</span><span class="p">(</span><span class="n">spot</span><span class="p">,</span> <span class="n">T</span><span class="p">)</span> <span class="p">)</span>
+<span class="k">print</span> <span class="s">&quot;</span><span class="si">%-20s</span><span class="s">: </span><span class="si">%4.4f</span><span class="s">&quot;</span> <span class="o">%</span><span class="p">(</span><span class="s">&quot;Vega&quot;</span><span class="p">,</span> <span class="n">black</span><span class="o">.</span><span class="n">vega</span><span class="p">(</span><span class="n">T</span><span class="p">)</span> <span class="p">)</span>
+<span class="k">print</span> <span class="s">&quot;</span><span class="si">%-20s</span><span class="s">: </span><span class="si">%4.4f</span><span class="s">&quot;</span> <span class="o">%</span><span class="p">(</span><span class="s">&quot;Rho&quot;</span><span class="p">,</span> <span class="n">black</span><span class="o">.</span><span class="n">rho</span><span class="p">(</span> <span class="n">T</span><span class="p">)</span> <span class="p">)</span>
+</pre></div>
+
+</div>
+
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="box-flex1 output_subarea output_stream output_stdout">
+<pre class="ipynb">Option Price        : 7.9686
+Delta               : 0.9875
+Gamma               : 0.0088
+Theta               : -0.9356
+Vega                : 1.0285
+Rho                 : 7.3974
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="natural-gas-futures-option">Natural Gas Futures Option</h2>
+<p>I saw <a href="http://quantlib.10058.n7.nabble.com/Quantlib-methods-for-option-pricing-td17018.html">this</a> question on quantlib users group. Thought I will add this example as well. </p>
+<p>Call option with a 3.5 strike, spot 2.919, volatility 0.4251. The interest rate is 0.15%.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[6]:</div>
+
+<div class="input_area box-flex1">
+<div class="highlight-ipynb"><pre class="ipynb"><span class="n">interest_rate</span> <span class="o">=</span> <span class="mf">0.0015</span>
+<span class="n">calc_date</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">Date</span><span class="p">(</span><span class="mi">23</span><span class="p">,</span><span class="mi">9</span><span class="p">,</span><span class="mi">2015</span><span class="p">)</span>
+<span class="n">yield_curve</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">FlatForward</span><span class="p">(</span><span class="n">calc_date</span><span class="p">,</span> 
+                             <span class="n">interest_rate</span><span class="p">,</span>
+                             <span class="n">day_count</span><span class="p">,</span>
+                             <span class="n">ql</span><span class="o">.</span><span class="n">Compounded</span><span class="p">,</span>
+                             <span class="n">ql</span><span class="o">.</span><span class="n">Continuous</span><span class="p">)</span>
+</pre></div>
+
+</div>
+
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[7]:</div>
+
+<div class="input_area box-flex1">
+<div class="highlight-ipynb"><pre class="ipynb"><span class="n">ql</span><span class="o">.</span><span class="n">Settings</span><span class="o">.</span><span class="n">instance</span><span class="p">()</span><span class="o">.</span><span class="n">evaluationDate</span> <span class="o">=</span> <span class="n">calc_date</span>
+<span class="n">T</span> <span class="o">=</span> <span class="mf">96.12</span><span class="o">/</span><span class="mf">365.</span>
+
+<span class="n">strike</span> <span class="o">=</span> <span class="mf">3.5</span>
+<span class="n">spot</span> <span class="o">=</span> <span class="mf">2.919</span>
+<span class="n">volatility</span> <span class="o">=</span> <span class="mf">0.4251</span>
+<span class="n">flavor</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">Option</span><span class="o">.</span><span class="n">Call</span>
+
+<span class="n">discount</span> <span class="o">=</span> <span class="n">yield_curve</span><span class="o">.</span><span class="n">discount</span><span class="p">(</span><span class="n">T</span><span class="p">)</span>
+<span class="n">strikepayoff</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">PlainVanillaPayoff</span><span class="p">(</span><span class="n">flavor</span><span class="p">,</span> <span class="n">strike</span><span class="p">)</span>
+<span class="n">stddev</span> <span class="o">=</span> <span class="n">volatility</span><span class="o">*</span><span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">T</span><span class="p">)</span>
+
+<span class="n">strikepayoff</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">PlainVanillaPayoff</span><span class="p">(</span><span class="n">flavor</span><span class="p">,</span> <span class="n">strike</span><span class="p">)</span>
+<span class="n">black</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">BlackCalculator</span><span class="p">(</span><span class="n">strikepayoff</span><span class="p">,</span> <span class="n">spot</span><span class="p">,</span> <span class="n">stddev</span><span class="p">,</span> <span class="n">discount</span><span class="p">)</span>
+</pre></div>
+
+</div>
+
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[8]:</div>
+
+<div class="input_area box-flex1">
+<div class="highlight-ipynb"><pre class="ipynb"><span class="k">print</span> <span class="s">&quot;</span><span class="si">%-20s</span><span class="s">: </span><span class="si">%4.4f</span><span class="s">&quot;</span> <span class="o">%</span><span class="p">(</span><span class="s">&quot;Option Price&quot;</span><span class="p">,</span> <span class="n">black</span><span class="o">.</span><span class="n">value</span><span class="p">()</span> <span class="p">)</span>
+<span class="k">print</span> <span class="s">&quot;</span><span class="si">%-20s</span><span class="s">: </span><span class="si">%4.4f</span><span class="s">&quot;</span> <span class="o">%</span><span class="p">(</span><span class="s">&quot;Delta&quot;</span><span class="p">,</span> <span class="n">black</span><span class="o">.</span><span class="n">delta</span><span class="p">(</span><span class="n">spot</span><span class="p">)</span> <span class="p">)</span>
+<span class="k">print</span> <span class="s">&quot;</span><span class="si">%-20s</span><span class="s">: </span><span class="si">%4.4f</span><span class="s">&quot;</span> <span class="o">%</span><span class="p">(</span><span class="s">&quot;Gamma&quot;</span><span class="p">,</span> <span class="n">black</span><span class="o">.</span><span class="n">gamma</span><span class="p">(</span><span class="n">spot</span><span class="p">)</span> <span class="p">)</span>
+<span class="k">print</span> <span class="s">&quot;</span><span class="si">%-20s</span><span class="s">: </span><span class="si">%4.4f</span><span class="s">&quot;</span> <span class="o">%</span><span class="p">(</span><span class="s">&quot;Theta&quot;</span><span class="p">,</span> <span class="n">black</span><span class="o">.</span><span class="n">theta</span><span class="p">(</span><span class="n">spot</span><span class="p">,</span> <span class="n">T</span><span class="p">)</span> <span class="p">)</span>
+<span class="k">print</span> <span class="s">&quot;</span><span class="si">%-20s</span><span class="s">: </span><span class="si">%4.4f</span><span class="s">&quot;</span> <span class="o">%</span><span class="p">(</span><span class="s">&quot;Vega&quot;</span><span class="p">,</span> <span class="n">black</span><span class="o">.</span><span class="n">vega</span><span class="p">(</span><span class="n">T</span><span class="p">)</span> <span class="p">)</span>
+<span class="k">print</span> <span class="s">&quot;</span><span class="si">%-20s</span><span class="s">: </span><span class="si">%4.4f</span><span class="s">&quot;</span> <span class="o">%</span><span class="p">(</span><span class="s">&quot;Rho&quot;</span><span class="p">,</span> <span class="n">black</span><span class="o">.</span><span class="n">rho</span><span class="p">(</span> <span class="n">T</span><span class="p">)</span> <span class="p">)</span>
+</pre></div>
+
+</div>
+
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="box-flex1 output_subarea output_stream output_stdout">
+<pre class="ipynb">Option Price        : 0.0789
+Delta               : 0.2347
+Gamma               : 0.4822
+Theta               : -0.3711
+Vega                : 0.4600
+Rho                 : 0.1597
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="conclusion">Conclusion</h2>
+<p>In this notebook, I demonstrated how Black formula can be used to value options on commodity futures. It is worth pointing out that different vendors usually have different scaling conventions when it comes to reporting greeks. One would needs to take that into account when comparing the values shown by QuantLib with that of other vendors</p>
+<h2 id="references">References</h2>
+<p>[1] Fischer Black, <em>The pricing of commodity contracts</em>, Journal of Financial Economics, (3) 167-179 (1976) </p>
+</div>
+</div>
+</div></p>
+<p>Click here to download the <a href="/extra/notebooks/commodity_futures_options.ipynb">ipython notebook on treasury futures</a>.</p>
+     <br>
+     
+     <!-- article tags-->
+        <span class="glyphicon glyphicon-tags"></span>&nbsp;&nbsp;
+            <span class="label label-default"><a href="http://gouthamanbalaraman.com/tag/quantlib.html">quantlib</a></span>&nbsp;&nbsp;
+            <span class="label label-default"><a href="http://gouthamanbalaraman.com/tag/python.html">python</a></span>&nbsp;&nbsp;
+            <span class="label label-default"><a href="http://gouthamanbalaraman.com/tag/finance.html">finance</a></span>&nbsp;&nbsp;
+        <br>
+     <hr/>
+    
+    <strong>Related Post</strong>
+        <ul>
+            <li>
+                <a href="http://gouthamanbalaraman.com/blog/short-interest-rate-model-calibration-quantlib.html">Short Interest Rate Model Calibration</a>
+            </li>
+            <li>
+                <a href="http://gouthamanbalaraman.com/blog/quantlib-basics.html">Introduction to QuantLib</a>
+            </li>
+            <li>
+                <a href="http://gouthamanbalaraman.com/blog/hull-white-simulation-monte-carlo-convergence.html">On the Convergence of Hull White Monte Carlo Simulations</a>
+            </li>
+            <li>
+                <a href="http://gouthamanbalaraman.com/blog/quantlib-bond-modeling.html">Modeling Fixed Rate Bonds Using QuantLib</a>
+            </li>
+            <li>
+                <a href="http://gouthamanbalaraman.com/blog/hull-white-simulation-quantlib-python.html">Hull White Term Structure Simulations with QuantLib</a>
+            </li>
+        </ul>
+        <hr/>
+
+     <!-- article comments -->
+    <div class="comment">
+        <div id="disqus_thread"></div> <!-- comment app container -->
+    </div>
+	<!-- Comment BEGIN -->
+    <script type="text/javascript">
+        var disqus_shortname = 'gouthamanbalaramancom'; // required: replace example with your forum shortname
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+     <!-- Comment END -->
+</div>    
+                </div>
+               
+            </div>
+            <div class="row">
+                <div class="col-md-10 col-md-offset-1">
+                </div>
+            </div>
+            <footer id="contentinfo" class="footer">
+                <address id="about" class="vcard body">
+                    &copy; <a href="http://gouthamanbalaraman.com">Gouthaman Balaraman</a> Proudly powered by <a href="http://getpelican.com/">Pelican</a>
+                    <div class="pull-right">
+                    	<a href="http://www.bloglovin.com/blog/14559547/?claim=cqravg9v4n2">Bloglovin</a>
+			            <a href="http://gouthamanbalaraman.com/feeds/all.atom.xml">Atom</a>
+			        &nbsp
+			            <a href="http://gouthamanbalaraman.com/feeds/all.rss.xml">RSS</a>
+		            </div>
+                </address><!-- /#about -->
+            </footer>
+        </div><!-- container -->
+        <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
+        <script src="http://gouthamanbalaraman.com/theme/static/js/jquery.1.11.2.min.js"></script>
+        <script src="http://gouthamanbalaraman.com/theme/static/js/bootstrap.min.js"></script>
+        <script type="text/javascript">
+	jQuery(document).ready(function($) {
+	    $("div.collapseheader").click(function () {
+	    $header = $(this).children("span").first();
+	    $codearea = $(this).children(".input_area");
+	    console.log($(this).children());
+	    $codearea.slideToggle(500, function () {
+	        $header.text(function () {
+	            return $codearea.is(":visible") ? "Collapse Code" : "Expand Code";
+	        });
+	    });
+	});
+	});
+	</script>
+    </body>
+</html>
