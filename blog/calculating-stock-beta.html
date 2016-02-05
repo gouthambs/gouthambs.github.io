@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Calculating Stock Beta, Volatility, and More - Gouthaman Balaraman</title>
+        <title>Calculating Stock Beta, Volatility, and More - G B</title>
         <!-- All the meta tags -->
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -12,10 +12,10 @@
         <link href="http://gouthamanbalaraman.com/theme/static/css/bootstrap.readable.min.css" rel="stylesheet" />
         <link href="http://gouthamanbalaraman.com/theme/static/css/style.css" rel="stylesheet" />
         
-        <link href="http://gouthamanbalaraman.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Gouthaman Balaraman Full Atom Feed" />
-        <link href="http://gouthamanbalaraman.com/feeds/all.rss.xml" type="application/rss+xml" rel="alternate" title="Gouthaman Balaraman RSS Feed" />
-        <link href="http://gouthamanbalaraman.com/feeds/articles.atom.xml" type="application/atom+xml" rel="alternate" title="Gouthaman Balaraman Categories Atom Feed" />
-        <link href="http://gouthamanbalaraman.com/feeds/articles.rss.xml" type="application/rss+xml" rel="alternate" title="Gouthaman Balaraman Categories RSS Feed" />
+        <link href="http://gouthamanbalaraman.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="G B Full Atom Feed" />
+        <link href="http://gouthamanbalaraman.com/feeds/all.rss.xml" type="application/rss+xml" rel="alternate" title="G B RSS Feed" />
+        <link href="http://gouthamanbalaraman.com/feeds/articles.atom.xml" type="application/atom+xml" rel="alternate" title="G B Categories Atom Feed" />
+        <link href="http://gouthamanbalaraman.com/feeds/articles.rss.xml" type="application/rss+xml" rel="alternate" title="G B Categories RSS Feed" />
         <!-- Google Analytics -->
 <script type="text/javascript">
   var _gaq = _gaq || [];
@@ -48,7 +48,7 @@
       <div class="navbar navbar-default navbar-fixed-top">
           <div class="container">
             <div class="navbar-header">
-              <a href="http://gouthamanbalaraman.com" class="navbar-brand">Gouthaman Balaraman</a>
+              <a href="http://gouthamanbalaraman.com" class="navbar-brand">G B</a>
               <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
@@ -169,41 +169,41 @@ will be the 3-year return of the stock.</p>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="kn">as</span> <span class="nn">pd</span>
 
-<span class="c"># Grab time series data for 5-year history for the stock (here AAPL)</span>
-<span class="c"># and for S&amp;P-500 Index</span>
+<span class="c1"># Grab time series data for 5-year history for the stock (here AAPL)</span>
+<span class="c1"># and for S&amp;P-500 Index</span>
 <span class="n">sdate</span> <span class="o">=</span> <span class="n">date</span><span class="p">(</span><span class="mi">2008</span><span class="p">,</span><span class="mi">12</span><span class="p">,</span><span class="mi">31</span><span class="p">)</span>
 <span class="n">edate</span> <span class="o">=</span> <span class="n">date</span><span class="p">(</span><span class="mi">2013</span><span class="p">,</span><span class="mi">12</span><span class="p">,</span><span class="mi">31</span><span class="p">)</span>
-<span class="n">df</span> <span class="o">=</span> <span class="n">DataReader</span><span class="p">(</span><span class="s">'WFM'</span><span class="p">,</span><span class="s">'yahoo'</span><span class="p">,</span><span class="n">sdate</span><span class="p">,</span><span class="n">edate</span><span class="p">)</span>
-<span class="n">dfb</span> <span class="o">=</span> <span class="n">DataReader</span><span class="p">(</span><span class="s">'^GSPC'</span><span class="p">,</span><span class="s">'yahoo'</span><span class="p">,</span><span class="n">sdate</span><span class="p">,</span><span class="n">edate</span><span class="p">)</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">DataReader</span><span class="p">(</span><span class="s1">'WFM'</span><span class="p">,</span><span class="s1">'yahoo'</span><span class="p">,</span><span class="n">sdate</span><span class="p">,</span><span class="n">edate</span><span class="p">)</span>
+<span class="n">dfb</span> <span class="o">=</span> <span class="n">DataReader</span><span class="p">(</span><span class="s1">'^GSPC'</span><span class="p">,</span><span class="s1">'yahoo'</span><span class="p">,</span><span class="n">sdate</span><span class="p">,</span><span class="n">edate</span><span class="p">)</span>
 
-<span class="c"># create a time-series of monthly data points</span>
-<span class="n">rts</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">resample</span><span class="p">(</span><span class="s">'M'</span><span class="p">,</span><span class="n">how</span><span class="o">=</span><span class="s">'last'</span><span class="p">)</span>
-<span class="n">rbts</span> <span class="o">=</span> <span class="n">dfb</span><span class="o">.</span><span class="n">resample</span><span class="p">(</span><span class="s">'M'</span><span class="p">,</span><span class="n">how</span><span class="o">=</span><span class="s">'last'</span><span class="p">)</span>
-<span class="n">dfsm</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s">'s_adjclose'</span> <span class="p">:</span> <span class="n">rts</span><span class="p">[</span><span class="s">'Adj Close'</span><span class="p">],</span>
-                        <span class="s">'b_adjclose'</span> <span class="p">:</span> <span class="n">rbts</span><span class="p">[</span><span class="s">'Adj Close'</span><span class="p">]},</span>
+<span class="c1"># create a time-series of monthly data points</span>
+<span class="n">rts</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">resample</span><span class="p">(</span><span class="s1">'M'</span><span class="p">,</span><span class="n">how</span><span class="o">=</span><span class="s1">'last'</span><span class="p">)</span>
+<span class="n">rbts</span> <span class="o">=</span> <span class="n">dfb</span><span class="o">.</span><span class="n">resample</span><span class="p">(</span><span class="s1">'M'</span><span class="p">,</span><span class="n">how</span><span class="o">=</span><span class="s1">'last'</span><span class="p">)</span>
+<span class="n">dfsm</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">'s_adjclose'</span> <span class="p">:</span> <span class="n">rts</span><span class="p">[</span><span class="s1">'Adj Close'</span><span class="p">],</span>
+                        <span class="s1">'b_adjclose'</span> <span class="p">:</span> <span class="n">rbts</span><span class="p">[</span><span class="s1">'Adj Close'</span><span class="p">]},</span>
                         <span class="n">index</span><span class="o">=</span><span class="n">rts</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
 
-<span class="c"># compute returns</span>
-<span class="n">dfsm</span><span class="p">[[</span><span class="s">'s_returns'</span><span class="p">,</span><span class="s">'b_returns'</span><span class="p">]]</span> <span class="o">=</span> <span class="n">dfsm</span><span class="p">[[</span><span class="s">'s_adjclose'</span><span class="p">,</span><span class="s">'b_adjclose'</span><span class="p">]]</span><span class="o">/</span>\
-    <span class="n">dfsm</span><span class="p">[[</span><span class="s">'s_adjclose'</span><span class="p">,</span><span class="s">'b_adjclose'</span><span class="p">]]</span><span class="o">.</span><span class="n">shift</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">-</span><span class="mi">1</span>
+<span class="c1"># compute returns</span>
+<span class="n">dfsm</span><span class="p">[[</span><span class="s1">'s_returns'</span><span class="p">,</span><span class="s1">'b_returns'</span><span class="p">]]</span> <span class="o">=</span> <span class="n">dfsm</span><span class="p">[[</span><span class="s1">'s_adjclose'</span><span class="p">,</span><span class="s1">'b_adjclose'</span><span class="p">]]</span><span class="o">/</span>\
+    <span class="n">dfsm</span><span class="p">[[</span><span class="s1">'s_adjclose'</span><span class="p">,</span><span class="s1">'b_adjclose'</span><span class="p">]]</span><span class="o">.</span><span class="n">shift</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">-</span><span class="mi">1</span>
 <span class="n">dfsm</span> <span class="o">=</span> <span class="n">dfsm</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
-<span class="n">covmat</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cov</span><span class="p">(</span><span class="n">dfsm</span><span class="p">[</span><span class="s">&quot;s_returns&quot;</span><span class="p">],</span><span class="n">dfsm</span><span class="p">[</span><span class="s">&quot;b_returns&quot;</span><span class="p">])</span>
+<span class="n">covmat</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cov</span><span class="p">(</span><span class="n">dfsm</span><span class="p">[</span><span class="s2">&quot;s_returns&quot;</span><span class="p">],</span><span class="n">dfsm</span><span class="p">[</span><span class="s2">&quot;b_returns&quot;</span><span class="p">])</span>
 
-<span class="c"># calculate measures now</span>
+<span class="c1"># calculate measures now</span>
 <span class="n">beta</span> <span class="o">=</span> <span class="n">covmat</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span><span class="o">/</span><span class="n">covmat</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span>
-<span class="n">alpha</span><span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">dfsm</span><span class="p">[</span><span class="s">&quot;s_returns&quot;</span><span class="p">])</span><span class="o">-</span><span class="n">beta</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">dfsm</span><span class="p">[</span><span class="s">&quot;b_returns&quot;</span><span class="p">])</span>
+<span class="n">alpha</span><span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">dfsm</span><span class="p">[</span><span class="s2">&quot;s_returns&quot;</span><span class="p">])</span><span class="o">-</span><span class="n">beta</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">dfsm</span><span class="p">[</span><span class="s2">&quot;b_returns&quot;</span><span class="p">])</span>
 
-<span class="c"># r_squared     = 1. - SS_res/SS_tot</span>
-<span class="n">ypred</span> <span class="o">=</span> <span class="n">alpha</span> <span class="o">+</span> <span class="n">beta</span> <span class="o">*</span> <span class="n">dfsm</span><span class="p">[</span><span class="s">&quot;b_returns&quot;</span><span class="p">]</span>
-<span class="n">SS_res</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">power</span><span class="p">(</span><span class="n">ypred</span><span class="o">-</span><span class="n">dfsm</span><span class="p">[</span><span class="s">&quot;s_returns&quot;</span><span class="p">],</span><span class="mi">2</span><span class="p">))</span>
-<span class="n">SS_tot</span> <span class="o">=</span> <span class="n">covmat</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">dfsm</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="c"># SS_tot is sample_variance*(n-1)</span>
+<span class="c1"># r_squared     = 1. - SS_res/SS_tot</span>
+<span class="n">ypred</span> <span class="o">=</span> <span class="n">alpha</span> <span class="o">+</span> <span class="n">beta</span> <span class="o">*</span> <span class="n">dfsm</span><span class="p">[</span><span class="s2">&quot;b_returns&quot;</span><span class="p">]</span>
+<span class="n">SS_res</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">power</span><span class="p">(</span><span class="n">ypred</span><span class="o">-</span><span class="n">dfsm</span><span class="p">[</span><span class="s2">&quot;s_returns&quot;</span><span class="p">],</span><span class="mi">2</span><span class="p">))</span>
+<span class="n">SS_tot</span> <span class="o">=</span> <span class="n">covmat</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">dfsm</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="c1"># SS_tot is sample_variance*(n-1)</span>
 <span class="n">r_squared</span> <span class="o">=</span> <span class="mf">1.</span> <span class="o">-</span> <span class="n">SS_res</span><span class="o">/</span><span class="n">SS_tot</span>
-<span class="c"># 5- year volatiity and 1-year momentum</span>
+<span class="c1"># 5- year volatiity and 1-year momentum</span>
 <span class="n">volatility</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">covmat</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">])</span>
-<span class="n">momentum</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">prod</span><span class="p">(</span><span class="mi">1</span><span class="o">+</span><span class="n">dfsm</span><span class="p">[</span><span class="s">&quot;s_returns&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">tail</span><span class="p">(</span><span class="mi">12</span><span class="p">)</span><span class="o">.</span><span class="n">values</span><span class="p">)</span> <span class="o">-</span><span class="mi">1</span>
+<span class="n">momentum</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">prod</span><span class="p">(</span><span class="mi">1</span><span class="o">+</span><span class="n">dfsm</span><span class="p">[</span><span class="s2">&quot;s_returns&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">tail</span><span class="p">(</span><span class="mi">12</span><span class="p">)</span><span class="o">.</span><span class="n">values</span><span class="p">)</span> <span class="o">-</span><span class="mi">1</span>
 
-<span class="c"># annualize the numbers</span>
-<span class="n">prd</span> <span class="o">=</span> <span class="mf">12.</span> <span class="c"># used monthly returns; 12 periods to annualize</span>
+<span class="c1"># annualize the numbers</span>
+<span class="n">prd</span> <span class="o">=</span> <span class="mf">12.</span> <span class="c1"># used monthly returns; 12 periods to annualize</span>
 <span class="n">alpha</span> <span class="o">=</span> <span class="n">alpha</span><span class="o">*</span><span class="n">prd</span>
 <span class="n">volatility</span> <span class="o">=</span> <span class="n">volatility</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">prd</span><span class="p">)</span>
 
@@ -237,16 +237,16 @@ in order to annualize.</p>
                 <a href="http://gouthamanbalaraman.com/blog/modern-portfolio-theory-statistics.html">Modern Portfolio Theory Statistics</a>
             </li>
             <li>
-                <a href="http://gouthamanbalaraman.com/blog/understanding-econometric-factor-model.html">Understanding the Econometric Factor Model</a>
-            </li>
-            <li>
                 <a href="http://gouthamanbalaraman.com/blog/econometric-factor-model.html">Econometric Factor Model</a>
             </li>
             <li>
-                <a href="http://gouthamanbalaraman.com/blog/hull-white-simulation-quantlib-python.html">Hull White Term Structure Simulations with QuantLib</a>
+                <a href="http://gouthamanbalaraman.com/blog/understanding-econometric-factor-model.html">Understanding the Econometric Factor Model</a>
             </li>
             <li>
-                <a href="http://gouthamanbalaraman.com/blog/short-interest-rate-model-calibration-quantlib.html">Short Interest Rate Model Calibration</a>
+                <a href="http://gouthamanbalaraman.com/blog/option-model-handbook-part-I-introduction-to-option-models.html">Option Model Handbook, Part I: Introduction to Option Models</a>
+            </li>
+            <li>
+                <a href="http://gouthamanbalaraman.com/blog/quantlib-bond-modeling.html">Modeling Fixed Rate Bonds Using QuantLib</a>
             </li>
         </ul>
         <hr/>
@@ -278,7 +278,7 @@ in order to annualize.</p>
             </div>
             <footer id="contentinfo" class="footer">
                 <address id="about" class="vcard body">
-                    &copy; <a href="http://gouthamanbalaraman.com">Gouthaman Balaraman</a> Proudly powered by <a href="http://getpelican.com/">Pelican</a>
+                    &copy; <a href="http://gouthamanbalaraman.com">Goutham Balaraman</a> Proudly powered by <a href="http://getpelican.com/">Pelican</a>
                     <div class="pull-right">
                     	<a href="http://www.bloglovin.com/blog/14559547/?claim=cqravg9v4n2">Bloglovin</a>
 			            <a href="http://gouthamanbalaraman.com/feeds/all.atom.xml">Atom</a>

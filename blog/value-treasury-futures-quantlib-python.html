@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Valuing Treasury Futures Using QuantLib - Gouthaman Balaraman</title>
+        <title>Valuing Treasury Futures Using QuantLib - G B</title>
         <!-- All the meta tags -->
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -12,10 +12,10 @@
         <link href="http://gouthamanbalaraman.com/theme/static/css/bootstrap.readable.min.css" rel="stylesheet" />
         <link href="http://gouthamanbalaraman.com/theme/static/css/style.css" rel="stylesheet" />
         
-        <link href="http://gouthamanbalaraman.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Gouthaman Balaraman Full Atom Feed" />
-        <link href="http://gouthamanbalaraman.com/feeds/all.rss.xml" type="application/rss+xml" rel="alternate" title="Gouthaman Balaraman RSS Feed" />
-        <link href="http://gouthamanbalaraman.com/feeds/quantlib.atom.xml" type="application/atom+xml" rel="alternate" title="Gouthaman Balaraman Categories Atom Feed" />
-        <link href="http://gouthamanbalaraman.com/feeds/quantlib.rss.xml" type="application/rss+xml" rel="alternate" title="Gouthaman Balaraman Categories RSS Feed" />
+        <link href="http://gouthamanbalaraman.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="G B Full Atom Feed" />
+        <link href="http://gouthamanbalaraman.com/feeds/all.rss.xml" type="application/rss+xml" rel="alternate" title="G B RSS Feed" />
+        <link href="http://gouthamanbalaraman.com/feeds/quantlib.atom.xml" type="application/atom+xml" rel="alternate" title="G B Categories Atom Feed" />
+        <link href="http://gouthamanbalaraman.com/feeds/quantlib.rss.xml" type="application/rss+xml" rel="alternate" title="G B Categories RSS Feed" />
         <!-- Google Analytics -->
 <script type="text/javascript">
   var _gaq = _gaq || [];
@@ -48,7 +48,7 @@
       <div class="navbar navbar-default navbar-fixed-top">
           <div class="container">
             <div class="navbar-header">
-              <a href="http://gouthamanbalaraman.com" class="navbar-brand">Gouthaman Balaraman</a>
+              <a href="http://gouthamanbalaraman.com" class="navbar-brand">G B</a>
               <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
@@ -163,7 +163,7 @@
 
 <div class="collapseheader box-flex1"><span style="font-weight: bold;">Expand Code</span>
 <div class="input_area box-flex1" style="display:none">
-<div class="highlight-ipynb"><pre class="ipynb"><span class="c"># build curve</span>
+<div class="highlight-ipynb"><pre class="ipynb"><span class="c1"># build curve</span>
 <span class="n">prices</span> <span class="o">=</span> <span class="p">[</span><span class="mf">99.9935</span><span class="p">,</span><span class="mf">99.9576</span><span class="p">,</span><span class="mf">99.8119</span><span class="p">,</span><span class="mf">99.5472</span><span class="p">,</span><span class="mf">99.8867</span><span class="p">,</span>
 <span class="mf">100.0664</span><span class="p">,</span><span class="mf">99.8711</span><span class="p">,</span><span class="mf">100.0547</span><span class="p">,</span><span class="mf">100.3047</span><span class="p">,</span><span class="mf">100.2266</span><span class="p">]</span>
 
@@ -220,7 +220,7 @@
 <div class="highlight-ipynb"><pre class="ipynb"><span class="n">yield_curve</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">PiecewiseCubicZero</span><span class="p">(</span><span class="n">calc_date</span><span class="p">,</span> <span class="n">bond_helpers</span><span class="p">,</span> <span class="n">day_count</span><span class="p">)</span>
 <span class="n">yield_curve_handle</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">YieldTermStructureHandle</span><span class="p">(</span><span class="n">yield_curve</span><span class="p">)</span>
 <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">maturity_dates</span><span class="p">:</span>
-    <span class="k">print</span> <span class="s">&quot;|</span><span class="si">%20s</span><span class="s">  </span><span class="si">%9.6f</span><span class="s">|&quot;</span><span class="o">%</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">yield_curve</span><span class="o">.</span><span class="n">discount</span><span class="p">(</span><span class="n">d</span><span class="p">))</span>
+    <span class="k">print</span> <span class="s2">&quot;|</span><span class="si">%20s</span><span class="s2">  </span><span class="si">%9.6f</span><span class="s2">|&quot;</span><span class="o">%</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">yield_curve</span><span class="o">.</span><span class="n">discount</span><span class="p">(</span><span class="n">d</span><span class="p">))</span>
 </pre></div>
 
 </div>
@@ -352,7 +352,7 @@
                                    <span class="n">yield_curve</span><span class="p">,</span> <span class="n">day_count</span><span class="p">,</span> 
                                    <span class="n">ql</span><span class="o">.</span><span class="n">Compounded</span><span class="p">,</span> <span class="n">ql</span><span class="o">.</span><span class="n">Semiannual</span><span class="p">,</span> 
                                    <span class="n">calc_date</span><span class="p">)</span><span class="o">*</span><span class="mi">10000</span>
-<span class="k">print</span> <span class="s">&quot;Z-Spread =</span><span class="si">%3.0f</span><span class="s">bp&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">zspread</span><span class="p">)</span>
+<span class="k">print</span> <span class="s2">&quot;Z-Spread =</span><span class="si">%3.0f</span><span class="s2">bp&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">zspread</span><span class="p">)</span>
 </pre></div>
 
 </div>
@@ -395,7 +395,7 @@
 
 <div class="collapseheader box-flex1"><span style="font-weight: bold;">Expand Code</span>
 <div class="input_area box-flex1" style="display:none">
-<div class="highlight-ipynb"><pre class="ipynb"><span class="c"># basket describes the coupon rate, maturity date, price</span>
+<div class="highlight-ipynb"><pre class="ipynb"><span class="c1"># basket describes the coupon rate, maturity date, price</span>
 <span class="n">day_count</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">ActualActual</span><span class="p">()</span>
 <span class="n">basket</span> <span class="o">=</span> <span class="p">[(</span><span class="mf">1.625</span><span class="p">,</span> <span class="n">ql</span><span class="o">.</span><span class="n">Date</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">2022</span><span class="p">),</span> <span class="mf">97.921875</span><span class="p">),</span> 
           <span class="p">(</span><span class="mf">1.625</span><span class="p">,</span> <span class="n">ql</span><span class="o">.</span><span class="n">Date</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span><span class="mi">11</span><span class="p">,</span><span class="mi">2022</span><span class="p">),</span> <span class="mf">97.671875</span><span class="p">),</span>
@@ -438,11 +438,11 @@
 <span class="n">ctd_info</span> <span class="o">=</span> <span class="n">basket</span><span class="p">[</span><span class="n">min_basis_index</span><span class="p">]</span>
 <span class="n">ctd_bond</span><span class="p">,</span><span class="n">ctd_cf</span> <span class="o">=</span> <span class="n">securities</span><span class="p">[</span><span class="n">min_basis_index</span><span class="p">]</span>
 <span class="n">ctd_price</span> <span class="o">=</span> <span class="n">ctd_info</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
-<span class="k">print</span> <span class="s">&quot;</span><span class="si">%-30s</span><span class="s"> = </span><span class="si">%lf</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="s">&quot;Minimum Basis&quot;</span><span class="p">,</span> <span class="n">min_basis</span><span class="p">)</span>
-<span class="k">print</span> <span class="s">&quot;</span><span class="si">%-30s</span><span class="s"> = </span><span class="si">%lf</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="s">&quot;Conversion Factor&quot;</span><span class="p">,</span> <span class="n">ctd_cf</span><span class="p">)</span>
-<span class="k">print</span> <span class="s">&quot;</span><span class="si">%-30s</span><span class="s"> = </span><span class="si">%lf</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="s">&quot;Coupon&quot;</span><span class="p">,</span> <span class="n">ctd_info</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
-<span class="k">print</span> <span class="s">&quot;</span><span class="si">%-30s</span><span class="s"> = </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="s">&quot;Maturity&quot;</span><span class="p">,</span> <span class="n">ctd_info</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
-<span class="k">print</span> <span class="s">&quot;</span><span class="si">%-30s</span><span class="s"> = </span><span class="si">%lf</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="s">&quot;Price&quot;</span><span class="p">,</span> <span class="n">ctd_info</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+<span class="k">print</span> <span class="s2">&quot;</span><span class="si">%-30s</span><span class="s2"> = </span><span class="si">%lf</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="s2">&quot;Minimum Basis&quot;</span><span class="p">,</span> <span class="n">min_basis</span><span class="p">)</span>
+<span class="k">print</span> <span class="s2">&quot;</span><span class="si">%-30s</span><span class="s2"> = </span><span class="si">%lf</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="s2">&quot;Conversion Factor&quot;</span><span class="p">,</span> <span class="n">ctd_cf</span><span class="p">)</span>
+<span class="k">print</span> <span class="s2">&quot;</span><span class="si">%-30s</span><span class="s2"> = </span><span class="si">%lf</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="s2">&quot;Coupon&quot;</span><span class="p">,</span> <span class="n">ctd_info</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="k">print</span> <span class="s2">&quot;</span><span class="si">%-30s</span><span class="s2"> = </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="s2">&quot;Maturity&quot;</span><span class="p">,</span> <span class="n">ctd_info</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+<span class="k">print</span> <span class="s2">&quot;</span><span class="si">%-30s</span><span class="s2"> = </span><span class="si">%lf</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="s2">&quot;Price&quot;</span><span class="p">,</span> <span class="n">ctd_info</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
 </pre></div>
 
 </div>
@@ -520,12 +520,12 @@ Price                          = 101.062500
 <span class="n">ytm</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">BondFunctions</span><span class="o">.</span><span class="n">_yield</span><span class="p">(</span><span class="n">ctd_bond</span><span class="p">,</span> <span class="n">ctd_price</span><span class="p">,</span> <span class="n">day_count</span><span class="p">,</span>
                               <span class="n">ql</span><span class="o">.</span><span class="n">Compounded</span><span class="p">,</span> <span class="n">ql</span><span class="o">.</span><span class="n">Semiannual</span><span class="p">,</span> <span class="n">calc_date</span><span class="p">)</span>
 
-<span class="k">print</span> <span class="s">&quot;</span><span class="si">%-30s</span><span class="s"> = </span><span class="si">%lf</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="s">&quot;Model Futures Price&quot;</span><span class="p">,</span> <span class="n">model_futures_price</span><span class="p">)</span>
-<span class="k">print</span> <span class="s">&quot;</span><span class="si">%-30s</span><span class="s"> = </span><span class="si">%lf</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="s">&quot;Market Futures Price&quot;</span><span class="p">,</span> <span class="n">futures_price</span><span class="p">)</span>
-<span class="k">print</span> <span class="s">&quot;</span><span class="si">%-30s</span><span class="s"> = </span><span class="si">%lf</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="s">&quot;Model Adjustment&quot;</span><span class="p">,</span> <span class="n">model_futures_price</span><span class="o">-</span><span class="n">futures_price</span><span class="p">)</span>
-<span class="k">print</span> <span class="s">&quot;</span><span class="si">%-30s</span><span class="s"> = </span><span class="si">%2.3f%%</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="s">&quot;Implied Yield&quot;</span><span class="p">,</span> <span class="n">implied_yield</span><span class="o">*</span><span class="mi">100</span><span class="p">)</span>
-<span class="k">print</span> <span class="s">&quot;</span><span class="si">%-30s</span><span class="s"> = </span><span class="si">%2.1f</span><span class="s">bps&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="s">&quot;Forward Z-Spread&quot;</span><span class="p">,</span> <span class="n">z_spread</span><span class="o">*</span><span class="mi">10000</span><span class="p">)</span>
-<span class="k">print</span> <span class="s">&quot;</span><span class="si">%-30s</span><span class="s"> = </span><span class="si">%2.3f%%</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="s">&quot;Forward YTM &quot;</span><span class="p">,</span> <span class="n">ytm</span><span class="o">*</span><span class="mi">100</span><span class="p">)</span>
+<span class="k">print</span> <span class="s2">&quot;</span><span class="si">%-30s</span><span class="s2"> = </span><span class="si">%lf</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="s2">&quot;Model Futures Price&quot;</span><span class="p">,</span> <span class="n">model_futures_price</span><span class="p">)</span>
+<span class="k">print</span> <span class="s2">&quot;</span><span class="si">%-30s</span><span class="s2"> = </span><span class="si">%lf</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="s2">&quot;Market Futures Price&quot;</span><span class="p">,</span> <span class="n">futures_price</span><span class="p">)</span>
+<span class="k">print</span> <span class="s2">&quot;</span><span class="si">%-30s</span><span class="s2"> = </span><span class="si">%lf</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="s2">&quot;Model Adjustment&quot;</span><span class="p">,</span> <span class="n">model_futures_price</span><span class="o">-</span><span class="n">futures_price</span><span class="p">)</span>
+<span class="k">print</span> <span class="s2">&quot;</span><span class="si">%-30s</span><span class="s2"> = </span><span class="si">%2.3f%%</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="s2">&quot;Implied Yield&quot;</span><span class="p">,</span> <span class="n">implied_yield</span><span class="o">*</span><span class="mi">100</span><span class="p">)</span>
+<span class="k">print</span> <span class="s2">&quot;</span><span class="si">%-30s</span><span class="s2"> = </span><span class="si">%2.1f</span><span class="s2">bps&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="s2">&quot;Forward Z-Spread&quot;</span><span class="p">,</span> <span class="n">z_spread</span><span class="o">*</span><span class="mi">10000</span><span class="p">)</span>
+<span class="k">print</span> <span class="s2">&quot;</span><span class="si">%-30s</span><span class="s2"> = </span><span class="si">%2.3f%%</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="s2">&quot;Forward YTM &quot;</span><span class="p">,</span> <span class="n">ytm</span><span class="o">*</span><span class="mi">100</span><span class="p">)</span>
 </pre></div>
 
 </div>
@@ -581,19 +581,19 @@ Forward YTM                    = 1.952%
     <strong>Related Post</strong>
         <ul>
             <li>
-                <a href="http://gouthamanbalaraman.com/blog/value-options-commodity-futures-black-formula-quantlib-python.html">Valuing Options on Commodity Futures Using the Black Formula</a>
+                <a href="http://gouthamanbalaraman.com/blog/hull-white-simulation-quantlib-python.html">Hull White Term Structure Simulations with QuantLib</a>
             </li>
             <li>
-                <a href="http://gouthamanbalaraman.com/blog/hull-white-simulation-monte-carlo-convergence.html">On the Convergence of Hull White Monte Carlo Simulations</a>
+                <a href="http://gouthamanbalaraman.com/blog/short-interest-rate-model-calibration-quantlib.html">Short Interest Rate Model Calibration</a>
             </li>
             <li>
-                <a href="http://gouthamanbalaraman.com/blog/quantlib-bond-modeling.html">Modeling Fixed Rate Bonds Using QuantLib</a>
+                <a href="http://gouthamanbalaraman.com/blog/quantlib-python-tutorials-with-examples.html">QuantLib Python Tutorials With Examples</a>
             </li>
             <li>
-                <a href="http://gouthamanbalaraman.com/blog/quantlib-basics.html">Introduction to QuantLib</a>
+                <a href="http://gouthamanbalaraman.com/blog/european-option-binomial-tree-quantlib-python.html">Option Model Handbook, Part III: European Option Pricing With QuantLib</a>
             </li>
             <li>
-                <a href="http://gouthamanbalaraman.com/blog/interest-rate-swap-quantlib-python.html">Modeling Vanilla Interest Rate Swaps Using QuantLib</a>
+                <a href="http://gouthamanbalaraman.com/blog/valuing-european-option-heston-model-quantLib.html">Valuing European Option Using the Heston Model in QuantLib and Python</a>
             </li>
         </ul>
         <hr/>
@@ -625,7 +625,7 @@ Forward YTM                    = 1.952%
             </div>
             <footer id="contentinfo" class="footer">
                 <address id="about" class="vcard body">
-                    &copy; <a href="http://gouthamanbalaraman.com">Gouthaman Balaraman</a> Proudly powered by <a href="http://getpelican.com/">Pelican</a>
+                    &copy; <a href="http://gouthamanbalaraman.com">Goutham Balaraman</a> Proudly powered by <a href="http://getpelican.com/">Pelican</a>
                     <div class="pull-right">
                     	<a href="http://www.bloglovin.com/blog/14559547/?claim=cqravg9v4n2">Bloglovin</a>
 			            <a href="http://gouthamanbalaraman.com/feeds/all.atom.xml">Atom</a>

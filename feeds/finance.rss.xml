@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Gouthaman Balaraman</title><link>http://gouthamanbalaraman.com/</link><description></description><atom:link href="http://gouthamanbalaraman.com/feeds/finance.rss.xml" rel="self"></atom:link><lastBuildDate>Mon, 22 Jun 2015 00:00:00 -0700</lastBuildDate><item><title>How to Build a Fundamental Factor Model</title><link>http://gouthamanbalaraman.com/blog/build-fundamental-factor-model.html</link><description>&lt;p&gt;In a multi-factor model, the return of a stock can be broken out 
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>G B</title><link>http://gouthamanbalaraman.com/</link><description></description><atom:link href="http://gouthamanbalaraman.com/feeds/finance.rss.xml" rel="self"></atom:link><lastBuildDate>Mon, 22 Jun 2015 00:00:00 -0700</lastBuildDate><item><title>How to Build a Fundamental Factor Model</title><link>http://gouthamanbalaraman.com/blog/build-fundamental-factor-model.html</link><description>&lt;p&gt;In a multi-factor model, the return of a stock can be broken out 
 into multiple factors.&lt;/p&gt;
 &lt;p&gt;$$ r_i = \alpha_i + \sum_{j=1}^{K} \beta_{ij} f_j + \epsilon_i $$&lt;/p&gt;
 &lt;p&gt;The term $\epsilon_i$ is the error term which is assumed to have a 

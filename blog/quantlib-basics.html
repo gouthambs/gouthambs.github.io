@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Introduction to QuantLib - Gouthaman Balaraman</title>
+        <title>Introduction to QuantLib - G B</title>
         <!-- All the meta tags -->
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -12,10 +12,10 @@
         <link href="http://gouthamanbalaraman.com/theme/static/css/bootstrap.readable.min.css" rel="stylesheet" />
         <link href="http://gouthamanbalaraman.com/theme/static/css/style.css" rel="stylesheet" />
         
-        <link href="http://gouthamanbalaraman.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Gouthaman Balaraman Full Atom Feed" />
-        <link href="http://gouthamanbalaraman.com/feeds/all.rss.xml" type="application/rss+xml" rel="alternate" title="Gouthaman Balaraman RSS Feed" />
-        <link href="http://gouthamanbalaraman.com/feeds/quantlib.atom.xml" type="application/atom+xml" rel="alternate" title="Gouthaman Balaraman Categories Atom Feed" />
-        <link href="http://gouthamanbalaraman.com/feeds/quantlib.rss.xml" type="application/rss+xml" rel="alternate" title="Gouthaman Balaraman Categories RSS Feed" />
+        <link href="http://gouthamanbalaraman.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="G B Full Atom Feed" />
+        <link href="http://gouthamanbalaraman.com/feeds/all.rss.xml" type="application/rss+xml" rel="alternate" title="G B RSS Feed" />
+        <link href="http://gouthamanbalaraman.com/feeds/quantlib.atom.xml" type="application/atom+xml" rel="alternate" title="G B Categories Atom Feed" />
+        <link href="http://gouthamanbalaraman.com/feeds/quantlib.rss.xml" type="application/rss+xml" rel="alternate" title="G B Categories RSS Feed" />
         <!-- Google Analytics -->
 <script type="text/javascript">
   var _gaq = _gaq || [];
@@ -48,7 +48,7 @@
       <div class="navbar navbar-default navbar-fixed-top">
           <div class="container">
             <div class="navbar-header">
-              <a href="http://gouthamanbalaraman.com" class="navbar-brand">Gouthaman Balaraman</a>
+              <a href="http://gouthamanbalaraman.com" class="navbar-brand">G B</a>
               <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
@@ -74,7 +74,7 @@
      &nbsp;March 24, 2015
      &nbsp;
      <!--span class="glyphicon glyphicon-user"></span--> by  
-     <a class="url fn" href="http://gouthamanbalaraman.com/author/gouthaman-balaraman.html">&nbsp;Gouthaman Balaraman </a>
+     <a class="url fn" href="http://gouthamanbalaraman.com/author/goutham-balaraman.html">&nbsp;Goutham Balaraman </a>
 
         <p id="post-share-links">
             &nbsp;Share on:
@@ -115,7 +115,7 @@ we will look into some of the basic classes and functionality in QuantLib.</p>
 <p>The <tt class="docutils literal">ql/time</tt> sub-folder implements various time related classes. Lets take a look
 at the <tt class="docutils literal">Date</tt> object which can be constructed as <tt class="docutils literal">Date(date, month, year)</tt>.</p>
 <pre class="code python literal-block">
-<span class="o">&gt;&gt;&gt;</span> <span class="n">date</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">Date</span><span class="p">(</span><span class="mi">31</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2015</span><span class="p">)</span> <span class="c"># 31 March, 2015</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">date</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">Date</span><span class="p">(</span><span class="mi">31</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2015</span><span class="p">)</span> <span class="c1"># 31 March, 2015</span>
 <span class="o">&gt;&gt;&gt;</span> <span class="k">print</span> <span class="n">date</span>
 <span class="n">March</span> <span class="mi">31</span><span class="n">st</span><span class="p">,</span> <span class="mi">2015</span>
 <span class="o">&gt;&gt;&gt;</span> <span class="n">date</span><span class="o">.</span><span class="n">dayOfMonth</span><span class="p">()</span>
@@ -127,10 +127,10 @@ at the <tt class="docutils literal">Date</tt> object which can be constructed as
 <span class="o">&gt;&gt;&gt;</span> <span class="n">date</span><span class="o">.</span><span class="n">weekday</span><span class="p">()</span> <span class="o">==</span> <span class="n">ql</span><span class="o">.</span><span class="n">Tuesday</span>
 <span class="bp">True</span>
 
-<span class="c"># arithmetic with dates</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">date</span> <span class="o">+</span> <span class="mi">1</span>  <span class="c"># add a day</span>
+<span class="c1"># arithmetic with dates</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">date</span> <span class="o">+</span> <span class="mi">1</span>  <span class="c1"># add a day</span>
 <span class="n">Date</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">2015</span><span class="p">)</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">date</span> <span class="o">-</span> <span class="mi">1</span>  <span class="c"># subtract a day</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">date</span> <span class="o">-</span> <span class="mi">1</span>  <span class="c1"># subtract a day</span>
 <span class="n">Date</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">2015</span><span class="p">)</span>
 <span class="o">&gt;&gt;&gt;</span> <span class="n">date</span> <span class="o">+</span> <span class="n">ql</span><span class="o">.</span><span class="n">Period</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">ql</span><span class="o">.</span><span class="n">Months</span><span class="p">)</span>
 <span class="n">Date</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">2015</span><span class="p">)</span>
@@ -139,7 +139,7 @@ at the <tt class="docutils literal">Date</tt> object which can be constructed as
 <span class="o">&gt;&gt;&gt;</span> <span class="n">date</span> <span class="o">+</span> <span class="n">ql</span><span class="o">.</span><span class="n">Period</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">ql</span><span class="o">.</span><span class="n">Years</span><span class="p">)</span>
 <span class="n">Date</span><span class="p">(</span><span class="mi">31</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">2016</span><span class="p">)</span>
 
-<span class="c"># logical operations</span>
+<span class="c1"># logical operations</span>
 <span class="o">&gt;&gt;&gt;</span> <span class="n">ql</span><span class="o">.</span><span class="n">Date</span><span class="p">(</span><span class="mi">31</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2015</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">ql</span><span class="o">.</span><span class="n">Date</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2015</span><span class="p">)</span>
 <span class="bp">True</span>
 </pre>
@@ -193,7 +193,7 @@ the expected compounding formula.</p>
 <pre class="code python literal-block">
 <span class="o">&gt;&gt;&gt;</span> <span class="n">interestRate</span><span class="o">.</span><span class="n">compoundFactor</span><span class="p">(</span><span class="mf">2.0</span><span class="p">)</span>
 <span class="mf">1.1025</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">+</span> <span class="n">annualRate</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="mf">1.0</span> <span class="o">+</span> <span class="n">annualRate</span><span class="p">)</span>  <span class="c"># Check the above calculation</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">+</span> <span class="n">annualRate</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="mf">1.0</span> <span class="o">+</span> <span class="n">annualRate</span><span class="p">)</span>  <span class="c1"># Check the above calculation</span>
 <span class="mf">1.1025</span>
 </pre>
 <p>The <tt class="docutils literal">discountFactor</tt> method returns the reciprocal of the <tt class="docutils literal">compoundFactor</tt> method.
@@ -252,16 +252,16 @@ net present value (barring some precision).</p>
     <strong>Related Post</strong>
         <ul>
             <li>
-                <a href="http://gouthamanbalaraman.com/blog/value-options-commodity-futures-black-formula-quantlib-python.html">Valuing Options on Commodity Futures Using the Black Formula</a>
+                <a href="http://gouthamanbalaraman.com/blog/valuing-european-option-heston-model-quantLib.html">Valuing European Option Using the Heston Model in QuantLib and Python</a>
             </li>
             <li>
-                <a href="http://gouthamanbalaraman.com/blog/hull-white-simulation-monte-carlo-convergence.html">On the Convergence of Hull White Monte Carlo Simulations</a>
+                <a href="http://gouthamanbalaraman.com/blog/hull-white-simulation-quantlib-python.html">Hull White Term Structure Simulations with QuantLib</a>
             </li>
             <li>
-                <a href="http://gouthamanbalaraman.com/blog/quantlib-bond-modeling.html">Modeling Fixed Rate Bonds Using QuantLib</a>
+                <a href="http://gouthamanbalaraman.com/blog/value-treasury-futures-quantlib-python.html">Valuing Treasury Futures Using QuantLib</a>
             </li>
             <li>
-                <a href="http://gouthamanbalaraman.com/blog/interest-rate-swap-quantlib-python.html">Modeling Vanilla Interest Rate Swaps Using QuantLib</a>
+                <a href="http://gouthamanbalaraman.com/blog/quantlib-python-tutorials-with-examples.html">QuantLib Python Tutorials With Examples</a>
             </li>
             <li>
                 <a href="http://gouthamanbalaraman.com/blog/european-option-binomial-tree-quantlib-python.html">Option Model Handbook, Part III: European Option Pricing With QuantLib</a>
@@ -296,7 +296,7 @@ net present value (barring some precision).</p>
             </div>
             <footer id="contentinfo" class="footer">
                 <address id="about" class="vcard body">
-                    &copy; <a href="http://gouthamanbalaraman.com">Gouthaman Balaraman</a> Proudly powered by <a href="http://getpelican.com/">Pelican</a>
+                    &copy; <a href="http://gouthamanbalaraman.com">Goutham Balaraman</a> Proudly powered by <a href="http://getpelican.com/">Pelican</a>
                     <div class="pull-right">
                     	<a href="http://www.bloglovin.com/blog/14559547/?claim=cqravg9v4n2">Bloglovin</a>
 			            <a href="http://gouthamanbalaraman.com/feeds/all.atom.xml">Atom</a>

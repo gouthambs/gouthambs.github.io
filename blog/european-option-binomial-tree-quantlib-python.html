@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Option Model Handbook, Part III: European Option Pricing With QuantLib - Gouthaman Balaraman</title>
+        <title>Option Model Handbook, Part III: European Option Pricing With QuantLib - G B</title>
         <!-- All the meta tags -->
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -12,10 +12,10 @@
         <link href="http://gouthamanbalaraman.com/theme/static/css/bootstrap.readable.min.css" rel="stylesheet" />
         <link href="http://gouthamanbalaraman.com/theme/static/css/style.css" rel="stylesheet" />
         
-        <link href="http://gouthamanbalaraman.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Gouthaman Balaraman Full Atom Feed" />
-        <link href="http://gouthamanbalaraman.com/feeds/all.rss.xml" type="application/rss+xml" rel="alternate" title="Gouthaman Balaraman RSS Feed" />
-        <link href="http://gouthamanbalaraman.com/feeds/quantlib.atom.xml" type="application/atom+xml" rel="alternate" title="Gouthaman Balaraman Categories Atom Feed" />
-        <link href="http://gouthamanbalaraman.com/feeds/quantlib.rss.xml" type="application/rss+xml" rel="alternate" title="Gouthaman Balaraman Categories RSS Feed" />
+        <link href="http://gouthamanbalaraman.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="G B Full Atom Feed" />
+        <link href="http://gouthamanbalaraman.com/feeds/all.rss.xml" type="application/rss+xml" rel="alternate" title="G B RSS Feed" />
+        <link href="http://gouthamanbalaraman.com/feeds/quantlib.atom.xml" type="application/atom+xml" rel="alternate" title="G B Categories Atom Feed" />
+        <link href="http://gouthamanbalaraman.com/feeds/quantlib.rss.xml" type="application/rss+xml" rel="alternate" title="G B Categories RSS Feed" />
         <!-- Google Analytics -->
 <script type="text/javascript">
   var _gaq = _gaq || [];
@@ -48,7 +48,7 @@
       <div class="navbar navbar-default navbar-fixed-top">
           <div class="container">
             <div class="navbar-header">
-              <a href="http://gouthamanbalaraman.com" class="navbar-brand">Gouthaman Balaraman</a>
+              <a href="http://gouthamanbalaraman.com" class="navbar-brand">G B</a>
               <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
@@ -118,7 +118,7 @@
 <div class="prompt input_prompt">In&nbsp;[1]:</div>
 
 <div class="input_area box-flex1">
-<div class="highlight-ipynb"><pre class="ipynb"><span class="kn">import</span> <span class="nn">QuantLib</span> <span class="kn">as</span> <span class="nn">ql</span> <span class="c"># version 1.5</span>
+<div class="highlight-ipynb"><pre class="ipynb"><span class="kn">import</span> <span class="nn">QuantLib</span> <span class="kn">as</span> <span class="nn">ql</span> <span class="c1"># version 1.5</span>
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
 <span class="o">%</span><span class="k">matplotlib</span> <span class="n">inline</span>
 </pre></div>
@@ -142,11 +142,11 @@
 <div class="prompt input_prompt">In&nbsp;[2]:</div>
 
 <div class="input_area box-flex1">
-<div class="highlight-ipynb"><pre class="ipynb"><span class="c"># option data</span>
+<div class="highlight-ipynb"><pre class="ipynb"><span class="c1"># option data</span>
 <span class="n">maturity_date</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">Date</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2016</span><span class="p">)</span>
 <span class="n">spot_price</span> <span class="o">=</span> <span class="mf">127.62</span>
 <span class="n">strike_price</span> <span class="o">=</span> <span class="mi">130</span>
-<span class="n">volatility</span> <span class="o">=</span> <span class="mf">0.20</span> <span class="c"># the historical vols for a year</span>
+<span class="n">volatility</span> <span class="o">=</span> <span class="mf">0.20</span> <span class="c1"># the historical vols for a year</span>
 <span class="n">dividend_rate</span> <span class="o">=</span>  <span class="mf">0.0163</span>
 <span class="n">option_type</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">Option</span><span class="o">.</span><span class="n">Call</span>
 
@@ -177,7 +177,7 @@
 <div class="prompt input_prompt">In&nbsp;[3]:</div>
 
 <div class="input_area box-flex1">
-<div class="highlight-ipynb"><pre class="ipynb"><span class="c"># construct the European Option</span>
+<div class="highlight-ipynb"><pre class="ipynb"><span class="c1"># construct the European Option</span>
 <span class="n">payoff</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">PlainVanillaPayoff</span><span class="p">(</span><span class="n">option_type</span><span class="p">,</span> <span class="n">strike_price</span><span class="p">)</span>
 <span class="n">exercise</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">EuropeanExercise</span><span class="p">(</span><span class="n">maturity_date</span><span class="p">)</span>
 <span class="n">european_option</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">VanillaOption</span><span class="p">(</span><span class="n">payoff</span><span class="p">,</span> <span class="n">exercise</span><span class="p">)</span>
@@ -241,7 +241,7 @@
 <div class="input_area box-flex1">
 <div class="highlight-ipynb"><pre class="ipynb"><span class="n">european_option</span><span class="o">.</span><span class="n">setPricingEngine</span><span class="p">(</span><span class="n">ql</span><span class="o">.</span><span class="n">AnalyticEuropeanEngine</span><span class="p">(</span><span class="n">bsm_process</span><span class="p">))</span>
 <span class="n">bs_price</span> <span class="o">=</span> <span class="n">european_option</span><span class="o">.</span><span class="n">NPV</span><span class="p">()</span>
-<span class="k">print</span> <span class="s">&quot;The theoretical price is &quot;</span><span class="p">,</span> <span class="n">bs_price</span>
+<span class="k">print</span> <span class="s2">&quot;The theoretical price is &quot;</span><span class="p">,</span> <span class="n">bs_price</span>
 </pre></div>
 
 </div>
@@ -278,7 +278,7 @@
 
 <div class="input_area box-flex1">
 <div class="highlight-ipynb"><pre class="ipynb"><span class="k">def</span> <span class="nf">binomial_price</span><span class="p">(</span><span class="n">bsm_process</span><span class="p">,</span> <span class="n">steps</span><span class="p">):</span>
-    <span class="n">binomial_engine</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">BinomialVanillaEngine</span><span class="p">(</span><span class="n">bsm_process</span><span class="p">,</span> <span class="s">&quot;crr&quot;</span><span class="p">,</span> <span class="n">steps</span><span class="p">)</span>
+    <span class="n">binomial_engine</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">BinomialVanillaEngine</span><span class="p">(</span><span class="n">bsm_process</span><span class="p">,</span> <span class="s2">&quot;crr&quot;</span><span class="p">,</span> <span class="n">steps</span><span class="p">)</span>
     <span class="n">european_option</span><span class="o">.</span><span class="n">setPricingEngine</span><span class="p">(</span><span class="n">binomial_engine</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">european_option</span><span class="o">.</span><span class="n">NPV</span><span class="p">()</span>
 
@@ -305,11 +305,11 @@
 <div class="prompt input_prompt">In&nbsp;[8]:</div>
 
 <div class="input_area box-flex1">
-<div class="highlight-ipynb"><pre class="ipynb"><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">steps</span><span class="p">,</span> <span class="n">prices</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s">&quot;Binomial Tree Price&quot;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.6</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="mi">100</span><span class="p">],[</span><span class="n">bs_price</span><span class="p">,</span> <span class="n">bs_price</span><span class="p">],</span> <span class="s">&quot;r--&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s">&quot;BSM Price&quot;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.6</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s">&quot;Steps&quot;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s">&quot;Price&quot;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s">&quot;Binomial Tree Price For Varying Steps&quot;</span><span class="p">)</span>
+<div class="highlight-ipynb"><pre class="ipynb"><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">steps</span><span class="p">,</span> <span class="n">prices</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Binomial Tree Price&quot;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.6</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="mi">100</span><span class="p">],[</span><span class="n">bs_price</span><span class="p">,</span> <span class="n">bs_price</span><span class="p">],</span> <span class="s2">&quot;r--&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;BSM Price&quot;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.6</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Steps&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Price&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Binomial Tree Price For Varying Steps&quot;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
 </pre></div>
 
@@ -645,19 +645,19 @@ QuantLib. You can download the <a href="/extra/notebooks/european-option-models.
     <strong>Related Post</strong>
         <ul>
             <li>
-                <a href="http://gouthamanbalaraman.com/blog/value-options-commodity-futures-black-formula-quantlib-python.html">Valuing Options on Commodity Futures Using the Black Formula</a>
+                <a href="http://gouthamanbalaraman.com/blog/valuing-european-option-heston-model-quantLib.html">Valuing European Option Using the Heston Model in QuantLib and Python</a>
             </li>
             <li>
-                <a href="http://gouthamanbalaraman.com/blog/hull-white-simulation-monte-carlo-convergence.html">On the Convergence of Hull White Monte Carlo Simulations</a>
+                <a href="http://gouthamanbalaraman.com/blog/hull-white-simulation-quantlib-python.html">Hull White Term Structure Simulations with QuantLib</a>
             </li>
             <li>
-                <a href="http://gouthamanbalaraman.com/blog/quantlib-bond-modeling.html">Modeling Fixed Rate Bonds Using QuantLib</a>
-            </li>
-            <li>
-                <a href="http://gouthamanbalaraman.com/blog/quantlib-basics.html">Introduction to QuantLib</a>
+                <a href="http://gouthamanbalaraman.com/blog/value-treasury-futures-quantlib-python.html">Valuing Treasury Futures Using QuantLib</a>
             </li>
             <li>
                 <a href="http://gouthamanbalaraman.com/blog/interest-rate-swap-quantlib-python.html">Modeling Vanilla Interest Rate Swaps Using QuantLib</a>
+            </li>
+            <li>
+                <a href="http://gouthamanbalaraman.com/blog/quantlib-python-tutorials-with-examples.html">QuantLib Python Tutorials With Examples</a>
             </li>
         </ul>
         <hr/>
@@ -689,7 +689,7 @@ QuantLib. You can download the <a href="/extra/notebooks/european-option-models.
             </div>
             <footer id="contentinfo" class="footer">
                 <address id="about" class="vcard body">
-                    &copy; <a href="http://gouthamanbalaraman.com">Gouthaman Balaraman</a> Proudly powered by <a href="http://getpelican.com/">Pelican</a>
+                    &copy; <a href="http://gouthamanbalaraman.com">Goutham Balaraman</a> Proudly powered by <a href="http://getpelican.com/">Pelican</a>
                     <div class="pull-right">
                     	<a href="http://www.bloglovin.com/blog/14559547/?claim=cqravg9v4n2">Bloglovin</a>
 			            <a href="http://gouthamanbalaraman.com/feeds/all.atom.xml">Atom</a>

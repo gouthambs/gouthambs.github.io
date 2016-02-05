@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Python Multiprocessing as a Task Queue - Gouthaman Balaraman</title>
+        <title>Python Multiprocessing as a Task Queue - G B</title>
         <!-- All the meta tags -->
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -12,10 +12,10 @@
         <link href="http://gouthamanbalaraman.com/theme/static/css/bootstrap.readable.min.css" rel="stylesheet" />
         <link href="http://gouthamanbalaraman.com/theme/static/css/style.css" rel="stylesheet" />
         
-        <link href="http://gouthamanbalaraman.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Gouthaman Balaraman Full Atom Feed" />
-        <link href="http://gouthamanbalaraman.com/feeds/all.rss.xml" type="application/rss+xml" rel="alternate" title="Gouthaman Balaraman RSS Feed" />
-        <link href="http://gouthamanbalaraman.com/feeds/articles.atom.xml" type="application/atom+xml" rel="alternate" title="Gouthaman Balaraman Categories Atom Feed" />
-        <link href="http://gouthamanbalaraman.com/feeds/articles.rss.xml" type="application/rss+xml" rel="alternate" title="Gouthaman Balaraman Categories RSS Feed" />
+        <link href="http://gouthamanbalaraman.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="G B Full Atom Feed" />
+        <link href="http://gouthamanbalaraman.com/feeds/all.rss.xml" type="application/rss+xml" rel="alternate" title="G B RSS Feed" />
+        <link href="http://gouthamanbalaraman.com/feeds/articles.atom.xml" type="application/atom+xml" rel="alternate" title="G B Categories Atom Feed" />
+        <link href="http://gouthamanbalaraman.com/feeds/articles.rss.xml" type="application/rss+xml" rel="alternate" title="G B Categories RSS Feed" />
         <!-- Google Analytics -->
 <script type="text/javascript">
   var _gaq = _gaq || [];
@@ -48,7 +48,7 @@
       <div class="navbar navbar-default navbar-fixed-top">
           <div class="container">
             <div class="navbar-header">
-              <a href="http://gouthamanbalaraman.com" class="navbar-brand">Gouthaman Balaraman</a>
+              <a href="http://gouthamanbalaraman.com" class="navbar-brand">G B</a>
               <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
@@ -74,7 +74,7 @@
      &nbsp;January 07, 2014
      &nbsp;
      <!--span class="glyphicon glyphicon-user"></span--> by  
-     <a class="url fn" href="http://gouthamanbalaraman.com/author/gouthaman-balaraman.html">&nbsp;Gouthaman Balaraman </a>
+     <a class="url fn" href="http://gouthamanbalaraman.com/author/goutham-balaraman.html">&nbsp;Goutham Balaraman </a>
 
         <p id="post-share-links">
             &nbsp;Share on:
@@ -112,12 +112,12 @@ is to use multiprocessing as a task queue.</p>
 <pre class="code python literal-block">
 <span class="kn">from</span> <span class="nn">multiprocessing</span> <span class="kn">import</span> <span class="n">Pool</span>
 <span class="k">def</span> <span class="nf">expensive_function</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
-        <span class="c"># do your expensive time consuming process</span>
+        <span class="c1"># do your expensive time consuming process</span>
         <span class="k">return</span> <span class="n">x</span><span class="o">*</span><span class="n">x</span>
-<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">'__main__'</span><span class="p">:</span>
-        <span class="c"># start 4 worker processes</span>
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s1">'__main__'</span><span class="p">:</span>
+        <span class="c1"># start 4 worker processes</span>
         <span class="n">pool</span> <span class="o">=</span> <span class="n">Pool</span><span class="p">(</span><span class="n">processes</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
-        <span class="c"># evaluate &quot;f(10)&quot; asynchronously</span>
+        <span class="c1"># evaluate &quot;f(10)&quot; asynchronously</span>
         <span class="n">result</span> <span class="o">=</span> <span class="n">pool</span><span class="o">.</span><span class="n">apply_async</span><span class="p">(</span><span class="n">expensive_function</span><span class="p">,</span> <span class="p">[</span><span class="mi">10</span><span class="p">])</span>
         <span class="k">print</span> <span class="n">result</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">timeout</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 </pre>
@@ -133,20 +133,20 @@ evaluate the <tt class="docutils literal">expensive_function</tt>.</p>
 <span class="n">_pool</span> <span class="o">=</span> <span class="bp">None</span>
 
 <span class="k">def</span> <span class="nf">expensive_function</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
-        <span class="c"># import packages that is used in this function</span>
-        <span class="c"># do your expensive time consuming process</span>
+        <span class="c1"># import packages that is used in this function</span>
+        <span class="c1"># do your expensive time consuming process</span>
         <span class="k">return</span> <span class="n">x</span><span class="o">*</span><span class="n">x</span>
 
-<span class="nd">&#64;app.route</span><span class="p">(</span><span class="s">'/expensive_calc/&lt;int:x&gt;'</span><span class="p">)</span>
+<span class="nd">&#64;app.route</span><span class="p">(</span><span class="s1">'/expensive_calc/&lt;int:x&gt;'</span><span class="p">)</span>
 <span class="k">def</span> <span class="nf">route_expcalc</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
         <span class="n">f</span> <span class="o">=</span> <span class="n">_pool</span><span class="o">.</span><span class="n">apply_async</span><span class="p">(</span><span class="n">expensive_function</span><span class="p">,[</span><span class="n">x</span><span class="p">])</span>
         <span class="n">r</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">timeout</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
-        <span class="k">return</span> <span class="s">'Result is </span><span class="si">%d</span><span class="s">'</span><span class="o">%</span><span class="n">r</span>
+        <span class="k">return</span> <span class="s1">'Result is </span><span class="si">%d</span><span class="s1">'</span><span class="o">%</span><span class="n">r</span>
 
-<span class="k">if</span> <span class="n">__name__</span><span class="o">==</span><span class="s">'__main__'</span><span class="p">:</span>
+<span class="k">if</span> <span class="n">__name__</span><span class="o">==</span><span class="s1">'__main__'</span><span class="p">:</span>
         <span class="n">_pool</span> <span class="o">=</span> <span class="n">Pool</span><span class="p">(</span><span class="n">processes</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
         <span class="k">try</span><span class="p">:</span>
-                <span class="c"># insert production server deployment code</span>
+                <span class="c1"># insert production server deployment code</span>
                 <span class="n">app</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
         <span class="k">except</span> <span class="ne">KeyboardInterrupt</span><span class="p">:</span>
                 <span class="n">_pool</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
@@ -165,19 +165,19 @@ evaluate the <tt class="docutils literal">expensive_function</tt>.</p>
     <strong>Related Post</strong>
         <ul>
             <li>
-                <a href="http://gouthamanbalaraman.com/blog/sending-msmq-messages-python.html">Sending MSMQ Messages Using Python</a>
-            </li>
-            <li>
                 <a href="http://gouthamanbalaraman.com/blog/zeo-as-a-windows-service.html">Running ZEO as a Windows Service</a>
             </li>
             <li>
                 <a href="http://gouthamanbalaraman.com/blog/securing-authentication-tokens.html">Securing Authentication Tokens</a>
             </li>
             <li>
-                <a href="http://gouthamanbalaraman.com/blog/flask-track-usage.html">Flask Track Usage Primer</a>
+                <a href="http://gouthamanbalaraman.com/blog/flask-app-directory-structure.html">Flask App Directory Structure</a>
             </li>
             <li>
                 <a href="http://gouthamanbalaraman.com/blog/distributed-processing-pandas.html">Multi-Processing With Pandas</a>
+            </li>
+            <li>
+                <a href="http://gouthamanbalaraman.com/blog/sqlalchemy-luigi-workflow-pipeline.html">Using SQLAlchemy in Luigi Workflow Pipeline</a>
             </li>
         </ul>
         <hr/>
@@ -209,7 +209,7 @@ evaluate the <tt class="docutils literal">expensive_function</tt>.</p>
             </div>
             <footer id="contentinfo" class="footer">
                 <address id="about" class="vcard body">
-                    &copy; <a href="http://gouthamanbalaraman.com">Gouthaman Balaraman</a> Proudly powered by <a href="http://getpelican.com/">Pelican</a>
+                    &copy; <a href="http://gouthamanbalaraman.com">Goutham Balaraman</a> Proudly powered by <a href="http://getpelican.com/">Pelican</a>
                     <div class="pull-right">
                     	<a href="http://www.bloglovin.com/blog/14559547/?claim=cqravg9v4n2">Bloglovin</a>
 			            <a href="http://gouthamanbalaraman.com/feeds/all.atom.xml">Atom</a>

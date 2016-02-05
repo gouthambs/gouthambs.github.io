@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Multi-Processing With Pandas - Gouthaman Balaraman</title>
+        <title>Multi-Processing With Pandas - G B</title>
         <!-- All the meta tags -->
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -12,10 +12,10 @@
         <link href="http://gouthamanbalaraman.com/theme/static/css/bootstrap.readable.min.css" rel="stylesheet" />
         <link href="http://gouthamanbalaraman.com/theme/static/css/style.css" rel="stylesheet" />
         
-        <link href="http://gouthamanbalaraman.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Gouthaman Balaraman Full Atom Feed" />
-        <link href="http://gouthamanbalaraman.com/feeds/all.rss.xml" type="application/rss+xml" rel="alternate" title="Gouthaman Balaraman RSS Feed" />
-        <link href="http://gouthamanbalaraman.com/feeds/articles.atom.xml" type="application/atom+xml" rel="alternate" title="Gouthaman Balaraman Categories Atom Feed" />
-        <link href="http://gouthamanbalaraman.com/feeds/articles.rss.xml" type="application/rss+xml" rel="alternate" title="Gouthaman Balaraman Categories RSS Feed" />
+        <link href="http://gouthamanbalaraman.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="G B Full Atom Feed" />
+        <link href="http://gouthamanbalaraman.com/feeds/all.rss.xml" type="application/rss+xml" rel="alternate" title="G B RSS Feed" />
+        <link href="http://gouthamanbalaraman.com/feeds/articles.atom.xml" type="application/atom+xml" rel="alternate" title="G B Categories Atom Feed" />
+        <link href="http://gouthamanbalaraman.com/feeds/articles.rss.xml" type="application/rss+xml" rel="alternate" title="G B Categories RSS Feed" />
         <!-- Google Analytics -->
 <script type="text/javascript">
   var _gaq = _gaq || [];
@@ -48,7 +48,7 @@
       <div class="navbar navbar-default navbar-fixed-top">
           <div class="container">
             <div class="navbar-header">
-              <a href="http://gouthamanbalaraman.com" class="navbar-brand">Gouthaman Balaraman</a>
+              <a href="http://gouthamanbalaraman.com" class="navbar-brand">G B</a>
               <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
@@ -74,7 +74,7 @@
      &nbsp;November 19, 2014
      &nbsp;
      <!--span class="glyphicon glyphicon-user"></span--> by  
-     <a class="url fn" href="http://gouthamanbalaraman.com/author/gouthaman-balaraman.html">&nbsp;Gouthaman Balaraman </a>
+     <a class="url fn" href="http://gouthamanbalaraman.com/author/goutham-balaraman.html">&nbsp;Goutham Balaraman </a>
 
         <p id="post-share-links">
             &nbsp;Share on:
@@ -124,22 +124,22 @@ while reading a file. This means that you can process individual <tt class="docu
 <pre class="code python literal-block">
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="kn">as</span> <span class="nn">pd</span>
 
-<span class="n">LARGE_FILE</span> <span class="o">=</span> <span class="s">&quot;D:</span><span class="se">\\</span><span class="s">my_large_file.txt&quot;</span>
-<span class="n">CHUNKSIZE</span> <span class="o">=</span> <span class="mi">100000</span> <span class="c"># processing 100,000 rows at a time</span>
+<span class="n">LARGE_FILE</span> <span class="o">=</span> <span class="s2">&quot;D:</span><span class="se">\\</span><span class="s2">my_large_file.txt&quot;</span>
+<span class="n">CHUNKSIZE</span> <span class="o">=</span> <span class="mi">100000</span> <span class="c1"># processing 100,000 rows at a time</span>
 
 <span class="k">def</span> <span class="nf">process_frame</span><span class="p">(</span><span class="n">df</span><span class="p">):</span>
-        <span class="c"># process data frame</span>
+        <span class="c1"># process data frame</span>
         <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
 
-<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">'__main__'</span><span class="p">:</span>
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s1">'__main__'</span><span class="p">:</span>
         <span class="n">reader</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_table</span><span class="p">(</span><span class="n">LARGE_FILE</span><span class="p">,</span> <span class="n">chunksize</span><span class="o">=</span><span class="n">CHUNKSIZE</span><span class="p">)</span>
 
         <span class="n">result</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="k">for</span> <span class="n">df</span> <span class="ow">in</span> <span class="n">reader</span><span class="p">:</span>
-                <span class="c"># process each data frame</span>
+                <span class="c1"># process each data frame</span>
                 <span class="n">result</span> <span class="o">+=</span> <span class="n">process_frame</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
 
-        <span class="k">print</span> <span class="s">&quot;There are </span><span class="si">%d</span><span class="s"> rows of data&quot;</span><span class="o">%</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+        <span class="k">print</span> <span class="s2">&quot;There are </span><span class="si">%d</span><span class="s2"> rows of data&quot;</span><span class="o">%</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
 </pre>
 <p>The code chunk above shows you how to read file in smaller chunks and process
 each chunk at a time. You can also add a <tt class="docutils literal">multiprocessing</tt> twist to it
@@ -149,28 +149,28 @@ snippet from above.</p>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="kn">as</span> <span class="nn">pd</span>
 <span class="kn">import</span> <span class="nn">multiprocessing</span> <span class="kn">as</span> <span class="nn">mp</span>
 
-<span class="n">LARGE_FILE</span> <span class="o">=</span> <span class="s">&quot;D:</span><span class="se">\\</span><span class="s">my_large_file.txt&quot;</span>
-<span class="n">CHUNKSIZE</span> <span class="o">=</span> <span class="mi">100000</span> <span class="c"># processing 100,000 rows at a time</span>
+<span class="n">LARGE_FILE</span> <span class="o">=</span> <span class="s2">&quot;D:</span><span class="se">\\</span><span class="s2">my_large_file.txt&quot;</span>
+<span class="n">CHUNKSIZE</span> <span class="o">=</span> <span class="mi">100000</span> <span class="c1"># processing 100,000 rows at a time</span>
 
 <span class="k">def</span> <span class="nf">process_frame</span><span class="p">(</span><span class="n">df</span><span class="p">):</span>
-        <span class="c"># process data frame</span>
+        <span class="c1"># process data frame</span>
         <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
 
-<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">'__main__'</span><span class="p">:</span>
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s1">'__main__'</span><span class="p">:</span>
         <span class="n">reader</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_table</span><span class="p">(</span><span class="n">LARGE_FILE</span><span class="p">,</span> <span class="n">chunksize</span><span class="o">=</span><span class="n">CHUNKSIZE</span><span class="p">)</span>
-        <span class="n">pool</span> <span class="o">=</span> <span class="n">mp</span><span class="o">.</span><span class="n">Pool</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span> <span class="c"># use 4 processes</span>
+        <span class="n">pool</span> <span class="o">=</span> <span class="n">mp</span><span class="o">.</span><span class="n">Pool</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span> <span class="c1"># use 4 processes</span>
 
         <span class="n">funclist</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">df</span> <span class="ow">in</span> <span class="n">reader</span><span class="p">:</span>
-                <span class="c"># process each data frame</span>
+                <span class="c1"># process each data frame</span>
                 <span class="n">f</span> <span class="o">=</span> <span class="n">pool</span><span class="o">.</span><span class="n">apply_async</span><span class="p">(</span><span class="n">process_frame</span><span class="p">,[</span><span class="n">df</span><span class="p">])</span>
                 <span class="n">funclist</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
 
         <span class="n">result</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">funclist</span><span class="p">:</span>
-                <span class="n">result</span> <span class="o">+=</span> <span class="n">f</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">timeout</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span> <span class="c"># timeout in 10 seconds</span>
+                <span class="n">result</span> <span class="o">+=</span> <span class="n">f</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">timeout</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span> <span class="c1"># timeout in 10 seconds</span>
 
-        <span class="k">print</span> <span class="s">&quot;There are </span><span class="si">%d</span><span class="s"> rows of data&quot;</span><span class="o">%</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+        <span class="k">print</span> <span class="s2">&quot;There are </span><span class="si">%d</span><span class="s2"> rows of data&quot;</span><span class="o">%</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
 </pre>
 <p>The code snippet above should be fairly self explanatory. The idea here is to
 <em>asynchronously</em> process chunk of data by pushing it into a multiprocessing pool queue.
@@ -190,19 +190,19 @@ Each process in pool will work on the task, and return the result.</p>
     <strong>Related Post</strong>
         <ul>
             <li>
-                <a href="http://gouthamanbalaraman.com/blog/sending-msmq-messages-python.html">Sending MSMQ Messages Using Python</a>
-            </li>
-            <li>
-                <a href="http://gouthamanbalaraman.com/blog/securing-authentication-tokens.html">Securing Authentication Tokens</a>
-            </li>
-            <li>
                 <a href="http://gouthamanbalaraman.com/blog/zeo-as-a-windows-service.html">Running ZEO as a Windows Service</a>
             </li>
             <li>
-                <a href="http://gouthamanbalaraman.com/blog/asynchronous-python-logging-using-msmq.html">Asynchronous Python Logging Using MSMQ</a>
+                <a href="http://gouthamanbalaraman.com/blog/minimal-flask-login-example.html">Minimal Flask-Login Example</a>
             </li>
             <li>
                 <a href="http://gouthamanbalaraman.com/blog/adding-caching-to-python-flask-blogging-extension.html">Adding Caching to Python Flask-Blogging Engine</a>
+            </li>
+            <li>
+                <a href="http://gouthamanbalaraman.com/blog/flask-app-directory-structure.html">Flask App Directory Structure</a>
+            </li>
+            <li>
+                <a href="http://gouthamanbalaraman.com/blog/sqlalchemy-luigi-workflow-pipeline.html">Using SQLAlchemy in Luigi Workflow Pipeline</a>
             </li>
         </ul>
         <hr/>
@@ -234,7 +234,7 @@ Each process in pool will work on the task, and return the result.</p>
             </div>
             <footer id="contentinfo" class="footer">
                 <address id="about" class="vcard body">
-                    &copy; <a href="http://gouthamanbalaraman.com">Gouthaman Balaraman</a> Proudly powered by <a href="http://getpelican.com/">Pelican</a>
+                    &copy; <a href="http://gouthamanbalaraman.com">Goutham Balaraman</a> Proudly powered by <a href="http://getpelican.com/">Pelican</a>
                     <div class="pull-right">
                     	<a href="http://www.bloglovin.com/blog/14559547/?claim=cqravg9v4n2">Bloglovin</a>
 			            <a href="http://gouthamanbalaraman.com/feeds/all.atom.xml">Atom</a>

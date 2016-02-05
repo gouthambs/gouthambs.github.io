@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Flask Track Usage Primer - Gouthaman Balaraman</title>
+        <title>Flask Track Usage Primer - G B</title>
         <!-- All the meta tags -->
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -12,10 +12,10 @@
         <link href="http://gouthamanbalaraman.com/theme/static/css/bootstrap.readable.min.css" rel="stylesheet" />
         <link href="http://gouthamanbalaraman.com/theme/static/css/style.css" rel="stylesheet" />
         
-        <link href="http://gouthamanbalaraman.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Gouthaman Balaraman Full Atom Feed" />
-        <link href="http://gouthamanbalaraman.com/feeds/all.rss.xml" type="application/rss+xml" rel="alternate" title="Gouthaman Balaraman RSS Feed" />
-        <link href="http://gouthamanbalaraman.com/feeds/articles.atom.xml" type="application/atom+xml" rel="alternate" title="Gouthaman Balaraman Categories Atom Feed" />
-        <link href="http://gouthamanbalaraman.com/feeds/articles.rss.xml" type="application/rss+xml" rel="alternate" title="Gouthaman Balaraman Categories RSS Feed" />
+        <link href="http://gouthamanbalaraman.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="G B Full Atom Feed" />
+        <link href="http://gouthamanbalaraman.com/feeds/all.rss.xml" type="application/rss+xml" rel="alternate" title="G B RSS Feed" />
+        <link href="http://gouthamanbalaraman.com/feeds/articles.atom.xml" type="application/atom+xml" rel="alternate" title="G B Categories Atom Feed" />
+        <link href="http://gouthamanbalaraman.com/feeds/articles.rss.xml" type="application/rss+xml" rel="alternate" title="G B Categories RSS Feed" />
         <!-- Google Analytics -->
 <script type="text/javascript">
   var _gaq = _gaq || [];
@@ -48,7 +48,7 @@
       <div class="navbar navbar-default navbar-fixed-top">
           <div class="container">
             <div class="navbar-header">
-              <a href="http://gouthamanbalaraman.com" class="navbar-brand">Gouthaman Balaraman</a>
+              <a href="http://gouthamanbalaraman.com" class="navbar-brand">G B</a>
               <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
@@ -112,32 +112,32 @@ option for me, I added SQLAlchemy based storage, thus opening doors for a wide a
 be released as part of version 1.0.0.</p>
 <p>Here is a quick-start version on using SQLStorage with Flask-Track-Usage:</p>
 <pre class="code python literal-block">
-<span class="c"># mainapp.py</span>
-<span class="c"># Create the Flask 'app'</span>
+<span class="c1"># mainapp.py</span>
+<span class="c1"># Create the Flask 'app'</span>
 <span class="kn">from</span> <span class="nn">flask</span> <span class="kn">import</span> <span class="n">Flask</span>
 <span class="n">app</span> <span class="o">=</span> <span class="n">Flask</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
 
-<span class="c"># Set the configuration items manually for the example</span>
-<span class="n">app</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s">'TRACK_USAGE_USE_FREEGEOIP'</span><span class="p">]</span> <span class="o">=</span> <span class="bp">False</span>
-<span class="n">app</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s">'TRACK_USAGE_INCLUDE_OR_EXCLUDE_VIEWS'</span><span class="p">]</span> <span class="o">=</span> <span class="s">'include'</span>
+<span class="c1"># Set the configuration items manually for the example</span>
+<span class="n">app</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s1">'TRACK_USAGE_USE_FREEGEOIP'</span><span class="p">]</span> <span class="o">=</span> <span class="bp">False</span>
+<span class="n">app</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s1">'TRACK_USAGE_INCLUDE_OR_EXCLUDE_VIEWS'</span><span class="p">]</span> <span class="o">=</span> <span class="s1">'include'</span>
 
-<span class="c"># We will just print out the data for the example</span>
+<span class="c1"># We will just print out the data for the example</span>
 <span class="kn">from</span> <span class="nn">flask.ext.track_usage</span> <span class="kn">import</span> <span class="n">TrackUsage</span>
 <span class="kn">from</span> <span class="nn">flask.ext.track_usage.storage.sql</span> <span class="kn">import</span> <span class="n">SQLStorage</span>
 
-<span class="c"># Make an instance of the extension</span>
-<span class="n">t</span> <span class="o">=</span> <span class="n">TrackUsage</span><span class="p">(</span><span class="n">app</span><span class="p">,</span> <span class="n">SQLStorage</span><span class="p">(</span><span class="n">conn_str</span><span class="o">=</span><span class="s">&quot;sqlite:///D:</span><span class="se">\\</span><span class="s">usage_tracking.db&quot;</span><span class="p">))</span>
+<span class="c1"># Make an instance of the extension</span>
+<span class="n">t</span> <span class="o">=</span> <span class="n">TrackUsage</span><span class="p">(</span><span class="n">app</span><span class="p">,</span> <span class="n">SQLStorage</span><span class="p">(</span><span class="n">conn_str</span><span class="o">=</span><span class="s2">&quot;sqlite:///D:</span><span class="se">\\</span><span class="s2">usage_tracking.db&quot;</span><span class="p">))</span>
 
-<span class="c"># Make an instance of the extension</span>
+<span class="c1"># Make an instance of the extension</span>
 <span class="n">t</span> <span class="o">=</span> <span class="n">TrackUsage</span><span class="p">(</span><span class="n">app</span><span class="p">,</span> <span class="n">storage</span><span class="p">)</span>
 
-<span class="c"># Include the view in the metrics</span>
+<span class="c1"># Include the view in the metrics</span>
 <span class="nd">&#64;t.include</span>
-<span class="nd">&#64;app.route</span><span class="p">(</span><span class="s">'/'</span><span class="p">)</span>
+<span class="nd">&#64;app.route</span><span class="p">(</span><span class="s1">'/'</span><span class="p">)</span>
 <span class="k">def</span> <span class="nf">index</span><span class="p">():</span>
-    <span class="k">return</span> <span class="s">&quot;Hello&quot;</span>
+    <span class="k">return</span> <span class="s2">&quot;Hello&quot;</span>
 
-<span class="c"># Run the application!</span>
+<span class="c1"># Run the application!</span>
 <span class="n">app</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">debug</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
 </pre>
 <p>In the code above, the <cite>SQLStorage</cite> object is created with a <cite>conn_str</cite> argument which can be
@@ -145,24 +145,24 @@ any of the <a class="reference external" href="http://docs.sqlalchemy.org/en/rel
 supported by SQLAlchemy itself.</p>
 <p>You can use Flask-Track-Usage with blueprints as well. This is how you include blueprints views:</p>
 <pre class="code python literal-block">
-<span class="c"># Here app is the Flask app created in mainapp.py</span>
-<span class="n">app</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s">'TRACK_USAGE_INCLUDE_OR_EXCLUDE_VIEWS'</span><span class="p">]</span> <span class="o">=</span> <span class="s">'include'</span>
+<span class="c1"># Here app is the Flask app created in mainapp.py</span>
+<span class="n">app</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s1">'TRACK_USAGE_INCLUDE_OR_EXCLUDE_VIEWS'</span><span class="p">]</span> <span class="o">=</span> <span class="s1">'include'</span>
 
-<span class="c"># Make an instance of the extension</span>
-<span class="n">t</span> <span class="o">=</span> <span class="n">TrackUsage</span><span class="p">(</span><span class="n">app</span><span class="p">,</span> <span class="n">SQLStorage</span><span class="p">(</span><span class="n">conn_str</span><span class="o">=</span><span class="s">&quot;sqlite:///D:</span><span class="se">\\</span><span class="s">usage_tracking.db&quot;</span><span class="p">))</span>
+<span class="c1"># Make an instance of the extension</span>
+<span class="n">t</span> <span class="o">=</span> <span class="n">TrackUsage</span><span class="p">(</span><span class="n">app</span><span class="p">,</span> <span class="n">SQLStorage</span><span class="p">(</span><span class="n">conn_str</span><span class="o">=</span><span class="s2">&quot;sqlite:///D:</span><span class="se">\\</span><span class="s2">usage_tracking.db&quot;</span><span class="p">))</span>
 
-<span class="c"># exclude just the a_blueprint out</span>
+<span class="c1"># exclude just the a_blueprint out</span>
 <span class="kn">from</span> <span class="nn">my_blueprints</span> <span class="kn">import</span> <span class="n">a_blueprint</span>
 <span class="n">t</span><span class="o">.</span><span class="n">exclude_blueprint</span><span class="p">(</span><span class="n">a_blueprint</span><span class="p">)</span>
 </pre>
 <p>What we have done here is to include all views, except for the ones in the blueprint <tt class="docutils literal">a_blueprint</tt>.
 You can instead exclude all by default, and include just the specific ones as shown below.</p>
 <pre class="code python literal-block">
-<span class="c"># Here app is the Flask app created in mainapp.py</span>
-<span class="n">app</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s">'TRACK_USAGE_INCLUDE_OR_EXCLUDE_VIEWS'</span><span class="p">]</span> <span class="o">=</span> <span class="s">'exclude'</span>
+<span class="c1"># Here app is the Flask app created in mainapp.py</span>
+<span class="n">app</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s1">'TRACK_USAGE_INCLUDE_OR_EXCLUDE_VIEWS'</span><span class="p">]</span> <span class="o">=</span> <span class="s1">'exclude'</span>
 
-<span class="c"># Make an instance of the extension</span>
-<span class="n">t</span> <span class="o">=</span> <span class="n">TrackUsage</span><span class="p">(</span><span class="n">app</span><span class="p">,</span> <span class="n">SQLStorage</span><span class="p">(</span><span class="n">conn_str</span><span class="o">=</span><span class="s">&quot;sqlite:///D:</span><span class="se">\\</span><span class="s">usage_tracking.db&quot;</span><span class="p">))</span>
+<span class="c1"># Make an instance of the extension</span>
+<span class="n">t</span> <span class="o">=</span> <span class="n">TrackUsage</span><span class="p">(</span><span class="n">app</span><span class="p">,</span> <span class="n">SQLStorage</span><span class="p">(</span><span class="n">conn_str</span><span class="o">=</span><span class="s2">&quot;sqlite:///D:</span><span class="se">\\</span><span class="s2">usage_tracking.db&quot;</span><span class="p">))</span>
 
 <span class="kn">from</span> <span class="nn">my_blueprints</span> <span class="kn">import</span> <span class="n">a_blueprint</span>
 <span class="n">t</span><span class="o">.</span><span class="n">include_blueprint</span><span class="p">(</span><span class="n">a_blueprint</span><span class="p">)</span>
@@ -208,16 +208,16 @@ dict and has the following schema:</p>
     <strong>Related Post</strong>
         <ul>
             <li>
-                <a href="http://gouthamanbalaraman.com/blog/sending-msmq-messages-python.html">Sending MSMQ Messages Using Python</a>
-            </li>
-            <li>
                 <a href="http://gouthamanbalaraman.com/blog/zeo-as-a-windows-service.html">Running ZEO as a Windows Service</a>
             </li>
             <li>
-                <a href="http://gouthamanbalaraman.com/blog/securing-authentication-tokens.html">Securing Authentication Tokens</a>
+                <a href="http://gouthamanbalaraman.com/blog/adding-caching-to-python-flask-blogging-extension.html">Adding Caching to Python Flask-Blogging Engine</a>
             </li>
             <li>
-                <a href="http://gouthamanbalaraman.com/blog/adding-caching-to-python-flask-blogging-extension.html">Adding Caching to Python Flask-Blogging Engine</a>
+                <a href="http://gouthamanbalaraman.com/blog/flask-app-directory-structure.html">Flask App Directory Structure</a>
+            </li>
+            <li>
+                <a href="http://gouthamanbalaraman.com/blog/python-multiprocessing-as-a-task-queue.html">Python Multiprocessing as a Task Queue</a>
             </li>
             <li>
                 <a href="http://gouthamanbalaraman.com/blog/distributed-processing-pandas.html">Multi-Processing With Pandas</a>
@@ -252,7 +252,7 @@ dict and has the following schema:</p>
             </div>
             <footer id="contentinfo" class="footer">
                 <address id="about" class="vcard body">
-                    &copy; <a href="http://gouthamanbalaraman.com">Gouthaman Balaraman</a> Proudly powered by <a href="http://getpelican.com/">Pelican</a>
+                    &copy; <a href="http://gouthamanbalaraman.com">Goutham Balaraman</a> Proudly powered by <a href="http://getpelican.com/">Pelican</a>
                     <div class="pull-right">
                     	<a href="http://www.bloglovin.com/blog/14559547/?claim=cqravg9v4n2">Bloglovin</a>
 			            <a href="http://gouthamanbalaraman.com/feeds/all.atom.xml">Atom</a>

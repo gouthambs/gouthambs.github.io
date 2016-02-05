@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>On the Convergence of Hull White Monte Carlo Simulations - Gouthaman Balaraman</title>
+        <title>On the Convergence of Hull White Monte Carlo Simulations - G B</title>
         <!-- All the meta tags -->
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -12,10 +12,10 @@
         <link href="http://gouthamanbalaraman.com/theme/static/css/bootstrap.readable.min.css" rel="stylesheet" />
         <link href="http://gouthamanbalaraman.com/theme/static/css/style.css" rel="stylesheet" />
         
-        <link href="http://gouthamanbalaraman.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Gouthaman Balaraman Full Atom Feed" />
-        <link href="http://gouthamanbalaraman.com/feeds/all.rss.xml" type="application/rss+xml" rel="alternate" title="Gouthaman Balaraman RSS Feed" />
-        <link href="http://gouthamanbalaraman.com/feeds/quantlib-finance.atom.xml" type="application/atom+xml" rel="alternate" title="Gouthaman Balaraman Categories Atom Feed" />
-        <link href="http://gouthamanbalaraman.com/feeds/quantlib-finance.rss.xml" type="application/rss+xml" rel="alternate" title="Gouthaman Balaraman Categories RSS Feed" />
+        <link href="http://gouthamanbalaraman.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="G B Full Atom Feed" />
+        <link href="http://gouthamanbalaraman.com/feeds/all.rss.xml" type="application/rss+xml" rel="alternate" title="G B RSS Feed" />
+        <link href="http://gouthamanbalaraman.com/feeds/quantlib-finance.atom.xml" type="application/atom+xml" rel="alternate" title="G B Categories Atom Feed" />
+        <link href="http://gouthamanbalaraman.com/feeds/quantlib-finance.rss.xml" type="application/rss+xml" rel="alternate" title="G B Categories RSS Feed" />
         <!-- Google Analytics -->
 <script type="text/javascript">
   var _gaq = _gaq || [];
@@ -48,7 +48,7 @@
       <div class="navbar navbar-default navbar-fixed-top">
           <div class="container">
             <div class="navbar-header">
-              <a href="http://gouthamanbalaraman.com" class="navbar-brand">Gouthaman Balaraman</a>
+              <a href="http://gouthamanbalaraman.com" class="navbar-brand">G B</a>
               <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
@@ -320,25 +320,25 @@ Monte-Carlo simulations. The error in the Monte-Carlo simulation can be defined 
 
 <div class="collapseheader box-flex1"><span style="font-weight: bold;">Expand Code</span>
 <div class="input_area box-flex1" style="display:none">
-<div class="highlight-ipynb"><pre class="ipynb"><span class="c"># Here we vary sigma with fixed a and observe the error epsilon</span>
-<span class="c"># define constants </span>
+<div class="highlight-ipynb"><pre class="ipynb"><span class="c1"># Here we vary sigma with fixed a and observe the error epsilon</span>
+<span class="c1"># define constants </span>
 <span class="n">num_paths</span> <span class="o">=</span> <span class="mi">500</span>
 <span class="n">sigma_array</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mf">0.01</span><span class="p">,</span><span class="mf">0.1</span><span class="p">,</span><span class="mf">0.03</span><span class="p">)</span>
 <span class="n">a</span> <span class="o">=</span> <span class="mf">0.1</span>
 <span class="n">timestep</span> <span class="o">=</span> <span class="mi">180</span>
-<span class="n">length</span> <span class="o">=</span> <span class="mi">15</span> <span class="c"># in years</span>
+<span class="n">length</span> <span class="o">=</span> <span class="mi">15</span> <span class="c1"># in years</span>
 <span class="n">forward_rate</span> <span class="o">=</span> <span class="mf">0.05</span>
 <span class="n">day_count</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">Thirty360</span><span class="p">()</span>
 <span class="n">avg_grid_array</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="n">timestep</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="mi">12</span><span class="p">)</span>
 
-<span class="c"># generate spot curve</span>
+<span class="c1"># generate spot curve</span>
 <span class="n">spot_curve</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">FlatForward</span><span class="p">(</span>
     <span class="n">todays_date</span><span class="p">,</span> 
     <span class="n">ql</span><span class="o">.</span><span class="n">QuoteHandle</span><span class="p">(</span><span class="n">ql</span><span class="o">.</span><span class="n">SimpleQuote</span><span class="p">(</span><span class="n">forward_rate</span><span class="p">)),</span> <span class="n">day_count</span>
 <span class="p">)</span>
 <span class="n">spot_curve_handle</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">YieldTermStructureHandle</span><span class="p">(</span><span class="n">spot_curve</span><span class="p">)</span>
 
-<span class="c">#initialize plots</span>
+<span class="c1">#initialize plots</span>
 <span class="n">figure</span><span class="p">,</span> <span class="n">axis</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
 <span class="n">plots</span> <span class="o">=</span> <span class="p">[]</span>
 <span class="n">zero_price_theory</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">spot_curve</span><span class="o">.</span><span class="n">discount</span><span class="p">(</span><span class="n">j</span><span class="o">*</span><span class="nb">float</span><span class="p">(</span><span class="n">length</span><span class="p">)</span><span class="o">/</span><span class="nb">float</span><span class="p">(</span><span class="n">timestep</span><span class="p">))</span> 
@@ -351,15 +351,15 @@ Monte-Carlo simulations. The error in the Monte-Carlo simulation can be defined 
     <span class="n">plots</span> <span class="o">+=</span> <span class="n">axis</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
         <span class="n">term</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">zero_price_theory</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">zero_price_empirical</span><span class="p">)),</span>
         <span class="n">lw</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.6</span><span class="p">,</span> 
-        <span class="n">label</span><span class="o">=</span><span class="s">&quot;$\sigma=$&quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">sigma</span><span class="p">)</span>
+        <span class="n">label</span><span class="o">=</span><span class="s2">&quot;$\sigma=$&quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">sigma</span><span class="p">)</span>
     <span class="p">)</span>
 
-<span class="c"># plot legend</span>
+<span class="c1"># plot legend</span>
 <span class="n">labels</span> <span class="o">=</span> <span class="p">[</span><span class="n">p</span><span class="o">.</span><span class="n">get_label</span><span class="p">()</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">plots</span><span class="p">]</span>
-<span class="n">legend</span> <span class="o">=</span><span class="n">axis</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">plots</span><span class="p">,</span><span class="n">labels</span><span class="p">,</span> <span class="n">loc</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span><span class="c">#, loc=0, bbox_to_anchor=(1.1,0.4))</span>
-<span class="n">axis</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s">&quot;T (years)&quot;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
-<span class="n">axis</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s">&quot;|$\epsilon(T)$|&quot;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
-<span class="n">axis</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s">&quot;Descount Factor Error for $a=$</span><span class="si">%0.2f</span><span class="s"> and Varying $\sigma$&quot;</span><span class="o">%</span><span class="k">a</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
+<span class="n">legend</span> <span class="o">=</span><span class="n">axis</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">plots</span><span class="p">,</span><span class="n">labels</span><span class="p">,</span> <span class="n">loc</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span><span class="c1">#, loc=0, bbox_to_anchor=(1.1,0.4))</span>
+<span class="n">axis</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;T (years)&quot;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">axis</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;|$\epsilon(T)$|&quot;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">axis</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Descount Factor Error for $a=$</span><span class="si">%0.2f</span><span class="s2"> and Varying $\sigma$&quot;</span><span class="o">%</span><span class="k">a</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
 
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
@@ -768,25 +768,25 @@ V/wfSyJ8tpTlvpsAAAAASUVORK5CYII=
 
 <div class="collapseheader box-flex1"><span style="font-weight: bold;">Expand Code</span>
 <div class="input_area box-flex1" style="display:none">
-<div class="highlight-ipynb"><pre class="ipynb"><span class="c"># Here we vary a with fixed sigma and observe the error epsilon</span>
-<span class="c">#define constants</span>
+<div class="highlight-ipynb"><pre class="ipynb"><span class="c1"># Here we vary a with fixed sigma and observe the error epsilon</span>
+<span class="c1">#define constants</span>
 <span class="n">num_paths</span> <span class="o">=</span> <span class="mi">500</span>
 <span class="n">sigma</span> <span class="o">=</span> <span class="mf">0.1</span>
 <span class="n">a_array</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.51</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">)</span>
 <span class="n">timestep</span> <span class="o">=</span> <span class="mi">180</span>
-<span class="n">length</span> <span class="o">=</span> <span class="mi">15</span> <span class="c"># in years</span>
+<span class="n">length</span> <span class="o">=</span> <span class="mi">15</span> <span class="c1"># in years</span>
 <span class="n">forward_rate</span> <span class="o">=</span> <span class="mf">0.05</span>
 <span class="n">day_count</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">Thirty360</span><span class="p">()</span>
 <span class="n">avg_grid_array</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="n">timestep</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="mi">12</span><span class="p">)</span>
 
-<span class="c"># generate spot curve</span>
+<span class="c1"># generate spot curve</span>
 <span class="n">spot_curve</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">FlatForward</span><span class="p">(</span>
     <span class="n">todays_date</span><span class="p">,</span>
     <span class="n">ql</span><span class="o">.</span><span class="n">QuoteHandle</span><span class="p">(</span><span class="n">ql</span><span class="o">.</span><span class="n">SimpleQuote</span><span class="p">(</span><span class="n">forward_rate</span><span class="p">)),</span> <span class="n">day_count</span>
 <span class="p">)</span>
 <span class="n">spot_curve_handle</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">YieldTermStructureHandle</span><span class="p">(</span><span class="n">spot_curve</span><span class="p">)</span>
 
-<span class="c">#initialize plots</span>
+<span class="c1">#initialize plots</span>
 <span class="n">figure</span><span class="p">,</span> <span class="n">axis</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
 <span class="n">plots</span> <span class="o">=</span> <span class="p">[]</span>
 <span class="n">zero_price_theory</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">spot_curve</span><span class="o">.</span><span class="n">discount</span><span class="p">(</span><span class="n">j</span><span class="o">*</span><span class="nb">float</span><span class="p">(</span><span class="n">length</span><span class="p">)</span><span class="o">/</span><span class="nb">float</span><span class="p">(</span><span class="n">timestep</span><span class="p">))</span> 
@@ -799,15 +799,15 @@ V/wfSyJ8tpTlvpsAAAAASUVORK5CYII=
     <span class="n">plots</span> <span class="o">+=</span> <span class="n">axis</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
         <span class="n">term</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">zero_price_theory</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">zero_price_empirical</span><span class="p">)),</span>  
         <span class="n">lw</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.6</span><span class="p">,</span> 
-        <span class="n">label</span><span class="o">=</span><span class="s">&quot;a=&quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+        <span class="n">label</span><span class="o">=</span><span class="s2">&quot;a=&quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
     <span class="p">)</span>
     
-<span class="c"># plot legend</span>
+<span class="c1"># plot legend</span>
 <span class="n">labels</span> <span class="o">=</span> <span class="p">[</span><span class="n">p</span><span class="o">.</span><span class="n">get_label</span><span class="p">()</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">plots</span><span class="p">]</span>
-<span class="n">legend</span> <span class="o">=</span><span class="n">axis</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">plots</span><span class="p">,</span><span class="n">labels</span><span class="p">,</span> <span class="n">loc</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span><span class="c">#, loc=0, bbox_to_anchor=(1.1,0.4))</span>
-<span class="n">axis</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s">&quot;T (years)&quot;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
-<span class="n">axis</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s">&quot;|$\epsilon(T)$|&quot;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
-<span class="n">axis</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s">&quot;Discount Factor Error for $\sigma$=</span><span class="si">%0.2f</span><span class="s"> and Varying $a$&quot;</span><span class="o">%</span><span class="k">sigma</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
+<span class="n">legend</span> <span class="o">=</span><span class="n">axis</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">plots</span><span class="p">,</span><span class="n">labels</span><span class="p">,</span> <span class="n">loc</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span><span class="c1">#, loc=0, bbox_to_anchor=(1.1,0.4))</span>
+<span class="n">axis</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;T (years)&quot;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">axis</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;|$\epsilon(T)$|&quot;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">axis</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Discount Factor Error for $\sigma$=</span><span class="si">%0.2f</span><span class="s2"> and Varying $a$&quot;</span><span class="o">%</span><span class="k">sigma</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
 
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
@@ -1344,17 +1344,17 @@ Var(Y) &amp;=&amp; (e^{\sigma^2} -1 )E(Y)^2
 
 <div class="collapseheader box-flex1"><span style="font-weight: bold;">Expand Code</span>
 <div class="input_area box-flex1" style="display:none">
-<div class="highlight-ipynb"><pre class="ipynb"><span class="c">#define constants</span>
+<div class="highlight-ipynb"><pre class="ipynb"><span class="c1">#define constants</span>
 <span class="n">num_paths</span> <span class="o">=</span> <span class="mi">500</span>
 <span class="n">sigma</span> <span class="o">=</span> <span class="mf">0.02</span>
 <span class="n">a</span> <span class="o">=</span> <span class="mf">0.1</span>
 <span class="n">timestep</span> <span class="o">=</span> <span class="mi">180</span>
-<span class="n">length</span> <span class="o">=</span> <span class="mi">15</span> <span class="c"># in years</span>
+<span class="n">length</span> <span class="o">=</span> <span class="mi">15</span> <span class="c1"># in years</span>
 <span class="n">forward_rate</span> <span class="o">=</span> <span class="mf">0.05</span>
 <span class="n">day_count</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">Thirty360</span><span class="p">()</span>
 <span class="n">avg_grid_array</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">timestep</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="mi">12</span><span class="p">)</span>
 
-<span class="c"># generate spot curve</span>
+<span class="c1"># generate spot curve</span>
 <span class="n">spot_curve</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">FlatForward</span><span class="p">(</span>
     <span class="n">todays_date</span><span class="p">,</span>
     <span class="n">ql</span><span class="o">.</span><span class="n">QuoteHandle</span><span class="p">(</span><span class="n">ql</span><span class="o">.</span><span class="n">SimpleQuote</span><span class="p">(</span><span class="n">forward_rate</span><span class="p">)),</span> <span class="n">day_count</span>
@@ -1367,18 +1367,18 @@ Var(Y) &amp;=&amp; (e^{\sigma^2} -1 )E(Y)^2
     <span class="p">)</span>
 
 <span class="n">vol</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">var</span><span class="p">(</span><span class="n">discount_factor_matrix</span><span class="p">[:,</span> <span class="n">i</span><span class="p">])</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">term</span><span class="p">))]</span>
-<span class="n">l1</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">term</span><span class="p">,</span> <span class="mi">100</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">vol</span><span class="p">),</span><span class="s">&quot;b&quot;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.6</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="s">&quot;Empirical&quot;</span><span class="p">)</span>
+<span class="n">l1</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">term</span><span class="p">,</span> <span class="mi">100</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">vol</span><span class="p">),</span><span class="s2">&quot;b&quot;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.6</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;Empirical&quot;</span><span class="p">)</span>
 <span class="n">vol_theory</span> <span class="o">=</span> <span class="p">[</span><span class="mi">100</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">V</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">T</span><span class="p">,</span><span class="n">a</span><span class="p">,</span> <span class="n">sigma</span><span class="p">))</span><span class="o">-</span><span class="mf">1.0</span><span class="p">)</span> <span class="o">*</span> 
               <span class="n">spot_curve_handle</span><span class="o">.</span><span class="n">discount</span><span class="p">(</span><span class="n">T</span><span class="p">)</span> <span class="k">for</span> <span class="n">T</span> <span class="ow">in</span> <span class="n">term</span><span class="p">]</span>
-<span class="n">l2</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">term</span><span class="p">,</span> <span class="n">vol_theory</span><span class="p">,</span><span class="s">&quot;r--&quot;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.6</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="s">&quot;Theory&quot;</span><span class="p">)</span>
+<span class="n">l2</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">term</span><span class="p">,</span> <span class="n">vol_theory</span><span class="p">,</span><span class="s2">&quot;r--&quot;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.6</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;Theory&quot;</span><span class="p">)</span>
 
 <span class="n">plots</span> <span class="o">=</span> <span class="n">l1</span><span class="o">+</span><span class="n">l2</span>
 <span class="n">labels</span> <span class="o">=</span> <span class="p">[</span><span class="n">p</span><span class="o">.</span><span class="n">get_label</span><span class="p">()</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">plots</span><span class="p">]</span>
 <span class="n">legend</span> <span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">plots</span><span class="p">,</span><span class="n">labels</span><span class="p">,</span> <span class="n">loc</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s">&quot;Time (Years)&quot;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s">&quot;$\sigma_D(0,T)$ (%)&quot;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s">&quot;Standard Deviation of Discount Factors &quot;</span>
-          <span class="s">&quot;(a=</span><span class="si">%0.2f</span><span class="s">, $\sigma$=</span><span class="si">%0.2f</span><span class="s">)&quot;</span><span class="o">%</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">sigma</span><span class="p">),</span> <span class="n">size</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Time (Years)&quot;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;$\sigma_D(0,T)$ (%)&quot;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Standard Deviation of Discount Factors &quot;</span>
+          <span class="s2">&quot;(a=</span><span class="si">%0.2f</span><span class="s2">, $\sigma$=</span><span class="si">%0.2f</span><span class="s2">)&quot;</span><span class="o">%</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">sigma</span><span class="p">),</span> <span class="n">size</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 
@@ -1708,19 +1708,19 @@ Hull-White model</a>.</p>
     <strong>Related Post</strong>
         <ul>
             <li>
-                <a href="http://gouthamanbalaraman.com/blog/value-options-commodity-futures-black-formula-quantlib-python.html">Valuing Options on Commodity Futures Using the Black Formula</a>
-            </li>
-            <li>
-                <a href="http://gouthamanbalaraman.com/blog/quantlib-bond-modeling.html">Modeling Fixed Rate Bonds Using QuantLib</a>
-            </li>
-            <li>
-                <a href="http://gouthamanbalaraman.com/blog/quantlib-basics.html">Introduction to QuantLib</a>
-            </li>
-            <li>
-                <a href="http://gouthamanbalaraman.com/blog/interest-rate-swap-quantlib-python.html">Modeling Vanilla Interest Rate Swaps Using QuantLib</a>
-            </li>
-            <li>
                 <a href="http://gouthamanbalaraman.com/blog/hull-white-simulation-quantlib-python.html">Hull White Term Structure Simulations with QuantLib</a>
+            </li>
+            <li>
+                <a href="http://gouthamanbalaraman.com/blog/value-treasury-futures-quantlib-python.html">Valuing Treasury Futures Using QuantLib</a>
+            </li>
+            <li>
+                <a href="http://gouthamanbalaraman.com/blog/short-interest-rate-model-calibration-quantlib.html">Short Interest Rate Model Calibration</a>
+            </li>
+            <li>
+                <a href="http://gouthamanbalaraman.com/blog/quantlib-python-tutorials-with-examples.html">QuantLib Python Tutorials With Examples</a>
+            </li>
+            <li>
+                <a href="http://gouthamanbalaraman.com/blog/european-option-binomial-tree-quantlib-python.html">Option Model Handbook, Part III: European Option Pricing With QuantLib</a>
             </li>
         </ul>
         <hr/>
@@ -1752,7 +1752,7 @@ Hull-White model</a>.</p>
             </div>
             <footer id="contentinfo" class="footer">
                 <address id="about" class="vcard body">
-                    &copy; <a href="http://gouthamanbalaraman.com">Gouthaman Balaraman</a> Proudly powered by <a href="http://getpelican.com/">Pelican</a>
+                    &copy; <a href="http://gouthamanbalaraman.com">Goutham Balaraman</a> Proudly powered by <a href="http://getpelican.com/">Pelican</a>
                     <div class="pull-right">
                     	<a href="http://www.bloglovin.com/blog/14559547/?claim=cqravg9v4n2">Bloglovin</a>
 			            <a href="http://gouthamanbalaraman.com/feeds/all.atom.xml">Atom</a>

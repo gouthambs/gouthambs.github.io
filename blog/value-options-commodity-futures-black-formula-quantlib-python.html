@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Valuing Options on Commodity Futures Using the Black Formula - Gouthaman Balaraman</title>
+        <title>Valuing Options on Commodity Futures Using the Black Formula - G B</title>
         <!-- All the meta tags -->
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -12,10 +12,10 @@
         <link href="http://gouthamanbalaraman.com/theme/static/css/bootstrap.readable.min.css" rel="stylesheet" />
         <link href="http://gouthamanbalaraman.com/theme/static/css/style.css" rel="stylesheet" />
         
-        <link href="http://gouthamanbalaraman.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Gouthaman Balaraman Full Atom Feed" />
-        <link href="http://gouthamanbalaraman.com/feeds/all.rss.xml" type="application/rss+xml" rel="alternate" title="Gouthaman Balaraman RSS Feed" />
-        <link href="http://gouthamanbalaraman.com/feeds/quantlib.atom.xml" type="application/atom+xml" rel="alternate" title="Gouthaman Balaraman Categories Atom Feed" />
-        <link href="http://gouthamanbalaraman.com/feeds/quantlib.rss.xml" type="application/rss+xml" rel="alternate" title="Gouthaman Balaraman Categories RSS Feed" />
+        <link href="http://gouthamanbalaraman.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="G B Full Atom Feed" />
+        <link href="http://gouthamanbalaraman.com/feeds/all.rss.xml" type="application/rss+xml" rel="alternate" title="G B RSS Feed" />
+        <link href="http://gouthamanbalaraman.com/feeds/quantlib.atom.xml" type="application/atom+xml" rel="alternate" title="G B Categories Atom Feed" />
+        <link href="http://gouthamanbalaraman.com/feeds/quantlib.rss.xml" type="application/rss+xml" rel="alternate" title="G B Categories RSS Feed" />
         <!-- Google Analytics -->
 <script type="text/javascript">
   var _gaq = _gaq || [];
@@ -48,7 +48,7 @@
       <div class="navbar navbar-default navbar-fixed-top">
           <div class="container">
             <div class="navbar-header">
-              <a href="http://gouthamanbalaraman.com" class="navbar-brand">Gouthaman Balaraman</a>
+              <a href="http://gouthamanbalaraman.com" class="navbar-brand">G B</a>
               <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
@@ -195,7 +195,7 @@ d_2 &amp;=&amp; \frac{\ln(F/K) - (\sigma^2/2)T}{\sigma\sqrt{T}} = d_1 - \sigma\s
 <div class="highlight-ipynb"><pre class="ipynb"><span class="n">ql</span><span class="o">.</span><span class="n">Settings</span><span class="o">.</span><span class="n">instance</span><span class="p">()</span><span class="o">.</span><span class="n">evaluationDate</span> <span class="o">=</span> <span class="n">calc_date</span>
 <span class="n">option_maturity_date</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">Date</span><span class="p">(</span><span class="mi">24</span><span class="p">,</span><span class="mi">12</span><span class="p">,</span><span class="mi">2015</span><span class="p">)</span>
 <span class="n">strike</span> <span class="o">=</span> <span class="mi">119</span>
-<span class="n">spot</span> <span class="o">=</span> <span class="mf">126.953</span><span class="c"># futures price</span>
+<span class="n">spot</span> <span class="o">=</span> <span class="mf">126.953</span><span class="c1"># futures price</span>
 <span class="n">volatility</span> <span class="o">=</span> <span class="mf">11.567</span><span class="o">/</span><span class="mf">100.</span>
 <span class="n">flavor</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">Option</span><span class="o">.</span><span class="n">Call</span>
 
@@ -221,12 +221,12 @@ d_2 &amp;=&amp; \frac{\ln(F/K) - (\sigma^2/2)T}{\sigma\sqrt{T}} = d_1 - \sigma\s
 <div class="prompt input_prompt">In&nbsp;[5]:</div>
 
 <div class="input_area box-flex1">
-<div class="highlight-ipynb"><pre class="ipynb"><span class="k">print</span> <span class="s">&quot;</span><span class="si">%-20s</span><span class="s">: </span><span class="si">%4.4f</span><span class="s">&quot;</span> <span class="o">%</span><span class="p">(</span><span class="s">&quot;Option Price&quot;</span><span class="p">,</span> <span class="n">black</span><span class="o">.</span><span class="n">value</span><span class="p">()</span> <span class="p">)</span>
-<span class="k">print</span> <span class="s">&quot;</span><span class="si">%-20s</span><span class="s">: </span><span class="si">%4.4f</span><span class="s">&quot;</span> <span class="o">%</span><span class="p">(</span><span class="s">&quot;Delta&quot;</span><span class="p">,</span> <span class="n">black</span><span class="o">.</span><span class="n">delta</span><span class="p">(</span><span class="n">spot</span><span class="p">)</span> <span class="p">)</span>
-<span class="k">print</span> <span class="s">&quot;</span><span class="si">%-20s</span><span class="s">: </span><span class="si">%4.4f</span><span class="s">&quot;</span> <span class="o">%</span><span class="p">(</span><span class="s">&quot;Gamma&quot;</span><span class="p">,</span> <span class="n">black</span><span class="o">.</span><span class="n">gamma</span><span class="p">(</span><span class="n">spot</span><span class="p">)</span> <span class="p">)</span>
-<span class="k">print</span> <span class="s">&quot;</span><span class="si">%-20s</span><span class="s">: </span><span class="si">%4.4f</span><span class="s">&quot;</span> <span class="o">%</span><span class="p">(</span><span class="s">&quot;Theta&quot;</span><span class="p">,</span> <span class="n">black</span><span class="o">.</span><span class="n">theta</span><span class="p">(</span><span class="n">spot</span><span class="p">,</span> <span class="n">T</span><span class="p">)</span> <span class="p">)</span>
-<span class="k">print</span> <span class="s">&quot;</span><span class="si">%-20s</span><span class="s">: </span><span class="si">%4.4f</span><span class="s">&quot;</span> <span class="o">%</span><span class="p">(</span><span class="s">&quot;Vega&quot;</span><span class="p">,</span> <span class="n">black</span><span class="o">.</span><span class="n">vega</span><span class="p">(</span><span class="n">T</span><span class="p">)</span> <span class="p">)</span>
-<span class="k">print</span> <span class="s">&quot;</span><span class="si">%-20s</span><span class="s">: </span><span class="si">%4.4f</span><span class="s">&quot;</span> <span class="o">%</span><span class="p">(</span><span class="s">&quot;Rho&quot;</span><span class="p">,</span> <span class="n">black</span><span class="o">.</span><span class="n">rho</span><span class="p">(</span> <span class="n">T</span><span class="p">)</span> <span class="p">)</span>
+<div class="highlight-ipynb"><pre class="ipynb"><span class="k">print</span> <span class="s2">&quot;</span><span class="si">%-20s</span><span class="s2">: </span><span class="si">%4.4f</span><span class="s2">&quot;</span> <span class="o">%</span><span class="p">(</span><span class="s2">&quot;Option Price&quot;</span><span class="p">,</span> <span class="n">black</span><span class="o">.</span><span class="n">value</span><span class="p">()</span> <span class="p">)</span>
+<span class="k">print</span> <span class="s2">&quot;</span><span class="si">%-20s</span><span class="s2">: </span><span class="si">%4.4f</span><span class="s2">&quot;</span> <span class="o">%</span><span class="p">(</span><span class="s2">&quot;Delta&quot;</span><span class="p">,</span> <span class="n">black</span><span class="o">.</span><span class="n">delta</span><span class="p">(</span><span class="n">spot</span><span class="p">)</span> <span class="p">)</span>
+<span class="k">print</span> <span class="s2">&quot;</span><span class="si">%-20s</span><span class="s2">: </span><span class="si">%4.4f</span><span class="s2">&quot;</span> <span class="o">%</span><span class="p">(</span><span class="s2">&quot;Gamma&quot;</span><span class="p">,</span> <span class="n">black</span><span class="o">.</span><span class="n">gamma</span><span class="p">(</span><span class="n">spot</span><span class="p">)</span> <span class="p">)</span>
+<span class="k">print</span> <span class="s2">&quot;</span><span class="si">%-20s</span><span class="s2">: </span><span class="si">%4.4f</span><span class="s2">&quot;</span> <span class="o">%</span><span class="p">(</span><span class="s2">&quot;Theta&quot;</span><span class="p">,</span> <span class="n">black</span><span class="o">.</span><span class="n">theta</span><span class="p">(</span><span class="n">spot</span><span class="p">,</span> <span class="n">T</span><span class="p">)</span> <span class="p">)</span>
+<span class="k">print</span> <span class="s2">&quot;</span><span class="si">%-20s</span><span class="s2">: </span><span class="si">%4.4f</span><span class="s2">&quot;</span> <span class="o">%</span><span class="p">(</span><span class="s2">&quot;Vega&quot;</span><span class="p">,</span> <span class="n">black</span><span class="o">.</span><span class="n">vega</span><span class="p">(</span><span class="n">T</span><span class="p">)</span> <span class="p">)</span>
+<span class="k">print</span> <span class="s2">&quot;</span><span class="si">%-20s</span><span class="s2">: </span><span class="si">%4.4f</span><span class="s2">&quot;</span> <span class="o">%</span><span class="p">(</span><span class="s2">&quot;Rho&quot;</span><span class="p">,</span> <span class="n">black</span><span class="o">.</span><span class="n">rho</span><span class="p">(</span> <span class="n">T</span><span class="p">)</span> <span class="p">)</span>
 </pre></div>
 
 </div>
@@ -314,12 +314,12 @@ Rho                 : 7.3974
 <div class="prompt input_prompt">In&nbsp;[8]:</div>
 
 <div class="input_area box-flex1">
-<div class="highlight-ipynb"><pre class="ipynb"><span class="k">print</span> <span class="s">&quot;</span><span class="si">%-20s</span><span class="s">: </span><span class="si">%4.4f</span><span class="s">&quot;</span> <span class="o">%</span><span class="p">(</span><span class="s">&quot;Option Price&quot;</span><span class="p">,</span> <span class="n">black</span><span class="o">.</span><span class="n">value</span><span class="p">()</span> <span class="p">)</span>
-<span class="k">print</span> <span class="s">&quot;</span><span class="si">%-20s</span><span class="s">: </span><span class="si">%4.4f</span><span class="s">&quot;</span> <span class="o">%</span><span class="p">(</span><span class="s">&quot;Delta&quot;</span><span class="p">,</span> <span class="n">black</span><span class="o">.</span><span class="n">delta</span><span class="p">(</span><span class="n">spot</span><span class="p">)</span> <span class="p">)</span>
-<span class="k">print</span> <span class="s">&quot;</span><span class="si">%-20s</span><span class="s">: </span><span class="si">%4.4f</span><span class="s">&quot;</span> <span class="o">%</span><span class="p">(</span><span class="s">&quot;Gamma&quot;</span><span class="p">,</span> <span class="n">black</span><span class="o">.</span><span class="n">gamma</span><span class="p">(</span><span class="n">spot</span><span class="p">)</span> <span class="p">)</span>
-<span class="k">print</span> <span class="s">&quot;</span><span class="si">%-20s</span><span class="s">: </span><span class="si">%4.4f</span><span class="s">&quot;</span> <span class="o">%</span><span class="p">(</span><span class="s">&quot;Theta&quot;</span><span class="p">,</span> <span class="n">black</span><span class="o">.</span><span class="n">theta</span><span class="p">(</span><span class="n">spot</span><span class="p">,</span> <span class="n">T</span><span class="p">)</span> <span class="p">)</span>
-<span class="k">print</span> <span class="s">&quot;</span><span class="si">%-20s</span><span class="s">: </span><span class="si">%4.4f</span><span class="s">&quot;</span> <span class="o">%</span><span class="p">(</span><span class="s">&quot;Vega&quot;</span><span class="p">,</span> <span class="n">black</span><span class="o">.</span><span class="n">vega</span><span class="p">(</span><span class="n">T</span><span class="p">)</span> <span class="p">)</span>
-<span class="k">print</span> <span class="s">&quot;</span><span class="si">%-20s</span><span class="s">: </span><span class="si">%4.4f</span><span class="s">&quot;</span> <span class="o">%</span><span class="p">(</span><span class="s">&quot;Rho&quot;</span><span class="p">,</span> <span class="n">black</span><span class="o">.</span><span class="n">rho</span><span class="p">(</span> <span class="n">T</span><span class="p">)</span> <span class="p">)</span>
+<div class="highlight-ipynb"><pre class="ipynb"><span class="k">print</span> <span class="s2">&quot;</span><span class="si">%-20s</span><span class="s2">: </span><span class="si">%4.4f</span><span class="s2">&quot;</span> <span class="o">%</span><span class="p">(</span><span class="s2">&quot;Option Price&quot;</span><span class="p">,</span> <span class="n">black</span><span class="o">.</span><span class="n">value</span><span class="p">()</span> <span class="p">)</span>
+<span class="k">print</span> <span class="s2">&quot;</span><span class="si">%-20s</span><span class="s2">: </span><span class="si">%4.4f</span><span class="s2">&quot;</span> <span class="o">%</span><span class="p">(</span><span class="s2">&quot;Delta&quot;</span><span class="p">,</span> <span class="n">black</span><span class="o">.</span><span class="n">delta</span><span class="p">(</span><span class="n">spot</span><span class="p">)</span> <span class="p">)</span>
+<span class="k">print</span> <span class="s2">&quot;</span><span class="si">%-20s</span><span class="s2">: </span><span class="si">%4.4f</span><span class="s2">&quot;</span> <span class="o">%</span><span class="p">(</span><span class="s2">&quot;Gamma&quot;</span><span class="p">,</span> <span class="n">black</span><span class="o">.</span><span class="n">gamma</span><span class="p">(</span><span class="n">spot</span><span class="p">)</span> <span class="p">)</span>
+<span class="k">print</span> <span class="s2">&quot;</span><span class="si">%-20s</span><span class="s2">: </span><span class="si">%4.4f</span><span class="s2">&quot;</span> <span class="o">%</span><span class="p">(</span><span class="s2">&quot;Theta&quot;</span><span class="p">,</span> <span class="n">black</span><span class="o">.</span><span class="n">theta</span><span class="p">(</span><span class="n">spot</span><span class="p">,</span> <span class="n">T</span><span class="p">)</span> <span class="p">)</span>
+<span class="k">print</span> <span class="s2">&quot;</span><span class="si">%-20s</span><span class="s2">: </span><span class="si">%4.4f</span><span class="s2">&quot;</span> <span class="o">%</span><span class="p">(</span><span class="s2">&quot;Vega&quot;</span><span class="p">,</span> <span class="n">black</span><span class="o">.</span><span class="n">vega</span><span class="p">(</span><span class="n">T</span><span class="p">)</span> <span class="p">)</span>
+<span class="k">print</span> <span class="s2">&quot;</span><span class="si">%-20s</span><span class="s2">: </span><span class="si">%4.4f</span><span class="s2">&quot;</span> <span class="o">%</span><span class="p">(</span><span class="s2">&quot;Rho&quot;</span><span class="p">,</span> <span class="n">black</span><span class="o">.</span><span class="n">rho</span><span class="p">(</span> <span class="n">T</span><span class="p">)</span> <span class="p">)</span>
 </pre></div>
 
 </div>
@@ -374,19 +374,19 @@ Rho                 : 0.1597
     <strong>Related Post</strong>
         <ul>
             <li>
-                <a href="http://gouthamanbalaraman.com/blog/hull-white-simulation-monte-carlo-convergence.html">On the Convergence of Hull White Monte Carlo Simulations</a>
-            </li>
-            <li>
-                <a href="http://gouthamanbalaraman.com/blog/quantlib-bond-modeling.html">Modeling Fixed Rate Bonds Using QuantLib</a>
-            </li>
-            <li>
-                <a href="http://gouthamanbalaraman.com/blog/quantlib-basics.html">Introduction to QuantLib</a>
-            </li>
-            <li>
-                <a href="http://gouthamanbalaraman.com/blog/interest-rate-swap-quantlib-python.html">Modeling Vanilla Interest Rate Swaps Using QuantLib</a>
-            </li>
-            <li>
                 <a href="http://gouthamanbalaraman.com/blog/hull-white-simulation-quantlib-python.html">Hull White Term Structure Simulations with QuantLib</a>
+            </li>
+            <li>
+                <a href="http://gouthamanbalaraman.com/blog/value-treasury-futures-quantlib-python.html">Valuing Treasury Futures Using QuantLib</a>
+            </li>
+            <li>
+                <a href="http://gouthamanbalaraman.com/blog/short-interest-rate-model-calibration-quantlib.html">Short Interest Rate Model Calibration</a>
+            </li>
+            <li>
+                <a href="http://gouthamanbalaraman.com/blog/quantlib-python-tutorials-with-examples.html">QuantLib Python Tutorials With Examples</a>
+            </li>
+            <li>
+                <a href="http://gouthamanbalaraman.com/blog/european-option-binomial-tree-quantlib-python.html">Option Model Handbook, Part III: European Option Pricing With QuantLib</a>
             </li>
         </ul>
         <hr/>
@@ -418,7 +418,7 @@ Rho                 : 0.1597
             </div>
             <footer id="contentinfo" class="footer">
                 <address id="about" class="vcard body">
-                    &copy; <a href="http://gouthamanbalaraman.com">Gouthaman Balaraman</a> Proudly powered by <a href="http://getpelican.com/">Pelican</a>
+                    &copy; <a href="http://gouthamanbalaraman.com">Goutham Balaraman</a> Proudly powered by <a href="http://getpelican.com/">Pelican</a>
                     <div class="pull-right">
                     	<a href="http://www.bloglovin.com/blog/14559547/?claim=cqravg9v4n2">Bloglovin</a>
 			            <a href="http://gouthamanbalaraman.com/feeds/all.atom.xml">Atom</a>
