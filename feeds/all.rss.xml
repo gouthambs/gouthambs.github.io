@@ -1,5 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>G B</title><link>http://gouthamanbalaraman.com/</link><description></description><atom:link href="http://gouthamanbalaraman.com/feeds/all.rss.xml" rel="self"></atom:link><lastBuildDate>Thu, 17 Dec 2015 00:00:00 -0800</lastBuildDate><item><title>Valuing Options on Commodity Futures Using the Black Formula</title><link>http://gouthamanbalaraman.com/blog/value-options-commodity-futures-black-formula-quantlib-python.html</link><description>&lt;p&gt;
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>G B</title><link>http://gouthamanbalaraman.com/</link><description></description><atom:link href="http://gouthamanbalaraman.com/feeds/all.rss.xml" rel="self"></atom:link><lastBuildDate>Fri, 19 Feb 2016 00:00:00 -0800</lastBuildDate><item><title>An Introduction to the Fundamental Review of the Trading Book (FRTB)</title><link>http://gouthamanbalaraman.com/blog/introduction-fundamental-review-of-the-trading-book-frtb.html</link><description>&lt;p&gt;Basel Committee on Banking Supervision (BCBS) released a consultative document 
+titled, "The Fundamental Review of the Trading Book" (FRTB) in 2012 &lt;a href="www.bis.org/publ/bcbs219.htm"&gt;1&lt;/a&gt;. 
+The intent of this document and the subsequent discussions and studies was to address the shortcomings of the 
+existing market risk capital framework, and reduce the variability in the minimum capital standard
+for market risk across different jurisdictions.&lt;/p&gt;
+&lt;p&gt;The key changes proposed under the &lt;a href="http://www.bis.org/bcbs/publ/d352.pdf"&gt;new market risk framework&lt;/a&gt;
+finalized on 14th January 2016:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;em&gt;A revised internal models-approach (IMA)&lt;/em&gt;. The new approach introduces a more rigorous model
+  approval process that enables supervisors to remove internal modelling permission for
+  individual trading desks, more consistent identification and capitalisation of material risk factors
+  across banks, and constraints on the capital-reducing effects of hedging and diversification.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;em&gt;A revised standardised approach (SA)&lt;/em&gt;. The revisions fundamentally overhaul the standardised
+  approach to make it sufficiently risk-sensitive to serve as a credible fallback for, as well as a
+  floor to, the IMA, while still providing an appropriate standard for banks that do not require a
+  sophisticated treatment for market risk.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;em&gt;A shift from Value-at-Risk (VaR) to an Expected Shortfall (ES) measure of risk under stress&lt;/em&gt;. Use of
+  ES will help to ensure a more prudent capture of “tail risk” and capital adequacy during periods
+  of significant financial market stress.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;em&gt;Incorporation of the risk of market illiquidity&lt;/em&gt;. Varying liquidity horizons are incorporated into the
+  revised SA and IMA to mitigate the risk of a sudden and severe impairment of market liquidity
+  across asset markets. These replace the static 10-day horizon assumed for all traded
+  instruments under VaR in the current framework.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;em&gt;A revised boundary between the trading book and banking book&lt;/em&gt;. Establishment of a more
+  objective boundary will serve to reduce incentives to arbitrage between the regulatory banking
+  and trading books, while still being aligned with banks' risk management practices. &lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The BCBS estimates that FRTB will result in 40% increase in total market risk capital 
+requirements as compared to the current Basel 2.5 framework. The changes proposed under
+FRTB not only have an impact on the capital requirements, but it will also pose significant
+challenges to a bank's technology infrastructure.&lt;/p&gt;
+&lt;p&gt;.. to be continued&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Goutham Balaraman</dc:creator><pubDate>Fri, 19 Feb 2016 00:00:00 -0800</pubDate><guid>tag:gouthamanbalaraman.com,2016-02-19:blog/introduction-fundamental-review-of-the-trading-book-frtb.html</guid><category>regulation</category><category>finance</category></item><item><title>Valuing Options on Commodity Futures Using the Black Formula</title><link>http://gouthamanbalaraman.com/blog/value-options-commodity-futures-black-formula-quantlib-python.html</link><description>&lt;p&gt;
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;
 &lt;div class="prompt input_prompt"&gt;
 &lt;/div&gt;
@@ -1110,6 +1151,14 @@ Forward YTM                    = 1.952%
                     
                     &lt;li&gt; &lt;b&gt;&lt;a href="/blog/value-options-commodity-futures-black-formula-quantlib-python.html"&gt;Valuing Options on Commodity Futures Using the Black Formula&lt;/a&gt;&lt;/b&gt;: Describes how to value options on commodity futures contract using the Black formula &lt;/li&gt;
                     
+                
+                    
+                
+                    
+                
+            
+        
+            
                 
                     
                 
