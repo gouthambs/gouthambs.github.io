@@ -118,7 +118,7 @@
 <div class="prompt input_prompt">In&nbsp;[1]:</div>
 
 <div class="input_area box-flex1">
-<div class="highlight-ipynb"><pre class="ipynb"><span class="kn">import</span> <span class="nn">QuantLib</span> <span class="kn">as</span> <span class="nn">ql</span>
+<div class="highlight-ipynb"><pre class="ipynb"><span></span><span class="kn">import</span> <span class="nn">QuantLib</span> <span class="kn">as</span> <span class="nn">ql</span>
 <span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">namedtuple</span>
 <span class="kn">import</span> <span class="nn">math</span>
 </pre></div>
@@ -148,7 +148,7 @@ dr_t = (\theta(t) - a r_t) dt + \sigma dW_t
 <div class="prompt input_prompt">In&nbsp;[2]:</div>
 
 <div class="input_area box-flex1">
-<div class="highlight-ipynb"><pre class="ipynb"><span class="n">today</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">Date</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="n">ql</span><span class="o">.</span><span class="n">February</span><span class="p">,</span> <span class="mi">2002</span><span class="p">);</span>
+<div class="highlight-ipynb"><pre class="ipynb"><span></span><span class="n">today</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">Date</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="n">ql</span><span class="o">.</span><span class="n">February</span><span class="p">,</span> <span class="mi">2002</span><span class="p">);</span>
 <span class="n">settlement</span><span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">Date</span><span class="p">(</span><span class="mi">19</span><span class="p">,</span> <span class="n">ql</span><span class="o">.</span><span class="n">February</span><span class="p">,</span> <span class="mi">2002</span><span class="p">);</span>
 <span class="n">ql</span><span class="o">.</span><span class="n">Settings</span><span class="o">.</span><span class="n">instance</span><span class="p">()</span><span class="o">.</span><span class="n">evaluationDate</span> <span class="o">=</span> <span class="n">today</span><span class="p">;</span>
 <span class="n">term_structure</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">YieldTermStructureHandle</span><span class="p">(</span>
@@ -176,7 +176,7 @@ dr_t = (\theta(t) - a r_t) dt + \sigma dW_t
 <div class="prompt input_prompt">In&nbsp;[3]:</div>
 
 <div class="input_area box-flex1">
-<div class="highlight-ipynb"><pre class="ipynb"><span class="n">CalibrationData</span> <span class="o">=</span> <span class="n">namedtuple</span><span class="p">(</span><span class="s2">&quot;CalibrationData&quot;</span><span class="p">,</span> 
+<div class="highlight-ipynb"><pre class="ipynb"><span></span><span class="n">CalibrationData</span> <span class="o">=</span> <span class="n">namedtuple</span><span class="p">(</span><span class="s2">&quot;CalibrationData&quot;</span><span class="p">,</span> 
                              <span class="s2">&quot;start, length, volatility&quot;</span><span class="p">)</span>
 <span class="n">data</span> <span class="o">=</span> <span class="p">[</span><span class="n">CalibrationData</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mf">0.1148</span><span class="p">),</span>
         <span class="n">CalibrationData</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mf">0.1108</span><span class="p">),</span>
@@ -196,7 +196,7 @@ dr_t = (\theta(t) - a r_t) dt + \sigma dW_t
 
 <div class="collapseheader box-flex1"><span style="font-weight: bold;">Expand Code</span>
 <div class="input_area box-flex1" style="display:none">
-<div class="highlight-ipynb"><pre class="ipynb"><span class="k">def</span> <span class="nf">create_swaption_helpers</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">term_structure</span><span class="p">,</span> <span class="n">engine</span><span class="p">):</span>
+<div class="highlight-ipynb"><pre class="ipynb"><span></span><span class="k">def</span> <span class="nf">create_swaption_helpers</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">term_structure</span><span class="p">,</span> <span class="n">engine</span><span class="p">):</span>
     <span class="n">swaptions</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="n">fixed_leg_tenor</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">Period</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">ql</span><span class="o">.</span><span class="n">Years</span><span class="p">)</span>
     <span class="n">fixed_leg_daycounter</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">Actual360</span><span class="p">()</span>
@@ -259,7 +259,7 @@ dr_t = (\theta(t) - a r_t) dt + \sigma dW_t
 <div class="prompt input_prompt">In&nbsp;[5]:</div>
 
 <div class="input_area box-flex1">
-<div class="highlight-ipynb"><pre class="ipynb"><span class="n">model</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">HullWhite</span><span class="p">(</span><span class="n">term_structure</span><span class="p">);</span>
+<div class="highlight-ipynb"><pre class="ipynb"><span></span><span class="n">model</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">HullWhite</span><span class="p">(</span><span class="n">term_structure</span><span class="p">);</span>
 <span class="n">engine</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">JamshidianSwaptionEngine</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
 <span class="n">swaptions</span> <span class="o">=</span> <span class="n">create_swaption_helpers</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">term_structure</span><span class="p">,</span> <span class="n">engine</span><span class="p">)</span>
 
@@ -295,7 +295,7 @@ dr_t = (\theta(t) - a r_t) dt + \sigma dW_t
 <div class="prompt input_prompt">In&nbsp;[6]:</div>
 
 <div class="input_area box-flex1">
-<div class="highlight-ipynb"><pre class="ipynb"><span class="n">calibration_report</span><span class="p">(</span><span class="n">swaptions</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
+<div class="highlight-ipynb"><pre class="ipynb"><span></span><span class="n">calibration_report</span><span class="p">(</span><span class="n">swaptions</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
 </pre></div>
 
 </div>
@@ -331,7 +331,7 @@ Cumulative Error :         0.11614
 <div class="prompt input_prompt">In&nbsp;[7]:</div>
 
 <div class="input_area box-flex1">
-<div class="highlight-ipynb"><pre class="ipynb"><span class="n">model</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">HullWhite</span><span class="p">(</span><span class="n">term_structure</span><span class="p">);</span>
+<div class="highlight-ipynb"><pre class="ipynb"><span></span><span class="n">model</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">HullWhite</span><span class="p">(</span><span class="n">term_structure</span><span class="p">);</span>
 <span class="n">engine</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">JamshidianSwaptionEngine</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
 <span class="n">swaptions</span> <span class="o">=</span> <span class="n">create_swaption_helpers</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">term_structure</span><span class="p">,</span> <span class="n">engine</span><span class="p">)</span>
 
@@ -388,7 +388,7 @@ Cumulative Error :         0.11614
 <div class="prompt input_prompt">In&nbsp;[8]:</div>
 
 <div class="input_area box-flex1">
-<div class="highlight-ipynb"><pre class="ipynb"><span class="n">constrained_model</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">HullWhite</span><span class="p">(</span><span class="n">term_structure</span><span class="p">,</span> <span class="mf">0.05</span><span class="p">,</span> <span class="mf">0.001</span><span class="p">);</span>
+<div class="highlight-ipynb"><pre class="ipynb"><span></span><span class="n">constrained_model</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">HullWhite</span><span class="p">(</span><span class="n">term_structure</span><span class="p">,</span> <span class="mf">0.05</span><span class="p">,</span> <span class="mf">0.001</span><span class="p">);</span>
 <span class="n">engine</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">JamshidianSwaptionEngine</span><span class="p">(</span><span class="n">constrained_model</span><span class="p">)</span>
 <span class="n">swaptions</span> <span class="o">=</span> <span class="n">create_swaption_helpers</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">term_structure</span><span class="p">,</span> <span class="n">engine</span><span class="p">)</span>
 
@@ -424,7 +424,7 @@ Cumulative Error :         0.11614
 <div class="prompt input_prompt">In&nbsp;[9]:</div>
 
 <div class="input_area box-flex1">
-<div class="highlight-ipynb"><pre class="ipynb"><span class="n">calibration_report</span><span class="p">(</span><span class="n">swaptions</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
+<div class="highlight-ipynb"><pre class="ipynb"><span></span><span class="n">calibration_report</span><span class="p">(</span><span class="n">swaptions</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
 </pre></div>
 
 </div>
@@ -474,7 +474,7 @@ d\ln(r_t) = (\theta_t - a \ln(r_t)) dt + \sigma dW_t
 <div class="prompt input_prompt">In&nbsp;[10]:</div>
 
 <div class="input_area box-flex1">
-<div class="highlight-ipynb"><pre class="ipynb"><span class="n">model</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">BlackKarasinski</span><span class="p">(</span><span class="n">term_structure</span><span class="p">);</span>
+<div class="highlight-ipynb"><pre class="ipynb"><span></span><span class="n">model</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">BlackKarasinski</span><span class="p">(</span><span class="n">term_structure</span><span class="p">);</span>
 <span class="n">engine</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">TreeSwaptionEngine</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
 <span class="n">swaptions</span> <span class="o">=</span> <span class="n">create_swaption_helpers</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">term_structure</span><span class="p">,</span> <span class="n">engine</span><span class="p">)</span>
 
@@ -510,7 +510,7 @@ d\ln(r_t) = (\theta_t - a \ln(r_t)) dt + \sigma dW_t
 <div class="prompt input_prompt">In&nbsp;[11]:</div>
 
 <div class="input_area box-flex1">
-<div class="highlight-ipynb"><pre class="ipynb"><span class="n">calibration_report</span><span class="p">(</span><span class="n">swaptions</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
+<div class="highlight-ipynb"><pre class="ipynb"><span></span><span class="n">calibration_report</span><span class="p">(</span><span class="n">swaptions</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
 </pre></div>
 
 </div>
@@ -566,7 +566,7 @@ dy_t &amp;=&amp; -b y_t dt + \eta dW^2_t \nonumber \\
 <div class="prompt input_prompt">In&nbsp;[12]:</div>
 
 <div class="input_area box-flex1">
-<div class="highlight-ipynb"><pre class="ipynb"><span class="n">model</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">G2</span><span class="p">(</span><span class="n">term_structure</span><span class="p">);</span>
+<div class="highlight-ipynb"><pre class="ipynb"><span></span><span class="n">model</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">G2</span><span class="p">(</span><span class="n">term_structure</span><span class="p">);</span>
 <span class="n">engine</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">TreeSwaptionEngine</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="mi">25</span><span class="p">)</span>
 <span class="c1"># engine = ql.G2SwaptionEngine(model, 10, 400)</span>
 <span class="c1"># engine = ql.FdG2SwaptionEngine(model)</span>
@@ -604,7 +604,7 @@ dy_t &amp;=&amp; -b y_t dt + \eta dW^2_t \nonumber \\
 <div class="prompt input_prompt">In&nbsp;[13]:</div>
 
 <div class="input_area box-flex1">
-<div class="highlight-ipynb"><pre class="ipynb"><span class="n">calibration_report</span><span class="p">(</span><span class="n">swaptions</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
+<div class="highlight-ipynb"><pre class="ipynb"><span></span><span class="n">calibration_report</span><span class="p">(</span><span class="n">swaptions</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
 </pre></div>
 
 </div>
@@ -661,19 +661,19 @@ Cumulative Error :         0.12265
     <strong>Related Post</strong>
         <ul>
             <li>
-                <a href="http://gouthamanbalaraman.com/blog/hull-white-simulation-quantlib-python.html">Hull White Term Structure Simulations with QuantLib</a>
+                <a href="http://gouthamanbalaraman.com/blog/value-options-commodity-futures-black-formula-quantlib-python.html">Valuing Options on Commodity Futures Using the Black Formula</a>
             </li>
             <li>
-                <a href="http://gouthamanbalaraman.com/blog/value-treasury-futures-quantlib-python.html">Valuing Treasury Futures Using QuantLib</a>
+                <a href="http://gouthamanbalaraman.com/blog/quantlib-bond-modeling.html">Modeling Fixed Rate Bonds Using QuantLib</a>
+            </li>
+            <li>
+                <a href="http://gouthamanbalaraman.com/blog/hull-white-simulation-quantlib-python.html">Hull White Term Structure Simulations with QuantLib</a>
             </li>
             <li>
                 <a href="http://gouthamanbalaraman.com/blog/quantlib-python-tutorials-with-examples.html">QuantLib Python Tutorials With Examples</a>
             </li>
             <li>
                 <a href="http://gouthamanbalaraman.com/blog/european-option-binomial-tree-quantlib-python.html">Option Model Handbook, Part III: European Option Pricing With QuantLib</a>
-            </li>
-            <li>
-                <a href="http://gouthamanbalaraman.com/blog/valuing-european-option-heston-model-quantLib.html">Valuing European Option Using the Heston Model in QuantLib and Python</a>
             </li>
         </ul>
         <hr/>

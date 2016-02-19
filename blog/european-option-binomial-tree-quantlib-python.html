@@ -118,7 +118,7 @@
 <div class="prompt input_prompt">In&nbsp;[1]:</div>
 
 <div class="input_area box-flex1">
-<div class="highlight-ipynb"><pre class="ipynb"><span class="kn">import</span> <span class="nn">QuantLib</span> <span class="kn">as</span> <span class="nn">ql</span> <span class="c1"># version 1.5</span>
+<div class="highlight-ipynb"><pre class="ipynb"><span></span><span class="kn">import</span> <span class="nn">QuantLib</span> <span class="kn">as</span> <span class="nn">ql</span> <span class="c1"># version 1.5</span>
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
 <span class="o">%</span><span class="k">matplotlib</span> <span class="n">inline</span>
 </pre></div>
@@ -142,7 +142,7 @@
 <div class="prompt input_prompt">In&nbsp;[2]:</div>
 
 <div class="input_area box-flex1">
-<div class="highlight-ipynb"><pre class="ipynb"><span class="c1"># option data</span>
+<div class="highlight-ipynb"><pre class="ipynb"><span></span><span class="c1"># option data</span>
 <span class="n">maturity_date</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">Date</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2016</span><span class="p">)</span>
 <span class="n">spot_price</span> <span class="o">=</span> <span class="mf">127.62</span>
 <span class="n">strike_price</span> <span class="o">=</span> <span class="mi">130</span>
@@ -177,7 +177,7 @@
 <div class="prompt input_prompt">In&nbsp;[3]:</div>
 
 <div class="input_area box-flex1">
-<div class="highlight-ipynb"><pre class="ipynb"><span class="c1"># construct the European Option</span>
+<div class="highlight-ipynb"><pre class="ipynb"><span></span><span class="c1"># construct the European Option</span>
 <span class="n">payoff</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">PlainVanillaPayoff</span><span class="p">(</span><span class="n">option_type</span><span class="p">,</span> <span class="n">strike_price</span><span class="p">)</span>
 <span class="n">exercise</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">EuropeanExercise</span><span class="p">(</span><span class="n">maturity_date</span><span class="p">)</span>
 <span class="n">european_option</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">VanillaOption</span><span class="p">(</span><span class="n">payoff</span><span class="p">,</span> <span class="n">exercise</span><span class="p">)</span>
@@ -202,7 +202,7 @@
 <div class="prompt input_prompt">In&nbsp;[4]:</div>
 
 <div class="input_area box-flex1">
-<div class="highlight-ipynb"><pre class="ipynb"><span class="n">spot_handle</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">QuoteHandle</span><span class="p">(</span>
+<div class="highlight-ipynb"><pre class="ipynb"><span></span><span class="n">spot_handle</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">QuoteHandle</span><span class="p">(</span>
     <span class="n">ql</span><span class="o">.</span><span class="n">SimpleQuote</span><span class="p">(</span><span class="n">spot_price</span><span class="p">)</span>
 <span class="p">)</span>
 <span class="n">flat_ts</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">YieldTermStructureHandle</span><span class="p">(</span>
@@ -239,7 +239,7 @@
 <div class="prompt input_prompt">In&nbsp;[5]:</div>
 
 <div class="input_area box-flex1">
-<div class="highlight-ipynb"><pre class="ipynb"><span class="n">european_option</span><span class="o">.</span><span class="n">setPricingEngine</span><span class="p">(</span><span class="n">ql</span><span class="o">.</span><span class="n">AnalyticEuropeanEngine</span><span class="p">(</span><span class="n">bsm_process</span><span class="p">))</span>
+<div class="highlight-ipynb"><pre class="ipynb"><span></span><span class="n">european_option</span><span class="o">.</span><span class="n">setPricingEngine</span><span class="p">(</span><span class="n">ql</span><span class="o">.</span><span class="n">AnalyticEuropeanEngine</span><span class="p">(</span><span class="n">bsm_process</span><span class="p">))</span>
 <span class="n">bs_price</span> <span class="o">=</span> <span class="n">european_option</span><span class="o">.</span><span class="n">NPV</span><span class="p">()</span>
 <span class="k">print</span> <span class="s2">&quot;The theoretical price is &quot;</span><span class="p">,</span> <span class="n">bs_price</span>
 </pre></div>
@@ -277,7 +277,7 @@
 <div class="prompt input_prompt">In&nbsp;[6]:</div>
 
 <div class="input_area box-flex1">
-<div class="highlight-ipynb"><pre class="ipynb"><span class="k">def</span> <span class="nf">binomial_price</span><span class="p">(</span><span class="n">bsm_process</span><span class="p">,</span> <span class="n">steps</span><span class="p">):</span>
+<div class="highlight-ipynb"><pre class="ipynb"><span></span><span class="k">def</span> <span class="nf">binomial_price</span><span class="p">(</span><span class="n">bsm_process</span><span class="p">,</span> <span class="n">steps</span><span class="p">):</span>
     <span class="n">binomial_engine</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">BinomialVanillaEngine</span><span class="p">(</span><span class="n">bsm_process</span><span class="p">,</span> <span class="s2">&quot;crr&quot;</span><span class="p">,</span> <span class="n">steps</span><span class="p">)</span>
     <span class="n">european_option</span><span class="o">.</span><span class="n">setPricingEngine</span><span class="p">(</span><span class="n">binomial_engine</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">european_option</span><span class="o">.</span><span class="n">NPV</span><span class="p">()</span>
@@ -305,7 +305,7 @@
 <div class="prompt input_prompt">In&nbsp;[8]:</div>
 
 <div class="input_area box-flex1">
-<div class="highlight-ipynb"><pre class="ipynb"><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">steps</span><span class="p">,</span> <span class="n">prices</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Binomial Tree Price&quot;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.6</span><span class="p">)</span>
+<div class="highlight-ipynb"><pre class="ipynb"><span></span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">steps</span><span class="p">,</span> <span class="n">prices</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Binomial Tree Price&quot;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.6</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="mi">100</span><span class="p">],[</span><span class="n">bs_price</span><span class="p">,</span> <span class="n">bs_price</span><span class="p">],</span> <span class="s2">&quot;r--&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;BSM Price&quot;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.6</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Steps&quot;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Price&quot;</span><span class="p">)</span>
@@ -645,16 +645,16 @@ QuantLib. You can download the <a href="/extra/notebooks/european-option-models.
     <strong>Related Post</strong>
         <ul>
             <li>
-                <a href="http://gouthamanbalaraman.com/blog/valuing-european-option-heston-model-quantLib.html">Valuing European Option Using the Heston Model in QuantLib and Python</a>
+                <a href="http://gouthamanbalaraman.com/blog/hull-white-simulation-monte-carlo-convergence.html">On the Convergence of Hull White Monte Carlo Simulations</a>
+            </li>
+            <li>
+                <a href="http://gouthamanbalaraman.com/blog/quantlib-bond-modeling.html">Modeling Fixed Rate Bonds Using QuantLib</a>
+            </li>
+            <li>
+                <a href="http://gouthamanbalaraman.com/blog/value-options-commodity-futures-black-formula-quantlib-python.html">Valuing Options on Commodity Futures Using the Black Formula</a>
             </li>
             <li>
                 <a href="http://gouthamanbalaraman.com/blog/hull-white-simulation-quantlib-python.html">Hull White Term Structure Simulations with QuantLib</a>
-            </li>
-            <li>
-                <a href="http://gouthamanbalaraman.com/blog/value-treasury-futures-quantlib-python.html">Valuing Treasury Futures Using QuantLib</a>
-            </li>
-            <li>
-                <a href="http://gouthamanbalaraman.com/blog/interest-rate-swap-quantlib-python.html">Modeling Vanilla Interest Rate Swaps Using QuantLib</a>
             </li>
             <li>
                 <a href="http://gouthamanbalaraman.com/blog/quantlib-python-tutorials-with-examples.html">QuantLib Python Tutorials With Examples</a>

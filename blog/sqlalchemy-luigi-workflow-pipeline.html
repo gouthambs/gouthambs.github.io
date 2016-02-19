@@ -107,7 +107,7 @@ for storing in databases supported by SQLAlchemy. The user would be responsible 
 installing the required database driver to connect using <tt class="docutils literal">SQLAlchemy</tt>.</p>
 <p>Minimal example of a job to copy data to database using <tt class="docutils literal">SQLAlchemy</tt> is as shown
 below:</p>
-<div class="highlight"><pre><span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">String</span>
+<div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">String</span>
 <span class="kn">import</span> <span class="nn">luigi</span>
 <span class="kn">from</span> <span class="nn">luigi.contrib</span> <span class="kn">import</span> <span class="n">sqla</span>
 
@@ -133,7 +133,7 @@ below:</p>
 <p>If the target table where the data needs to be copied already exists, then
 the column schema definition can be skipped and instead the reflect flag
 can be set as True. Here is a modified version of the above example:</p>
-<div class="highlight"><pre><span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">String</span>
+<div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">String</span>
 <span class="kn">import</span> <span class="nn">luigi</span>
 <span class="kn">from</span> <span class="nn">luigi.contrib</span> <span class="kn">import</span> <span class="n">sqla</span>
 
@@ -155,7 +155,7 @@ can be set as True. Here is a modified version of the above example:</p>
 <p>In the above examples, the data that needs to be copied was directly provided by
 overriding the rows method. Alternately, if the data comes from another task, the
 modified example would look as shown below:</p>
-<div class="highlight"><pre><span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">String</span>
+<div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">String</span>
 <span class="kn">import</span> <span class="nn">luigi</span>
 <span class="kn">from</span> <span class="nn">luigi.contrib</span> <span class="kn">import</span> <span class="n">sqla</span>
 <span class="kn">from</span> <span class="nn">luigi.mock</span> <span class="kn">import</span> <span class="n">MockFile</span>
@@ -220,13 +220,13 @@ for performance.</p>
                 <a href="http://gouthamanbalaraman.com/blog/zeo-as-a-windows-service.html">Running ZEO as a Windows Service</a>
             </li>
             <li>
-                <a href="http://gouthamanbalaraman.com/blog/adding-caching-to-python-flask-blogging-extension.html">Adding Caching to Python Flask-Blogging Engine</a>
+                <a href="http://gouthamanbalaraman.com/blog/distributed-processing-pandas.html">Multi-Processing With Pandas</a>
             </li>
             <li>
-                <a href="http://gouthamanbalaraman.com/blog/flask-app-directory-structure.html">Flask App Directory Structure</a>
+                <a href="http://gouthamanbalaraman.com/blog/python-multiprocessing-as-a-task-queue.html">Python Multiprocessing as a Task Queue</a>
             </li>
             <li>
-                <a href="http://gouthamanbalaraman.com/blog/securing-authentication-tokens.html">Securing Authentication Tokens</a>
+                <a href="http://gouthamanbalaraman.com/blog/flask-track-usage.html">Flask Track Usage Primer</a>
             </li>
         </ul>
         <hr/>

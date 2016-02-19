@@ -128,7 +128,7 @@
 
 <div class="collapseheader box-flex1"><span style="font-weight: bold;">Expand Code</span>
 <div class="input_area box-flex1" style="display:none">
-<div class="highlight-ipynb"><pre class="ipynb"><span class="kn">import</span> <span class="nn">QuantLib</span> <span class="kn">as</span> <span class="nn">ql</span>
+<div class="highlight-ipynb"><pre class="ipynb"><span></span><span class="kn">import</span> <span class="nn">QuantLib</span> <span class="kn">as</span> <span class="nn">ql</span>
 <span class="n">calculation_date</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">Date</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">2015</span><span class="p">)</span>
 <span class="n">ql</span><span class="o">.</span><span class="n">Settings</span><span class="o">.</span><span class="n">instance</span><span class="p">()</span><span class="o">.</span><span class="n">evaluationDate</span> <span class="o">=</span> <span class="n">calculation_date</span>
 </pre></div>
@@ -153,7 +153,7 @@
 <div class="prompt input_prompt">In&nbsp;[2]:</div>
 
 <div class="input_area box-flex1">
-<div class="highlight-ipynb"><pre class="ipynb"><span class="c1"># construct discount curve and libor curve</span>
+<div class="highlight-ipynb"><pre class="ipynb"><span></span><span class="c1"># construct discount curve and libor curve</span>
 
 <span class="n">risk_free_rate</span> <span class="o">=</span> <span class="mf">0.01</span>
 <span class="n">libor_rate</span> <span class="o">=</span> <span class="mf">0.02</span>
@@ -189,7 +189,7 @@
 <div class="prompt input_prompt">In&nbsp;[3]:</div>
 
 <div class="input_area box-flex1">
-<div class="highlight-ipynb"><pre class="ipynb"><span class="n">calendar</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">UnitedStates</span><span class="p">()</span>
+<div class="highlight-ipynb"><pre class="ipynb"><span></span><span class="n">calendar</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">UnitedStates</span><span class="p">()</span>
 <span class="n">settle_date</span> <span class="o">=</span> <span class="n">calendar</span><span class="o">.</span><span class="n">advance</span><span class="p">(</span><span class="n">calculation_date</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="n">ql</span><span class="o">.</span><span class="n">Days</span><span class="p">)</span>
 <span class="n">maturity_date</span> <span class="o">=</span> <span class="n">calendar</span><span class="o">.</span><span class="n">advance</span><span class="p">(</span><span class="n">settle_date</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="n">ql</span><span class="o">.</span><span class="n">Years</span><span class="p">)</span>
 
@@ -225,7 +225,7 @@
 <div class="prompt input_prompt">In&nbsp;[4]:</div>
 
 <div class="input_area box-flex1">
-<div class="highlight-ipynb"><pre class="ipynb"><span class="n">notional</span> <span class="o">=</span> <span class="mi">10000000</span>
+<div class="highlight-ipynb"><pre class="ipynb"><span></span><span class="n">notional</span> <span class="o">=</span> <span class="mi">10000000</span>
 <span class="n">fixed_rate</span> <span class="o">=</span> <span class="mf">0.025</span>
 <span class="n">fixed_leg_daycount</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">Actual360</span><span class="p">()</span>
 <span class="n">float_spread</span> <span class="o">=</span> <span class="mf">0.004</span>
@@ -255,7 +255,7 @@
 <div class="prompt input_prompt">In&nbsp;[5]:</div>
 
 <div class="input_area box-flex1">
-<div class="highlight-ipynb"><pre class="ipynb"><span class="n">swap_engine</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">DiscountingSwapEngine</span><span class="p">(</span><span class="n">discount_curve</span><span class="p">)</span>
+<div class="highlight-ipynb"><pre class="ipynb"><span></span><span class="n">swap_engine</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">DiscountingSwapEngine</span><span class="p">(</span><span class="n">discount_curve</span><span class="p">)</span>
 <span class="n">ir_swap</span><span class="o">.</span><span class="n">setPricingEngine</span><span class="p">(</span><span class="n">swap_engine</span><span class="p">)</span>
 </pre></div>
 
@@ -288,7 +288,7 @@
 
 <div class="collapseheader box-flex1"><span style="font-weight: bold;">Expand Code</span>
 <div class="input_area box-flex1" style="display:none">
-<div class="highlight-ipynb"><pre class="ipynb"><span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">cf</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">ir_swap</span><span class="o">.</span><span class="n">leg</span><span class="p">(</span><span class="mi">0</span><span class="p">)):</span>
+<div class="highlight-ipynb"><pre class="ipynb"><span></span><span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">cf</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">ir_swap</span><span class="o">.</span><span class="n">leg</span><span class="p">(</span><span class="mi">0</span><span class="p">)):</span>
     <span class="k">print</span> <span class="s2">&quot;</span><span class="si">%2d</span><span class="s2">    </span><span class="si">%-18s</span><span class="s2">  </span><span class="si">%10.2f</span><span class="s2">&quot;</span><span class="o">%</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">cf</span><span class="o">.</span><span class="n">date</span><span class="p">(),</span> <span class="n">cf</span><span class="o">.</span><span class="n">amount</span><span class="p">())</span>
 </pre></div>
 
@@ -346,7 +346,7 @@
 
 <div class="collapseheader box-flex1"><span style="font-weight: bold;">Expand Code</span>
 <div class="input_area box-flex1" style="display:none">
-<div class="highlight-ipynb"><pre class="ipynb"><span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">cf</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">ir_swap</span><span class="o">.</span><span class="n">leg</span><span class="p">(</span><span class="mi">1</span><span class="p">)):</span>
+<div class="highlight-ipynb"><pre class="ipynb"><span></span><span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">cf</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">ir_swap</span><span class="o">.</span><span class="n">leg</span><span class="p">(</span><span class="mi">1</span><span class="p">)):</span>
     <span class="k">print</span> <span class="s2">&quot;</span><span class="si">%2d</span><span class="s2">    </span><span class="si">%-18s</span><span class="s2">  </span><span class="si">%10.2f</span><span class="s2">&quot;</span><span class="o">%</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">cf</span><span class="o">.</span><span class="n">date</span><span class="p">(),</span> <span class="n">cf</span><span class="o">.</span><span class="n">amount</span><span class="p">())</span>
 </pre></div>
 
@@ -424,7 +424,7 @@
 
 <div class="collapseheader box-flex1"><span style="font-weight: bold;">Expand Code</span>
 <div class="input_area box-flex1" style="display:none">
-<div class="highlight-ipynb"><pre class="ipynb"><span class="k">print</span> <span class="s2">&quot;</span><span class="si">%-20s</span><span class="s2">: </span><span class="si">%20.3f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="s2">&quot;Net Present Value&quot;</span><span class="p">,</span> <span class="n">ir_swap</span><span class="o">.</span><span class="n">NPV</span><span class="p">())</span>
+<div class="highlight-ipynb"><pre class="ipynb"><span></span><span class="k">print</span> <span class="s2">&quot;</span><span class="si">%-20s</span><span class="s2">: </span><span class="si">%20.3f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="s2">&quot;Net Present Value&quot;</span><span class="p">,</span> <span class="n">ir_swap</span><span class="o">.</span><span class="n">NPV</span><span class="p">())</span>
 <span class="k">print</span> <span class="s2">&quot;</span><span class="si">%-20s</span><span class="s2">: </span><span class="si">%20.3f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="s2">&quot;Fair Spread&quot;</span><span class="p">,</span> <span class="n">ir_swap</span><span class="o">.</span><span class="n">fairSpread</span><span class="p">())</span>
 <span class="k">print</span> <span class="s2">&quot;</span><span class="si">%-20s</span><span class="s2">: </span><span class="si">%20.3f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="s2">&quot;Fair Rate&quot;</span><span class="p">,</span> <span class="n">ir_swap</span><span class="o">.</span><span class="n">fairRate</span><span class="p">())</span>
 <span class="k">print</span> <span class="s2">&quot;</span><span class="si">%-20s</span><span class="s2">: </span><span class="si">%20.3f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="s2">&quot;Fixed Leg BPS&quot;</span><span class="p">,</span> <span class="n">ir_swap</span><span class="o">.</span><span class="n">fixedLegBPS</span><span class="p">())</span>
@@ -481,19 +481,19 @@ Floating Leg BPS    :             9642.042
     <strong>Related Post</strong>
         <ul>
             <li>
-                <a href="http://gouthamanbalaraman.com/blog/hull-white-simulation-quantlib-python.html">Hull White Term Structure Simulations with QuantLib</a>
+                <a href="http://gouthamanbalaraman.com/blog/value-options-commodity-futures-black-formula-quantlib-python.html">Valuing Options on Commodity Futures Using the Black Formula</a>
             </li>
             <li>
-                <a href="http://gouthamanbalaraman.com/blog/value-treasury-futures-quantlib-python.html">Valuing Treasury Futures Using QuantLib</a>
+                <a href="http://gouthamanbalaraman.com/blog/quantlib-bond-modeling.html">Modeling Fixed Rate Bonds Using QuantLib</a>
+            </li>
+            <li>
+                <a href="http://gouthamanbalaraman.com/blog/hull-white-simulation-quantlib-python.html">Hull White Term Structure Simulations with QuantLib</a>
             </li>
             <li>
                 <a href="http://gouthamanbalaraman.com/blog/short-interest-rate-model-calibration-quantlib.html">Short Interest Rate Model Calibration</a>
             </li>
             <li>
                 <a href="http://gouthamanbalaraman.com/blog/quantlib-python-tutorials-with-examples.html">QuantLib Python Tutorials With Examples</a>
-            </li>
-            <li>
-                <a href="http://gouthamanbalaraman.com/blog/european-option-binomial-tree-quantlib-python.html">Option Model Handbook, Part III: European Option Pricing With QuantLib</a>
             </li>
         </ul>
         <hr/>

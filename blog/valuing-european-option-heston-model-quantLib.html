@@ -135,7 +135,7 @@ dV_t &amp;=&amp; \kappa(\theta-V_t) + \sigma \sqrt{V_t} dW_t^2
 
 <div class="collapseheader box-flex1"><span style="font-weight: bold;">Expand Code</span>
 <div class="input_area box-flex1" style="display:none">
-<div class="highlight-ipynb"><pre class="ipynb"><span class="kn">import</span> <span class="nn">QuantLib</span> <span class="kn">as</span> <span class="nn">ql</span>
+<div class="highlight-ipynb"><pre class="ipynb"><span></span><span class="kn">import</span> <span class="nn">QuantLib</span> <span class="kn">as</span> <span class="nn">ql</span>
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
 <span class="kn">from</span> <span class="nn">scipy.integrate</span> <span class="kn">import</span> <span class="n">simps</span><span class="p">,</span> <span class="n">cumtrapz</span><span class="p">,</span> <span class="n">romb</span>
@@ -164,7 +164,7 @@ dV_t &amp;=&amp; \kappa(\theta-V_t) + \sigma \sqrt{V_t} dW_t^2
 
 <div class="collapseheader box-flex1"><span style="font-weight: bold;">Expand Code</span>
 <div class="input_area box-flex1" style="display:none">
-<div class="highlight-ipynb"><pre class="ipynb"><span class="c1"># option parameters</span>
+<div class="highlight-ipynb"><pre class="ipynb"><span></span><span class="c1"># option parameters</span>
 <span class="n">strike_price</span> <span class="o">=</span> <span class="mf">110.0</span>
 <span class="n">payoff</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">PlainVanillaPayoff</span><span class="p">(</span><span class="n">ql</span><span class="o">.</span><span class="n">Option</span><span class="o">.</span><span class="n">Call</span><span class="p">,</span> <span class="n">strike_price</span><span class="p">)</span>
 
@@ -204,7 +204,7 @@ dV_t &amp;=&amp; \kappa(\theta-V_t) + \sigma \sqrt{V_t} dW_t^2
 <div class="prompt input_prompt">In&nbsp;[3]:</div>
 
 <div class="input_area box-flex1">
-<div class="highlight-ipynb"><pre class="ipynb"><span class="c1"># construct the European Option</span>
+<div class="highlight-ipynb"><pre class="ipynb"><span></span><span class="c1"># construct the European Option</span>
 <span class="n">payoff</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">PlainVanillaPayoff</span><span class="p">(</span><span class="n">option_type</span><span class="p">,</span> <span class="n">strike_price</span><span class="p">)</span>
 <span class="n">exercise</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">EuropeanExercise</span><span class="p">(</span><span class="n">maturity_date</span><span class="p">)</span>
 <span class="n">european_option</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">VanillaOption</span><span class="p">(</span><span class="n">payoff</span><span class="p">,</span> <span class="n">exercise</span><span class="p">)</span>
@@ -230,7 +230,7 @@ dV_t &amp;=&amp; \kappa(\theta-V_t) + \sigma \sqrt{V_t} dW_t^2
 
 <div class="collapseheader box-flex1"><span style="font-weight: bold;">Expand Code</span>
 <div class="input_area box-flex1" style="display:none">
-<div class="highlight-ipynb"><pre class="ipynb"><span class="c1"># construct the Heston process</span>
+<div class="highlight-ipynb"><pre class="ipynb"><span></span><span class="c1"># construct the Heston process</span>
 
 <span class="n">v0</span> <span class="o">=</span> <span class="n">volatility</span><span class="o">*</span><span class="n">volatility</span>  <span class="c1"># spot variance</span>
 <span class="n">kappa</span> <span class="o">=</span> <span class="mf">0.1</span>
@@ -277,7 +277,7 @@ dV_t &amp;=&amp; \kappa(\theta-V_t) + \sigma \sqrt{V_t} dW_t^2
 <div class="prompt input_prompt">In&nbsp;[5]:</div>
 
 <div class="input_area box-flex1">
-<div class="highlight-ipynb"><pre class="ipynb"><span class="n">engine</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">AnalyticHestonEngine</span><span class="p">(</span><span class="n">ql</span><span class="o">.</span><span class="n">HestonModel</span><span class="p">(</span><span class="n">heston_process</span><span class="p">),</span><span class="mf">0.01</span><span class="p">,</span> <span class="mi">1000</span><span class="p">)</span>
+<div class="highlight-ipynb"><pre class="ipynb"><span></span><span class="n">engine</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">AnalyticHestonEngine</span><span class="p">(</span><span class="n">ql</span><span class="o">.</span><span class="n">HestonModel</span><span class="p">(</span><span class="n">heston_process</span><span class="p">),</span><span class="mf">0.01</span><span class="p">,</span> <span class="mi">1000</span><span class="p">)</span>
 <span class="n">european_option</span><span class="o">.</span><span class="n">setPricingEngine</span><span class="p">(</span><span class="n">engine</span><span class="p">)</span>
 <span class="n">h_price</span> <span class="o">=</span> <span class="n">european_option</span><span class="o">.</span><span class="n">NPV</span><span class="p">()</span>
 <span class="k">print</span> <span class="s2">&quot;The Heston model price is&quot;</span><span class="p">,</span><span class="n">h_price</span>
@@ -317,7 +317,7 @@ dV_t &amp;=&amp; \kappa(\theta-V_t) + \sigma \sqrt{V_t} dW_t^2
 
 <div class="collapseheader box-flex1"><span style="font-weight: bold;">Expand Code</span>
 <div class="input_area box-flex1" style="display:none">
-<div class="highlight-ipynb"><pre class="ipynb"><span class="n">flat_vol_ts</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">BlackVolTermStructureHandle</span><span class="p">(</span>
+<div class="highlight-ipynb"><pre class="ipynb"><span></span><span class="n">flat_vol_ts</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">BlackVolTermStructureHandle</span><span class="p">(</span>
     <span class="n">ql</span><span class="o">.</span><span class="n">BlackConstantVol</span><span class="p">(</span><span class="n">calculation_date</span><span class="p">,</span> <span class="n">calendar</span><span class="p">,</span> <span class="n">volatility</span><span class="p">,</span> <span class="n">day_count</span><span class="p">)</span>
 <span class="p">)</span>
 <span class="n">bsm_process</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">BlackScholesMertonProcess</span><span class="p">(</span><span class="n">spot_handle</span><span class="p">,</span> 
@@ -376,19 +376,19 @@ Comparison with the Black-Scholes-Merton model is shown for instructional purpos
     <strong>Related Post</strong>
         <ul>
             <li>
-                <a href="http://gouthamanbalaraman.com/blog/hull-white-simulation-quantlib-python.html">Hull White Term Structure Simulations with QuantLib</a>
+                <a href="http://gouthamanbalaraman.com/blog/value-options-commodity-futures-black-formula-quantlib-python.html">Valuing Options on Commodity Futures Using the Black Formula</a>
             </li>
             <li>
-                <a href="http://gouthamanbalaraman.com/blog/value-treasury-futures-quantlib-python.html">Valuing Treasury Futures Using QuantLib</a>
+                <a href="http://gouthamanbalaraman.com/blog/quantlib-bond-modeling.html">Modeling Fixed Rate Bonds Using QuantLib</a>
+            </li>
+            <li>
+                <a href="http://gouthamanbalaraman.com/blog/hull-white-simulation-quantlib-python.html">Hull White Term Structure Simulations with QuantLib</a>
             </li>
             <li>
                 <a href="http://gouthamanbalaraman.com/blog/short-interest-rate-model-calibration-quantlib.html">Short Interest Rate Model Calibration</a>
             </li>
             <li>
                 <a href="http://gouthamanbalaraman.com/blog/quantlib-python-tutorials-with-examples.html">QuantLib Python Tutorials With Examples</a>
-            </li>
-            <li>
-                <a href="http://gouthamanbalaraman.com/blog/european-option-binomial-tree-quantlib-python.html">Option Model Handbook, Part III: European Option Pricing With QuantLib</a>
             </li>
         </ul>
         <hr/>

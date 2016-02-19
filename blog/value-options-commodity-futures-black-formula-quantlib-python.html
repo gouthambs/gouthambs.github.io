@@ -133,7 +133,7 @@ d_2 &amp;=&amp; \frac{\ln(F/K) - (\sigma^2/2)T}{\sigma\sqrt{T}} = d_1 - \sigma\s
 <div class="prompt input_prompt">In&nbsp;[1]:</div>
 
 <div class="input_area box-flex1">
-<div class="highlight-ipynb"><pre class="ipynb"><span class="kn">import</span> <span class="nn">QuantLib</span> <span class="kn">as</span> <span class="nn">ql</span>
+<div class="highlight-ipynb"><pre class="ipynb"><span></span><span class="kn">import</span> <span class="nn">QuantLib</span> <span class="kn">as</span> <span class="nn">ql</span>
 <span class="kn">import</span> <span class="nn">math</span>
 </pre></div>
 
@@ -147,7 +147,7 @@ d_2 &amp;=&amp; \frac{\ln(F/K) - (\sigma^2/2)T}{\sigma\sqrt{T}} = d_1 - \sigma\s
 <div class="prompt input_prompt">In&nbsp;[2]:</div>
 
 <div class="input_area box-flex1">
-<div class="highlight-ipynb"><pre class="ipynb"><span class="n">calendar</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">UnitedStates</span><span class="p">()</span>
+<div class="highlight-ipynb"><pre class="ipynb"><span></span><span class="n">calendar</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">UnitedStates</span><span class="p">()</span>
 <span class="n">bussiness_convention</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">ModifiedFollowing</span>
 <span class="n">settlement_days</span> <span class="o">=</span> <span class="mi">0</span>
 <span class="n">day_count</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">ActualActual</span><span class="p">()</span>
@@ -173,7 +173,7 @@ d_2 &amp;=&amp; \frac{\ln(F/K) - (\sigma^2/2)T}{\sigma\sqrt{T}} = d_1 - \sigma\s
 <div class="prompt input_prompt">In&nbsp;[3]:</div>
 
 <div class="input_area box-flex1">
-<div class="highlight-ipynb"><pre class="ipynb"><span class="n">interest_rate</span> <span class="o">=</span> <span class="mf">0.00105</span>
+<div class="highlight-ipynb"><pre class="ipynb"><span></span><span class="n">interest_rate</span> <span class="o">=</span> <span class="mf">0.00105</span>
 <span class="n">calc_date</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">Date</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">12</span><span class="p">,</span><span class="mi">2015</span><span class="p">)</span>
 <span class="n">yield_curve</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">FlatForward</span><span class="p">(</span><span class="n">calc_date</span><span class="p">,</span> 
                              <span class="n">interest_rate</span><span class="p">,</span>
@@ -192,7 +192,7 @@ d_2 &amp;=&amp; \frac{\ln(F/K) - (\sigma^2/2)T}{\sigma\sqrt{T}} = d_1 - \sigma\s
 <div class="prompt input_prompt">In&nbsp;[4]:</div>
 
 <div class="input_area box-flex1">
-<div class="highlight-ipynb"><pre class="ipynb"><span class="n">ql</span><span class="o">.</span><span class="n">Settings</span><span class="o">.</span><span class="n">instance</span><span class="p">()</span><span class="o">.</span><span class="n">evaluationDate</span> <span class="o">=</span> <span class="n">calc_date</span>
+<div class="highlight-ipynb"><pre class="ipynb"><span></span><span class="n">ql</span><span class="o">.</span><span class="n">Settings</span><span class="o">.</span><span class="n">instance</span><span class="p">()</span><span class="o">.</span><span class="n">evaluationDate</span> <span class="o">=</span> <span class="n">calc_date</span>
 <span class="n">option_maturity_date</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">Date</span><span class="p">(</span><span class="mi">24</span><span class="p">,</span><span class="mi">12</span><span class="p">,</span><span class="mi">2015</span><span class="p">)</span>
 <span class="n">strike</span> <span class="o">=</span> <span class="mi">119</span>
 <span class="n">spot</span> <span class="o">=</span> <span class="mf">126.953</span><span class="c1"># futures price</span>
@@ -221,7 +221,7 @@ d_2 &amp;=&amp; \frac{\ln(F/K) - (\sigma^2/2)T}{\sigma\sqrt{T}} = d_1 - \sigma\s
 <div class="prompt input_prompt">In&nbsp;[5]:</div>
 
 <div class="input_area box-flex1">
-<div class="highlight-ipynb"><pre class="ipynb"><span class="k">print</span> <span class="s2">&quot;</span><span class="si">%-20s</span><span class="s2">: </span><span class="si">%4.4f</span><span class="s2">&quot;</span> <span class="o">%</span><span class="p">(</span><span class="s2">&quot;Option Price&quot;</span><span class="p">,</span> <span class="n">black</span><span class="o">.</span><span class="n">value</span><span class="p">()</span> <span class="p">)</span>
+<div class="highlight-ipynb"><pre class="ipynb"><span></span><span class="k">print</span> <span class="s2">&quot;</span><span class="si">%-20s</span><span class="s2">: </span><span class="si">%4.4f</span><span class="s2">&quot;</span> <span class="o">%</span><span class="p">(</span><span class="s2">&quot;Option Price&quot;</span><span class="p">,</span> <span class="n">black</span><span class="o">.</span><span class="n">value</span><span class="p">()</span> <span class="p">)</span>
 <span class="k">print</span> <span class="s2">&quot;</span><span class="si">%-20s</span><span class="s2">: </span><span class="si">%4.4f</span><span class="s2">&quot;</span> <span class="o">%</span><span class="p">(</span><span class="s2">&quot;Delta&quot;</span><span class="p">,</span> <span class="n">black</span><span class="o">.</span><span class="n">delta</span><span class="p">(</span><span class="n">spot</span><span class="p">)</span> <span class="p">)</span>
 <span class="k">print</span> <span class="s2">&quot;</span><span class="si">%-20s</span><span class="s2">: </span><span class="si">%4.4f</span><span class="s2">&quot;</span> <span class="o">%</span><span class="p">(</span><span class="s2">&quot;Gamma&quot;</span><span class="p">,</span> <span class="n">black</span><span class="o">.</span><span class="n">gamma</span><span class="p">(</span><span class="n">spot</span><span class="p">)</span> <span class="p">)</span>
 <span class="k">print</span> <span class="s2">&quot;</span><span class="si">%-20s</span><span class="s2">: </span><span class="si">%4.4f</span><span class="s2">&quot;</span> <span class="o">%</span><span class="p">(</span><span class="s2">&quot;Theta&quot;</span><span class="p">,</span> <span class="n">black</span><span class="o">.</span><span class="n">theta</span><span class="p">(</span><span class="n">spot</span><span class="p">,</span> <span class="n">T</span><span class="p">)</span> <span class="p">)</span>
@@ -269,7 +269,7 @@ Rho                 : 7.3974
 <div class="prompt input_prompt">In&nbsp;[6]:</div>
 
 <div class="input_area box-flex1">
-<div class="highlight-ipynb"><pre class="ipynb"><span class="n">interest_rate</span> <span class="o">=</span> <span class="mf">0.0015</span>
+<div class="highlight-ipynb"><pre class="ipynb"><span></span><span class="n">interest_rate</span> <span class="o">=</span> <span class="mf">0.0015</span>
 <span class="n">calc_date</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">Date</span><span class="p">(</span><span class="mi">23</span><span class="p">,</span><span class="mi">9</span><span class="p">,</span><span class="mi">2015</span><span class="p">)</span>
 <span class="n">yield_curve</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">FlatForward</span><span class="p">(</span><span class="n">calc_date</span><span class="p">,</span> 
                              <span class="n">interest_rate</span><span class="p">,</span>
@@ -288,7 +288,7 @@ Rho                 : 7.3974
 <div class="prompt input_prompt">In&nbsp;[7]:</div>
 
 <div class="input_area box-flex1">
-<div class="highlight-ipynb"><pre class="ipynb"><span class="n">ql</span><span class="o">.</span><span class="n">Settings</span><span class="o">.</span><span class="n">instance</span><span class="p">()</span><span class="o">.</span><span class="n">evaluationDate</span> <span class="o">=</span> <span class="n">calc_date</span>
+<div class="highlight-ipynb"><pre class="ipynb"><span></span><span class="n">ql</span><span class="o">.</span><span class="n">Settings</span><span class="o">.</span><span class="n">instance</span><span class="p">()</span><span class="o">.</span><span class="n">evaluationDate</span> <span class="o">=</span> <span class="n">calc_date</span>
 <span class="n">T</span> <span class="o">=</span> <span class="mf">96.12</span><span class="o">/</span><span class="mf">365.</span>
 
 <span class="n">strike</span> <span class="o">=</span> <span class="mf">3.5</span>
@@ -314,7 +314,7 @@ Rho                 : 7.3974
 <div class="prompt input_prompt">In&nbsp;[8]:</div>
 
 <div class="input_area box-flex1">
-<div class="highlight-ipynb"><pre class="ipynb"><span class="k">print</span> <span class="s2">&quot;</span><span class="si">%-20s</span><span class="s2">: </span><span class="si">%4.4f</span><span class="s2">&quot;</span> <span class="o">%</span><span class="p">(</span><span class="s2">&quot;Option Price&quot;</span><span class="p">,</span> <span class="n">black</span><span class="o">.</span><span class="n">value</span><span class="p">()</span> <span class="p">)</span>
+<div class="highlight-ipynb"><pre class="ipynb"><span></span><span class="k">print</span> <span class="s2">&quot;</span><span class="si">%-20s</span><span class="s2">: </span><span class="si">%4.4f</span><span class="s2">&quot;</span> <span class="o">%</span><span class="p">(</span><span class="s2">&quot;Option Price&quot;</span><span class="p">,</span> <span class="n">black</span><span class="o">.</span><span class="n">value</span><span class="p">()</span> <span class="p">)</span>
 <span class="k">print</span> <span class="s2">&quot;</span><span class="si">%-20s</span><span class="s2">: </span><span class="si">%4.4f</span><span class="s2">&quot;</span> <span class="o">%</span><span class="p">(</span><span class="s2">&quot;Delta&quot;</span><span class="p">,</span> <span class="n">black</span><span class="o">.</span><span class="n">delta</span><span class="p">(</span><span class="n">spot</span><span class="p">)</span> <span class="p">)</span>
 <span class="k">print</span> <span class="s2">&quot;</span><span class="si">%-20s</span><span class="s2">: </span><span class="si">%4.4f</span><span class="s2">&quot;</span> <span class="o">%</span><span class="p">(</span><span class="s2">&quot;Gamma&quot;</span><span class="p">,</span> <span class="n">black</span><span class="o">.</span><span class="n">gamma</span><span class="p">(</span><span class="n">spot</span><span class="p">)</span> <span class="p">)</span>
 <span class="k">print</span> <span class="s2">&quot;</span><span class="si">%-20s</span><span class="s2">: </span><span class="si">%4.4f</span><span class="s2">&quot;</span> <span class="o">%</span><span class="p">(</span><span class="s2">&quot;Theta&quot;</span><span class="p">,</span> <span class="n">black</span><span class="o">.</span><span class="n">theta</span><span class="p">(</span><span class="n">spot</span><span class="p">,</span> <span class="n">T</span><span class="p">)</span> <span class="p">)</span>
@@ -374,10 +374,10 @@ Rho                 : 0.1597
     <strong>Related Post</strong>
         <ul>
             <li>
-                <a href="http://gouthamanbalaraman.com/blog/hull-white-simulation-quantlib-python.html">Hull White Term Structure Simulations with QuantLib</a>
+                <a href="http://gouthamanbalaraman.com/blog/quantlib-bond-modeling.html">Modeling Fixed Rate Bonds Using QuantLib</a>
             </li>
             <li>
-                <a href="http://gouthamanbalaraman.com/blog/value-treasury-futures-quantlib-python.html">Valuing Treasury Futures Using QuantLib</a>
+                <a href="http://gouthamanbalaraman.com/blog/hull-white-simulation-quantlib-python.html">Hull White Term Structure Simulations with QuantLib</a>
             </li>
             <li>
                 <a href="http://gouthamanbalaraman.com/blog/short-interest-rate-model-calibration-quantlib.html">Short Interest Rate Model Calibration</a>

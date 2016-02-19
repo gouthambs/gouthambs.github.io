@@ -143,7 +143,7 @@ and investigate some of the properties.</p>
 
 <div class="collapseheader box-flex1"><span style="font-weight: bold;">Expand Code</span>
 <div class="input_area box-flex1" style="display:none">
-<div class="highlight-ipynb"><pre class="ipynb"><span class="kn">import</span> <span class="nn">QuantLib</span> <span class="kn">as</span> <span class="nn">ql</span>
+<div class="highlight-ipynb"><pre class="ipynb"><span></span><span class="kn">import</span> <span class="nn">QuantLib</span> <span class="kn">as</span> <span class="nn">ql</span>
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
 <span class="kn">from</span> <span class="nn">scipy.integrate</span> <span class="kn">import</span> <span class="n">simps</span><span class="p">,</span> <span class="n">cumtrapz</span><span class="p">,</span> <span class="n">romb</span>
@@ -175,7 +175,7 @@ and investigate some of the properties.</p>
 
 <div class="collapseheader box-flex1"><span style="font-weight: bold;">Expand Code</span>
 <div class="input_area box-flex1" style="display:none">
-<div class="highlight-ipynb"><pre class="ipynb"><span class="k">def</span> <span class="nf">get_path_generator</span><span class="p">(</span><span class="n">timestep</span><span class="p">,</span> <span class="n">hw_process</span><span class="p">,</span> <span class="n">length</span><span class="p">,</span> 
+<div class="highlight-ipynb"><pre class="ipynb"><span></span><span class="k">def</span> <span class="nf">get_path_generator</span><span class="p">(</span><span class="n">timestep</span><span class="p">,</span> <span class="n">hw_process</span><span class="p">,</span> <span class="n">length</span><span class="p">,</span> 
                        <span class="n">low_discrepancy</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">brownian_bridge</span><span class="o">=</span><span class="bp">True</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Returns a path generator</span>
@@ -214,7 +214,7 @@ and investigate some of the properties.</p>
 
 <div class="collapseheader box-flex1"><span style="font-weight: bold;">Expand Code</span>
 <div class="input_area box-flex1" style="display:none">
-<div class="highlight-ipynb"><pre class="ipynb"><span class="k">def</span> <span class="nf">generate_paths</span><span class="p">(</span><span class="n">num_paths</span><span class="p">,</span> <span class="n">timestep</span><span class="p">,</span> <span class="n">seq</span><span class="p">):</span>
+<div class="highlight-ipynb"><pre class="ipynb"><span></span><span class="k">def</span> <span class="nf">generate_paths</span><span class="p">(</span><span class="n">num_paths</span><span class="p">,</span> <span class="n">timestep</span><span class="p">,</span> <span class="n">seq</span><span class="p">):</span>
     <span class="n">arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">num_paths</span><span class="p">,</span> <span class="n">timestep</span><span class="o">+</span><span class="mi">1</span><span class="p">))</span>
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_paths</span><span class="p">):</span>
         <span class="n">sample_path</span> <span class="o">=</span> <span class="n">seq</span><span class="o">.</span><span class="n">next</span><span class="p">()</span>
@@ -246,7 +246,7 @@ and investigate some of the properties.</p>
 
 <div class="collapseheader box-flex1"><span style="font-weight: bold;">Expand Code</span>
 <div class="input_area box-flex1" style="display:none">
-<div class="highlight-ipynb"><pre class="ipynb"><span class="k">def</span> <span class="nf">generate_paths_zero_price</span><span class="p">(</span><span class="n">spot_curve_handle</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">timestep</span><span class="p">,</span> <span class="n">length</span><span class="p">,</span> 
+<div class="highlight-ipynb"><pre class="ipynb"><span></span><span class="k">def</span> <span class="nf">generate_paths_zero_price</span><span class="p">(</span><span class="n">spot_curve_handle</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">timestep</span><span class="p">,</span> <span class="n">length</span><span class="p">,</span> 
                               <span class="n">num_paths</span><span class="p">,</span> <span class="n">avg_grid_array</span><span class="p">,</span> <span class="n">low_discrepancy</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> 
                               <span class="n">brownian_bridge</span><span class="o">=</span><span class="bp">True</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
@@ -320,7 +320,7 @@ Monte-Carlo simulations. The error in the Monte-Carlo simulation can be defined 
 
 <div class="collapseheader box-flex1"><span style="font-weight: bold;">Expand Code</span>
 <div class="input_area box-flex1" style="display:none">
-<div class="highlight-ipynb"><pre class="ipynb"><span class="c1"># Here we vary sigma with fixed a and observe the error epsilon</span>
+<div class="highlight-ipynb"><pre class="ipynb"><span></span><span class="c1"># Here we vary sigma with fixed a and observe the error epsilon</span>
 <span class="c1"># define constants </span>
 <span class="n">num_paths</span> <span class="o">=</span> <span class="mi">500</span>
 <span class="n">sigma_array</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mf">0.01</span><span class="p">,</span><span class="mf">0.1</span><span class="p">,</span><span class="mf">0.03</span><span class="p">)</span>
@@ -768,7 +768,7 @@ V/wfSyJ8tpTlvpsAAAAASUVORK5CYII=
 
 <div class="collapseheader box-flex1"><span style="font-weight: bold;">Expand Code</span>
 <div class="input_area box-flex1" style="display:none">
-<div class="highlight-ipynb"><pre class="ipynb"><span class="c1"># Here we vary a with fixed sigma and observe the error epsilon</span>
+<div class="highlight-ipynb"><pre class="ipynb"><span></span><span class="c1"># Here we vary a with fixed sigma and observe the error epsilon</span>
 <span class="c1">#define constants</span>
 <span class="n">num_paths</span> <span class="o">=</span> <span class="mi">500</span>
 <span class="n">sigma</span> <span class="o">=</span> <span class="mf">0.1</span>
@@ -1344,7 +1344,7 @@ Var(Y) &amp;=&amp; (e^{\sigma^2} -1 )E(Y)^2
 
 <div class="collapseheader box-flex1"><span style="font-weight: bold;">Expand Code</span>
 <div class="input_area box-flex1" style="display:none">
-<div class="highlight-ipynb"><pre class="ipynb"><span class="c1">#define constants</span>
+<div class="highlight-ipynb"><pre class="ipynb"><span></span><span class="c1">#define constants</span>
 <span class="n">num_paths</span> <span class="o">=</span> <span class="mi">500</span>
 <span class="n">sigma</span> <span class="o">=</span> <span class="mf">0.02</span>
 <span class="n">a</span> <span class="o">=</span> <span class="mf">0.1</span>
@@ -1708,19 +1708,19 @@ Hull-White model</a>.</p>
     <strong>Related Post</strong>
         <ul>
             <li>
-                <a href="http://gouthamanbalaraman.com/blog/hull-white-simulation-quantlib-python.html">Hull White Term Structure Simulations with QuantLib</a>
+                <a href="http://gouthamanbalaraman.com/blog/value-options-commodity-futures-black-formula-quantlib-python.html">Valuing Options on Commodity Futures Using the Black Formula</a>
             </li>
             <li>
-                <a href="http://gouthamanbalaraman.com/blog/value-treasury-futures-quantlib-python.html">Valuing Treasury Futures Using QuantLib</a>
+                <a href="http://gouthamanbalaraman.com/blog/quantlib-bond-modeling.html">Modeling Fixed Rate Bonds Using QuantLib</a>
+            </li>
+            <li>
+                <a href="http://gouthamanbalaraman.com/blog/hull-white-simulation-quantlib-python.html">Hull White Term Structure Simulations with QuantLib</a>
             </li>
             <li>
                 <a href="http://gouthamanbalaraman.com/blog/short-interest-rate-model-calibration-quantlib.html">Short Interest Rate Model Calibration</a>
             </li>
             <li>
                 <a href="http://gouthamanbalaraman.com/blog/quantlib-python-tutorials-with-examples.html">QuantLib Python Tutorials With Examples</a>
-            </li>
-            <li>
-                <a href="http://gouthamanbalaraman.com/blog/european-option-binomial-tree-quantlib-python.html">Option Model Handbook, Part III: European Option Pricing With QuantLib</a>
             </li>
         </ul>
         <hr/>
