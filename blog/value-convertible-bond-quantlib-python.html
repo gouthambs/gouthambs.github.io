@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Valuing Convertible Bonds Using QuantLib - G B</title>
+        <!-- All the meta tags -->
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+        <meta property="og:type" content="article"/>
+        <meta property="og:title" content="Valuing Convertible Bonds Using QuantLib"/>
+        <meta property="og:url" content="http://gouthamanbalaraman.com/blog/value-convertible-bond-quantlib-python.html"/>
+        <meta property="og:description" content="Provides an introduction to valuation of convertible bonds using QuantLib with a minimal example."/>
+        <link href="http://gouthamanbalaraman.com/theme/static/css/bootstrap.readable.min.css" rel="stylesheet" />
+        <link href="http://gouthamanbalaraman.com/theme/static/css/style.css" rel="stylesheet" />
+        
+        <link href="http://gouthamanbalaraman.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="G B Full Atom Feed" />
+        <link href="http://gouthamanbalaraman.com/feeds/all.rss.xml" type="application/rss+xml" rel="alternate" title="G B RSS Feed" />
+        <link href="http://gouthamanbalaraman.com/feeds/quantlib.atom.xml" type="application/atom+xml" rel="alternate" title="G B Categories Atom Feed" />
+        <link href="http://gouthamanbalaraman.com/feeds/quantlib.rss.xml" type="application/rss+xml" rel="alternate" title="G B Categories RSS Feed" />
+        <!-- Google Analytics -->
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-46714334-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    /*Update Your Analytics Tracking Code to Support Display Advertising by uncommenting the following 
+    instead of the above line */    
+    /*ga.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'stats.g.doubleclick.net/dc.js';*/
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+        <!-- Using MathJax, with the delimiters $ -->
+        <!-- Conflict with pygments for the .mo and .mi -->
+        <script type="text/x-mathjax-config">
+          MathJax.Hub.Config({
+          "HTML-CSS": {
+          styles: {
+          ".MathJax .mo, .MathJax .mi": {color: "black ! important"}}
+          },
+          tex2jax: {inlineMath: [['$','$'], ['\\\\(','\\\\)']],processEscapes: true}
+          });
+        </script>
+    </head>
+
+    <body>
+      <div class="navbar navbar-default navbar-fixed-top">
+          <div class="container">
+            <div class="navbar-header">
+              <a href="http://gouthamanbalaraman.com" class="navbar-brand">G B</a>
+              <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+            </div>
+            <div class="navbar-collapse collapse" id="navbar-main">
+              <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="http://gouthamanbalaraman.com/pages/about.html">About</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                <div class="col-md-10 col-md-offset-1">
+    <div class="page-header">
+        <h1>Valuing Convertible Bonds Using QuantLib</h1>
+     <!--span class="glyphicon glyphicon-calendar"></span-->
+     &nbsp;March 16, 2016
+     &nbsp;
+     <!--span class="glyphicon glyphicon-user"></span--> by  
+     <a class="url fn" href="http://gouthamanbalaraman.com/author/goutham-balaraman.html">&nbsp;Goutham Balaraman </a>
+
+        <p id="post-share-links">
+            &nbsp;Share on:
+            <a href="https://sharetodiaspora.github.io/?title=Valuing%20Convertible%20Bonds%20Using%20QuantLib&url=http%3A//gouthamanbalaraman.com/blog/value-convertible-bond-quantlib-python.html" target="_blank" title="Share on Diaspora">Diaspora*</a>
+            /
+            <a href="http://twitter.com/home?status=Valuing%20Convertible%20Bonds%20Using%20QuantLib by @gsbalaraman%20http%3A//gouthamanbalaraman.com/blog/value-convertible-bond-quantlib-python.html" target="_blank" title="Share on Twitter">Twitter</a>
+            /
+            <a href="http://www.facebook.com/sharer/sharer.php?s=100&amp;p%5Burl%5D=http%3A//gouthamanbalaraman.com/blog/value-convertible-bond-quantlib-python.html" target="_blank" title="Share on Facebook">Facebook</a>
+            /
+            <a href="https://plus.google.com/share?url=http%3A//gouthamanbalaraman.com/blog/value-convertible-bond-quantlib-python.html" target="_blank" title="Share on Google Plus">Google+</a>
+            /
+            <a href="mailto:?subject=Valuing%20Convertible%20Bonds%20Using%20QuantLib&amp;body=http%3A//gouthamanbalaraman.com/blog/value-convertible-bond-quantlib-python.html" target="_blank" title="Share via Email">Email</a>
+            /
+            <a href="http://www.bloglovin.com/blog/14559547/?claim=cqravg9v4n2">Bloglovin</a>
+        </p>
+     </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-10 col-md-offset-1">
+
+<div class="bs-docs-section">
+    
+     <!-- article description -->
+         <p class="lead">Provides an introduction to valuation of convertible bonds using QuantLib with a minimal example.</p>
+      
+	            <em>Found this post useful? Can you please answer this 
+	            <a href="https://docs.google.com/forms/d/1iRI-YWgqCB-rUhxVsFf-s_y00yAB0vyb-b816q6oktk/viewform">one minute survey.</a></em>
+	            Visit here for other <a href ="http://gouthamanbalaraman.com/blog/quantlib-python-tutorials-with-examples.html">QuantLib Python examples</a>.
+	            <br><br>
+      
+      <!-- article content -->
+     <p>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[1]:</div>
+
+<div class="input_area box-flex1">
+<div class="highlight-ipynb"><pre class="ipynb"><span></span><span class="kn">import</span> <span class="nn">QuantLib</span> <span class="kn">as</span> <span class="nn">ql</span>
+</pre></div>
+
+</div>
+
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>In this blog I will work through an example of valuing convertible bonds in QuantLib. Lets start by doing the usual setup of creating a <code>calculation_date</code> and setting it as the <code>evaluationDate</code>.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[2]:</div>
+
+<div class="input_area box-flex1">
+<div class="highlight-ipynb"><pre class="ipynb"><span></span><span class="n">calculation_date</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">Date</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2004</span><span class="p">)</span>
+<span class="n">ql</span><span class="o">.</span><span class="n">Settings</span><span class="o">.</span><span class="n">instance</span><span class="p">()</span><span class="o">.</span><span class="n">evaluationDate</span> <span class="o">=</span> <span class="n">calculation_date</span>
+</pre></div>
+
+</div>
+
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>One little quirk in the QuantLib convertible bond implementation is that there are places where the redemption amount is hard coded to <code>100</code>. So if you have conversion ratio evaluated as 
+\begin{eqnarray}
+Conversion\ Ratio = \frac{Redemption\ Amount}{Conversion\ Price}
+\end{eqnarray}</p>
+<p>you will need to scale to an appropriate value with a redemption amount of <code>100</code>. For instance, vendors report conversion ratio with a redemption amount of 1000. The conversion ratio obtained this way should be divided by a factor of <code>10</code> to get the equivalent conversion ratio for use in the QuantLib calculations. This is a limitation right now (as of version 1.7), which can be fixed in the future.</p>
+<p>Following is the details of the convertible bond of interest.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[3]:</div>
+
+<div class="input_area box-flex1">
+<div class="highlight-ipynb"><pre class="ipynb"><span></span><span class="c1"># St. Mary Land &amp; Exploration Company </span>
+<span class="c1"># Bloomberg ticker: SM 5.75 03/15/22 </span>
+
+<span class="n">redemption</span> <span class="o">=</span> <span class="mf">100.00</span>
+<span class="n">face_amount</span> <span class="o">=</span> <span class="mf">100.0</span>
+<span class="n">spot_price</span> <span class="o">=</span> <span class="mf">29.04</span>
+<span class="n">conversion_price</span> <span class="o">=</span> <span class="mf">26.0</span>
+<span class="n">conversion_ratio</span> <span class="o">=</span> <span class="mf">3.84615</span>  <span class="c1"># BBG quotes 38.4615; had to scale by a factor of 10</span>
+
+<span class="n">issue_date</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">Date</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">2002</span><span class="p">)</span>        
+<span class="n">maturity_date</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">Date</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">2022</span><span class="p">)</span>
+
+<span class="n">settlement_days</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="n">calendar</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">UnitedStates</span><span class="p">(</span><span class="n">ql</span><span class="o">.</span><span class="n">UnitedStates</span><span class="o">.</span><span class="n">GovernmentBond</span><span class="p">)</span>
+<span class="n">coupon</span> <span class="o">=</span> <span class="mf">0.0575</span>
+<span class="n">frequency</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">Semiannual</span>
+<span class="n">tenor</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">Period</span><span class="p">(</span><span class="n">frequency</span><span class="p">)</span>
+
+<span class="n">day_count</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">Thirty360</span><span class="p">()</span>
+<span class="n">accrual_convention</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">Unadjusted</span>
+<span class="n">payment_convention</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">Unadjusted</span>
+
+<span class="n">call_dates</span> <span class="o">=</span> <span class="p">[</span><span class="n">ql</span><span class="o">.</span><span class="n">Date</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">2007</span><span class="p">)]</span>
+<span class="n">call_price</span> <span class="o">=</span> <span class="mf">100.0</span>
+<span class="n">put_dates</span> <span class="o">=</span> <span class="p">[</span><span class="n">ql</span><span class="o">.</span><span class="n">Date</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">2007</span><span class="p">),</span> <span class="n">ql</span><span class="o">.</span><span class="n">Date</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">2012</span><span class="p">),</span> <span class="n">ql</span><span class="o">.</span><span class="n">Date</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">2017</span><span class="p">)]</span>
+<span class="n">put_price</span> <span class="o">=</span> <span class="mf">100.0</span>
+
+<span class="c1"># assumptions</span>
+<span class="n">dividend_yield</span> <span class="o">=</span> <span class="mf">0.02</span>
+<span class="n">credit_spread_rate</span> <span class="o">=</span> <span class="mf">0.03</span>  
+<span class="n">risk_free_rate</span> <span class="o">=</span> <span class="mf">0.04</span>
+<span class="n">volatility</span> <span class="o">=</span> <span class="mf">0.40</span>
+</pre></div>
+
+</div>
+
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The call and put schedule for this bond is created as shown below. Here for each call date, we create a <code>CallabilityPrice</code>, then use that to form the <code>Callability</code> object. This is appended to the <code>CallabilitySchedule</code> object to form a list of call and put schedules.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[4]:</div>
+
+<div class="input_area box-flex1">
+<div class="highlight-ipynb"><pre class="ipynb"><span></span><span class="n">callability_schedule</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">CallabilitySchedule</span><span class="p">()</span>
+
+
+<span class="k">for</span> <span class="n">call_date</span> <span class="ow">in</span> <span class="n">call_dates</span><span class="p">:</span>
+   <span class="n">callability_price</span>  <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">CallabilityPrice</span><span class="p">(</span><span class="n">call_price</span><span class="p">,</span> 
+                                            <span class="n">ql</span><span class="o">.</span><span class="n">CallabilityPrice</span><span class="o">.</span><span class="n">Clean</span><span class="p">)</span>
+   <span class="n">callability_schedule</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ql</span><span class="o">.</span><span class="n">Callability</span><span class="p">(</span><span class="n">callability_price</span><span class="p">,</span> 
+                                       <span class="n">ql</span><span class="o">.</span><span class="n">Callability</span><span class="o">.</span><span class="n">Call</span><span class="p">,</span>
+                                       <span class="n">call_date</span><span class="p">)</span>
+                        <span class="p">)</span>
+    
+<span class="k">for</span> <span class="n">put_date</span> <span class="ow">in</span> <span class="n">put_dates</span><span class="p">:</span>
+    <span class="n">puttability_price</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">CallabilityPrice</span><span class="p">(</span><span class="n">put_price</span><span class="p">,</span> 
+                                            <span class="n">ql</span><span class="o">.</span><span class="n">CallabilityPrice</span><span class="o">.</span><span class="n">Clean</span><span class="p">)</span>
+    <span class="n">callability_schedule</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ql</span><span class="o">.</span><span class="n">Callability</span><span class="p">(</span><span class="n">puttability_price</span><span class="p">,</span>
+                                               <span class="n">ql</span><span class="o">.</span><span class="n">Callability</span><span class="o">.</span><span class="n">Put</span><span class="p">,</span>
+                                               <span class="n">put_date</span><span class="p">))</span>
+</pre></div>
+
+</div>
+
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Any dividend information for the underlying stock is used to form the <code>DividendSchedule</code>.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[5]:</div>
+
+<div class="input_area box-flex1">
+<div class="highlight-ipynb"><pre class="ipynb"><span></span><span class="n">dividend_schedule</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">DividendSchedule</span><span class="p">()</span> <span class="c1"># No dividends</span>
+<span class="n">dividend_amount</span> <span class="o">=</span> <span class="n">dividend_yield</span><span class="o">*</span><span class="n">spot_price</span>
+<span class="n">next_dividend_date</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">Date</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">12</span><span class="p">,</span><span class="mi">2004</span><span class="p">)</span>
+<span class="n">dividend_amount</span> <span class="o">=</span> <span class="n">spot_price</span><span class="o">*</span><span class="n">dividend_yield</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">):</span>
+    <span class="n">date</span> <span class="o">=</span> <span class="n">calendar</span><span class="o">.</span><span class="n">advance</span><span class="p">(</span><span class="n">next_dividend_date</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">ql</span><span class="o">.</span><span class="n">Years</span><span class="p">)</span>
+    <span class="n">dividend_schedule</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+        <span class="n">ql</span><span class="o">.</span><span class="n">FixedDividend</span><span class="p">(</span><span class="n">dividend_amount</span><span class="p">,</span> <span class="n">date</span><span class="p">)</span>
+    <span class="p">)</span>
+</pre></div>
+
+</div>
+
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Now we bulid the fixed coupon convertible bond object</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[6]:</div>
+
+<div class="input_area box-flex1">
+<div class="highlight-ipynb"><pre class="ipynb"><span></span><span class="n">schedule</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">Schedule</span><span class="p">(</span><span class="n">issue_date</span><span class="p">,</span> <span class="n">maturity_date</span><span class="p">,</span> <span class="n">tenor</span><span class="p">,</span>
+                       <span class="n">calendar</span><span class="p">,</span> <span class="n">accrual_convention</span><span class="p">,</span> <span class="n">accrual_convention</span><span class="p">,</span>
+                       <span class="n">ql</span><span class="o">.</span><span class="n">DateGeneration</span><span class="o">.</span><span class="n">Backward</span><span class="p">,</span> <span class="bp">False</span><span class="p">)</span>
+
+<span class="n">credit_spread_handle</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">QuoteHandle</span><span class="p">(</span><span class="n">ql</span><span class="o">.</span><span class="n">SimpleQuote</span><span class="p">(</span><span class="n">credit_spread_rate</span><span class="p">))</span>
+<span class="n">exercise</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">AmericanExercise</span><span class="p">(</span><span class="n">calculation_date</span><span class="p">,</span> <span class="n">maturity_date</span><span class="p">)</span>
+
+<span class="n">convertible_bond</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">ConvertibleFixedCouponBond</span><span class="p">(</span><span class="n">exercise</span><span class="p">,</span>
+                                                 <span class="n">conversion_ratio</span><span class="p">,</span>
+                                                 <span class="n">dividend_schedule</span><span class="p">,</span>
+                                                 <span class="n">callability_schedule</span><span class="p">,</span> 
+                                                 <span class="n">credit_spread_handle</span><span class="p">,</span>
+                                                 <span class="n">issue_date</span><span class="p">,</span>
+                                                 <span class="n">settlement_days</span><span class="p">,</span>
+                                                 <span class="p">[</span><span class="n">coupon</span><span class="p">],</span>
+                                                 <span class="n">day_count</span><span class="p">,</span>
+                                                 <span class="n">schedule</span><span class="p">,</span>
+                                                 <span class="n">redemption</span><span class="p">)</span>
+</pre></div>
+
+</div>
+
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Build the Black-Scholes-Merton process to model the equity part</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[7]:</div>
+
+<div class="input_area box-flex1">
+<div class="highlight-ipynb"><pre class="ipynb"><span></span><span class="n">spot_price_handle</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">QuoteHandle</span><span class="p">(</span><span class="n">ql</span><span class="o">.</span><span class="n">SimpleQuote</span><span class="p">(</span><span class="n">spot_price</span><span class="p">))</span>
+<span class="n">yield_ts_handle</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">YieldTermStructureHandle</span><span class="p">(</span>
+    <span class="n">ql</span><span class="o">.</span><span class="n">FlatForward</span><span class="p">(</span><span class="n">calculation_date</span><span class="p">,</span> <span class="n">risk_free_rate</span><span class="p">,</span> <span class="n">day_count</span><span class="p">)</span>
+<span class="p">)</span>
+<span class="n">dividend_ts_handle</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">YieldTermStructureHandle</span><span class="p">(</span>
+    <span class="n">ql</span><span class="o">.</span><span class="n">FlatForward</span><span class="p">(</span><span class="n">calculation_date</span><span class="p">,</span> <span class="n">dividend_yield</span><span class="p">,</span> <span class="n">day_count</span><span class="p">)</span>
+<span class="p">)</span>
+<span class="n">volatility_ts_handle</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">BlackVolTermStructureHandle</span><span class="p">(</span>
+    <span class="n">ql</span><span class="o">.</span><span class="n">BlackConstantVol</span><span class="p">(</span><span class="n">calculation_date</span><span class="p">,</span> <span class="n">calendar</span><span class="p">,</span><span class="n">volatility</span><span class="p">,</span> <span class="n">day_count</span><span class="p">)</span>
+<span class="p">)</span>
+
+<span class="n">bsm_process</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">BlackScholesMertonProcess</span><span class="p">(</span><span class="n">spot_price_handle</span><span class="p">,</span> 
+                                           <span class="n">dividend_ts_handle</span><span class="p">,</span>
+                                           <span class="n">yield_ts_handle</span><span class="p">,</span>
+                                           <span class="n">volatility_ts_handle</span><span class="p">)</span>
+</pre></div>
+
+</div>
+
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Build the convertible bond pricing engine</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[8]:</div>
+
+<div class="input_area box-flex1">
+<div class="highlight-ipynb"><pre class="ipynb"><span></span><span class="n">time_steps</span> <span class="o">=</span> <span class="mi">1000</span>
+<span class="n">engine</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">BinomialConvertibleEngine</span><span class="p">(</span><span class="n">bsm_process</span><span class="p">,</span> <span class="s2">&quot;crr&quot;</span><span class="p">,</span> <span class="n">time_steps</span><span class="p">)</span>
+</pre></div>
+
+</div>
+
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Price the bond</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[9]:</div>
+
+<div class="input_area box-flex1">
+<div class="highlight-ipynb"><pre class="ipynb"><span></span><span class="n">convertible_bond</span><span class="o">.</span><span class="n">setPricingEngine</span><span class="p">(</span><span class="n">engine</span><span class="p">)</span>
+<span class="k">print</span> <span class="s2">&quot;NPV &quot;</span><span class="p">,</span> <span class="n">convertible_bond</span><span class="o">.</span><span class="n">NPV</span><span class="p">()</span>
+</pre></div>
+
+</div>
+
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="box-flex1 output_subarea output_stream output_stdout">
+<pre class="ipynb">NPV  132.308276818
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div></p>
+<p>Click here to download the <a href="/extra/notebooks/convertible_bond.ipynb">ipython notebook on convertible bonds</a>.</p>
+     <br>
+     
+     <!-- article tags-->
+        <span class="glyphicon glyphicon-tags"></span>&nbsp;&nbsp;
+            <span class="label label-default"><a href="http://gouthamanbalaraman.com/tag/quantlib.html">quantlib</a></span>&nbsp;&nbsp;
+            <span class="label label-default"><a href="http://gouthamanbalaraman.com/tag/python.html">python</a></span>&nbsp;&nbsp;
+            <span class="label label-default"><a href="http://gouthamanbalaraman.com/tag/finance.html">finance</a></span>&nbsp;&nbsp;
+        <br>
+     <hr/>
+    
+    <strong>Related Post</strong>
+        <ul>
+            <li>
+                <a href="http://gouthamanbalaraman.com/blog/hull-white-simulation-monte-carlo-convergence.html">On the Convergence of Hull White Monte Carlo Simulations</a>
+            </li>
+            <li>
+                <a href="http://gouthamanbalaraman.com/blog/european-option-binomial-tree-quantlib-python.html">Option Model Handbook, Part III: European Option Pricing With QuantLib</a>
+            </li>
+            <li>
+                <a href="http://gouthamanbalaraman.com/blog/quantlib-python-tutorials-with-examples.html">QuantLib Python Tutorials With Examples</a>
+            </li>
+            <li>
+                <a href="http://gouthamanbalaraman.com/blog/short-interest-rate-model-calibration-quantlib.html">Short Interest Rate Model Calibration</a>
+            </li>
+            <li>
+                <a href="http://gouthamanbalaraman.com/blog/value-options-commodity-futures-black-formula-quantlib-python.html">Valuing Options on Commodity Futures Using the Black Formula</a>
+            </li>
+        </ul>
+        <hr/>
+
+     <!-- article comments -->
+    <div class="comment">
+        <div id="disqus_thread"></div> <!-- comment app container -->
+    </div>
+	<!-- Comment BEGIN -->
+    <script type="text/javascript">
+        var disqus_shortname = 'gouthamanbalaramancom'; // required: replace example with your forum shortname
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+     <!-- Comment END -->
+</div>    
+                </div>
+               
+            </div>
+            <div class="row">
+                <div class="col-md-10 col-md-offset-1">
+                </div>
+            </div>
+            <footer id="contentinfo" class="footer">
+                <address id="about" class="vcard body">
+                    &copy; <a href="http://gouthamanbalaraman.com">Goutham Balaraman</a> Proudly powered by <a href="http://getpelican.com/">Pelican</a>
+                    <div class="pull-right">
+                    	<a href="http://www.bloglovin.com/blog/14559547/?claim=cqravg9v4n2">Bloglovin</a>
+			            <a href="http://gouthamanbalaraman.com/feeds/all.atom.xml">Atom</a>
+			        &nbsp
+			            <a href="http://gouthamanbalaraman.com/feeds/all.rss.xml">RSS</a>
+		            </div>
+                </address><!-- /#about -->
+            </footer>
+        </div><!-- container -->
+        <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
+        <script src="http://gouthamanbalaraman.com/theme/static/js/jquery.1.11.2.min.js"></script>
+        <script src="http://gouthamanbalaraman.com/theme/static/js/bootstrap.min.js"></script>
+        <script type="text/javascript">
+	jQuery(document).ready(function($) {
+	    $("div.collapseheader").click(function () {
+	    $header = $(this).children("span").first();
+	    $codearea = $(this).children(".input_area");
+	    console.log($(this).children());
+	    $codearea.slideToggle(500, function () {
+	        $header.text(function () {
+	            return $codearea.is(":visible") ? "Collapse Code" : "Expand Code";
+	        });
+	    });
+	});
+	});
+	</script>
+    </body>
+</html>
