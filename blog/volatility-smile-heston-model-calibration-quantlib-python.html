@@ -679,7 +679,7 @@ cnHOORdznlycc87F3P8DRNdRMO6nxecAAAAASUVORK5CYII=
 <div class="output_area"><div class="prompt output_prompt">Out[10]:</div>
 
 
-<pre class="ipynb">&lt;matplotlib.colorbar.Colorbar instance at 0x096298F0&gt;</pre>
+<pre class="ipynb">&lt;matplotlib.colorbar.Colorbar instance at 0x0963C7D8&gt;</pre>
 
 </div>
 
@@ -1711,7 +1711,11 @@ oJsIVBABAQEB3UQQgAMCAgK6if8P098E7FtyaO4AAAAASUVORK5CYII=
 <div class="prompt input_prompt">In&nbsp;[11]:</div>
 
 <div class="input_area box-flex1">
-<div class="highlight-ipynb"><pre class="ipynb"><span></span><span class="n">local_vol_surface</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">LocalVolSurface</span><span class="p">(</span><span class="n">ql</span><span class="o">.</span><span class="n">BlackVolTermStructureHandle</span><span class="p">(</span><span class="n">black_var_surface</span><span class="p">),</span> <span class="n">flat_ts</span><span class="p">,</span> <span class="n">dividend_ts</span><span class="p">,</span> <span class="n">spot</span><span class="p">)</span>
+<div class="highlight-ipynb"><pre class="ipynb"><span></span><span class="n">local_vol_surface</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">LocalVolSurface</span><span class="p">(</span>
+    <span class="n">ql</span><span class="o">.</span><span class="n">BlackVolTermStructureHandle</span><span class="p">(</span><span class="n">black_var_surface</span><span class="p">),</span> 
+    <span class="n">flat_ts</span><span class="p">,</span> 
+    <span class="n">dividend_ts</span><span class="p">,</span> 
+    <span class="n">spot</span><span class="p">)</span>
 </pre></div>
 
 </div>
@@ -1750,7 +1754,7 @@ oJsIVBABAQEB3UQQgAMCAgK6if8P098E7FtyaO4AAAAASUVORK5CYII=
 <div class="output_area"><div class="prompt output_prompt">Out[12]:</div>
 
 
-<pre class="ipynb">&lt;matplotlib.colorbar.Colorbar instance at 0x08F5A260&gt;</pre>
+<pre class="ipynb">&lt;matplotlib.colorbar.Colorbar instance at 0x091720F8&gt;</pre>
 
 </div>
 
@@ -2689,7 +2693,11 @@ edtQAAAAAElFTkSuQmCC
 
 <div class="input_area box-flex1">
 <div class="highlight-ipynb"><pre class="ipynb"><span></span><span class="n">black_var_surface</span><span class="o">.</span><span class="n">setInterpolation</span><span class="p">(</span><span class="s2">&quot;bicubic&quot;</span><span class="p">)</span>
-<span class="n">local_vol_surface</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">LocalVolSurface</span><span class="p">(</span><span class="n">ql</span><span class="o">.</span><span class="n">BlackVolTermStructureHandle</span><span class="p">(</span><span class="n">black_var_surface</span><span class="p">),</span> <span class="n">flat_ts</span><span class="p">,</span> <span class="n">dividend_ts</span><span class="p">,</span> <span class="n">spot</span><span class="p">)</span>
+<span class="n">local_vol_surface</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">LocalVolSurface</span><span class="p">(</span>
+    <span class="n">ql</span><span class="o">.</span><span class="n">BlackVolTermStructureHandle</span><span class="p">(</span><span class="n">black_var_surface</span><span class="p">),</span> 
+    <span class="n">flat_ts</span><span class="p">,</span> 
+    <span class="n">dividend_ts</span><span class="p">,</span> 
+    <span class="n">spot</span><span class="p">)</span>
 <span class="n">plot_years</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mf">0.15</span><span class="p">)</span>
 <span class="n">plot_strikes</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">535</span><span class="p">,</span> <span class="mi">750</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
 <span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
@@ -2719,12 +2727,12 @@ edtQAAAAAElFTkSuQmCC
 <pre>
 <span class="ansired">---------------------------------------------------------------------------</span>
 <span class="ansired">RuntimeError</span>                              Traceback (most recent call last)
-<span class="ansigreen">&lt;ipython-input-13-56e067e0324f&gt;</span> in <span class="ansicyan">&lt;module&gt;</span><span class="ansiblue">()</span>
-<span class="ansigreen">      8</span> Z = np.array([local_vol_surface.localVol(y, x) 
-<span class="ansigreen">      9</span>               <span class="ansigreen">for</span> xr<span class="ansiyellow">,</span> yr <span class="ansigreen">in</span> zip<span class="ansiyellow">(</span>X<span class="ansiyellow">,</span> Y<span class="ansiyellow">)</span><span class="ansiyellow"></span>
-<span class="ansigreen">---&gt; 10</span><span class="ansiyellow">                   for x, y in zip(xr,yr) ]
-</span><span class="ansigreen">     11</span>              ).reshape(len(X), len(X[0]))
-<span class="ansigreen">     12</span> <span class="ansiyellow"></span>
+<span class="ansigreen">&lt;ipython-input-13-51cf0ac8418d&gt;</span> in <span class="ansicyan">&lt;module&gt;</span><span class="ansiblue">()</span>
+<span class="ansigreen">     12</span> Z = np.array([local_vol_surface.localVol(y, x) 
+<span class="ansigreen">     13</span>               <span class="ansigreen">for</span> xr<span class="ansiyellow">,</span> yr <span class="ansigreen">in</span> zip<span class="ansiyellow">(</span>X<span class="ansiyellow">,</span> Y<span class="ansiyellow">)</span><span class="ansiyellow"></span>
+<span class="ansigreen">---&gt; 14</span><span class="ansiyellow">                   for x, y in zip(xr,yr) ]
+</span><span class="ansigreen">     15</span>              ).reshape(len(X), len(X[0]))
+<span class="ansigreen">     16</span> <span class="ansiyellow"></span>
 
 <span class="ansigreen">C:\Users\gbalaram\Documents\Code\env\Lib\site-packages\QuantLib\QuantLib.pyc</span> in <span class="ansicyan">localVol</span><span class="ansiblue">(self, *args)</span>
 <span class="ansigreen">   7467</span> <span class="ansiyellow"></span>
@@ -3178,7 +3186,7 @@ TkSuQmCC
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="prompt input_prompt">In&nbsp;[17]:</div>
 
 <div class="input_area box-flex1">
 <div class="highlight-ipynb"><pre class="ipynb"><span></span><span class="k">print</span> <span class="s2">&quot;theta = </span><span class="si">%f</span><span class="s2">, kappa = </span><span class="si">%f</span><span class="s2">, sigma = </span><span class="si">%f</span><span class="s2">, rho = </span><span class="si">%f</span><span class="s2">, v0 = </span><span class="si">%f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">theta</span><span class="p">,</span> <span class="n">kappa</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">rho</span><span class="p">,</span> <span class="n">v0</span><span class="p">)</span>
@@ -3188,10 +3196,33 @@ TkSuQmCC
 
 </div>
 
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="box-flex1 output_subarea output_stream output_stdout">
+<pre class="ipynb">theta = 0.135147, kappa = 1.878471, sigma = 0.002035, rho = -1.000000, v0 = 0.043485
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Let us look at the quality of calibration by pricing the options used in the calibration using the model and lets get an estimate of the relative error.</p>
+</div>
+</div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[17]:</div>
+<div class="prompt input_prompt">In&nbsp;[18]:</div>
 
 <div class="input_area box-flex1">
 <div class="highlight-ipynb"><pre class="ipynb"><span></span><span class="n">avg</span> <span class="o">=</span> <span class="mf">0.0</span>
@@ -3207,9 +3238,9 @@ TkSuQmCC
         <span class="n">opt</span><span class="o">.</span><span class="n">modelValue</span><span class="p">(),</span> 
         <span class="mf">100.0</span><span class="o">*</span><span class="p">(</span><span class="n">opt</span><span class="o">.</span><span class="n">modelValue</span><span class="p">()</span><span class="o">/</span><span class="n">opt</span><span class="o">.</span><span class="n">marketValue</span><span class="p">()</span> <span class="o">-</span> <span class="mf">1.0</span><span class="p">))</span>
     <span class="n">avg</span> <span class="o">+=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">err</span><span class="p">)</span>
-<span class="n">avg</span> <span class="o">/=</span> <span class="nb">len</span><span class="p">(</span><span class="n">heston_helpers</span><span class="p">)</span>
+<span class="n">avg</span> <span class="o">=</span> <span class="n">avg</span><span class="o">*</span><span class="mf">100.0</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">heston_helpers</span><span class="p">)</span>
 <span class="k">print</span> <span class="s2">&quot;-&quot;</span><span class="o">*</span><span class="mi">70</span>
-<span class="k">print</span> <span class="s2">&quot;Average Abs Error : </span><span class="si">%15.7f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">avg</span>
+<span class="k">print</span> <span class="s2">&quot;Average Abs Error (</span><span class="si">%%</span><span class="s2">) : </span><span class="si">%5.3f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">avg</span><span class="p">)</span>
 </pre></div>
 
 </div>
@@ -3233,7 +3264,7 @@ TkSuQmCC
          725.31       79.64951        80.95876            1.6437604 
          758.28       67.62146        70.44848            4.1806550 
 ----------------------------------------------------------------------
-Average Abs Error :       0.0244007
+Average Abs Error (%) : 2.440
 </pre>
 </div>
 </div>
@@ -3266,7 +3297,7 @@ Average Abs Error :       0.0244007
     <strong>Related Post</strong>
         <ul>
             <li>
-                <a href="http://gouthamanbalaraman.com/blog/valuing-european-option-heston-model-quantLib.html">Valuing European Option Using the Heston Model in QuantLib and Python</a>
+                <a href="http://gouthamanbalaraman.com/blog/value-treasury-futures-quantlib-python.html">Valuing Treasury Futures Using QuantLib</a>
             </li>
             <li>
                 <a href="http://gouthamanbalaraman.com/blog/hull-white-simulation-monte-carlo-convergence.html">On the Convergence of Hull White Monte Carlo Simulations</a>
@@ -3278,7 +3309,7 @@ Average Abs Error :       0.0244007
                 <a href="http://gouthamanbalaraman.com/blog/value-convertible-bond-quantlib-python.html">Valuing Convertible Bonds Using QuantLib</a>
             </li>
             <li>
-                <a href="http://gouthamanbalaraman.com/blog/quantlib-bond-modeling.html">Modeling Fixed Rate Bonds Using QuantLib</a>
+                <a href="http://gouthamanbalaraman.com/blog/valuing-european-option-heston-model-quantLib.html">Valuing European Option Using the Heston Model in QuantLib and Python</a>
             </li>
         </ul>
         <hr/>
