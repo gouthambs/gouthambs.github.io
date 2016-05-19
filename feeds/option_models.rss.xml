@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>G B</title><link>http://gouthamanbalaraman.com/</link><description></description><atom:link href="http://gouthamanbalaraman.com/feeds/option_models.rss.xml" rel="self"></atom:link><lastBuildDate>Tue, 30 Sep 2014 00:00:00 -0700</lastBuildDate><item><title>Option Model Handbook, Part II: Introduction to Binomial Trees</title><link>http://gouthamanbalaraman.com/blog/option-model-handbook-part-II-introduction-to-binomial-trees.html</link><description>&lt;p&gt;This is a series of articles pertaining to option model pricing. Here I will
+<rss version="2.0"><channel><title>G B</title><link>http://gouthamanbalaraman.com/</link><description></description><lastBuildDate>Tue, 30 Sep 2014 00:00:00 -0700</lastBuildDate><item><title>Option Model Handbook, Part II: Introduction to Binomial Trees</title><link>http://gouthamanbalaraman.com/blog/option-model-handbook-part-II-introduction-to-binomial-trees.html</link><description>&lt;p&gt;This is a series of articles pertaining to option model pricing. Here I will
 explain the various concepts such as risk-neutral valuation, Black-Scholes formula,
 and binomial tree option pricing models.&lt;/p&gt;
 &lt;div class="section" id="introduction-to-binomial-trees"&gt;
@@ -29,7 +29,7 @@ for up and down movement of the stock respectively. The value of
 the option in this case is given as:&lt;/p&gt;
 &lt;p&gt;$$ f = e^{−rT}[ pf_u + (1−p)f_d] $$.&lt;/p&gt;
 &lt;/div&gt;
-</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Gouthaman Balaraman</dc:creator><pubDate>Tue, 30 Sep 2014 00:00:00 -0700</pubDate><guid>tag:gouthamanbalaraman.com,2014-09-30:blog/option-model-handbook-part-II-introduction-to-binomial-trees.html</guid><category>finance</category><category>option models</category><category>binomial tree</category></item><item><title>Option Model Handbook, Part I: Introduction to Option Models</title><link>http://gouthamanbalaraman.com/blog/option-model-handbook-part-I-introduction-to-option-models.html</link><description>&lt;p&gt;This is a series of articles pertaining to option model pricing. Here I will
+</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Gouthaman Balaraman</dc:creator><pubDate>Tue, 30 Sep 2014 00:00:00 -0700</pubDate><guid isPermaLink="false">tag:gouthamanbalaraman.com,2014-09-30:blog/option-model-handbook-part-II-introduction-to-binomial-trees.html</guid><category>finance</category><category>option models</category><category>binomial tree</category></item><item><title>Option Model Handbook, Part I: Introduction to Option Models</title><link>http://gouthamanbalaraman.com/blog/option-model-handbook-part-I-introduction-to-option-models.html</link><description>&lt;p&gt;This is a series of articles pertaining to option model pricing. Here I will
 explain the various concepts such as risk-neutral valuation, Black-Scholes formula,
 and binomial tree option pricing models.&lt;/p&gt;
 &lt;div class="section" id="introduction-to-option-models"&gt;
@@ -83,4 +83,4 @@ at the risk neutral valuation, and how it can be used to derive the Black-Schole
 model.&lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Gouthaman Balaraman</dc:creator><pubDate>Fri, 08 Aug 2014 00:00:00 -0700</pubDate><guid>tag:gouthamanbalaraman.com,2014-08-08:blog/option-model-handbook-part-I-introduction-to-option-models.html</guid><category>finance</category><category>option models</category><category>binomial tree</category></item></channel></rss>
+</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Gouthaman Balaraman</dc:creator><pubDate>Fri, 08 Aug 2014 00:00:00 -0700</pubDate><guid isPermaLink="false">tag:gouthamanbalaraman.com,2014-08-08:blog/option-model-handbook-part-I-introduction-to-option-models.html</guid><category>finance</category><category>option models</category><category>binomial tree</category></item></channel></rss>

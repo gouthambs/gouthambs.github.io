@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>G B</title><link>http://gouthamanbalaraman.com/</link><description></description><atom:link href="http://gouthamanbalaraman.com/feeds/regulation.rss.xml" rel="self"></atom:link><lastBuildDate>Fri, 19 Feb 2016 00:00:00 -0800</lastBuildDate><item><title>An Introduction to the Fundamental Review of the Trading Book (FRTB)</title><link>http://gouthamanbalaraman.com/blog/introduction-fundamental-review-of-the-trading-book-frtb.html</link><description>&lt;p&gt;Basel Committee on Banking Supervision (BCBS) released a consultative document 
+<rss version="2.0"><channel><title>G B</title><link>http://gouthamanbalaraman.com/</link><description></description><lastBuildDate>Fri, 19 Feb 2016 00:00:00 -0800</lastBuildDate><item><title>An Introduction to the Fundamental Review of the Trading Book (FRTB)</title><link>http://gouthamanbalaraman.com/blog/introduction-fundamental-review-of-the-trading-book-frtb.html</link><description>&lt;p&gt;Basel Committee on Banking Supervision (BCBS) released a consultative document 
 titled, "The Fundamental Review of the Trading Book" (FRTB) in 2012 &lt;a href="www.bis.org/publ/bcbs219.htm"&gt;1&lt;/a&gt;. 
 The intent of this document and the subsequent discussions and studies was to address the shortcomings of the 
 existing market risk capital framework, and reduce the variability in the minimum capital standard
@@ -40,4 +40,4 @@ finalized on 14th January 2016:&lt;/p&gt;
 requirements as compared to the current Basel 2.5 framework. The changes proposed under
 FRTB not only have an impact on the capital requirements, but it will also pose significant
 challenges to a bank's technology infrastructure.&lt;/p&gt;
-&lt;p&gt;.. to be continued&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Goutham Balaraman</dc:creator><pubDate>Fri, 19 Feb 2016 00:00:00 -0800</pubDate><guid>tag:gouthamanbalaraman.com,2016-02-19:blog/introduction-fundamental-review-of-the-trading-book-frtb.html</guid><category>regulation</category><category>finance</category></item></channel></rss>
+&lt;p&gt;.. to be continued&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Goutham Balaraman</dc:creator><pubDate>Fri, 19 Feb 2016 00:00:00 -0800</pubDate><guid isPermaLink="false">tag:gouthamanbalaraman.com,2016-02-19:blog/introduction-fundamental-review-of-the-trading-book-frtb.html</guid><category>regulation</category><category>finance</category></item></channel></rss>

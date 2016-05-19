@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>G B</title><link href="http://gouthamanbalaraman.com/" rel="alternate"></link><link href="http://gouthamanbalaraman.com/feeds/gouthaman-balaraman.atom.xml" rel="self"></link><id>http://gouthamanbalaraman.com/</id><updated>2015-12-17T00:00:00-08:00</updated><entry><title>Valuing Options on Commodity Futures Using the Black Formula</title><link href="http://gouthamanbalaraman.com/blog/value-options-commodity-futures-black-formula-quantlib-python.html" rel="alternate"></link><updated>2015-12-17T00:00:00-08:00</updated><author><name>Gouthaman Balaraman</name></author><id>tag:gouthamanbalaraman.com,2015-12-17:blog/value-options-commodity-futures-black-formula-quantlib-python.html</id><summary type="html">&lt;p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>G B</title><link href="http://gouthamanbalaraman.com/" rel="alternate"></link><link href="http://gouthamanbalaraman.com/feeds/gouthaman-balaraman.atom.xml" rel="self"></link><id>http://gouthamanbalaraman.com/</id><updated>2015-12-17T00:00:00-08:00</updated><entry><title>Valuing Options on Commodity Futures Using the Black Formula</title><link href="http://gouthamanbalaraman.com/blog/value-options-commodity-futures-black-formula-quantlib-python.html" rel="alternate"></link><published>2015-12-17T00:00:00-08:00</published><author><name>Gouthaman Balaraman</name></author><id>tag:gouthamanbalaraman.com,2015-12-17:blog/value-options-commodity-futures-black-formula-quantlib-python.html</id><summary type="html">&lt;p&gt;
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;
 &lt;div class="prompt input_prompt"&gt;
 &lt;/div&gt;
@@ -255,7 +255,7 @@ Rho                 : 0.1597
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;&lt;/p&gt;
-&lt;p&gt;Click here to download the &lt;a href="/extra/notebooks/commodity_futures_options.ipynb"&gt;ipython notebook on treasury futures&lt;/a&gt;.&lt;/p&gt;</summary><category term="quantlib"></category><category term="python"></category><category term="finance"></category></entry><entry><title>Valuing Treasury Futures Using QuantLib</title><link href="http://gouthamanbalaraman.com/blog/value-treasury-futures-quantlib-python.html" rel="alternate"></link><updated>2015-12-02T00:00:00-08:00</updated><author><name>Gouthaman Balaraman</name></author><id>tag:gouthamanbalaraman.com,2015-12-02:blog/value-treasury-futures-quantlib-python.html</id><summary type="html">&lt;p&gt;
+&lt;p&gt;Click here to download the &lt;a href="/extra/notebooks/commodity_futures_options.ipynb"&gt;ipython notebook on treasury futures&lt;/a&gt;.&lt;/p&gt;</summary><category term="quantlib"></category><category term="python"></category><category term="finance"></category></entry><entry><title>Valuing Treasury Futures Using QuantLib</title><link href="http://gouthamanbalaraman.com/blog/value-treasury-futures-quantlib-python.html" rel="alternate"></link><published>2015-12-02T00:00:00-08:00</published><author><name>Gouthaman Balaraman</name></author><id>tag:gouthamanbalaraman.com,2015-12-02:blog/value-treasury-futures-quantlib-python.html</id><summary type="html">&lt;p&gt;
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;
 &lt;div class="prompt input_prompt"&gt;
 &lt;/div&gt;
@@ -718,7 +718,7 @@ Forward YTM                    = 1.952%
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;&lt;/p&gt;
-&lt;p&gt;Click here to download the &lt;a href="/extra/notebooks/understanding_treasury_futures.ipynb"&gt;ipython notebook on treasury futures&lt;/a&gt;.&lt;/p&gt;</summary><category term="quantlib"></category><category term="python"></category><category term="finance"></category></entry><entry><title>QuantLib Python Tutorials With Examples</title><link href="http://gouthamanbalaraman.com/blog/quantlib-python-tutorials-with-examples.html" rel="alternate"></link><updated>2015-10-30T00:00:00-07:00</updated><author><name>Gouthaman Balaraman</name></author><id>tag:gouthamanbalaraman.com,2015-10-30:blog/quantlib-python-tutorials-with-examples.html</id><summary type="html">
+&lt;p&gt;Click here to download the &lt;a href="/extra/notebooks/understanding_treasury_futures.ipynb"&gt;ipython notebook on treasury futures&lt;/a&gt;.&lt;/p&gt;</summary><category term="quantlib"></category><category term="python"></category><category term="finance"></category></entry><entry><title>QuantLib Python Tutorials With Examples</title><link href="http://gouthamanbalaraman.com/blog/quantlib-python-tutorials-with-examples.html" rel="alternate"></link><published>2015-10-30T00:00:00-07:00</published><author><name>Gouthaman Balaraman</name></author><id>tag:gouthamanbalaraman.com,2015-10-30:blog/quantlib-python-tutorials-with-examples.html</id><summary type="html">
         I have written a lot of little tutorials on using QuantLib python bindings. In these posts I explain some
         of the QuantLib concepts using minimal examples. Following are the links to these posts:
         &lt;ul&gt;
@@ -733,7 +733,7 @@ Forward YTM                    = 1.952%
         {% endfor %}
         
         &lt;/ul&gt;
-    </summary><category term="quantlib"></category><category term="python"></category><category term="finance"></category></entry><entry><title>Short Interest Rate Model Calibration</title><link href="http://gouthamanbalaraman.com/blog/short-interest-rate-model-calibration-quantlib.html" rel="alternate"></link><updated>2015-10-27T00:00:00-07:00</updated><author><name>Gouthaman Balaraman</name></author><id>tag:gouthamanbalaraman.com,2015-10-27:blog/short-interest-rate-model-calibration-quantlib.html</id><summary type="html">&lt;p&gt;
+    </summary><category term="quantlib"></category><category term="python"></category><category term="finance"></category></entry><entry><title>Short Interest Rate Model Calibration</title><link href="http://gouthamanbalaraman.com/blog/short-interest-rate-model-calibration-quantlib.html" rel="alternate"></link><published>2015-10-27T00:00:00-07:00</published><author><name>Gouthaman Balaraman</name></author><id>tag:gouthamanbalaraman.com,2015-10-27:blog/short-interest-rate-model-calibration-quantlib.html</id><summary type="html">&lt;p&gt;
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;
 &lt;div class="prompt input_prompt"&gt;
 &lt;/div&gt;
@@ -1276,7 +1276,7 @@ Cumulative Error :         0.12265
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;&lt;/p&gt;
-&lt;p&gt;Click here to download the &lt;a href="/extra/notebooks/interest_rate_model_calibration.ipynb"&gt;ipython notebook&lt;/a&gt;&lt;/p&gt;</summary><category term="quantlib"></category><category term="python"></category><category term="finance"></category></entry><entry><title>Modeling Vanilla Interest Rate Swaps Using QuantLib</title><link href="http://gouthamanbalaraman.com/blog/interest-rate-swap-quantlib-python.html" rel="alternate"></link><updated>2015-10-20T00:00:00-07:00</updated><author><name>Gouthaman Balaraman</name></author><id>tag:gouthamanbalaraman.com,2015-10-20:blog/interest-rate-swap-quantlib-python.html</id><summary type="html">&lt;p&gt;
+&lt;p&gt;Click here to download the &lt;a href="/extra/notebooks/interest_rate_model_calibration.ipynb"&gt;ipython notebook&lt;/a&gt;&lt;/p&gt;</summary><category term="quantlib"></category><category term="python"></category><category term="finance"></category></entry><entry><title>Modeling Vanilla Interest Rate Swaps Using QuantLib</title><link href="http://gouthamanbalaraman.com/blog/interest-rate-swap-quantlib-python.html" rel="alternate"></link><published>2015-10-20T00:00:00-07:00</published><author><name>Gouthaman Balaraman</name></author><id>tag:gouthamanbalaraman.com,2015-10-20:blog/interest-rate-swap-quantlib-python.html</id><summary type="html">&lt;p&gt;
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;
 &lt;div class="prompt input_prompt"&gt;
 &lt;/div&gt;
@@ -1639,7 +1639,7 @@ Floating Leg BPS    :             9642.042
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;&lt;/p&gt;
-&lt;p&gt;Click here to download the &lt;a href="/extra/notebooks/irswapexample.ipynb"&gt;ipython notebook on interest rate swaps&lt;/a&gt;.&lt;/p&gt;</summary><category term="quantlib"></category><category term="python"></category><category term="finance"></category></entry><entry><title>Valuing European Option Using the Heston Model in QuantLib and Python</title><link href="http://gouthamanbalaraman.com/blog/valuing-european-option-heston-model-quantLib.html" rel="alternate"></link><updated>2015-09-08T00:00:00-07:00</updated><author><name>Gouthaman Balaraman</name></author><id>tag:gouthamanbalaraman.com,2015-09-08:blog/valuing-european-option-heston-model-quantLib.html</id><summary type="html">&lt;p&gt;
+&lt;p&gt;Click here to download the &lt;a href="/extra/notebooks/irswapexample.ipynb"&gt;ipython notebook on interest rate swaps&lt;/a&gt;.&lt;/p&gt;</summary><category term="quantlib"></category><category term="python"></category><category term="finance"></category></entry><entry><title>Valuing European Option Using the Heston Model in QuantLib and Python</title><link href="http://gouthamanbalaraman.com/blog/valuing-european-option-heston-model-quantLib.html" rel="alternate"></link><published>2015-09-08T00:00:00-07:00</published><author><name>Gouthaman Balaraman</name></author><id>tag:gouthamanbalaraman.com,2015-09-08:blog/valuing-european-option-heston-model-quantLib.html</id><summary type="html">&lt;p&gt;
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;
 &lt;div class="prompt input_prompt"&gt;
 &lt;/div&gt;
@@ -1897,7 +1897,7 @@ dV_t &amp;amp;=&amp;amp; \kappa(\theta-V_t) + \sigma \sqrt{V_t} dW_t^2
 &lt;/div&gt;&lt;/p&gt;
 &lt;h1&gt;Conclusion&lt;/h1&gt;
 &lt;p&gt;This post provided a minimal example of valuing European options using the Heston model. 
-Comparison with the Black-Scholes-Merton model is shown for instructional purpose.&lt;/p&gt;</summary><category term="quantlib"></category><category term="python"></category><category term="finance"></category></entry><entry><title>How to Build a Fundamental Factor Model</title><link href="http://gouthamanbalaraman.com/blog/build-fundamental-factor-model.html" rel="alternate"></link><updated>2015-06-22T00:00:00-07:00</updated><author><name>Gouthaman Balaraman</name></author><id>tag:gouthamanbalaraman.com,2015-06-22:blog/build-fundamental-factor-model.html</id><summary type="html">&lt;p&gt;In a multi-factor model, the return of a stock can be broken out 
+Comparison with the Black-Scholes-Merton model is shown for instructional purpose.&lt;/p&gt;</summary><category term="quantlib"></category><category term="python"></category><category term="finance"></category></entry><entry><title>How to Build a Fundamental Factor Model</title><link href="http://gouthamanbalaraman.com/blog/build-fundamental-factor-model.html" rel="alternate"></link><published>2015-06-22T00:00:00-07:00</published><author><name>Gouthaman Balaraman</name></author><id>tag:gouthamanbalaraman.com,2015-06-22:blog/build-fundamental-factor-model.html</id><summary type="html">&lt;p&gt;In a multi-factor model, the return of a stock can be broken out 
 into multiple factors.&lt;/p&gt;
 &lt;p&gt;$$ r_i = \alpha_i + \sum_{j=1}^{K} \beta_{ij} f_j + \epsilon_i $$&lt;/p&gt;
 &lt;p&gt;The term $\epsilon_i$ is the error term which is assumed to have a 
@@ -2061,7 +2061,7 @@ follow the wind as the market currents change.&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;Ludwig B. Chincarini &amp;amp; Daehwan Kim, &lt;em&gt;Quantitative Equity Portfolio Management&lt;/em&gt;, McGraw Hill&lt;/li&gt;
 &lt;li&gt;Olivier Ledoit &amp;amp; Michael Wolf, &lt;em&gt;Honey, I Shrunk the Sample Covariance Matrix&lt;/em&gt;, &lt;a href="http://www.ledoit.net/honey.pdf"&gt;http://www.ledoit.net/honey.pdf&lt;/a&gt;&lt;/li&gt;
-&lt;/ol&gt;</summary><category term="finance"></category></entry><entry><title>On the Convergence of Hull White Monte Carlo Simulations</title><link href="http://gouthamanbalaraman.com/blog/hull-white-simulation-monte-carlo-convergence.html" rel="alternate"></link><updated>2015-05-22T00:00:00-07:00</updated><author><name>Gouthaman Balaraman</name></author><id>tag:gouthamanbalaraman.com,2015-05-22:blog/hull-white-simulation-monte-carlo-convergence.html</id><summary type="html">&lt;p&gt;
+&lt;/ol&gt;</summary><category term="finance"></category></entry><entry><title>On the Convergence of Hull White Monte Carlo Simulations</title><link href="http://gouthamanbalaraman.com/blog/hull-white-simulation-monte-carlo-convergence.html" rel="alternate"></link><published>2015-05-22T00:00:00-07:00</published><author><name>Gouthaman Balaraman</name></author><id>tag:gouthamanbalaraman.com,2015-05-22:blog/hull-white-simulation-monte-carlo-convergence.html</id><summary type="html">&lt;p&gt;
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;
 &lt;div class="prompt input_prompt"&gt;
 &lt;/div&gt;
@@ -3651,7 +3651,7 @@ time $T$ of interest to us.&lt;/p&gt;
 &lt;h1&gt;Conclusion&lt;/h1&gt;
 &lt;p&gt;This post shows how convergence of Monte Carlo simulations of Hull-White short rate model is dependent
 on the ratio $\sigma /a$. You can download the &lt;a href="/extra/notebooks/hull_white_monte_carlo_convergence.ipynb"&gt;ipython notebook on convergence of Monte Carlo simulations of
-Hull-White model&lt;/a&gt;.&lt;/p&gt;</summary><category term="quantlib"></category><category term="python"></category><category term="finance"></category></entry><entry><title>Option Model Handbook, Part III: European Option Pricing With QuantLib</title><link href="http://gouthamanbalaraman.com/blog/european-option-binomial-tree-quantlib-python.html" rel="alternate"></link><updated>2015-05-08T00:00:00-07:00</updated><author><name>Gouthaman Balaraman</name></author><id>tag:gouthamanbalaraman.com,2015-05-08:blog/european-option-binomial-tree-quantlib-python.html</id><summary type="html">&lt;p&gt;
+Hull-White model&lt;/a&gt;.&lt;/p&gt;</summary><category term="quantlib"></category><category term="python"></category><category term="finance"></category></entry><entry><title>Option Model Handbook, Part III: European Option Pricing With QuantLib</title><link href="http://gouthamanbalaraman.com/blog/european-option-binomial-tree-quantlib-python.html" rel="alternate"></link><published>2015-05-08T00:00:00-07:00</published><author><name>Gouthaman Balaraman</name></author><id>tag:gouthamanbalaraman.com,2015-05-08:blog/european-option-binomial-tree-quantlib-python.html</id><summary type="html">&lt;p&gt;
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;
 &lt;div class="prompt input_prompt"&gt;
 &lt;/div&gt;
@@ -4177,7 +4177,7 @@ EEIIIYQQQgghhBBCCCGEEEIIIYQQQgghhBBVxf8HS2Sg2lqUPnoAAAAASUVORK5CYII=
 &lt;/div&gt;&lt;/p&gt;
 &lt;h1&gt;Conclusion&lt;/h1&gt;
 &lt;p&gt;This post shows how to price European Options using the theoretical and binomial-tree methods in
-QuantLib. You can download the &lt;a href="/extra/notebooks/european-option-models.ipynb"&gt;ipython notebook on European option pricing with QuantLib&lt;/a&gt;.&lt;/p&gt;</summary><category term="quantlib"></category><category term="python"></category><category term="finance"></category><category term="option models"></category></entry><entry><title>Hull White Term Structure Simulations with QuantLib</title><link href="http://gouthamanbalaraman.com/blog/hull-white-simulation-quantlib-python.html" rel="alternate"></link><updated>2015-05-01T00:00:00-07:00</updated><author><name>Gouthaman Balaraman</name></author><id>tag:gouthamanbalaraman.com,2015-05-01:blog/hull-white-simulation-quantlib-python.html</id><summary type="html">&lt;p&gt;
+QuantLib. You can download the &lt;a href="/extra/notebooks/european-option-models.ipynb"&gt;ipython notebook on European option pricing with QuantLib&lt;/a&gt;.&lt;/p&gt;</summary><category term="quantlib"></category><category term="python"></category><category term="finance"></category><category term="option models"></category></entry><entry><title>Hull White Term Structure Simulations with QuantLib</title><link href="http://gouthamanbalaraman.com/blog/hull-white-simulation-quantlib-python.html" rel="alternate"></link><published>2015-05-01T00:00:00-07:00</published><author><name>Gouthaman Balaraman</name></author><id>tag:gouthamanbalaraman.com,2015-05-01:blog/hull-white-simulation-quantlib-python.html</id><summary type="html">&lt;p&gt;
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;
 &lt;div class="prompt input_prompt"&gt;
 &lt;/div&gt;
@@ -6097,7 +6097,7 @@ AAAAAElFTkSuQmCC
 &lt;/div&gt;&lt;/p&gt;
 &lt;h1&gt;Conclusion&lt;/h1&gt;
 &lt;p&gt;This post shows how to simulate Hull-White short rate model using QuantLib. You can
-download the &lt;a href="/extra/notebooks/hull_white_simulations.ipynb"&gt;ipython notebook on Hull-White simulations&lt;/a&gt;.&lt;/p&gt;</summary><category term="quantlib"></category><category term="python"></category><category term="finance"></category></entry><entry><title>Using SQLAlchemy in Luigi Workflow Pipeline</title><link href="http://gouthamanbalaraman.com/blog/sqlalchemy-luigi-workflow-pipeline.html" rel="alternate"></link><updated>2015-02-05T00:00:00-08:00</updated><author><name>Gouthaman Balaraman</name></author><id>tag:gouthamanbalaraman.com,2015-02-05:blog/sqlalchemy-luigi-workflow-pipeline.html</id><summary type="html">&lt;p&gt;The &lt;tt class="docutils literal"&gt;luigi.contrib.sqla&lt;/tt&gt; provides support for SQLAlchmey through the &lt;tt class="docutils literal"&gt;SQLAlchemyTarget&lt;/tt&gt;
+download the &lt;a href="/extra/notebooks/hull_white_simulations.ipynb"&gt;ipython notebook on Hull-White simulations&lt;/a&gt;.&lt;/p&gt;</summary><category term="quantlib"></category><category term="python"></category><category term="finance"></category></entry><entry><title>Using SQLAlchemy in Luigi Workflow Pipeline</title><link href="http://gouthamanbalaraman.com/blog/sqlalchemy-luigi-workflow-pipeline.html" rel="alternate"></link><published>2015-02-05T00:00:00-08:00</published><author><name>Gouthaman Balaraman</name></author><id>tag:gouthamanbalaraman.com,2015-02-05:blog/sqlalchemy-luigi-workflow-pipeline.html</id><summary type="html">&lt;p&gt;The &lt;tt class="docutils literal"&gt;luigi.contrib.sqla&lt;/tt&gt; provides support for SQLAlchmey through the &lt;tt class="docutils literal"&gt;SQLAlchemyTarget&lt;/tt&gt;
 for storing in databases supported by SQLAlchemy. The user would be responsible for
 installing the required database driver to connect using &lt;tt class="docutils literal"&gt;SQLAlchemy&lt;/tt&gt;.&lt;/p&gt;
 &lt;p&gt;Minimal example of a job to copy data to database using &lt;tt class="docutils literal"&gt;SQLAlchemy&lt;/tt&gt; is as shown
@@ -6194,7 +6194,7 @@ tab separated.&lt;/p&gt;
 &lt;cite&gt;chunk_size&lt;/cite&gt;. The default is 5000. This is the number of rows that will be inserted in
 a transaction at a time. Depending on the size of the inserts, this value can be tuned
 for performance.&lt;/p&gt;
-</summary><category term="Programming"></category><category term="Python"></category><category term="Luigi"></category><category term="SQLAlchemy"></category></entry><entry><title>Building Task Pipelines Using Luigi</title><link href="http://gouthamanbalaraman.com/blog/building-luigi-task-pipeline.html" rel="alternate"></link><updated>2014-12-31T00:00:00-08:00</updated><author><name>Gouthaman Balaraman</name></author><id>tag:gouthamanbalaraman.com,2014-12-31:blog/building-luigi-task-pipeline.html</id><summary type="html">&lt;p&gt;It is incredibly easy to write a script to process some data in python. But if you
+</summary><category term="Programming"></category><category term="Python"></category><category term="Luigi"></category><category term="SQLAlchemy"></category></entry><entry><title>Building Task Pipelines Using Luigi</title><link href="http://gouthamanbalaraman.com/blog/building-luigi-task-pipeline.html" rel="alternate"></link><published>2014-12-31T00:00:00-08:00</published><author><name>Gouthaman Balaraman</name></author><id>tag:gouthamanbalaraman.com,2014-12-31:blog/building-luigi-task-pipeline.html</id><summary type="html">&lt;p&gt;It is incredibly easy to write a script to process some data in python. But if you
 have a lot of tasks that depend on each other, and you need to create a robust work
 flow, then thinking in terms of a data pipeline is useful.&lt;/p&gt;
 &lt;p&gt;Luigi is a framework for building data pipelines, and managing workflows. The onus of
@@ -6274,7 +6274,7 @@ INFO: Worker Worker(salt=907129510, host=G-ubuntu, username=myuser, pid=30648) w
 &lt;h2&gt;Conclusion&lt;/h2&gt;
 &lt;p&gt;Here we learnt a really basic example that should give you some sense of building Luigi based task pipelines.&lt;/p&gt;
 &lt;/div&gt;
-</summary><category term="Programming"></category><category term="Python"></category><category term="Luigi"></category></entry><entry><title>Flask App Directory Structure</title><link href="http://gouthamanbalaraman.com/blog/flask-app-directory-structure.html" rel="alternate"></link><updated>2014-12-29T00:00:00-08:00</updated><author><name>Gouthaman Balaraman</name></author><id>tag:gouthamanbalaraman.com,2014-12-29:blog/flask-app-directory-structure.html</id><summary type="html">&lt;p&gt;This post is a summary of what I learnt perusing a lot of websites. My goal here is to:&lt;/p&gt;
+</summary><category term="Programming"></category><category term="Python"></category><category term="Luigi"></category></entry><entry><title>Flask App Directory Structure</title><link href="http://gouthamanbalaraman.com/blog/flask-app-directory-structure.html" rel="alternate"></link><published>2014-12-29T00:00:00-08:00</published><author><name>Gouthaman Balaraman</name></author><id>tag:gouthamanbalaraman.com,2014-12-29:blog/flask-app-directory-structure.html</id><summary type="html">&lt;p&gt;This post is a summary of what I learnt perusing a lot of websites. My goal here is to:&lt;/p&gt;
 &lt;ul class="simple"&gt;
 &lt;li&gt;summarize the directory structure for a flask app&lt;/li&gt;
 &lt;li&gt;setup SQLAlchemy with migrations&lt;/li&gt;
@@ -6353,7 +6353,7 @@ different location. Though sometimes it is convenient to group them if you do ne
 &lt;/ul&gt;
 &lt;p&gt;... to be continued.&lt;/p&gt;
 &lt;/div&gt;
-</summary><category term="programming"></category><category term="flask"></category><category term="python"></category></entry><entry><title>MySQL Cheat Sheet</title><link href="http://gouthamanbalaraman.com/blog/mysql-cheatsheet.html" rel="alternate"></link><updated>2014-12-09T00:00:00-08:00</updated><author><name>Gouthaman Balaraman</name></author><id>tag:gouthamanbalaraman.com,2014-12-09:blog/mysql-cheatsheet.html</id><summary type="html">&lt;p&gt;Here are some notes and commands on MySQL administration&lt;/p&gt;
+</summary><category term="programming"></category><category term="flask"></category><category term="python"></category></entry><entry><title>MySQL Cheat Sheet</title><link href="http://gouthamanbalaraman.com/blog/mysql-cheatsheet.html" rel="alternate"></link><published>2014-12-09T00:00:00-08:00</published><author><name>Gouthaman Balaraman</name></author><id>tag:gouthamanbalaraman.com,2014-12-09:blog/mysql-cheatsheet.html</id><summary type="html">&lt;p&gt;Here are some notes and commands on MySQL administration&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;p class="first"&gt;Create a database:&lt;/p&gt;
 &lt;pre class="literal-block"&gt;
@@ -6425,7 +6425,7 @@ ORDER BY (data_length + index_length) DESC;
 &lt;/pre&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
-</summary><category term="programming"></category><category term="linux"></category><category term="database"></category><category term="mysql"></category></entry><entry><title>Securing Authentication Tokens</title><link href="http://gouthamanbalaraman.com/blog/securing-authentication-tokens.html" rel="alternate"></link><updated>2014-12-02T00:00:00-08:00</updated><author><name>Gouthaman Balaraman</name></author><id>tag:gouthamanbalaraman.com,2014-12-02:blog/securing-authentication-tokens.html</id><summary type="html">&lt;p&gt;The article &lt;a class="reference external" href="/blog/minimal-flask-login-example.html"&gt;Minimal Flask Login Example&lt;/a&gt; provided an introduction to token
+</summary><category term="programming"></category><category term="linux"></category><category term="database"></category><category term="mysql"></category></entry><entry><title>Securing Authentication Tokens</title><link href="http://gouthamanbalaraman.com/blog/securing-authentication-tokens.html" rel="alternate"></link><published>2014-12-02T00:00:00-08:00</published><author><name>Gouthaman Balaraman</name></author><id>tag:gouthamanbalaraman.com,2014-12-02:blog/securing-authentication-tokens.html</id><summary type="html">&lt;p&gt;The article &lt;a class="reference external" href="/blog/minimal-flask-login-example.html"&gt;Minimal Flask Login Example&lt;/a&gt; provided an introduction to token
 based authentication using the Flask-Login extension for the Flask web framework. The focus of that article was to
 highlight the crux of authentication logic. One glaring omission was that the token itself was nothing but
 the username and password passed as clear text. This clearly will not work!&lt;/p&gt;
@@ -6456,7 +6456,7 @@ simple as well.&lt;/p&gt;
 &lt;/pre&gt;
 &lt;p&gt;The above code will get the &lt;tt class="docutils literal"&gt;credential&lt;/tt&gt; corresponding to the user which can then be checked against what is
 stored in the database.&lt;/p&gt;
-</summary><category term="Programming"></category><category term="Python"></category><category term="Flask"></category><category term="Authentication"></category></entry><entry><title>Setting Up Linode For The Impatient</title><link href="http://gouthamanbalaraman.com/blog/setting-up-linode.html" rel="alternate"></link><updated>2014-11-13T00:00:00-08:00</updated><author><name>Gouthaman Balaraman</name></author><id>tag:gouthamanbalaraman.com,2014-11-13:blog/setting-up-linode.html</id><summary type="html">&lt;p&gt;When you get a linode instance, you really get a barren (sort of) linux machine on the cloud. That means
+</summary><category term="Programming"></category><category term="Python"></category><category term="Flask"></category><category term="Authentication"></category></entry><entry><title>Setting Up Linode For The Impatient</title><link href="http://gouthamanbalaraman.com/blog/setting-up-linode.html" rel="alternate"></link><published>2014-11-13T00:00:00-08:00</published><author><name>Gouthaman Balaraman</name></author><id>tag:gouthamanbalaraman.com,2014-11-13:blog/setting-up-linode.html</id><summary type="html">&lt;p&gt;When you get a linode instance, you really get a barren (sort of) linux machine on the cloud. That means
 you have to take care of customizing the server based on your needs. Here are some notes based on what I
 wanted to setup.&lt;/p&gt;
 &lt;p&gt;My requirements were the following:&lt;/p&gt;
@@ -6619,7 +6619,7 @@ it will be blocked at the network level and the event will be logged in &lt;tt c
 &lt;li&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/div&gt;
-</summary><category term="programming"></category><category term="linux"></category></entry><entry><title>An Elegy</title><link href="http://gouthamanbalaraman.com/blog/jayam-elegy.html" rel="alternate"></link><updated>2014-10-26T00:00:00-07:00</updated><author><name>Gouthaman Balaraman</name></author><id>tag:gouthamanbalaraman.com,2014-10-26:blog/jayam-elegy.html</id><summary type="html">&lt;div class="line-block"&gt;
+</summary><category term="programming"></category><category term="linux"></category></entry><entry><title>An Elegy</title><link href="http://gouthamanbalaraman.com/blog/jayam-elegy.html" rel="alternate"></link><published>2014-10-26T00:00:00-07:00</published><author><name>Gouthaman Balaraman</name></author><id>tag:gouthamanbalaraman.com,2014-10-26:blog/jayam-elegy.html</id><summary type="html">&lt;div class="line-block"&gt;
 &lt;div class="line"&gt;On this day, we mourn the loss of Jayam&lt;/div&gt;
 &lt;div class="line"&gt;Mother to our dads,&lt;/div&gt;
 &lt;div class="line"&gt;Grandmother to us,&lt;/div&gt;
@@ -6653,7 +6653,7 @@ it will be blocked at the network level and the event will be logged in &lt;tt c
 &lt;div class="line"&gt;&lt;br /&gt;&lt;/div&gt;
 &lt;div class="line"&gt;May her soul rest in peace!&lt;/div&gt;
 &lt;/div&gt;
-</summary><category term="personal"></category></entry><entry><title>Understanding the Econometric Factor Model</title><link href="http://gouthamanbalaraman.com/blog/understanding-econometric-factor-model.html" rel="alternate"></link><updated>2014-10-26T00:00:00-07:00</updated><author><name>Gouthaman Balaraman</name></author><id>tag:gouthamanbalaraman.com,2014-10-26:blog/understanding-econometric-factor-model.html</id><summary type="html">&lt;p&gt;The post explains the &lt;a class="reference external" href="/blog/econometric-factor-model.html"&gt;Econometric Factor Model&lt;/a&gt;
+</summary><category term="personal"></category></entry><entry><title>Understanding the Econometric Factor Model</title><link href="http://gouthamanbalaraman.com/blog/understanding-econometric-factor-model.html" rel="alternate"></link><published>2014-10-26T00:00:00-07:00</published><author><name>Gouthaman Balaraman</name></author><id>tag:gouthamanbalaraman.com,2014-10-26:blog/understanding-econometric-factor-model.html</id><summary type="html">&lt;p&gt;The post explains the &lt;a class="reference external" href="/blog/econometric-factor-model.html"&gt;Econometric Factor Model&lt;/a&gt;
 widget that I have built. The factors used in the econometric factor model are: &lt;em&gt;unemployment&lt;/em&gt;,
 &lt;em&gt;consumer sentiment&lt;/em&gt;, &lt;em&gt;market&lt;/em&gt;, &lt;em&gt;size&lt;/em&gt; and &lt;em&gt;value/growth&lt;/em&gt;. A brief explanation of the factors are
 as follows.&lt;/p&gt;
@@ -6725,7 +6725,7 @@ sense because travel industry benefits from a positive consumer sentiment.&lt;/p
 The strong positive exposure of DAL to size is a little puzzling, and its history of mergers with
 Northwest might explain. This is also highlights that factor models do need more than intuition sometimes to
 make sense and make correct use of.&lt;/p&gt;
-</summary><category term="finance"></category><category term="investing"></category><category term="widget"></category></entry><entry><title>Econometric Factor Model</title><link href="http://gouthamanbalaraman.com/blog/econometric-factor-model.html" rel="alternate"></link><updated>2014-10-20T00:00:00-07:00</updated><author><name>Gouthaman Balaraman</name></author><id>tag:gouthamanbalaraman.com,2014-10-20:blog/econometric-factor-model.html</id><summary type="html">&lt;p&gt;Please refer to &lt;a class="reference external" href="/blog/understanding-econometric-factor-model.html"&gt;Understanding Econometric Factor Model&lt;/a&gt;
+</summary><category term="finance"></category><category term="investing"></category><category term="widget"></category></entry><entry><title>Econometric Factor Model</title><link href="http://gouthamanbalaraman.com/blog/econometric-factor-model.html" rel="alternate"></link><published>2014-10-20T00:00:00-07:00</published><author><name>Gouthaman Balaraman</name></author><id>tag:gouthamanbalaraman.com,2014-10-20:blog/econometric-factor-model.html</id><summary type="html">&lt;p&gt;Please refer to &lt;a class="reference external" href="/blog/understanding-econometric-factor-model.html"&gt;Understanding Econometric Factor Model&lt;/a&gt;
 for details.&lt;/p&gt;
 &lt;script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular.min.js"&gt;&lt;/script&gt;
 &lt;script src="http://d3js.org/d3.v3.min.js"&gt;&lt;/script&gt;
@@ -6871,7 +6871,7 @@ for details.&lt;/p&gt;
                     &lt;/div&gt;
 
     &lt;/div&gt; &lt;!-- controller --&gt;
-&lt;/div&gt;&lt;!--app --&gt;</summary><category term="finance"></category><category term="investing"></category><category term="widget"></category></entry><entry><title>Option Model Handbook, Part II: Introduction to Binomial Trees</title><link href="http://gouthamanbalaraman.com/blog/option-model-handbook-part-II-introduction-to-binomial-trees.html" rel="alternate"></link><updated>2014-09-30T00:00:00-07:00</updated><author><name>Gouthaman Balaraman</name></author><id>tag:gouthamanbalaraman.com,2014-09-30:blog/option-model-handbook-part-II-introduction-to-binomial-trees.html</id><summary type="html">&lt;p&gt;This is a series of articles pertaining to option model pricing. Here I will
+&lt;/div&gt;&lt;!--app --&gt;</summary><category term="finance"></category><category term="investing"></category><category term="widget"></category></entry><entry><title>Option Model Handbook, Part II: Introduction to Binomial Trees</title><link href="http://gouthamanbalaraman.com/blog/option-model-handbook-part-II-introduction-to-binomial-trees.html" rel="alternate"></link><published>2014-09-30T00:00:00-07:00</published><author><name>Gouthaman Balaraman</name></author><id>tag:gouthamanbalaraman.com,2014-09-30:blog/option-model-handbook-part-II-introduction-to-binomial-trees.html</id><summary type="html">&lt;p&gt;This is a series of articles pertaining to option model pricing. Here I will
 explain the various concepts such as risk-neutral valuation, Black-Scholes formula,
 and binomial tree option pricing models.&lt;/p&gt;
 &lt;div class="section" id="introduction-to-binomial-trees"&gt;
@@ -6901,7 +6901,7 @@ for up and down movement of the stock respectively. The value of
 the option in this case is given as:&lt;/p&gt;
 &lt;p&gt;$$ f = e^{−rT}[ pf_u + (1−p)f_d] $$.&lt;/p&gt;
 &lt;/div&gt;
-</summary><category term="finance"></category><category term="option models"></category><category term="binomial tree"></category></entry><entry><title>Modern Portfolio Theory Statistics</title><link href="http://gouthamanbalaraman.com/blog/modern-portfolio-theory-statistics.html" rel="alternate"></link><updated>2014-09-21T00:00:00-07:00</updated><author><name>Gouthaman Balaraman</name></author><id>tag:gouthamanbalaraman.com,2014-09-21:blog/modern-portfolio-theory-statistics.html</id><summary type="html">&lt;p&gt;This widget shows Modern Portfolio Theory (MPT) statistics for a selected list of stocks. The calculations were made
+</summary><category term="finance"></category><category term="option models"></category><category term="binomial tree"></category></entry><entry><title>Modern Portfolio Theory Statistics</title><link href="http://gouthamanbalaraman.com/blog/modern-portfolio-theory-statistics.html" rel="alternate"></link><published>2014-09-21T00:00:00-07:00</published><author><name>Gouthaman Balaraman</name></author><id>tag:gouthamanbalaraman.com,2014-09-21:blog/modern-portfolio-theory-statistics.html</id><summary type="html">&lt;p&gt;This widget shows Modern Portfolio Theory (MPT) statistics for a selected list of stocks. The calculations were made
 using &lt;a class="reference external" href="https://www.quandl.com/"&gt;Quandl&lt;/a&gt; data in the &lt;a class="reference external" href="https://www.quandl.com/WIKI"&gt;WIKI&lt;/a&gt; dataset. The ETF SPY was used as a benchmark using a 5-year time horizon. If the time
 series is not long enough, then an N/A is shown. You can also download the &lt;a class="reference external" href="/extra/data/mptstats/mpt_5y_latest.csv"&gt;CSV_File&lt;/a&gt; containing all the metrics.&lt;/p&gt;
 &lt;script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular.min.js"&gt;&lt;/script&gt;
@@ -7031,7 +7031,7 @@ series is not long enough, then an N/A is shown. You can also download the &lt;a
                     &lt;/div&gt;
 
     &lt;/div&gt; &lt;!-- controller --&gt;
-&lt;/div&gt;&lt;!--app --&gt;</summary><category term="finance"></category><category term="investing"></category><category term="widget"></category></entry><entry><title>Option Model Handbook, Part I: Introduction to Option Models</title><link href="http://gouthamanbalaraman.com/blog/option-model-handbook-part-I-introduction-to-option-models.html" rel="alternate"></link><updated>2014-08-08T00:00:00-07:00</updated><author><name>Gouthaman Balaraman</name></author><id>tag:gouthamanbalaraman.com,2014-08-08:blog/option-model-handbook-part-I-introduction-to-option-models.html</id><summary type="html">&lt;p&gt;This is a series of articles pertaining to option model pricing. Here I will
+&lt;/div&gt;&lt;!--app --&gt;</summary><category term="finance"></category><category term="investing"></category><category term="widget"></category></entry><entry><title>Option Model Handbook, Part I: Introduction to Option Models</title><link href="http://gouthamanbalaraman.com/blog/option-model-handbook-part-I-introduction-to-option-models.html" rel="alternate"></link><published>2014-08-08T00:00:00-07:00</published><author><name>Gouthaman Balaraman</name></author><id>tag:gouthamanbalaraman.com,2014-08-08:blog/option-model-handbook-part-I-introduction-to-option-models.html</id><summary type="html">&lt;p&gt;This is a series of articles pertaining to option model pricing. Here I will
 explain the various concepts such as risk-neutral valuation, Black-Scholes formula,
 and binomial tree option pricing models.&lt;/p&gt;
 &lt;div class="section" id="introduction-to-option-models"&gt;
@@ -7085,7 +7085,7 @@ at the risk neutral valuation, and how it can be used to derive the Black-Schole
 model.&lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-</summary><category term="finance"></category><category term="option models"></category><category term="binomial tree"></category></entry><entry><title>Running ZEO as a Windows Service</title><link href="http://gouthamanbalaraman.com/blog/zeo-as-a-windows-service.html" rel="alternate"></link><updated>2014-08-04T00:00:00-07:00</updated><author><name>Gouthaman Balaraman</name></author><id>tag:gouthamanbalaraman.com,2014-08-04:blog/zeo-as-a-windows-service.html</id><summary type="html">&lt;p&gt;The other day, I wanted to run ZEO as a Windows service. The &lt;tt class="docutils literal"&gt;runzeo.py&lt;/tt&gt; part of &lt;tt class="docutils literal"&gt;ZEO&lt;/tt&gt; will let you
+</summary><category term="finance"></category><category term="option models"></category><category term="binomial tree"></category></entry><entry><title>Running ZEO as a Windows Service</title><link href="http://gouthamanbalaraman.com/blog/zeo-as-a-windows-service.html" rel="alternate"></link><published>2014-08-04T00:00:00-07:00</published><author><name>Gouthaman Balaraman</name></author><id>tag:gouthamanbalaraman.com,2014-08-04:blog/zeo-as-a-windows-service.html</id><summary type="html">&lt;p&gt;The other day, I wanted to run ZEO as a Windows service. The &lt;tt class="docutils literal"&gt;runzeo.py&lt;/tt&gt; part of &lt;tt class="docutils literal"&gt;ZEO&lt;/tt&gt; will let you
 run the client, but it doesn't work well for deployment on a windows machine. So I used &lt;tt class="docutils literal"&gt;pywin32&lt;/tt&gt; to wrap
 the &lt;tt class="docutils literal"&gt;runzeo.py&lt;/tt&gt; into a Windows Service.&lt;/p&gt;
 &lt;div class="section" id="code"&gt;
@@ -7166,7 +7166,7 @@ Event Viewer-&amp;gt;Windows Logs-&amp;gt;Application
 &lt;/pre&gt;
 &lt;p&gt;The logs from this script can be found under &lt;tt class="docutils literal"&gt;ZEO WinService&lt;/tt&gt; in the Source column.&lt;/p&gt;
 &lt;/div&gt;
-</summary><category term="Programming"></category><category term="Python"></category><category term="ZEO"></category><category term="ZODB"></category></entry><entry><title>Minimal Flask-Login Example</title><link href="http://gouthamanbalaraman.com/blog/minimal-flask-login-example.html" rel="alternate"></link><updated>2014-07-24T00:00:00-07:00</updated><author><name>Gouthaman Balaraman</name></author><id>tag:gouthamanbalaraman.com,2014-07-24:blog/minimal-flask-login-example.html</id><summary type="html">&lt;p&gt;The goal of this post is to give a very basic introduction to token based authentication using Flask-Login.
+</summary><category term="Programming"></category><category term="Python"></category><category term="ZEO"></category><category term="ZODB"></category></entry><entry><title>Minimal Flask-Login Example</title><link href="http://gouthamanbalaraman.com/blog/minimal-flask-login-example.html" rel="alternate"></link><published>2014-07-24T00:00:00-07:00</published><author><name>Gouthaman Balaraman</name></author><id>tag:gouthamanbalaraman.com,2014-07-24:blog/minimal-flask-login-example.html</id><summary type="html">&lt;p&gt;The goal of this post is to give a very basic introduction to token based authentication using Flask-Login.
 Usually the user credentials are stored in a database, with passwords hashed. However the authentication
 mechanism can be understood without having to worry about database, and various token generation algorithms.
 As a first step lets focus on just understanding the authentication mechanism. Then in a subsequent post
@@ -7254,7 +7254,7 @@ even the token generation. Once the basic plumbing is setup, one can extend this
 &lt;li&gt;have a database to store and retrive user credentials.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/div&gt;
-</summary><category term="Programming"></category><category term="Python"></category><category term="Flask"></category><category term="Authentication"></category></entry><entry><title>Flask Track Usage Primer</title><link href="http://gouthamanbalaraman.com/blog/flask-track-usage.html" rel="alternate"></link><updated>2014-03-26T00:00:00-07:00</updated><author><name>Gouthaman Balaraman</name></author><id>tag:gouthamanbalaraman.com,2014-03-26:blog/flask-track-usage.html</id><summary type="html">&lt;p&gt;Recently I had a requirement to add light weight tracking for a Flask app. Tools like Google analytics was not
+</summary><category term="Programming"></category><category term="Python"></category><category term="Flask"></category><category term="Authentication"></category></entry><entry><title>Flask Track Usage Primer</title><link href="http://gouthamanbalaraman.com/blog/flask-track-usage.html" rel="alternate"></link><published>2014-03-26T00:00:00-07:00</published><author><name>Gouthaman Balaraman</name></author><id>tag:gouthamanbalaraman.com,2014-03-26:blog/flask-track-usage.html</id><summary type="html">&lt;p&gt;Recently I had a requirement to add light weight tracking for a Flask app. Tools like Google analytics was not
 an option because, I wanted raw number and data handy rather than just figures, this was a website page in the intranet, and
 I also wanted to easily track all the REST apis. That is when I stumbled upon &lt;a class="reference external" href="http://www.stevemilner.org/"&gt;Steve Milner's&lt;/a&gt;
 &lt;cite&gt;Flask-Track-Usage&lt;/cite&gt; package.&lt;/p&gt;
@@ -7346,7 +7346,7 @@ dict and has the following schema:&lt;/p&gt;
     }
 ]
 &lt;/pre&gt;
-</summary><category term="Programming"></category><category term="Python"></category></entry><entry><title>A Short Story of Wall Street</title><link href="http://gouthamanbalaraman.com/blog/a-short-story-of-wall-street.html" rel="alternate"></link><updated>2014-01-23T00:00:00-08:00</updated><author><name>Gouthaman Balaraman</name></author><id>tag:gouthamanbalaraman.com,2014-01-23:blog/a-short-story-of-wall-street.html</id><summary type="html">&lt;p&gt;In the last couple of decades, the US market has witnessed a
+</summary><category term="Programming"></category><category term="Python"></category></entry><entry><title>A Short Story of Wall Street</title><link href="http://gouthamanbalaraman.com/blog/a-short-story-of-wall-street.html" rel="alternate"></link><published>2014-01-23T00:00:00-08:00</published><author><name>Gouthaman Balaraman</name></author><id>tag:gouthamanbalaraman.com,2014-01-23:blog/a-short-story-of-wall-street.html</id><summary type="html">&lt;p&gt;In the last couple of decades, the US market has witnessed a
 technology bubble, a housing bubble, recession, and market
 crashes. I wanted to understand the human sentiment, the fear
 when market crashes, the euphoria while riding the upside of the bubble.
@@ -7389,7 +7389,7 @@ high quality debt, even though a lot of them defaulted.&lt;/li&gt;
 calculated by computing volatility using daily returns over a 45 day window.&lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-</summary><category term="finance"></category><category term="equity"></category></entry><entry><title>Calculating Stock Beta, Volatility, and More</title><link href="http://gouthamanbalaraman.com/blog/calculating-stock-beta.html" rel="alternate"></link><updated>2014-01-09T00:00:00-08:00</updated><author><name>Gouthaman Balaraman</name></author><id>tag:gouthamanbalaraman.com,2014-01-09:blog/calculating-stock-beta.html</id><summary type="html">&lt;p&gt;Have you ever wondered how to calculate the Beta value that is shown in
+</summary><category term="finance"></category><category term="equity"></category></entry><entry><title>Calculating Stock Beta, Volatility, and More</title><link href="http://gouthamanbalaraman.com/blog/calculating-stock-beta.html" rel="alternate"></link><published>2014-01-09T00:00:00-08:00</published><author><name>Gouthaman Balaraman</name></author><id>tag:gouthamanbalaraman.com,2014-01-09:blog/calculating-stock-beta.html</id><summary type="html">&lt;p&gt;Have you ever wondered how to calculate the Beta value that is shown in
 &lt;a class="reference external" href="http://www.google.com/finance"&gt;GoogleFinance&lt;/a&gt; or &lt;a class="reference external" href="http://www.finance.yahoo.com/"&gt;YahooFinance&lt;/a&gt; and what does it mean from an investment perspective?
 This article will give you an introduction to the concept and demonstrate how
 you can calculate various time series measures for a stock using python. The

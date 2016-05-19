@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>G B</title><link>http://gouthamanbalaraman.com/</link><description></description><atom:link href="http://gouthamanbalaraman.com/feeds/python.rss.xml" rel="self"></atom:link><lastBuildDate>Sat, 25 Jul 2015 00:00:00 -0700</lastBuildDate><item><title>Adding Caching to Python Flask-Blogging Engine</title><link>http://gouthamanbalaraman.com/blog/adding-caching-to-python-flask-blogging-extension.html</link><description>&lt;p&gt;I deployed my blog (using &lt;a class="reference external" href="https://github.com/gouthambs/Flask-Blogging"&gt;Flask-Blogging&lt;/a&gt; extension)
+<rss version="2.0"><channel><title>G B</title><link>http://gouthamanbalaraman.com/</link><description></description><lastBuildDate>Sat, 25 Jul 2015 00:00:00 -0700</lastBuildDate><item><title>Adding Caching to Python Flask-Blogging Engine</title><link>http://gouthamanbalaraman.com/blog/adding-caching-to-python-flask-blogging-extension.html</link><description>&lt;p&gt;I deployed my blog (using &lt;a class="reference external" href="https://github.com/gouthambs/Flask-Blogging"&gt;Flask-Blogging&lt;/a&gt; extension)
 to a site I am building. I am currently hosting the test version on the free instance
 of &lt;a class="reference external" href="https://openshift.com"&gt;Openshift&lt;/a&gt;. So these are not very powerful servers, and
 I wasn't expecting any great performance. Here is what I saw while
@@ -102,7 +102,7 @@ filesystem cache. Using in memory like Redis, or SSD filesystem should be even b
 &lt;p&gt;Flask-Blogging, the Flask extension to add Markdown based blog support to Flask sites, incorporates
 caching support which has greatly improved its performance.&lt;/p&gt;
 &lt;/div&gt;
-</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Goutham Balaraman</dc:creator><pubDate>Sat, 25 Jul 2015 00:00:00 -0700</pubDate><guid>tag:gouthamanbalaraman.com,2015-07-25:blog/adding-caching-to-python-flask-blogging-extension.html</guid><category>python</category><category>flask</category><category>programming</category></item><item><title>Flask-Blogging: A Python Flask Blog Engine as an Extension</title><link>http://gouthamanbalaraman.com/blog/flask-blogging-python-flask-blog-engine-extension.html</link><description>&lt;p&gt;I wanted to add a blog to my flask site. I decided to write it as an
+</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Goutham Balaraman</dc:creator><pubDate>Sat, 25 Jul 2015 00:00:00 -0700</pubDate><guid isPermaLink="false">tag:gouthamanbalaraman.com,2015-07-25:blog/adding-caching-to-python-flask-blogging-extension.html</guid><category>python</category><category>flask</category><category>programming</category></item><item><title>Flask-Blogging: A Python Flask Blog Engine as an Extension</title><link>http://gouthamanbalaraman.com/blog/flask-blogging-python-flask-blog-engine-extension.html</link><description>&lt;p&gt;I wanted to add a blog to my flask site. I decided to write it as an
 extension. This makes the blog code easy to plug into any site, and
 fairly reusable.&lt;/p&gt;
 &lt;p&gt;Flask-Blogging is a blog engine as a Flask extension based on Markdown.
@@ -238,4 +238,4 @@ $ pip install flask-blogging
 &lt;p&gt;Here I introduced the Flask-Blogging extension that can be used as
 a flask blog engine to your flask site.&lt;/p&gt;
 &lt;/div&gt;
-</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Goutham Balaraman</dc:creator><pubDate>Sat, 04 Jul 2015 00:00:00 -0700</pubDate><guid>tag:gouthamanbalaraman.com,2015-07-04:blog/flask-blogging-python-flask-blog-engine-extension.html</guid><category>python</category><category>flask</category><category>programming</category></item></channel></rss>
+</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Goutham Balaraman</dc:creator><pubDate>Sat, 04 Jul 2015 00:00:00 -0700</pubDate><guid isPermaLink="false">tag:gouthamanbalaraman.com,2015-07-04:blog/flask-blogging-python-flask-blog-engine-extension.html</guid><category>python</category><category>flask</category><category>programming</category></item></channel></rss>

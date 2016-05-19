@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>G B</title><link>http://gouthamanbalaraman.com/</link><description></description><atom:link href="http://gouthamanbalaraman.com/feeds/quantlib-finance.rss.xml" rel="self"></atom:link><lastBuildDate>Tue, 08 Sep 2015 00:00:00 -0700</lastBuildDate><item><title>Valuing European Option Using the Heston Model in QuantLib and Python</title><link>http://gouthamanbalaraman.com/blog/valuing-european-option-heston-model-quantLib.html</link><description>&lt;p&gt;
+<rss version="2.0"><channel><title>G B</title><link>http://gouthamanbalaraman.com/</link><description></description><lastBuildDate>Tue, 08 Sep 2015 00:00:00 -0700</lastBuildDate><item><title>Valuing European Option Using the Heston Model in QuantLib and Python</title><link>http://gouthamanbalaraman.com/blog/valuing-european-option-heston-model-quantLib.html</link><description>&lt;p&gt;
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;
 &lt;div class="prompt input_prompt"&gt;
 &lt;/div&gt;
@@ -257,7 +257,7 @@ dV_t &amp;amp;=&amp;amp; \kappa(\theta-V_t) + \sigma \sqrt{V_t} dW_t^2
 &lt;/div&gt;&lt;/p&gt;
 &lt;h1&gt;Conclusion&lt;/h1&gt;
 &lt;p&gt;This post provided a minimal example of valuing European options using the Heston model. 
-Comparison with the Black-Scholes-Merton model is shown for instructional purpose.&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Gouthaman Balaraman</dc:creator><pubDate>Tue, 08 Sep 2015 00:00:00 -0700</pubDate><guid>tag:gouthamanbalaraman.com,2015-09-08:blog/valuing-european-option-heston-model-quantLib.html</guid><category>quantlib</category><category>python</category><category>finance</category></item><item><title>On the Convergence of Hull White Monte Carlo Simulations</title><link>http://gouthamanbalaraman.com/blog/hull-white-simulation-monte-carlo-convergence.html</link><description>&lt;p&gt;
+Comparison with the Black-Scholes-Merton model is shown for instructional purpose.&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Gouthaman Balaraman</dc:creator><pubDate>Tue, 08 Sep 2015 00:00:00 -0700</pubDate><guid isPermaLink="false">tag:gouthamanbalaraman.com,2015-09-08:blog/valuing-european-option-heston-model-quantLib.html</guid><category>quantlib</category><category>python</category><category>finance</category></item><item><title>On the Convergence of Hull White Monte Carlo Simulations</title><link>http://gouthamanbalaraman.com/blog/hull-white-simulation-monte-carlo-convergence.html</link><description>&lt;p&gt;
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;
 &lt;div class="prompt input_prompt"&gt;
 &lt;/div&gt;
@@ -1847,4 +1847,4 @@ time $T$ of interest to us.&lt;/p&gt;
 &lt;h1&gt;Conclusion&lt;/h1&gt;
 &lt;p&gt;This post shows how convergence of Monte Carlo simulations of Hull-White short rate model is dependent
 on the ratio $\sigma /a$. You can download the &lt;a href="/extra/notebooks/hull_white_monte_carlo_convergence.ipynb"&gt;ipython notebook on convergence of Monte Carlo simulations of
-Hull-White model&lt;/a&gt;.&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Gouthaman Balaraman</dc:creator><pubDate>Fri, 22 May 2015 00:00:00 -0700</pubDate><guid>tag:gouthamanbalaraman.com,2015-05-22:blog/hull-white-simulation-monte-carlo-convergence.html</guid><category>quantlib</category><category>python</category><category>finance</category></item></channel></rss>
+Hull-White model&lt;/a&gt;.&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Gouthaman Balaraman</dc:creator><pubDate>Fri, 22 May 2015 00:00:00 -0700</pubDate><guid isPermaLink="false">tag:gouthamanbalaraman.com,2015-05-22:blog/hull-white-simulation-monte-carlo-convergence.html</guid><category>quantlib</category><category>python</category><category>finance</category></item></channel></rss>

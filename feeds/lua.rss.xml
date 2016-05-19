@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>G B</title><link>http://gouthamanbalaraman.com/</link><description></description><atom:link href="http://gouthamanbalaraman.com/feeds/lua.rss.xml" rel="self"></atom:link><lastBuildDate>Tue, 05 Aug 2014 00:00:00 -0700</lastBuildDate><item><title>Minimal Example of Calling Lua Functions from C++</title><link>http://gouthamanbalaraman.com/blog/minimal-example-lua-function-cpp.html</link><description>&lt;p&gt;If you want to extend and customize the capabilities of a C++ application
+<rss version="2.0"><channel><title>G B</title><link>http://gouthamanbalaraman.com/</link><description></description><lastBuildDate>Tue, 05 Aug 2014 00:00:00 -0700</lastBuildDate><item><title>Minimal Example of Calling Lua Functions from C++</title><link>http://gouthamanbalaraman.com/blog/minimal-example-lua-function-cpp.html</link><description>&lt;p&gt;If you want to extend and customize the capabilities of a C++ application
 without requiring a full recompilation, then using a embedded scripting language
 is the way to go. Lua is one such embeddable scripting language, and is very popular
 among game developers. The main advantage of Lua, in my opinion, is that the core API
@@ -71,7 +71,7 @@ sum=11.000000
 &lt;h2&gt;Conclusion&lt;/h2&gt;
 &lt;p&gt;This article gave a very minimal example explaining how to call a lua function from C++.&lt;/p&gt;
 &lt;/div&gt;
-</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Goutham Balaraman</dc:creator><pubDate>Tue, 05 Aug 2014 00:00:00 -0700</pubDate><guid>tag:gouthamanbalaraman.com,2014-08-05:blog/minimal-example-lua-function-cpp.html</guid><category>lua</category><category>programming</category><category>C++</category></item><item><title>Minimal Lua C++ Example</title><link>http://gouthamanbalaraman.com/blog/minimal-lua-c-example.html</link><description>&lt;p&gt;If you want to extend and customize the capabilities of a C++ application
+</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Goutham Balaraman</dc:creator><pubDate>Tue, 05 Aug 2014 00:00:00 -0700</pubDate><guid isPermaLink="false">tag:gouthamanbalaraman.com,2014-08-05:blog/minimal-example-lua-function-cpp.html</guid><category>lua</category><category>programming</category><category>C++</category></item><item><title>Minimal Lua C++ Example</title><link>http://gouthamanbalaraman.com/blog/minimal-lua-c-example.html</link><description>&lt;p&gt;If you want to extend and customize the capabilities of a C++ application
 without requiring a full recompilation, then using a embedded scripting language
 is the way to go. Lua is one such embeddable scripting language, and is very popular
 among game developers. The main advantage of Lua, in my opinion, is that the core API
@@ -121,4 +121,4 @@ executable, you should see &lt;tt class="docutils literal"&gt;Hello World!&lt;/t
 &lt;h2&gt;Conclusion&lt;/h2&gt;
 &lt;p&gt;We looked at a rather simple introductory example of &lt;tt class="docutils literal"&gt;lua&lt;/tt&gt; interpreter embeded into &lt;tt class="docutils literal"&gt;C++&lt;/tt&gt; code.&lt;/p&gt;
 &lt;/div&gt;
-</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Goutham Balaraman</dc:creator><pubDate>Thu, 17 Jul 2014 00:00:00 -0700</pubDate><guid>tag:gouthamanbalaraman.com,2014-07-17:blog/minimal-lua-c-example.html</guid><category>lua</category><category>programming</category><category>C++</category></item></channel></rss>
+</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Goutham Balaraman</dc:creator><pubDate>Thu, 17 Jul 2014 00:00:00 -0700</pubDate><guid isPermaLink="false">tag:gouthamanbalaraman.com,2014-07-17:blog/minimal-lua-c-example.html</guid><category>lua</category><category>programming</category><category>C++</category></item></channel></rss>

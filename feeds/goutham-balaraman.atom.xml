@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>G B</title><link href="http://gouthamanbalaraman.com/" rel="alternate"></link><link href="http://gouthamanbalaraman.com/feeds/goutham-balaraman.atom.xml" rel="self"></link><id>http://gouthamanbalaraman.com/</id><updated>2016-03-16T00:00:00-07:00</updated><entry><title>Valuing Convertible Bonds Using QuantLib</title><link href="http://gouthamanbalaraman.com/blog/value-convertible-bond-quantlib-python.html" rel="alternate"></link><updated>2016-03-16T00:00:00-07:00</updated><author><name>Goutham Balaraman</name></author><id>tag:gouthamanbalaraman.com,2016-03-16:blog/value-convertible-bond-quantlib-python.html</id><summary type="html">&lt;p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>G B</title><link href="http://gouthamanbalaraman.com/" rel="alternate"></link><link href="http://gouthamanbalaraman.com/feeds/goutham-balaraman.atom.xml" rel="self"></link><id>http://gouthamanbalaraman.com/</id><updated>2016-03-16T00:00:00-07:00</updated><entry><title>Valuing Convertible Bonds Using QuantLib</title><link href="http://gouthamanbalaraman.com/blog/value-convertible-bond-quantlib-python.html" rel="alternate"></link><published>2016-03-16T00:00:00-07:00</published><author><name>Goutham Balaraman</name></author><id>tag:gouthamanbalaraman.com,2016-03-16:blog/value-convertible-bond-quantlib-python.html</id><summary type="html">&lt;p&gt;
 &lt;div class="cell border-box-sizing code_cell rendered"&gt;
 &lt;div class="input"&gt;
 &lt;div class="prompt input_prompt"&gt;In&amp;nbsp;[1]:&lt;/div&gt;
@@ -297,7 +297,7 @@ Conversion\ Ratio = \frac{Redemption\ Amount}{Conversion\ Price}
 &lt;/div&gt;
 
 &lt;/div&gt;&lt;/p&gt;
-&lt;p&gt;Click here to download the &lt;a href="/extra/notebooks/convertible_bond.ipynb"&gt;ipython notebook on convertible bonds&lt;/a&gt;.&lt;/p&gt;</summary><category term="quantlib"></category><category term="python"></category><category term="finance"></category></entry><entry><title>Understanding Interest Rate Risk</title><link href="http://gouthamanbalaraman.com/blog/understanding-interest-rate-risk.html" rel="alternate"></link><updated>2016-03-09T00:00:00-08:00</updated><author><name>Goutham Balaraman</name></author><id>tag:gouthamanbalaraman.com,2016-03-09:blog/understanding-interest-rate-risk.html</id><summary type="html">&lt;p&gt;Interest rate changes affect returns on bonds and other fixed income assets, in which 
+&lt;p&gt;Click here to download the &lt;a href="/extra/notebooks/convertible_bond.ipynb"&gt;ipython notebook on convertible bonds&lt;/a&gt;.&lt;/p&gt;</summary><category term="quantlib"></category><category term="python"></category><category term="finance"></category></entry><entry><title>Understanding Interest Rate Risk</title><link href="http://gouthamanbalaraman.com/blog/understanding-interest-rate-risk.html" rel="alternate"></link><published>2016-03-09T00:00:00-08:00</published><author><name>Goutham Balaraman</name></author><id>tag:gouthamanbalaraman.com,2016-03-09:blog/understanding-interest-rate-risk.html</id><summary type="html">&lt;p&gt;Interest rate changes affect returns on bonds and other fixed income assets, in which 
 a lot of people nearing retirement would have their money invested. But volatility in 
 interest rates also affect non-investment businesses which then indirectly affect the prices
 that we pay for products that we consume.&lt;/p&gt;
@@ -346,7 +346,7 @@ interest rate risk exposure on their books. The Futures contracts are exchange t
 liquidity and do not have credit risk associated.&lt;/p&gt;
 &lt;h2&gt;Conclusion&lt;/h2&gt;
 &lt;p&gt;In this blog post, I provided an introduction to interest rate risk and how it can be managed. At a later
-post, I will drill into some of the specifics of how certain derivatives can help hedge interest rate risk.&lt;/p&gt;</summary><category term="hedging"></category><category term="finance"></category><category term="risk management"></category></entry><entry><title>An Introduction to the Fundamental Review of the Trading Book (FRTB)</title><link href="http://gouthamanbalaraman.com/blog/introduction-fundamental-review-of-the-trading-book-frtb.html" rel="alternate"></link><updated>2016-02-19T00:00:00-08:00</updated><author><name>Goutham Balaraman</name></author><id>tag:gouthamanbalaraman.com,2016-02-19:blog/introduction-fundamental-review-of-the-trading-book-frtb.html</id><summary type="html">&lt;p&gt;Basel Committee on Banking Supervision (BCBS) released a consultative document 
+post, I will drill into some of the specifics of how certain derivatives can help hedge interest rate risk.&lt;/p&gt;</summary><category term="hedging"></category><category term="finance"></category><category term="risk management"></category></entry><entry><title>An Introduction to the Fundamental Review of the Trading Book (FRTB)</title><link href="http://gouthamanbalaraman.com/blog/introduction-fundamental-review-of-the-trading-book-frtb.html" rel="alternate"></link><published>2016-02-19T00:00:00-08:00</published><author><name>Goutham Balaraman</name></author><id>tag:gouthamanbalaraman.com,2016-02-19:blog/introduction-fundamental-review-of-the-trading-book-frtb.html</id><summary type="html">&lt;p&gt;Basel Committee on Banking Supervision (BCBS) released a consultative document 
 titled, "The Fundamental Review of the Trading Book" (FRTB) in 2012 &lt;a href="www.bis.org/publ/bcbs219.htm"&gt;1&lt;/a&gt;. 
 The intent of this document and the subsequent discussions and studies was to address the shortcomings of the 
 existing market risk capital framework, and reduce the variability in the minimum capital standard
@@ -387,7 +387,7 @@ finalized on 14th January 2016:&lt;/p&gt;
 requirements as compared to the current Basel 2.5 framework. The changes proposed under
 FRTB not only have an impact on the capital requirements, but it will also pose significant
 challenges to a bank's technology infrastructure.&lt;/p&gt;
-&lt;p&gt;.. to be continued&lt;/p&gt;</summary><category term="regulation"></category><category term="finance"></category></entry><entry><title>Adding Caching to Python Flask-Blogging Engine</title><link href="http://gouthamanbalaraman.com/blog/adding-caching-to-python-flask-blogging-extension.html" rel="alternate"></link><updated>2015-07-25T00:00:00-07:00</updated><author><name>Goutham Balaraman</name></author><id>tag:gouthamanbalaraman.com,2015-07-25:blog/adding-caching-to-python-flask-blogging-extension.html</id><summary type="html">&lt;p&gt;I deployed my blog (using &lt;a class="reference external" href="https://github.com/gouthambs/Flask-Blogging"&gt;Flask-Blogging&lt;/a&gt; extension)
+&lt;p&gt;.. to be continued&lt;/p&gt;</summary><category term="regulation"></category><category term="finance"></category></entry><entry><title>Adding Caching to Python Flask-Blogging Engine</title><link href="http://gouthamanbalaraman.com/blog/adding-caching-to-python-flask-blogging-extension.html" rel="alternate"></link><published>2015-07-25T00:00:00-07:00</published><author><name>Goutham Balaraman</name></author><id>tag:gouthamanbalaraman.com,2015-07-25:blog/adding-caching-to-python-flask-blogging-extension.html</id><summary type="html">&lt;p&gt;I deployed my blog (using &lt;a class="reference external" href="https://github.com/gouthambs/Flask-Blogging"&gt;Flask-Blogging&lt;/a&gt; extension)
 to a site I am building. I am currently hosting the test version on the free instance
 of &lt;a class="reference external" href="https://openshift.com"&gt;Openshift&lt;/a&gt;. So these are not very powerful servers, and
 I wasn't expecting any great performance. Here is what I saw while
@@ -490,7 +490,7 @@ filesystem cache. Using in memory like Redis, or SSD filesystem should be even b
 &lt;p&gt;Flask-Blogging, the Flask extension to add Markdown based blog support to Flask sites, incorporates
 caching support which has greatly improved its performance.&lt;/p&gt;
 &lt;/div&gt;
-</summary><category term="python"></category><category term="flask"></category><category term="programming"></category></entry><entry><title>Flask-Blogging: A Python Flask Blog Engine as an Extension</title><link href="http://gouthamanbalaraman.com/blog/flask-blogging-python-flask-blog-engine-extension.html" rel="alternate"></link><updated>2015-07-04T00:00:00-07:00</updated><author><name>Goutham Balaraman</name></author><id>tag:gouthamanbalaraman.com,2015-07-04:blog/flask-blogging-python-flask-blog-engine-extension.html</id><summary type="html">&lt;p&gt;I wanted to add a blog to my flask site. I decided to write it as an
+</summary><category term="python"></category><category term="flask"></category><category term="programming"></category></entry><entry><title>Flask-Blogging: A Python Flask Blog Engine as an Extension</title><link href="http://gouthamanbalaraman.com/blog/flask-blogging-python-flask-blog-engine-extension.html" rel="alternate"></link><published>2015-07-04T00:00:00-07:00</published><author><name>Goutham Balaraman</name></author><id>tag:gouthamanbalaraman.com,2015-07-04:blog/flask-blogging-python-flask-blog-engine-extension.html</id><summary type="html">&lt;p&gt;I wanted to add a blog to my flask site. I decided to write it as an
 extension. This makes the blog code easy to plug into any site, and
 fairly reusable.&lt;/p&gt;
 &lt;p&gt;Flask-Blogging is a blog engine as a Flask extension based on Markdown.
@@ -626,7 +626,7 @@ $ pip install flask-blogging
 &lt;p&gt;Here I introduced the Flask-Blogging extension that can be used as
 a flask blog engine to your flask site.&lt;/p&gt;
 &lt;/div&gt;
-</summary><category term="python"></category><category term="flask"></category><category term="programming"></category></entry><entry><title>An Introduction to Interest Rate Term Structure in QuantLib</title><link href="http://gouthamanbalaraman.com/blog/quantlib-term-structure-bootstrap-yield-curve.html" rel="alternate"></link><updated>2015-04-08T00:00:00-07:00</updated><author><name>Goutham Balaraman</name></author><id>tag:gouthamanbalaraman.com,2015-04-08:blog/quantlib-term-structure-bootstrap-yield-curve.html</id><summary type="html">&lt;p&gt;Term structure is pivotal to pricing securities. One would need a &lt;tt class="docutils literal"&gt;YieldTermStructure&lt;/tt&gt; object
+</summary><category term="python"></category><category term="flask"></category><category term="programming"></category></entry><entry><title>An Introduction to Interest Rate Term Structure in QuantLib</title><link href="http://gouthamanbalaraman.com/blog/quantlib-term-structure-bootstrap-yield-curve.html" rel="alternate"></link><published>2015-04-08T00:00:00-07:00</published><author><name>Goutham Balaraman</name></author><id>tag:gouthamanbalaraman.com,2015-04-08:blog/quantlib-term-structure-bootstrap-yield-curve.html</id><summary type="html">&lt;p&gt;Term structure is pivotal to pricing securities. One would need a &lt;tt class="docutils literal"&gt;YieldTermStructure&lt;/tt&gt; object
 created in &lt;tt class="docutils literal"&gt;QuantLib&lt;/tt&gt; to use with pricing engines. In an earlier post on
 &lt;a class="reference external" href="/blog/quantlib-bond-modeling.html"&gt;modeling bonds using QuantLib&lt;/a&gt; we discussed how to use
 spot rates directly with bond pricing engine. Here in this post we will show how to
@@ -831,7 +831,7 @@ as the YTM.&lt;/p&gt;
 &lt;p&gt;In this post we showed how to bootstrap yield curve to get spot rates.&lt;/p&gt;
 &lt;p&gt;Download the &lt;a class="reference external" href="/extra/notebooks/term-structures.ipynb"&gt;bootstrap yield curve ipython notebook&lt;/a&gt;.&lt;/p&gt;
 &lt;/div&gt;
-</summary><category term="python"></category><category term="finance"></category><category term="quantlib"></category></entry><entry><title>Modeling Fixed Rate Bonds Using QuantLib</title><link href="http://gouthamanbalaraman.com/blog/quantlib-bond-modeling.html" rel="alternate"></link><updated>2015-03-30T00:00:00-07:00</updated><author><name>Goutham Balaraman</name></author><id>tag:gouthamanbalaraman.com,2015-03-30:blog/quantlib-bond-modeling.html</id><summary type="html">&lt;p&gt;Let's consider a hypothetical bond with a par value of 100, that pays 6% coupon
+</summary><category term="python"></category><category term="finance"></category><category term="quantlib"></category></entry><entry><title>Modeling Fixed Rate Bonds Using QuantLib</title><link href="http://gouthamanbalaraman.com/blog/quantlib-bond-modeling.html" rel="alternate"></link><published>2015-03-30T00:00:00-07:00</published><author><name>Goutham Balaraman</name></author><id>tag:gouthamanbalaraman.com,2015-03-30:blog/quantlib-bond-modeling.html</id><summary type="html">&lt;p&gt;Let's consider a hypothetical bond with a par value of 100, that pays 6% coupon
 semi-annually issued on January 15th, 2015 and set to mature on January 15th, 2016.
 The bond will pay a coupon on July 15th, 2015 and January 15th, 2016. The par
 amount of 100 will also be paid on the January 15th, 2016.&lt;/p&gt;
@@ -895,7 +895,7 @@ Now lets construct the fixed rate bond.&lt;/p&gt;
 &lt;/pre&gt;
 &lt;p&gt;Voila!&lt;/p&gt;
 &lt;p&gt;Download the &lt;a class="reference external" href="/extra/notebooks/modeling-bonds.ipynb"&gt;modeling bonds ipython notebook&lt;/a&gt;.&lt;/p&gt;
-</summary><category term="python"></category><category term="finance"></category><category term="quantlib"></category></entry><entry><title>Introduction to QuantLib</title><link href="http://gouthamanbalaraman.com/blog/quantlib-basics.html" rel="alternate"></link><updated>2015-03-24T00:00:00-07:00</updated><author><name>Goutham Balaraman</name></author><id>tag:gouthamanbalaraman.com,2015-03-24:blog/quantlib-basics.html</id><summary type="html">&lt;p&gt;I installed the latest version of QuantLib (V1.5) and the python wrapper to QuantLib.
+</summary><category term="python"></category><category term="finance"></category><category term="quantlib"></category></entry><entry><title>Introduction to QuantLib</title><link href="http://gouthamanbalaraman.com/blog/quantlib-basics.html" rel="alternate"></link><published>2015-03-24T00:00:00-07:00</published><author><name>Goutham Balaraman</name></author><id>tag:gouthamanbalaraman.com,2015-03-24:blog/quantlib-basics.html</id><summary type="html">&lt;p&gt;I installed the latest version of QuantLib (V1.5) and the python wrapper to QuantLib.
 My experiments lately have been to get a feel for the QuantLib API. The library itself
 is so extensive, that it is rather hard for a new comer to get going. In this post
 we will look into some of the basic classes and functionality in QuantLib.&lt;/p&gt;
@@ -1029,7 +1029,7 @@ net present value (barring some precision).&lt;/p&gt;
 &lt;li&gt;we learnt how to use the &lt;tt class="docutils literal"&gt;InterestRate&lt;/tt&gt; class&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/div&gt;
-</summary><category term="python"></category><category term="finance"></category><category term="quantlib"></category></entry><entry><title>Multi-Processing With Pandas</title><link href="http://gouthamanbalaraman.com/blog/distributed-processing-pandas.html" rel="alternate"></link><updated>2014-11-19T00:00:00-08:00</updated><author><name>Goutham Balaraman</name></author><id>tag:gouthamanbalaraman.com,2014-11-19:blog/distributed-processing-pandas.html</id><summary type="html">&lt;p&gt;If you have used &lt;tt class="docutils literal"&gt;pandas&lt;/tt&gt;, you must be familiar with the awesome functionality and tools that
+</summary><category term="python"></category><category term="finance"></category><category term="quantlib"></category></entry><entry><title>Multi-Processing With Pandas</title><link href="http://gouthamanbalaraman.com/blog/distributed-processing-pandas.html" rel="alternate"></link><published>2014-11-19T00:00:00-08:00</published><author><name>Goutham Balaraman</name></author><id>tag:gouthamanbalaraman.com,2014-11-19:blog/distributed-processing-pandas.html</id><summary type="html">&lt;p&gt;If you have used &lt;tt class="docutils literal"&gt;pandas&lt;/tt&gt;, you must be familiar with the awesome functionality and tools that
 it brings to data processing. I have used &lt;tt class="docutils literal"&gt;pandas&lt;/tt&gt; as a tool to read data files and transform
 them into various summaries of interest. My usual process pipeline would start with
 a text file with data in a CSV format. I would read data into a &lt;tt class="docutils literal"&gt;pandas&lt;/tt&gt; &lt;tt class="docutils literal"&gt;DataFrame&lt;/tt&gt;
@@ -1103,7 +1103,7 @@ snippet from above.&lt;/p&gt;
 &lt;em&gt;asynchronously&lt;/em&gt; process chunk of data by pushing it into a multiprocessing pool queue.
 Each process in pool will work on the task, and return the result.&lt;/p&gt;
 &lt;/div&gt;
-</summary><category term="python"></category><category term="programming"></category><category term="pandas"></category></entry><entry><title>Minimal Example of Calling Lua Functions from C++</title><link href="http://gouthamanbalaraman.com/blog/minimal-example-lua-function-cpp.html" rel="alternate"></link><updated>2014-08-05T00:00:00-07:00</updated><author><name>Goutham Balaraman</name></author><id>tag:gouthamanbalaraman.com,2014-08-05:blog/minimal-example-lua-function-cpp.html</id><summary type="html">&lt;p&gt;If you want to extend and customize the capabilities of a C++ application
+</summary><category term="python"></category><category term="programming"></category><category term="pandas"></category></entry><entry><title>Minimal Example of Calling Lua Functions from C++</title><link href="http://gouthamanbalaraman.com/blog/minimal-example-lua-function-cpp.html" rel="alternate"></link><published>2014-08-05T00:00:00-07:00</published><author><name>Goutham Balaraman</name></author><id>tag:gouthamanbalaraman.com,2014-08-05:blog/minimal-example-lua-function-cpp.html</id><summary type="html">&lt;p&gt;If you want to extend and customize the capabilities of a C++ application
 without requiring a full recompilation, then using a embedded scripting language
 is the way to go. Lua is one such embeddable scripting language, and is very popular
 among game developers. The main advantage of Lua, in my opinion, is that the core API
@@ -1175,7 +1175,7 @@ sum=11.000000
 &lt;h2&gt;Conclusion&lt;/h2&gt;
 &lt;p&gt;This article gave a very minimal example explaining how to call a lua function from C++.&lt;/p&gt;
 &lt;/div&gt;
-</summary><category term="lua"></category><category term="programming"></category><category term="C++"></category></entry><entry><title>Minimal Lua C++ Example</title><link href="http://gouthamanbalaraman.com/blog/minimal-lua-c-example.html" rel="alternate"></link><updated>2014-07-17T00:00:00-07:00</updated><author><name>Goutham Balaraman</name></author><id>tag:gouthamanbalaraman.com,2014-07-17:blog/minimal-lua-c-example.html</id><summary type="html">&lt;p&gt;If you want to extend and customize the capabilities of a C++ application
+</summary><category term="lua"></category><category term="programming"></category><category term="C++"></category></entry><entry><title>Minimal Lua C++ Example</title><link href="http://gouthamanbalaraman.com/blog/minimal-lua-c-example.html" rel="alternate"></link><published>2014-07-17T00:00:00-07:00</published><author><name>Goutham Balaraman</name></author><id>tag:gouthamanbalaraman.com,2014-07-17:blog/minimal-lua-c-example.html</id><summary type="html">&lt;p&gt;If you want to extend and customize the capabilities of a C++ application
 without requiring a full recompilation, then using a embedded scripting language
 is the way to go. Lua is one such embeddable scripting language, and is very popular
 among game developers. The main advantage of Lua, in my opinion, is that the core API
@@ -1225,7 +1225,7 @@ executable, you should see &lt;tt class="docutils literal"&gt;Hello World!&lt;/t
 &lt;h2&gt;Conclusion&lt;/h2&gt;
 &lt;p&gt;We looked at a rather simple introductory example of &lt;tt class="docutils literal"&gt;lua&lt;/tt&gt; interpreter embeded into &lt;tt class="docutils literal"&gt;C++&lt;/tt&gt; code.&lt;/p&gt;
 &lt;/div&gt;
-</summary><category term="lua"></category><category term="programming"></category><category term="C++"></category></entry><entry><title>Git For Dummies</title><link href="http://gouthamanbalaraman.com/blog/git-for-dummies.html" rel="alternate"></link><updated>2014-03-20T00:00:00-07:00</updated><author><name>Goutham Balaraman</name></author><id>tag:gouthamanbalaraman.com,2014-03-20:blog/git-for-dummies.html</id><summary type="html">&lt;p&gt;Git is a version control with a ton of powerful features. This article is intended to be
+</summary><category term="lua"></category><category term="programming"></category><category term="C++"></category></entry><entry><title>Git For Dummies</title><link href="http://gouthamanbalaraman.com/blog/git-for-dummies.html" rel="alternate"></link><published>2014-03-20T00:00:00-07:00</published><author><name>Goutham Balaraman</name></author><id>tag:gouthamanbalaraman.com,2014-03-20:blog/git-for-dummies.html</id><summary type="html">&lt;p&gt;Git is a version control with a ton of powerful features. This article is intended to be
 an introduction for dummies (like me). I have had to do a lot of googling lately to get familiar
 with git. My understanding of git is a work in progress. Here I summarize some of the basic
 commands and features that I learnt. I plan to keep this article updated as and when I learn
@@ -1370,7 +1370,7 @@ git tag -a v0.5.0 -m &amp;quot;Tagging version 0.5.0&amp;quot;
 &lt;/li&gt;
 &lt;/ul&gt;
 &lt;/div&gt;
-</summary><category term="git"></category><category term="programming"></category><category term="github"></category></entry><entry><title>Asynchronous Python Logging Using MSMQ</title><link href="http://gouthamanbalaraman.com/blog/asynchronous-python-logging-using-msmq.html" rel="alternate"></link><updated>2014-02-21T00:00:00-08:00</updated><author><name>Goutham Balaraman</name></author><id>tag:gouthamanbalaraman.com,2014-02-21:blog/asynchronous-python-logging-using-msmq.html</id><summary type="html">&lt;p&gt;If you have a web application running in Python, there can be a need for the logging to
+</summary><category term="git"></category><category term="programming"></category><category term="github"></category></entry><entry><title>Asynchronous Python Logging Using MSMQ</title><link href="http://gouthamanbalaraman.com/blog/asynchronous-python-logging-using-msmq.html" rel="alternate"></link><published>2014-02-21T00:00:00-08:00</published><author><name>Goutham Balaraman</name></author><id>tag:gouthamanbalaraman.com,2014-02-21:blog/asynchronous-python-logging-using-msmq.html</id><summary type="html">&lt;p&gt;If you have a web application running in Python, there can be a need for the logging to
 not interfere with the performance. Default file based loggers can lead to a slow down
 because of the constand disk writes. An alternate solution that can be quite handy is
 logging into a message based logger, such as MSMQ. This post is built on my earlier post
@@ -1432,7 +1432,7 @@ you can incorporate it into your workflow as shown below:&lt;/p&gt;
 &lt;p&gt;And that completes the MSMQ logger using python. Now all your logs will be pushed to the KaruthQueue
 that we created. You can use the example shown &lt;a class="reference external" href="/blog/sending-msmq-messages-python.rst"&gt;here&lt;/a&gt; to read the messages in a seperate application
 and store any way you chose, files, database etc.&lt;/p&gt;
-</summary><category term="python"></category><category term="programming"></category></entry><entry><title>Sending MSMQ Messages Using Python</title><link href="http://gouthamanbalaraman.com/blog/sending-msmq-messages-python.html" rel="alternate"></link><updated>2014-02-21T00:00:00-08:00</updated><author><name>Goutham Balaraman</name></author><id>tag:gouthamanbalaraman.com,2014-02-21:blog/sending-msmq-messages-python.html</id><summary type="html">&lt;p&gt;MSMQ is a message queue in the Windows environment, very much like
+</summary><category term="python"></category><category term="programming"></category></entry><entry><title>Sending MSMQ Messages Using Python</title><link href="http://gouthamanbalaraman.com/blog/sending-msmq-messages-python.html" rel="alternate"></link><published>2014-02-21T00:00:00-08:00</published><author><name>Goutham Balaraman</name></author><id>tag:gouthamanbalaraman.com,2014-02-21:blog/sending-msmq-messages-python.html</id><summary type="html">&lt;p&gt;MSMQ is a message queue in the Windows environment, very much like
 RabbitMQ. MSMQ can be used as a task queue or for communicating
 between processes. One advantage of using MSMQ rather than inter-process communication (IPC)
 is that messages have persistence. Here I show how to send and receive MSMQ messages using python.&lt;/p&gt;
@@ -1488,7 +1488,7 @@ You should see an entry there that corresponds to the message that was sent&lt;/
 see your earlier message printed out.&lt;/p&gt;
 &lt;p&gt;Have fun messaging!&lt;/p&gt;
 &lt;/div&gt;
-</summary><category term="python"></category><category term="programming"></category></entry><entry><title>Python Multiprocessing as a Task Queue</title><link href="http://gouthamanbalaraman.com/blog/python-multiprocessing-as-a-task-queue.html" rel="alternate"></link><updated>2014-01-07T00:00:00-08:00</updated><author><name>Goutham Balaraman</name></author><id>tag:gouthamanbalaraman.com,2014-01-07:blog/python-multiprocessing-as-a-task-queue.html</id><summary type="html">&lt;p&gt;When you have computationally intensive tasks in your website (or scripts),
+</summary><category term="python"></category><category term="programming"></category></entry><entry><title>Python Multiprocessing as a Task Queue</title><link href="http://gouthamanbalaraman.com/blog/python-multiprocessing-as-a-task-queue.html" rel="alternate"></link><published>2014-01-07T00:00:00-08:00</published><author><name>Goutham Balaraman</name></author><id>tag:gouthamanbalaraman.com,2014-01-07:blog/python-multiprocessing-as-a-task-queue.html</id><summary type="html">&lt;p&gt;When you have computationally intensive tasks in your website (or scripts),
 it is conventional to use a task queue such as &lt;a class="reference external" href="http://www.celeryproject.org/"&gt;Celery&lt;/a&gt;. Using Celery requires
 some amount of setup and if you want to avoid, try using the following task
 queue based on the multiprocessing.

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>G B</title><link href="http://gouthamanbalaraman.com/" rel="alternate"></link><link href="http://gouthamanbalaraman.com/feeds/articles.atom.xml" rel="self"></link><id>http://gouthamanbalaraman.com/</id><updated>2015-02-05T00:00:00-08:00</updated><entry><title>Using SQLAlchemy in Luigi Workflow Pipeline</title><link href="http://gouthamanbalaraman.com/blog/sqlalchemy-luigi-workflow-pipeline.html" rel="alternate"></link><updated>2015-02-05T00:00:00-08:00</updated><author><name>Gouthaman Balaraman</name></author><id>tag:gouthamanbalaraman.com,2015-02-05:blog/sqlalchemy-luigi-workflow-pipeline.html</id><summary type="html">&lt;p&gt;The &lt;tt class="docutils literal"&gt;luigi.contrib.sqla&lt;/tt&gt; provides support for SQLAlchmey through the &lt;tt class="docutils literal"&gt;SQLAlchemyTarget&lt;/tt&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>G B</title><link href="http://gouthamanbalaraman.com/" rel="alternate"></link><link href="http://gouthamanbalaraman.com/feeds/articles.atom.xml" rel="self"></link><id>http://gouthamanbalaraman.com/</id><updated>2015-02-05T00:00:00-08:00</updated><entry><title>Using SQLAlchemy in Luigi Workflow Pipeline</title><link href="http://gouthamanbalaraman.com/blog/sqlalchemy-luigi-workflow-pipeline.html" rel="alternate"></link><published>2015-02-05T00:00:00-08:00</published><author><name>Gouthaman Balaraman</name></author><id>tag:gouthamanbalaraman.com,2015-02-05:blog/sqlalchemy-luigi-workflow-pipeline.html</id><summary type="html">&lt;p&gt;The &lt;tt class="docutils literal"&gt;luigi.contrib.sqla&lt;/tt&gt; provides support for SQLAlchmey through the &lt;tt class="docutils literal"&gt;SQLAlchemyTarget&lt;/tt&gt;
 for storing in databases supported by SQLAlchemy. The user would be responsible for
 installing the required database driver to connect using &lt;tt class="docutils literal"&gt;SQLAlchemy&lt;/tt&gt;.&lt;/p&gt;
 &lt;p&gt;Minimal example of a job to copy data to database using &lt;tt class="docutils literal"&gt;SQLAlchemy&lt;/tt&gt; is as shown
@@ -96,7 +96,7 @@ tab separated.&lt;/p&gt;
 &lt;cite&gt;chunk_size&lt;/cite&gt;. The default is 5000. This is the number of rows that will be inserted in
 a transaction at a time. Depending on the size of the inserts, this value can be tuned
 for performance.&lt;/p&gt;
-</summary><category term="Programming"></category><category term="Python"></category><category term="Luigi"></category><category term="SQLAlchemy"></category></entry><entry><title>Building Task Pipelines Using Luigi</title><link href="http://gouthamanbalaraman.com/blog/building-luigi-task-pipeline.html" rel="alternate"></link><updated>2014-12-31T00:00:00-08:00</updated><author><name>Gouthaman Balaraman</name></author><id>tag:gouthamanbalaraman.com,2014-12-31:blog/building-luigi-task-pipeline.html</id><summary type="html">&lt;p&gt;It is incredibly easy to write a script to process some data in python. But if you
+</summary><category term="Programming"></category><category term="Python"></category><category term="Luigi"></category><category term="SQLAlchemy"></category></entry><entry><title>Building Task Pipelines Using Luigi</title><link href="http://gouthamanbalaraman.com/blog/building-luigi-task-pipeline.html" rel="alternate"></link><published>2014-12-31T00:00:00-08:00</published><author><name>Gouthaman Balaraman</name></author><id>tag:gouthamanbalaraman.com,2014-12-31:blog/building-luigi-task-pipeline.html</id><summary type="html">&lt;p&gt;It is incredibly easy to write a script to process some data in python. But if you
 have a lot of tasks that depend on each other, and you need to create a robust work
 flow, then thinking in terms of a data pipeline is useful.&lt;/p&gt;
 &lt;p&gt;Luigi is a framework for building data pipelines, and managing workflows. The onus of
@@ -176,7 +176,7 @@ INFO: Worker Worker(salt=907129510, host=G-ubuntu, username=myuser, pid=30648) w
 &lt;h2&gt;Conclusion&lt;/h2&gt;
 &lt;p&gt;Here we learnt a really basic example that should give you some sense of building Luigi based task pipelines.&lt;/p&gt;
 &lt;/div&gt;
-</summary><category term="Programming"></category><category term="Python"></category><category term="Luigi"></category></entry><entry><title>Flask App Directory Structure</title><link href="http://gouthamanbalaraman.com/blog/flask-app-directory-structure.html" rel="alternate"></link><updated>2014-12-29T00:00:00-08:00</updated><author><name>Gouthaman Balaraman</name></author><id>tag:gouthamanbalaraman.com,2014-12-29:blog/flask-app-directory-structure.html</id><summary type="html">&lt;p&gt;This post is a summary of what I learnt perusing a lot of websites. My goal here is to:&lt;/p&gt;
+</summary><category term="Programming"></category><category term="Python"></category><category term="Luigi"></category></entry><entry><title>Flask App Directory Structure</title><link href="http://gouthamanbalaraman.com/blog/flask-app-directory-structure.html" rel="alternate"></link><published>2014-12-29T00:00:00-08:00</published><author><name>Gouthaman Balaraman</name></author><id>tag:gouthamanbalaraman.com,2014-12-29:blog/flask-app-directory-structure.html</id><summary type="html">&lt;p&gt;This post is a summary of what I learnt perusing a lot of websites. My goal here is to:&lt;/p&gt;
 &lt;ul class="simple"&gt;
 &lt;li&gt;summarize the directory structure for a flask app&lt;/li&gt;
 &lt;li&gt;setup SQLAlchemy with migrations&lt;/li&gt;
@@ -255,7 +255,7 @@ different location. Though sometimes it is convenient to group them if you do ne
 &lt;/ul&gt;
 &lt;p&gt;... to be continued.&lt;/p&gt;
 &lt;/div&gt;
-</summary><category term="programming"></category><category term="flask"></category><category term="python"></category></entry><entry><title>MySQL Cheat Sheet</title><link href="http://gouthamanbalaraman.com/blog/mysql-cheatsheet.html" rel="alternate"></link><updated>2014-12-09T00:00:00-08:00</updated><author><name>Gouthaman Balaraman</name></author><id>tag:gouthamanbalaraman.com,2014-12-09:blog/mysql-cheatsheet.html</id><summary type="html">&lt;p&gt;Here are some notes and commands on MySQL administration&lt;/p&gt;
+</summary><category term="programming"></category><category term="flask"></category><category term="python"></category></entry><entry><title>MySQL Cheat Sheet</title><link href="http://gouthamanbalaraman.com/blog/mysql-cheatsheet.html" rel="alternate"></link><published>2014-12-09T00:00:00-08:00</published><author><name>Gouthaman Balaraman</name></author><id>tag:gouthamanbalaraman.com,2014-12-09:blog/mysql-cheatsheet.html</id><summary type="html">&lt;p&gt;Here are some notes and commands on MySQL administration&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;p class="first"&gt;Create a database:&lt;/p&gt;
 &lt;pre class="literal-block"&gt;
@@ -327,7 +327,7 @@ ORDER BY (data_length + index_length) DESC;
 &lt;/pre&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
-</summary><category term="programming"></category><category term="linux"></category><category term="database"></category><category term="mysql"></category></entry><entry><title>Securing Authentication Tokens</title><link href="http://gouthamanbalaraman.com/blog/securing-authentication-tokens.html" rel="alternate"></link><updated>2014-12-02T00:00:00-08:00</updated><author><name>Gouthaman Balaraman</name></author><id>tag:gouthamanbalaraman.com,2014-12-02:blog/securing-authentication-tokens.html</id><summary type="html">&lt;p&gt;The article &lt;a class="reference external" href="/blog/minimal-flask-login-example.html"&gt;Minimal Flask Login Example&lt;/a&gt; provided an introduction to token
+</summary><category term="programming"></category><category term="linux"></category><category term="database"></category><category term="mysql"></category></entry><entry><title>Securing Authentication Tokens</title><link href="http://gouthamanbalaraman.com/blog/securing-authentication-tokens.html" rel="alternate"></link><published>2014-12-02T00:00:00-08:00</published><author><name>Gouthaman Balaraman</name></author><id>tag:gouthamanbalaraman.com,2014-12-02:blog/securing-authentication-tokens.html</id><summary type="html">&lt;p&gt;The article &lt;a class="reference external" href="/blog/minimal-flask-login-example.html"&gt;Minimal Flask Login Example&lt;/a&gt; provided an introduction to token
 based authentication using the Flask-Login extension for the Flask web framework. The focus of that article was to
 highlight the crux of authentication logic. One glaring omission was that the token itself was nothing but
 the username and password passed as clear text. This clearly will not work!&lt;/p&gt;
@@ -358,7 +358,7 @@ simple as well.&lt;/p&gt;
 &lt;/pre&gt;
 &lt;p&gt;The above code will get the &lt;tt class="docutils literal"&gt;credential&lt;/tt&gt; corresponding to the user which can then be checked against what is
 stored in the database.&lt;/p&gt;
-</summary><category term="Programming"></category><category term="Python"></category><category term="Flask"></category><category term="Authentication"></category></entry><entry><title>Multi-Processing With Pandas</title><link href="http://gouthamanbalaraman.com/blog/distributed-processing-pandas.html" rel="alternate"></link><updated>2014-11-19T00:00:00-08:00</updated><author><name>Goutham Balaraman</name></author><id>tag:gouthamanbalaraman.com,2014-11-19:blog/distributed-processing-pandas.html</id><summary type="html">&lt;p&gt;If you have used &lt;tt class="docutils literal"&gt;pandas&lt;/tt&gt;, you must be familiar with the awesome functionality and tools that
+</summary><category term="Programming"></category><category term="Python"></category><category term="Flask"></category><category term="Authentication"></category></entry><entry><title>Multi-Processing With Pandas</title><link href="http://gouthamanbalaraman.com/blog/distributed-processing-pandas.html" rel="alternate"></link><published>2014-11-19T00:00:00-08:00</published><author><name>Goutham Balaraman</name></author><id>tag:gouthamanbalaraman.com,2014-11-19:blog/distributed-processing-pandas.html</id><summary type="html">&lt;p&gt;If you have used &lt;tt class="docutils literal"&gt;pandas&lt;/tt&gt;, you must be familiar with the awesome functionality and tools that
 it brings to data processing. I have used &lt;tt class="docutils literal"&gt;pandas&lt;/tt&gt; as a tool to read data files and transform
 them into various summaries of interest. My usual process pipeline would start with
 a text file with data in a CSV format. I would read data into a &lt;tt class="docutils literal"&gt;pandas&lt;/tt&gt; &lt;tt class="docutils literal"&gt;DataFrame&lt;/tt&gt;
@@ -432,7 +432,7 @@ snippet from above.&lt;/p&gt;
 &lt;em&gt;asynchronously&lt;/em&gt; process chunk of data by pushing it into a multiprocessing pool queue.
 Each process in pool will work on the task, and return the result.&lt;/p&gt;
 &lt;/div&gt;
-</summary><category term="python"></category><category term="programming"></category><category term="pandas"></category></entry><entry><title>Setting Up Linode For The Impatient</title><link href="http://gouthamanbalaraman.com/blog/setting-up-linode.html" rel="alternate"></link><updated>2014-11-13T00:00:00-08:00</updated><author><name>Gouthaman Balaraman</name></author><id>tag:gouthamanbalaraman.com,2014-11-13:blog/setting-up-linode.html</id><summary type="html">&lt;p&gt;When you get a linode instance, you really get a barren (sort of) linux machine on the cloud. That means
+</summary><category term="python"></category><category term="programming"></category><category term="pandas"></category></entry><entry><title>Setting Up Linode For The Impatient</title><link href="http://gouthamanbalaraman.com/blog/setting-up-linode.html" rel="alternate"></link><published>2014-11-13T00:00:00-08:00</published><author><name>Gouthaman Balaraman</name></author><id>tag:gouthamanbalaraman.com,2014-11-13:blog/setting-up-linode.html</id><summary type="html">&lt;p&gt;When you get a linode instance, you really get a barren (sort of) linux machine on the cloud. That means
 you have to take care of customizing the server based on your needs. Here are some notes based on what I
 wanted to setup.&lt;/p&gt;
 &lt;p&gt;My requirements were the following:&lt;/p&gt;
@@ -595,7 +595,7 @@ it will be blocked at the network level and the event will be logged in &lt;tt c
 &lt;li&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/div&gt;
-</summary><category term="programming"></category><category term="linux"></category></entry><entry><title>An Elegy</title><link href="http://gouthamanbalaraman.com/blog/jayam-elegy.html" rel="alternate"></link><updated>2014-10-26T00:00:00-07:00</updated><author><name>Gouthaman Balaraman</name></author><id>tag:gouthamanbalaraman.com,2014-10-26:blog/jayam-elegy.html</id><summary type="html">&lt;div class="line-block"&gt;
+</summary><category term="programming"></category><category term="linux"></category></entry><entry><title>An Elegy</title><link href="http://gouthamanbalaraman.com/blog/jayam-elegy.html" rel="alternate"></link><published>2014-10-26T00:00:00-07:00</published><author><name>Gouthaman Balaraman</name></author><id>tag:gouthamanbalaraman.com,2014-10-26:blog/jayam-elegy.html</id><summary type="html">&lt;div class="line-block"&gt;
 &lt;div class="line"&gt;On this day, we mourn the loss of Jayam&lt;/div&gt;
 &lt;div class="line"&gt;Mother to our dads,&lt;/div&gt;
 &lt;div class="line"&gt;Grandmother to us,&lt;/div&gt;
@@ -629,7 +629,7 @@ it will be blocked at the network level and the event will be logged in &lt;tt c
 &lt;div class="line"&gt;&lt;br /&gt;&lt;/div&gt;
 &lt;div class="line"&gt;May her soul rest in peace!&lt;/div&gt;
 &lt;/div&gt;
-</summary><category term="personal"></category></entry><entry><title>Understanding the Econometric Factor Model</title><link href="http://gouthamanbalaraman.com/blog/understanding-econometric-factor-model.html" rel="alternate"></link><updated>2014-10-26T00:00:00-07:00</updated><author><name>Gouthaman Balaraman</name></author><id>tag:gouthamanbalaraman.com,2014-10-26:blog/understanding-econometric-factor-model.html</id><summary type="html">&lt;p&gt;The post explains the &lt;a class="reference external" href="/blog/econometric-factor-model.html"&gt;Econometric Factor Model&lt;/a&gt;
+</summary><category term="personal"></category></entry><entry><title>Understanding the Econometric Factor Model</title><link href="http://gouthamanbalaraman.com/blog/understanding-econometric-factor-model.html" rel="alternate"></link><published>2014-10-26T00:00:00-07:00</published><author><name>Gouthaman Balaraman</name></author><id>tag:gouthamanbalaraman.com,2014-10-26:blog/understanding-econometric-factor-model.html</id><summary type="html">&lt;p&gt;The post explains the &lt;a class="reference external" href="/blog/econometric-factor-model.html"&gt;Econometric Factor Model&lt;/a&gt;
 widget that I have built. The factors used in the econometric factor model are: &lt;em&gt;unemployment&lt;/em&gt;,
 &lt;em&gt;consumer sentiment&lt;/em&gt;, &lt;em&gt;market&lt;/em&gt;, &lt;em&gt;size&lt;/em&gt; and &lt;em&gt;value/growth&lt;/em&gt;. A brief explanation of the factors are
 as follows.&lt;/p&gt;
@@ -701,7 +701,7 @@ sense because travel industry benefits from a positive consumer sentiment.&lt;/p
 The strong positive exposure of DAL to size is a little puzzling, and its history of mergers with
 Northwest might explain. This is also highlights that factor models do need more than intuition sometimes to
 make sense and make correct use of.&lt;/p&gt;
-</summary><category term="finance"></category><category term="investing"></category><category term="widget"></category></entry><entry><title>Running ZEO as a Windows Service</title><link href="http://gouthamanbalaraman.com/blog/zeo-as-a-windows-service.html" rel="alternate"></link><updated>2014-08-04T00:00:00-07:00</updated><author><name>Gouthaman Balaraman</name></author><id>tag:gouthamanbalaraman.com,2014-08-04:blog/zeo-as-a-windows-service.html</id><summary type="html">&lt;p&gt;The other day, I wanted to run ZEO as a Windows service. The &lt;tt class="docutils literal"&gt;runzeo.py&lt;/tt&gt; part of &lt;tt class="docutils literal"&gt;ZEO&lt;/tt&gt; will let you
+</summary><category term="finance"></category><category term="investing"></category><category term="widget"></category></entry><entry><title>Running ZEO as a Windows Service</title><link href="http://gouthamanbalaraman.com/blog/zeo-as-a-windows-service.html" rel="alternate"></link><published>2014-08-04T00:00:00-07:00</published><author><name>Gouthaman Balaraman</name></author><id>tag:gouthamanbalaraman.com,2014-08-04:blog/zeo-as-a-windows-service.html</id><summary type="html">&lt;p&gt;The other day, I wanted to run ZEO as a Windows service. The &lt;tt class="docutils literal"&gt;runzeo.py&lt;/tt&gt; part of &lt;tt class="docutils literal"&gt;ZEO&lt;/tt&gt; will let you
 run the client, but it doesn't work well for deployment on a windows machine. So I used &lt;tt class="docutils literal"&gt;pywin32&lt;/tt&gt; to wrap
 the &lt;tt class="docutils literal"&gt;runzeo.py&lt;/tt&gt; into a Windows Service.&lt;/p&gt;
 &lt;div class="section" id="code"&gt;
@@ -782,7 +782,7 @@ Event Viewer-&amp;gt;Windows Logs-&amp;gt;Application
 &lt;/pre&gt;
 &lt;p&gt;The logs from this script can be found under &lt;tt class="docutils literal"&gt;ZEO WinService&lt;/tt&gt; in the Source column.&lt;/p&gt;
 &lt;/div&gt;
-</summary><category term="Programming"></category><category term="Python"></category><category term="ZEO"></category><category term="ZODB"></category></entry><entry><title>Minimal Flask-Login Example</title><link href="http://gouthamanbalaraman.com/blog/minimal-flask-login-example.html" rel="alternate"></link><updated>2014-07-24T00:00:00-07:00</updated><author><name>Gouthaman Balaraman</name></author><id>tag:gouthamanbalaraman.com,2014-07-24:blog/minimal-flask-login-example.html</id><summary type="html">&lt;p&gt;The goal of this post is to give a very basic introduction to token based authentication using Flask-Login.
+</summary><category term="Programming"></category><category term="Python"></category><category term="ZEO"></category><category term="ZODB"></category></entry><entry><title>Minimal Flask-Login Example</title><link href="http://gouthamanbalaraman.com/blog/minimal-flask-login-example.html" rel="alternate"></link><published>2014-07-24T00:00:00-07:00</published><author><name>Gouthaman Balaraman</name></author><id>tag:gouthamanbalaraman.com,2014-07-24:blog/minimal-flask-login-example.html</id><summary type="html">&lt;p&gt;The goal of this post is to give a very basic introduction to token based authentication using Flask-Login.
 Usually the user credentials are stored in a database, with passwords hashed. However the authentication
 mechanism can be understood without having to worry about database, and various token generation algorithms.
 As a first step lets focus on just understanding the authentication mechanism. Then in a subsequent post
@@ -870,7 +870,7 @@ even the token generation. Once the basic plumbing is setup, one can extend this
 &lt;li&gt;have a database to store and retrive user credentials.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/div&gt;
-</summary><category term="Programming"></category><category term="Python"></category><category term="Flask"></category><category term="Authentication"></category></entry><entry><title>Flask Track Usage Primer</title><link href="http://gouthamanbalaraman.com/blog/flask-track-usage.html" rel="alternate"></link><updated>2014-03-26T00:00:00-07:00</updated><author><name>Gouthaman Balaraman</name></author><id>tag:gouthamanbalaraman.com,2014-03-26:blog/flask-track-usage.html</id><summary type="html">&lt;p&gt;Recently I had a requirement to add light weight tracking for a Flask app. Tools like Google analytics was not
+</summary><category term="Programming"></category><category term="Python"></category><category term="Flask"></category><category term="Authentication"></category></entry><entry><title>Flask Track Usage Primer</title><link href="http://gouthamanbalaraman.com/blog/flask-track-usage.html" rel="alternate"></link><published>2014-03-26T00:00:00-07:00</published><author><name>Gouthaman Balaraman</name></author><id>tag:gouthamanbalaraman.com,2014-03-26:blog/flask-track-usage.html</id><summary type="html">&lt;p&gt;Recently I had a requirement to add light weight tracking for a Flask app. Tools like Google analytics was not
 an option because, I wanted raw number and data handy rather than just figures, this was a website page in the intranet, and
 I also wanted to easily track all the REST apis. That is when I stumbled upon &lt;a class="reference external" href="http://www.stevemilner.org/"&gt;Steve Milner's&lt;/a&gt;
 &lt;cite&gt;Flask-Track-Usage&lt;/cite&gt; package.&lt;/p&gt;
@@ -962,7 +962,7 @@ dict and has the following schema:&lt;/p&gt;
     }
 ]
 &lt;/pre&gt;
-</summary><category term="Programming"></category><category term="Python"></category></entry><entry><title>Git For Dummies</title><link href="http://gouthamanbalaraman.com/blog/git-for-dummies.html" rel="alternate"></link><updated>2014-03-20T00:00:00-07:00</updated><author><name>Goutham Balaraman</name></author><id>tag:gouthamanbalaraman.com,2014-03-20:blog/git-for-dummies.html</id><summary type="html">&lt;p&gt;Git is a version control with a ton of powerful features. This article is intended to be
+</summary><category term="Programming"></category><category term="Python"></category></entry><entry><title>Git For Dummies</title><link href="http://gouthamanbalaraman.com/blog/git-for-dummies.html" rel="alternate"></link><published>2014-03-20T00:00:00-07:00</published><author><name>Goutham Balaraman</name></author><id>tag:gouthamanbalaraman.com,2014-03-20:blog/git-for-dummies.html</id><summary type="html">&lt;p&gt;Git is a version control with a ton of powerful features. This article is intended to be
 an introduction for dummies (like me). I have had to do a lot of googling lately to get familiar
 with git. My understanding of git is a work in progress. Here I summarize some of the basic
 commands and features that I learnt. I plan to keep this article updated as and when I learn
@@ -1107,7 +1107,7 @@ git tag -a v0.5.0 -m &amp;quot;Tagging version 0.5.0&amp;quot;
 &lt;/li&gt;
 &lt;/ul&gt;
 &lt;/div&gt;
-</summary><category term="git"></category><category term="programming"></category><category term="github"></category></entry><entry><title>Asynchronous Python Logging Using MSMQ</title><link href="http://gouthamanbalaraman.com/blog/asynchronous-python-logging-using-msmq.html" rel="alternate"></link><updated>2014-02-21T00:00:00-08:00</updated><author><name>Goutham Balaraman</name></author><id>tag:gouthamanbalaraman.com,2014-02-21:blog/asynchronous-python-logging-using-msmq.html</id><summary type="html">&lt;p&gt;If you have a web application running in Python, there can be a need for the logging to
+</summary><category term="git"></category><category term="programming"></category><category term="github"></category></entry><entry><title>Asynchronous Python Logging Using MSMQ</title><link href="http://gouthamanbalaraman.com/blog/asynchronous-python-logging-using-msmq.html" rel="alternate"></link><published>2014-02-21T00:00:00-08:00</published><author><name>Goutham Balaraman</name></author><id>tag:gouthamanbalaraman.com,2014-02-21:blog/asynchronous-python-logging-using-msmq.html</id><summary type="html">&lt;p&gt;If you have a web application running in Python, there can be a need for the logging to
 not interfere with the performance. Default file based loggers can lead to a slow down
 because of the constand disk writes. An alternate solution that can be quite handy is
 logging into a message based logger, such as MSMQ. This post is built on my earlier post
@@ -1169,7 +1169,7 @@ you can incorporate it into your workflow as shown below:&lt;/p&gt;
 &lt;p&gt;And that completes the MSMQ logger using python. Now all your logs will be pushed to the KaruthQueue
 that we created. You can use the example shown &lt;a class="reference external" href="/blog/sending-msmq-messages-python.rst"&gt;here&lt;/a&gt; to read the messages in a seperate application
 and store any way you chose, files, database etc.&lt;/p&gt;
-</summary><category term="python"></category><category term="programming"></category></entry><entry><title>Sending MSMQ Messages Using Python</title><link href="http://gouthamanbalaraman.com/blog/sending-msmq-messages-python.html" rel="alternate"></link><updated>2014-02-21T00:00:00-08:00</updated><author><name>Goutham Balaraman</name></author><id>tag:gouthamanbalaraman.com,2014-02-21:blog/sending-msmq-messages-python.html</id><summary type="html">&lt;p&gt;MSMQ is a message queue in the Windows environment, very much like
+</summary><category term="python"></category><category term="programming"></category></entry><entry><title>Sending MSMQ Messages Using Python</title><link href="http://gouthamanbalaraman.com/blog/sending-msmq-messages-python.html" rel="alternate"></link><published>2014-02-21T00:00:00-08:00</published><author><name>Goutham Balaraman</name></author><id>tag:gouthamanbalaraman.com,2014-02-21:blog/sending-msmq-messages-python.html</id><summary type="html">&lt;p&gt;MSMQ is a message queue in the Windows environment, very much like
 RabbitMQ. MSMQ can be used as a task queue or for communicating
 between processes. One advantage of using MSMQ rather than inter-process communication (IPC)
 is that messages have persistence. Here I show how to send and receive MSMQ messages using python.&lt;/p&gt;
@@ -1225,7 +1225,7 @@ You should see an entry there that corresponds to the message that was sent&lt;/
 see your earlier message printed out.&lt;/p&gt;
 &lt;p&gt;Have fun messaging!&lt;/p&gt;
 &lt;/div&gt;
-</summary><category term="python"></category><category term="programming"></category></entry><entry><title>A Short Story of Wall Street</title><link href="http://gouthamanbalaraman.com/blog/a-short-story-of-wall-street.html" rel="alternate"></link><updated>2014-01-23T00:00:00-08:00</updated><author><name>Gouthaman Balaraman</name></author><id>tag:gouthamanbalaraman.com,2014-01-23:blog/a-short-story-of-wall-street.html</id><summary type="html">&lt;p&gt;In the last couple of decades, the US market has witnessed a
+</summary><category term="python"></category><category term="programming"></category></entry><entry><title>A Short Story of Wall Street</title><link href="http://gouthamanbalaraman.com/blog/a-short-story-of-wall-street.html" rel="alternate"></link><published>2014-01-23T00:00:00-08:00</published><author><name>Gouthaman Balaraman</name></author><id>tag:gouthamanbalaraman.com,2014-01-23:blog/a-short-story-of-wall-street.html</id><summary type="html">&lt;p&gt;In the last couple of decades, the US market has witnessed a
 technology bubble, a housing bubble, recession, and market
 crashes. I wanted to understand the human sentiment, the fear
 when market crashes, the euphoria while riding the upside of the bubble.
@@ -1268,7 +1268,7 @@ high quality debt, even though a lot of them defaulted.&lt;/li&gt;
 calculated by computing volatility using daily returns over a 45 day window.&lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-</summary><category term="finance"></category><category term="equity"></category></entry><entry><title>Calculating Stock Beta, Volatility, and More</title><link href="http://gouthamanbalaraman.com/blog/calculating-stock-beta.html" rel="alternate"></link><updated>2014-01-09T00:00:00-08:00</updated><author><name>Gouthaman Balaraman</name></author><id>tag:gouthamanbalaraman.com,2014-01-09:blog/calculating-stock-beta.html</id><summary type="html">&lt;p&gt;Have you ever wondered how to calculate the Beta value that is shown in
+</summary><category term="finance"></category><category term="equity"></category></entry><entry><title>Calculating Stock Beta, Volatility, and More</title><link href="http://gouthamanbalaraman.com/blog/calculating-stock-beta.html" rel="alternate"></link><published>2014-01-09T00:00:00-08:00</published><author><name>Gouthaman Balaraman</name></author><id>tag:gouthamanbalaraman.com,2014-01-09:blog/calculating-stock-beta.html</id><summary type="html">&lt;p&gt;Have you ever wondered how to calculate the Beta value that is shown in
 &lt;a class="reference external" href="http://www.google.com/finance"&gt;GoogleFinance&lt;/a&gt; or &lt;a class="reference external" href="http://www.finance.yahoo.com/"&gt;YahooFinance&lt;/a&gt; and what does it mean from an investment perspective?
 This article will give you an introduction to the concept and demonstrate how
 you can calculate various time series measures for a stock using python. The
@@ -1385,7 +1385,7 @@ for the returns.&lt;/p&gt;
 of returns. The same goes for volatility, which is scaled by $\sqrt{12}$
 in order to annualize.&lt;/p&gt;
 &lt;/div&gt;
-</summary><category term="finance"></category><category term="investing"></category></entry><entry><title>Python Multiprocessing as a Task Queue</title><link href="http://gouthamanbalaraman.com/blog/python-multiprocessing-as-a-task-queue.html" rel="alternate"></link><updated>2014-01-07T00:00:00-08:00</updated><author><name>Goutham Balaraman</name></author><id>tag:gouthamanbalaraman.com,2014-01-07:blog/python-multiprocessing-as-a-task-queue.html</id><summary type="html">&lt;p&gt;When you have computationally intensive tasks in your website (or scripts),
+</summary><category term="finance"></category><category term="investing"></category></entry><entry><title>Python Multiprocessing as a Task Queue</title><link href="http://gouthamanbalaraman.com/blog/python-multiprocessing-as-a-task-queue.html" rel="alternate"></link><published>2014-01-07T00:00:00-08:00</published><author><name>Goutham Balaraman</name></author><id>tag:gouthamanbalaraman.com,2014-01-07:blog/python-multiprocessing-as-a-task-queue.html</id><summary type="html">&lt;p&gt;When you have computationally intensive tasks in your website (or scripts),
 it is conventional to use a task queue such as &lt;a class="reference external" href="http://www.celeryproject.org/"&gt;Celery&lt;/a&gt;. Using Celery requires
 some amount of setup and if you want to avoid, try using the following task
 queue based on the multiprocessing.
