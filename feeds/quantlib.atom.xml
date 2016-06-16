@@ -1,13 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>G B</title><link href="http://gouthamanbalaraman.com/" rel="alternate"></link><link href="http://gouthamanbalaraman.com/feeds/quantlib.atom.xml" rel="self"></link><id>http://gouthamanbalaraman.com/</id><updated>2016-06-15T00:00:00-07:00</updated><entry><title>QuantLib Python Cookbook Announcement</title><link href="http://gouthamanbalaraman.com/blog/quantlib-python-cookbook-announcement.html" rel="alternate"></link><published>2016-06-15T00:00:00-07:00</published><author><name>Goutham Balaraman</name></author><id>tag:gouthamanbalaraman.com,2016-06-15:blog/quantlib-python-cookbook-announcement.html</id><summary type="html">&lt;div class="center_img"&gt;
-&lt;img alt="QuantLib Python Cookbook" src="https://s3.amazonaws.com/titlepages.leanpub.com/quantlibpythoncookbook/hero?1465967986" title= "QuantLib Python Cookbook"&gt;
-&lt;/div&gt;
-
+<feed xmlns="http://www.w3.org/2005/Atom"><title>G B</title><link href="http://gouthamanbalaraman.com/" rel="alternate"></link><link href="http://gouthamanbalaraman.com/feeds/quantlib.atom.xml" rel="self"></link><id>http://gouthamanbalaraman.com/</id><updated>2016-06-15T00:00:00-07:00</updated><entry><title>QuantLib Python Cookbook Announcement</title><link href="http://gouthamanbalaraman.com/blog/quantlib-python-cookbook-announcement.html" rel="alternate"></link><published>2016-06-15T00:00:00-07:00</published><author><name>Goutham Balaraman</name></author><id>tag:gouthamanbalaraman.com,2016-06-15:blog/quantlib-python-cookbook-announcement.html</id><summary type="html">&lt;p&gt;&lt;a href="https://leanpub.com/quantlibpythoncookbook"&gt;
+    &lt;div class="center_img"&gt;
+        &lt;img alt="QuantLib Python Cookbook" 
+             src="https://s3.amazonaws.com/titlepages.leanpub.com/quantlibpythoncookbook/hero?1465967986" 
+             title= "QuantLib Python Cookbook"&gt;
+    &lt;/div&gt;
+&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;Hello everybody! &lt;a href="http://www.implementingquantlib.com/"&gt;Luigi Ballabio&lt;/a&gt; and I have published "QuantLib Python Cookbook" 
 on &lt;a href="https://leanpub.com/quantlibpythoncookbook"&gt;Leanpub&lt;/a&gt;. This book is a collection of 
 &lt;a href="https://www.youtube.com/playlist?list=PLu_PrO8j6XAvOAlZND9WUPwTHY_GYhJVr"&gt;Luigi's youtube videos&lt;/a&gt; and 
 my blog posts &lt;a href="http://gouthamanbalaraman.com/blog/quantlib-python-tutorials-with-examples.html"&gt;tutorials on QuantLib python&lt;/a&gt;.&lt;/p&gt;
-&lt;p&gt;This book gives an introduction to various QuantLib concepts such as various Interest rate curve construction, calibration and
+&lt;p&gt;This book gives an introduction to various QuantLib concepts such as interest rate curve construction, calibration and
 simulation of interest and equity models, and finally valuation of bonds and equities. This book is meant to be a resource for the 
 QuantLib community at large.&lt;/p&gt;</summary><category term="quantlib"></category><category term="python"></category><category term="finance"></category></entry><entry><title>Modeling Volatility Smile and Heston Model Calibration Using QuantLib</title><link href="http://gouthamanbalaraman.com/blog/volatility-smile-heston-model-calibration-quantlib-python.html" rel="alternate"></link><published>2016-05-19T00:00:00-07:00</published><author><name>Goutham Balaraman</name></author><id>tag:gouthamanbalaraman.com,2016-05-19:blog/volatility-smile-heston-model-calibration-quantlib-python.html</id><summary type="html">&lt;p&gt;
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;
