@@ -1,0 +1,959 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Valuing Interest Rate Caps and Floors Using QuantLib - G B</title>
+        <!-- All the meta tags -->
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+        <meta property="og:type" content="article"/>
+        <meta property="og:title" content="Valuing Interest Rate Caps and Floors Using QuantLib"/>
+        <meta property="og:url" content="http://gouthamanbalaraman.com/blog/interest-rate-cap-floor-valuation-quantlib-python.html"/>
+        <meta property="og:description" content="A tutorial on valuing caps and floors using QuantLib and python."/>
+        <link href="http://gouthamanbalaraman.com/theme/static/css/bootstrap.readable.min.css" rel="stylesheet" />
+        <link href="http://gouthamanbalaraman.com/theme/static/css/style.css" rel="stylesheet" />
+        
+        <link href="http://gouthamanbalaraman.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="G B Full Atom Feed" />
+        <link href="http://gouthamanbalaraman.com/feeds/all.rss.xml" type="application/rss+xml" rel="alternate" title="G B RSS Feed" />
+        <link href="http://gouthamanbalaraman.com/feeds/quantlib.atom.xml" type="application/atom+xml" rel="alternate" title="G B Categories Atom Feed" />
+        <link href="http://gouthamanbalaraman.com/feeds/quantlib.rss.xml" type="application/rss+xml" rel="alternate" title="G B Categories RSS Feed" />
+        <!-- Google Analytics -->
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-46714334-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    /*Update Your Analytics Tracking Code to Support Display Advertising by uncommenting the following 
+    instead of the above line */    
+    /*ga.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'stats.g.doubleclick.net/dc.js';*/
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+        <!-- Using MathJax, with the delimiters $ -->
+        <!-- Conflict with pygments for the .mo and .mi -->
+        <script type="text/x-mathjax-config">
+          MathJax.Hub.Config({
+          "HTML-CSS": {
+          styles: {
+          ".MathJax .mo, .MathJax .mi": {color: "black ! important"}}
+          },
+          tex2jax: {inlineMath: [['$','$'], ['\\\\(','\\\\)']],processEscapes: true}
+          });
+        </script>
+    </head>
+
+    <body>
+      <div class="navbar navbar-default navbar-fixed-top">
+          <div class="container">
+            <div class="navbar-header">
+              <a href="http://gouthamanbalaraman.com" class="navbar-brand">G B</a>
+              <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+            </div>
+            <div class="navbar-collapse collapse" id="navbar-main">
+              <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="http://gouthamanbalaraman.com/pages/about.html">About</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                <div class="col-md-10 col-md-offset-1">
+    <div class="page-header">
+        <h1>Valuing Interest Rate Caps and Floors Using QuantLib</h1>
+     <!--span class="glyphicon glyphicon-calendar"></span-->
+     &nbsp;June 23, 2016
+     &nbsp;
+     <!--span class="glyphicon glyphicon-user"></span--> by  
+     <a class="url fn" href="http://gouthamanbalaraman.com/author/goutham-balaraman.html">&nbsp;Goutham Balaraman </a>
+
+        <p id="post-share-links">
+            &nbsp;Share on:
+            <a href="https://sharetodiaspora.github.io/?title=Valuing%20Interest%20Rate%20Caps%20and%20Floors%20Using%20QuantLib&url=http%3A//gouthamanbalaraman.com/blog/interest-rate-cap-floor-valuation-quantlib-python.html" target="_blank" title="Share on Diaspora">Diaspora*</a>
+            /
+            <a href="http://twitter.com/home?status=Valuing%20Interest%20Rate%20Caps%20and%20Floors%20Using%20QuantLib by @gsbalaraman%20http%3A//gouthamanbalaraman.com/blog/interest-rate-cap-floor-valuation-quantlib-python.html" target="_blank" title="Share on Twitter">Twitter</a>
+            /
+            <a href="http://www.facebook.com/sharer/sharer.php?s=100&amp;p%5Burl%5D=http%3A//gouthamanbalaraman.com/blog/interest-rate-cap-floor-valuation-quantlib-python.html" target="_blank" title="Share on Facebook">Facebook</a>
+            /
+            <a href="https://plus.google.com/share?url=http%3A//gouthamanbalaraman.com/blog/interest-rate-cap-floor-valuation-quantlib-python.html" target="_blank" title="Share on Google Plus">Google+</a>
+            /
+            <a href="mailto:?subject=Valuing%20Interest%20Rate%20Caps%20and%20Floors%20Using%20QuantLib&amp;body=http%3A//gouthamanbalaraman.com/blog/interest-rate-cap-floor-valuation-quantlib-python.html" target="_blank" title="Share via Email">Email</a>
+            /
+            <a href="http://www.bloglovin.com/blog/14559547/?claim=cqravg9v4n2">Bloglovin</a>
+        </p>
+     </div>
+                </div>
+            </div>
+            <div class="row">
+				<div class="col-md-2 col-md-offset-1">
+	            <a href="https://leanpub.com/quantlibpythoncookbook">
+				<div class="row">
+					<div class="text-center center_img">
+						<img alt="QuantLib Python Cookbook" 
+							 src="https://s3.amazonaws.com/titlepages.leanpub.com/quantlibpythoncookbook/small?1465967986"
+							 title= "QuantLib Python Cookbook">
+						<h5>QuantLib Python Cookbook</h5>
+					</div>
+				</div>
+					
+				</a>
+				</div>
+                <div class="col-md-8">
+
+<div class="bs-docs-section">
+    
+     <!-- article description -->
+         <p class="lead">A tutorial on valuing caps and floors using QuantLib and python.</p>
+      
+	            <em>Found this post useful? Can you please answer this 
+	            <a href="https://docs.google.com/forms/d/1iRI-YWgqCB-rUhxVsFf-s_y00yAB0vyb-b816q6oktk/viewform">one minute survey.</a></em>
+	            Visit here for other <a href ="http://gouthamanbalaraman.com/blog/quantlib-python-tutorials-with-examples.html">QuantLib Python examples</a>.
+	            <br><br>
+      
+      <!-- article content -->
+     <p>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>In this post, I will walk you through a simple example of valuing caps. I want to talk about two specific cases: </p>
+<ol>
+<li>Value caps given a constant volatility</li>
+<li>Value caps given a cap volatility surface</li>
+</ol>
+<p>Caps, as you might know, can be valued as a sum of caplets. The value of each caplet is determined by the Black formula. In practice, each caplet would have a different volatility. Meaning, a caplet that is in the near term can have a different volotility profile compared to the caplet that is far away in tenor. Similarly caplet volatilities differ with the strike as well.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[1]:</div>
+
+<div class="input_area box-flex1">
+<div class="highlight-ipynb"><pre class="ipynb"><span></span><span class="kn">import</span> <span class="nn">QuantLib</span> <span class="kn">as</span> <span class="nn">ql</span>
+</pre></div>
+
+</div>
+
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[2]:</div>
+
+<div class="input_area box-flex1">
+<div class="highlight-ipynb"><pre class="ipynb"><span></span><span class="n">calc_date</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">Date</span><span class="p">(</span><span class="mi">14</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">2016</span><span class="p">)</span>
+<span class="n">ql</span><span class="o">.</span><span class="n">Settings</span><span class="o">.</span><span class="n">instance</span><span class="p">()</span><span class="o">.</span><span class="n">evaluationDate</span> <span class="o">=</span> <span class="n">calc_date</span>
+</pre></div>
+
+</div>
+
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="constant-volatility">Constant Volatility</h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Let us start by constructing different componets required in valuing the caps. The components that we would need are:</p>
+<ol>
+<li>interest rate term structure for discounting </li>
+<li>interest rate term structure for the floating leg</li>
+<li>construction of the cap</li>
+<li>the pricing engine to value caps using the Black formula</li>
+</ol>
+<p>For simplicity, we will construct only one interest rate term structure here, and assume that the discounting and the floating leg is referenced by the same. Below the term structure of interest rates is constructed from a set of zero rates.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[3]:</div>
+
+<div class="input_area box-flex1">
+<div class="highlight-ipynb"><pre class="ipynb"><span></span><span class="n">dates</span> <span class="o">=</span> <span class="p">[</span><span class="n">ql</span><span class="o">.</span><span class="n">Date</span><span class="p">(</span><span class="mi">14</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">2016</span><span class="p">),</span> <span class="n">ql</span><span class="o">.</span><span class="n">Date</span><span class="p">(</span><span class="mi">14</span><span class="p">,</span><span class="mi">9</span><span class="p">,</span><span class="mi">2016</span><span class="p">),</span> 
+         <span class="n">ql</span><span class="o">.</span><span class="n">Date</span><span class="p">(</span><span class="mi">14</span><span class="p">,</span><span class="mi">12</span><span class="p">,</span><span class="mi">2016</span><span class="p">),</span> <span class="n">ql</span><span class="o">.</span><span class="n">Date</span><span class="p">(</span><span class="mi">14</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">2017</span><span class="p">),</span>
+         <span class="n">ql</span><span class="o">.</span><span class="n">Date</span><span class="p">(</span><span class="mi">14</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">2019</span><span class="p">),</span> <span class="n">ql</span><span class="o">.</span><span class="n">Date</span><span class="p">(</span><span class="mi">14</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">2021</span><span class="p">),</span>
+         <span class="n">ql</span><span class="o">.</span><span class="n">Date</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">2026</span><span class="p">),</span> <span class="n">ql</span><span class="o">.</span><span class="n">Date</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">2031</span><span class="p">),</span>
+         <span class="n">ql</span><span class="o">.</span><span class="n">Date</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">2036</span><span class="p">),</span> <span class="n">ql</span><span class="o">.</span><span class="n">Date</span><span class="p">(</span><span class="mi">14</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">2046</span><span class="p">)</span>
+         <span class="p">]</span>
+<span class="n">yields</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.000000</span><span class="p">,</span> <span class="mf">0.006616</span><span class="p">,</span> <span class="mf">0.007049</span><span class="p">,</span> <span class="mf">0.007795</span><span class="p">,</span>
+          <span class="mf">0.009599</span><span class="p">,</span> <span class="mf">0.011203</span><span class="p">,</span> <span class="mf">0.015068</span><span class="p">,</span> <span class="mf">0.017583</span><span class="p">,</span>
+          <span class="mf">0.018998</span><span class="p">,</span> <span class="mf">0.020080</span><span class="p">]</span>
+<span class="n">day_count</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">ActualActual</span><span class="p">()</span>
+<span class="n">calendar</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">UnitedStates</span><span class="p">()</span>
+<span class="n">interpolation</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">Linear</span><span class="p">()</span>
+<span class="n">compounding</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">Compounded</span>
+<span class="n">compounding_frequency</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">Annual</span>
+
+<span class="n">term_structure</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">ZeroCurve</span><span class="p">(</span><span class="n">dates</span><span class="p">,</span> <span class="n">yields</span><span class="p">,</span> <span class="n">day_count</span><span class="p">,</span> <span class="n">calendar</span><span class="p">,</span> 
+                       <span class="n">interpolation</span><span class="p">,</span> <span class="n">compounding</span><span class="p">,</span> <span class="n">compounding_frequency</span><span class="p">)</span>
+<span class="n">ts_handle</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">YieldTermStructureHandle</span><span class="p">(</span><span class="n">term_structure</span><span class="p">)</span>
+</pre></div>
+
+</div>
+
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>As a next step, lets construct the cap itself. In order to do that, we start by constructing the <code>Schedule</code> object to project the cashflow dates. </p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[4]:</div>
+
+<div class="input_area box-flex1">
+<div class="highlight-ipynb"><pre class="ipynb"><span></span><span class="n">start_date</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">Date</span><span class="p">(</span><span class="mi">14</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">2016</span><span class="p">)</span>
+<span class="n">end_date</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">Date</span><span class="p">(</span><span class="mi">14</span><span class="p">,</span> <span class="mi">6</span> <span class="p">,</span> <span class="mi">2026</span><span class="p">)</span>
+<span class="n">period</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">Period</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="n">ql</span><span class="o">.</span><span class="n">Months</span><span class="p">)</span>
+<span class="n">calendar</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">UnitedStates</span><span class="p">()</span>
+<span class="n">buss_convention</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">ModifiedFollowing</span>
+<span class="n">rule</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">DateGeneration</span><span class="o">.</span><span class="n">Forward</span>
+<span class="n">end_of_month</span> <span class="o">=</span> <span class="bp">False</span>
+
+<span class="n">schedule</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">Schedule</span><span class="p">(</span><span class="n">start_date</span><span class="p">,</span> <span class="n">end_date</span><span class="p">,</span> <span class="n">period</span><span class="p">,</span>
+                       <span class="n">calendar</span><span class="p">,</span> <span class="n">buss_convention</span><span class="p">,</span> <span class="n">buss_convention</span><span class="p">,</span> 
+                       <span class="n">rule</span><span class="p">,</span> <span class="n">end_of_month</span><span class="p">)</span>
+</pre></div>
+
+</div>
+
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Now that we have the schedule, we construct the <code>USDLibor</code> index. Below, you can see that I use <code>addFixing</code> method to provide a fixing date for June 10, 2016. According the schedule constructed, the start date of the cap is June 14, 2016, and there is a 2 bussiness day settlement lag (meaning June 10 reference date) embedded in the <code>USDLibor</code> definition. So in order to set the rate for the accrual period, the rate is obtained from the fixing data provided. For all future dates, the libor rates are automatically inferred using the forward rates provided by the given interest rate term structure.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[5]:</div>
+
+<div class="input_area box-flex1">
+<div class="highlight-ipynb"><pre class="ipynb"><span></span><span class="n">ibor_index</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">USDLibor</span><span class="p">(</span><span class="n">ql</span><span class="o">.</span><span class="n">Period</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="n">ql</span><span class="o">.</span><span class="n">Months</span><span class="p">),</span> <span class="n">ts_handle</span><span class="p">)</span>
+<span class="n">ibor_index</span><span class="o">.</span><span class="n">addFixing</span><span class="p">(</span><span class="n">ql</span><span class="o">.</span><span class="n">Date</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">2016</span><span class="p">),</span> <span class="mf">0.0065560</span><span class="p">)</span>
+
+<span class="n">ibor_leg</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">IborLeg</span><span class="p">([</span><span class="mi">1000000</span><span class="p">],</span> <span class="n">schedule</span><span class="p">,</span> <span class="n">ibor_index</span><span class="p">)</span>
+</pre></div>
+
+</div>
+
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Now that we have all the required pieces, the <code>Cap</code> can be constructed by passing the <code>ibor_leg</code> and the <code>strike</code> information. Constructing a floot is done through the <code>Floor</code> class. The <code>BlackCapFloorEngine</code> can be used to price the cap with constant volatility as shown below. </p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[6]:</div>
+
+<div class="input_area box-flex1">
+<div class="highlight-ipynb"><pre class="ipynb"><span></span><span class="n">strike</span> <span class="o">=</span> <span class="mf">0.02</span>
+<span class="n">cap</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">Cap</span><span class="p">(</span><span class="n">ibor_leg</span><span class="p">,</span> <span class="p">[</span><span class="n">strike</span><span class="p">])</span>
+
+<span class="n">vols</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">QuoteHandle</span><span class="p">(</span><span class="n">ql</span><span class="o">.</span><span class="n">SimpleQuote</span><span class="p">(</span><span class="mf">0.547295</span><span class="p">))</span>
+<span class="n">engine</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">BlackCapFloorEngine</span><span class="p">(</span><span class="n">ts_handle</span><span class="p">,</span> <span class="n">vols</span><span class="p">)</span>
+
+<span class="n">cap</span><span class="o">.</span><span class="n">setPricingEngine</span><span class="p">(</span><span class="n">engine</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">cap</span><span class="o">.</span><span class="n">NPV</span><span class="p">()</span>
+</pre></div>
+
+</div>
+
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="box-flex1 output_subarea output_stream output_stdout">
+<pre class="ipynb">54369.8580629
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="using-volatility-surfaces">Using Volatility Surfaces</h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>In the above exercise, we used a constant volatility value. In practice, one needs to strip the market quoted capfloor volatilities to infer the volatility of each and every caplet. <code>QuantLib</code> provides excellent tools in order to do that. Let us assume the following dummy data represents the volatility surface quoted by the market. I have the various <code>strikes</code>, <code>expiries</code>, and the volatility quotes in percentage format. I take the raw data and create a <code>Matrix</code> in order to construct the volatility surface.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[7]:</div>
+
+<div class="input_area box-flex1">
+<div class="highlight-ipynb"><pre class="ipynb"><span></span><span class="n">strikes</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.01</span><span class="p">,</span><span class="mf">0.015</span><span class="p">,</span> <span class="mf">0.02</span><span class="p">]</span>
+<span class="n">expiries</span> <span class="o">=</span> <span class="p">[</span><span class="n">ql</span><span class="o">.</span><span class="n">Period</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">ql</span><span class="o">.</span><span class="n">Years</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">11</span><span class="p">)]</span> <span class="o">+</span> <span class="p">[</span><span class="n">ql</span><span class="o">.</span><span class="n">Period</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="n">ql</span><span class="o">.</span><span class="n">Years</span><span class="p">)]</span>
+<span class="n">vols</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">Matrix</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">expiries</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">strikes</span><span class="p">))</span>
+<span class="n">data</span> <span class="o">=</span> <span class="p">[[</span><span class="mf">47.27</span><span class="p">,</span> <span class="mf">55.47</span><span class="p">,</span> <span class="mf">64.07</span><span class="p">,</span> <span class="mf">70.14</span><span class="p">,</span> <span class="mf">72.13</span><span class="p">,</span> <span class="mf">69.41</span><span class="p">,</span> <span class="mf">72.15</span><span class="p">,</span> <span class="mf">67.28</span><span class="p">,</span> <span class="mf">66.08</span><span class="p">,</span> <span class="mf">68.64</span><span class="p">,</span> <span class="mf">65.83</span><span class="p">],</span>
+   <span class="p">[</span><span class="mf">46.65</span><span class="p">,</span><span class="mf">54.15</span><span class="p">,</span><span class="mf">61.47</span><span class="p">,</span><span class="mf">65.53</span><span class="p">,</span><span class="mf">66.28</span><span class="p">,</span><span class="mf">62.83</span><span class="p">,</span><span class="mf">64.42</span><span class="p">,</span><span class="mf">60.05</span><span class="p">,</span><span class="mf">58.71</span><span class="p">,</span><span class="mf">60.35</span><span class="p">,</span><span class="mf">55.91</span><span class="p">],</span>
+   <span class="p">[</span><span class="mf">46.6</span><span class="p">,</span><span class="mf">52.65</span><span class="p">,</span><span class="mf">59.32</span><span class="p">,</span><span class="mf">62.05</span><span class="p">,</span><span class="mf">62.0</span><span class="p">,</span><span class="mf">58.09</span><span class="p">,</span><span class="mf">59.03</span><span class="p">,</span><span class="mf">55.0</span><span class="p">,</span><span class="mf">53.59</span><span class="p">,</span><span class="mf">54.74</span><span class="p">,</span><span class="mf">49.54</span><span class="p">]</span>
+   <span class="p">]</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">vols</span><span class="o">.</span><span class="n">rows</span><span class="p">()):</span>
+    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">vols</span><span class="o">.</span><span class="n">columns</span><span class="p">()):</span>
+        <span class="n">vols</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="n">i</span><span class="p">]</span><span class="o">/</span><span class="mf">100.0</span>
+</pre></div>
+
+</div>
+
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The <code>CapFloorTermVolSurface</code> offers a way to store the capfloor volatilities. These are however <code>CapFloor</code> volatilities, and not the volatilities of the individual options.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[8]:</div>
+
+<div class="input_area box-flex1">
+<div class="highlight-ipynb"><pre class="ipynb"><span></span><span class="n">calendar</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">UnitedStates</span><span class="p">()</span>
+<span class="n">bdc</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">ModifiedFollowing</span>
+<span class="n">daycount</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">Actual365Fixed</span><span class="p">()</span>
+<span class="n">settlement_days</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="n">capfloor_vol</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">CapFloorTermVolSurface</span><span class="p">(</span><span class="n">settlement_days</span><span class="p">,</span> <span class="n">calendar</span><span class="p">,</span> <span class="n">bdc</span><span class="p">,</span> <span class="n">expiries</span><span class="p">,</span> <span class="n">strikes</span><span class="p">,</span> <span class="n">vols</span><span class="p">,</span> <span class="n">daycount</span><span class="p">)</span>
+</pre></div>
+
+</div>
+
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The <code>OptionletStripper1</code> class lets you to strip the individual caplet/floorlet volatilities from the capfloor volatilities. We have to &#39;jump&#39; some hoops here to make it useful for pricing. The <code>OptionletStripper1</code> class does not allow you to be consumed directly by a pricing engine. The <code>StrippedOptionletAdapter</code> takes the stripped optionlet volatilities, and creates a term structure of optionlet volatilities. We then wrap that into a handle using <code>OptionletVolatilityStructureHandle</code>.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[9]:</div>
+
+<div class="input_area box-flex1">
+<div class="highlight-ipynb"><pre class="ipynb"><span></span><span class="n">optionlet_surf</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">OptionletStripper1</span><span class="p">(</span><span class="n">capfloor_vol</span><span class="p">,</span> <span class="n">ibor_index</span><span class="p">)</span>
+<span class="n">ovs_handle</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">OptionletVolatilityStructureHandle</span><span class="p">(</span>
+    <span class="n">ql</span><span class="o">.</span><span class="n">StrippedOptionletAdapter</span><span class="p">(</span><span class="n">optionlet_surf</span><span class="p">)</span>
+<span class="p">)</span>
+</pre></div>
+
+</div>
+
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Below, we visulaize the capfloor volatility surface, and the optionlet volatility suface for a fixed strike.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[10]:</div>
+
+<div class="input_area box-flex1">
+<div class="highlight-ipynb"><pre class="ipynb"><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="o">%</span><span class="k">matplotlib</span> <span class="n">inline</span>
+</pre></div>
+
+</div>
+
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[11]:</div>
+
+<div class="input_area box-flex1">
+<div class="highlight-ipynb"><pre class="ipynb"><span></span><span class="n">tenors</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="mf">0.25</span><span class="p">)</span>
+<span class="n">strike</span> <span class="o">=</span> <span class="mf">0.015</span>
+<span class="n">capfloor_vols</span> <span class="o">=</span> <span class="p">[</span><span class="n">capfloor_vol</span><span class="o">.</span><span class="n">volatility</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">strike</span><span class="p">)</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">tenors</span><span class="p">]</span>
+<span class="n">opionlet_vols</span> <span class="o">=</span> <span class="p">[</span><span class="n">ovs_handle</span><span class="o">.</span><span class="n">volatility</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">strike</span><span class="p">)</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">tenors</span><span class="p">]</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">tenors</span><span class="p">,</span> <span class="n">capfloor_vols</span><span class="p">,</span> <span class="s2">&quot;--&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;CapFloor Vols&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">tenors</span><span class="p">,</span> <span class="n">opionlet_vols</span><span class="p">,</span><span class="s2">&quot;-&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Optionlet Vols&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">bbox_to_anchor</span><span class="o">=</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.25</span><span class="p">))</span>
+</pre></div>
+
+</div>
+
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt output_prompt">Out[11]:</div>
+
+
+<pre class="ipynb">&lt;matplotlib.legend.Legend at 0x894efd0&gt;</pre>
+
+</div>
+
+<div class="output_area"><div class="prompt"></div>
+
+
+<div class="output_png output_subarea ">
+<img src="data:image/png;base64,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
+AAAAAElFTkSuQmCC
+"
+>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The <code>BlackCapFloorEngine</code> can accept the optionlet volatility surface in order to price the caps or floors.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[12]:</div>
+
+<div class="input_area box-flex1">
+<div class="highlight-ipynb"><pre class="ipynb"><span></span><span class="n">engine2</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">BlackCapFloorEngine</span><span class="p">(</span><span class="n">ts_handle</span><span class="p">,</span> <span class="n">ovs_handle</span><span class="p">)</span>
+<span class="n">cap</span><span class="o">.</span><span class="n">setPricingEngine</span><span class="p">(</span><span class="n">engine2</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">cap</span><span class="o">.</span><span class="n">NPV</span><span class="p">()</span>
+</pre></div>
+
+</div>
+
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="box-flex1 output_subarea output_stream output_stdout">
+<pre class="ipynb">54384.928315
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The <code>QuantLib</code> C++ class allow for one to view the projected cashflows in terms of individual caplets. I just realized that the python extension does not have this feature added to it. Will give a PR one of these days and update this post. </p>
+<p>Hope you find this useful.</p>
+</div>
+</div>
+</div></p>
+     <br>
+     
+     <!-- article tags-->
+        <span class="glyphicon glyphicon-tags"></span>&nbsp;&nbsp;
+            <span class="label label-default"><a href="http://gouthamanbalaraman.com/tag/quantlib.html">quantlib</a></span>&nbsp;&nbsp;
+            <span class="label label-default"><a href="http://gouthamanbalaraman.com/tag/python.html">python</a></span>&nbsp;&nbsp;
+            <span class="label label-default"><a href="http://gouthamanbalaraman.com/tag/finance.html">finance</a></span>&nbsp;&nbsp;
+        <br>
+     <hr/>
+    
+    <strong>Related Post</strong>
+        <ul>
+            <li>
+                <a href="http://gouthamanbalaraman.com/blog/interest-rate-swap-quantlib-python.html">Modeling Vanilla Interest Rate Swaps Using QuantLib</a>
+            </li>
+            <li>
+                <a href="http://gouthamanbalaraman.com/blog/quantlib-python-cookbook-announcement.html">QuantLib Python Cookbook Announcement</a>
+            </li>
+            <li>
+                <a href="http://gouthamanbalaraman.com/blog/valuing-european-option-heston-model-quantLib.html">Valuing European Option Using the Heston Model in QuantLib and Python</a>
+            </li>
+            <li>
+                <a href="http://gouthamanbalaraman.com/blog/hull-white-simulation-quantlib-python.html">Hull White Term Structure Simulations with QuantLib</a>
+            </li>
+            <li>
+                <a href="http://gouthamanbalaraman.com/blog/european-option-binomial-tree-quantlib-python.html">Option Model Handbook, Part III: European Option Pricing With QuantLib</a>
+            </li>
+        </ul>
+        <hr/>
+
+     <!-- article comments -->
+    <div class="comment">
+        <div id="disqus_thread"></div> <!-- comment app container -->
+    </div>
+	<!-- Comment BEGIN -->
+    <script type="text/javascript">
+        var disqus_shortname = 'gouthamanbalaramancom'; // required: replace example with your forum shortname
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+     <!-- Comment END -->
+</div>    
+                </div>
+               
+            </div>
+            <div class="row">
+                <div class="col-md-10 col-md-offset-1">
+                </div>
+            </div>
+            <footer id="contentinfo" class="footer">
+                <address id="about" class="vcard body">
+                    &copy; <a href="http://gouthamanbalaraman.com">Goutham Balaraman</a> Proudly powered by <a href="http://getpelican.com/">Pelican</a>
+                    <div class="pull-right">
+                    	<a href="http://www.bloglovin.com/blog/14559547/?claim=cqravg9v4n2">Bloglovin</a>
+			            <a href="http://gouthamanbalaraman.com/feeds/all.atom.xml">Atom</a>
+			        &nbsp
+			            <a href="http://gouthamanbalaraman.com/feeds/all.rss.xml">RSS</a>
+		            </div>
+                </address><!-- /#about -->
+            </footer>
+        </div><!-- container -->
+        <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
+        <script src="http://gouthamanbalaraman.com/theme/static/js/jquery.1.11.2.min.js"></script>
+        <script src="http://gouthamanbalaraman.com/theme/static/js/bootstrap.min.js"></script>
+        <script type="text/javascript">
+	jQuery(document).ready(function($) {
+	    $("div.collapseheader").click(function () {
+	    $header = $(this).children("span").first();
+	    $codearea = $(this).children(".input_area");
+	    console.log($(this).children());
+	    $codearea.slideToggle(500, function () {
+	        $header.text(function () {
+	            return $codearea.is(":visible") ? "Collapse Code" : "Expand Code";
+	        });
+	    });
+	});
+	});
+	</script>
+    </body>
+</html>
