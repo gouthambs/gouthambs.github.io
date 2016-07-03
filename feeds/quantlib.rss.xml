@@ -57,7 +57,7 @@ this time around you can start it by saying:&lt;/p&gt;
 &lt;p&gt;Give this a try and drop a word about your experience with it. You can also take a look at
 &lt;a href="http://www.implementingquantlib.com/"&gt;Luigi Ballabio's&lt;/a&gt; presentation on 
 &lt;a href="https://www.youtube.com/watch?v=LZbsxs_VGtQ"&gt;QuantLib using Docker&lt;/a&gt; for another take on 
-this subject.&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Goutham Balaraman</dc:creator><pubDate>Sat, 02 Jul 2016 00:00:00 -0700</pubDate><guid isPermaLink="false">tag:gouthamanbalaraman.com,2016-07-02:blog/quantlib-python-notebook-docker.html</guid><category>python</category><category>finance</category><category>programming</category></item><item><title>Valuing Interest Rate Caps and Floors Using QuantLib</title><link>http://gouthamanbalaraman.com/blog/interest-rate-cap-floor-valuation-quantlib-python.html</link><description>&lt;p&gt;
+this subject.&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Goutham Balaraman</dc:creator><pubDate>Sat, 02 Jul 2016 00:00:00 -0700</pubDate><guid isPermaLink="false">tag:gouthamanbalaraman.com,2016-07-02:blog/quantlib-python-notebook-docker.html</guid><category>python</category><category>finance</category><category>programming</category><category>quantlib</category></item><item><title>Valuing Interest Rate Caps and Floors Using QuantLib</title><link>http://gouthamanbalaraman.com/blog/interest-rate-cap-floor-valuation-quantlib-python.html</link><description>&lt;p&gt;
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;
 &lt;div class="prompt input_prompt"&gt;
 &lt;/div&gt;
