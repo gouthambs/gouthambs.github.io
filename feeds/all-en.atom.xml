@@ -1,5 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>G B</title><link href="http://gouthamanbalaraman.com/" rel="alternate"></link><link href="http://gouthamanbalaraman.com/feeds/all-en.atom.xml" rel="self"></link><id>http://gouthamanbalaraman.com/</id><updated>2016-06-23T00:00:00-07:00</updated><entry><title>Valuing Interest Rate Caps and Floors Using QuantLib</title><link href="http://gouthamanbalaraman.com/blog/interest-rate-cap-floor-valuation-quantlib-python.html" rel="alternate"></link><published>2016-06-23T00:00:00-07:00</published><author><name>Goutham Balaraman</name></author><id>tag:gouthamanbalaraman.com,2016-06-23:blog/interest-rate-cap-floor-valuation-quantlib-python.html</id><summary type="html">&lt;p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>G B</title><link href="http://gouthamanbalaraman.com/" rel="alternate"></link><link href="http://gouthamanbalaraman.com/feeds/all-en.atom.xml" rel="self"></link><id>http://gouthamanbalaraman.com/</id><updated>2016-07-02T00:00:00-07:00</updated><entry><title>QuantLib Python Notebooks On Docker</title><link href="http://gouthamanbalaraman.com/blog/quantlib-python-notebook-docker.html" rel="alternate"></link><published>2016-07-02T00:00:00-07:00</published><author><name>Goutham Balaraman</name></author><id>tag:gouthamanbalaraman.com,2016-07-02:blog/quantlib-python-notebook-docker.html</id><summary type="html">&lt;p&gt;The typical way to get QuantLib python running in your computer
+is by compiling QuantLib and the SWIG bindings in your computer.
+I have heard from some of my blog readers that they run into issues
+with getting QuantLib-Python running in their system. Here I will show
+how you can easily get started on QuantLib-Python using Docker.&lt;/p&gt;
+&lt;h2&gt;Docker&lt;/h2&gt;
+&lt;p&gt;&lt;a href="https://www.docker.com/what-docker"&gt;Docker&lt;/a&gt; is a platform for containerization of software. 
+In other words, Docker lets one to wrap an application in a complete ecosystem needed to run
+the application (aka image), such as system libraries and filesystem. This means that irrespective of
+what operating system your computer runs, a Docker image will run reliably on the Docker containers. 
+Docker containers are very lightweight, and it starts up in a matter of couple of seconds.&lt;/p&gt;
+&lt;h2&gt;Docker and QuantLib&lt;/h2&gt;
+&lt;p&gt;Every now and then, I would run into conflicts between the development version of QuantLib and 
+the release version.  So in order to not have such conflicts, Docker containers are a perfect 
+solution. Every image is isolated and it is easy to load a specific version and not have any 
+conflicts. In order to keep my Docker images minimal, I use Alpine Linux as a base instead of Ubuntu.&lt;/p&gt;
+&lt;h3&gt;Getting Up and Running&lt;/h3&gt;
+&lt;p&gt;In order to get started on using Docker, you need to first install Docker. The first step
+is to get Docker itself. You can get the Docker client by going to 
+&lt;a href="https://www.docker.com/products/docker"&gt;getting started page&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Once you have done the installation, you can get quantlib-python by doing the following
+on a shell:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;docker pull gbalaraman/quantlib-notebook
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;This is going to pull the quantlib-notebook image from Docker Hub. This process takes a few 
+seconds. Think of this as the same as downloading an installer for a software.&lt;/p&gt;
+&lt;p&gt;Once you have the image downloaded, you can run quantlib-python notebooks by donig the following:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;docker run -d -p 8888:8888 -v &amp;lt;your notebook folder&amp;gt;:/home/notebooks/ --name ql_notebook gbalaraman/quantlib-notebook
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;The above command runs the image "gbalaraman/quantlib-notebook" as a daemon (-d) and
+will forward the port 8888 in the container to the port 8888 in localhost (-p 8888:8888).
+We are calling the container where this image runs as ql_notebook (--name ql_notebook). 
+In "-v &lt;your notebook folder&gt;:/home/notebooks/", you should put the folder in you machine
+where you want the notebooks to be stored. This takes care of mapping your local folder
+to the volume in the container where the notebook will run from.
+You can visit &lt;a href="http://localhost:8888"&gt;http://localhost:8888&lt;/a&gt; to access the QuntLib python 
+notebook environment to play with. This image also has a few other packages included in it, 
+such as numpy, pandas, scipy, matplolib and seaborn. This is most of
+all you would need to run the notebooks that I publish as part of my QuantLib python tutorial
+series. &lt;/p&gt;
+&lt;p&gt;When you are done you can stop the Docker container by using the command:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;docker stop ql_notebook
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;This is equivalent to shutting down the notebook. If you want to start docker again,
+this time around you can start it by saying:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;docker start ql_notebook
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Give this a try and drop a word about your experience with it. You can also take a look at
+&lt;a href="http://www.implementingquantlib.com/"&gt;Luigi Ballabio's&lt;/a&gt; presentation on 
+&lt;a href="https://www.youtube.com/watch?v=LZbsxs_VGtQ"&gt;QuantLib using Docker&lt;/a&gt; for another take on 
+this subject.&lt;/p&gt;</summary><category term="python"></category><category term="finance"></category><category term="programming"></category></entry><entry><title>Valuing Interest Rate Caps and Floors Using QuantLib</title><link href="http://gouthamanbalaraman.com/blog/interest-rate-cap-floor-valuation-quantlib-python.html" rel="alternate"></link><published>2016-06-23T00:00:00-07:00</published><author><name>Goutham Balaraman</name></author><id>tag:gouthamanbalaraman.com,2016-06-23:blog/interest-rate-cap-floor-valuation-quantlib-python.html</id><summary type="html">&lt;p&gt;
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;
 &lt;div class="prompt input_prompt"&gt;
 &lt;/div&gt;
@@ -5502,6 +5560,16 @@ Forward YTM                    = 1.952%
                 
                     
                     &lt;li&gt; &lt;b&gt;&lt;a href="/blog/interest-rate-cap-floor-valuation-quantlib-python.html"&gt;Valuing Interest Rate Caps and Floors Using QuantLib&lt;/a&gt;&lt;/b&gt;: A tutorial on valuing caps and floors using QuantLib and python. &lt;/li&gt;
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+                
                     
                 
                     
