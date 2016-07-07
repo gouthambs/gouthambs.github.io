@@ -57,7 +57,7 @@ this time around you can start it by saying:&lt;/p&gt;
 &lt;p&gt;Give this a try and drop a word about your experience with it. You can also take a look at
 &lt;a href="http://www.implementingquantlib.com/"&gt;Luigi Ballabio's&lt;/a&gt; presentation on 
 &lt;a href="https://www.youtube.com/watch?v=LZbsxs_VGtQ"&gt;QuantLib using Docker&lt;/a&gt; for another take on 
-this subject.&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Goutham Balaraman</dc:creator><pubDate>Sat, 02 Jul 2016 00:00:00 -0700</pubDate><guid isPermaLink="false">tag:gouthamanbalaraman.com,2016-07-02:blog/quantlib-python-notebook-docker.html</guid><category>python</category><category>finance</category><category>programming</category><category>quantlib</category></item><item><title>Valuing Interest Rate Caps and Floors Using QuantLib</title><link>http://gouthamanbalaraman.com/blog/interest-rate-cap-floor-valuation-quantlib-python.html</link><description>&lt;p&gt;
+this subject.&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Goutham Balaraman</dc:creator><pubDate>Sat, 02 Jul 2016 00:00:00 -0700</pubDate><guid isPermaLink="false">tag:gouthamanbalaraman.com,2016-07-02:blog/quantlib-python-notebook-docker.html</guid><category>python</category><category>finance</category><category>programming</category><category>quantlib</category></item><item><title>Valuing Interest Rate Caps and Floors Using QuantLib Python</title><link>http://gouthamanbalaraman.com/blog/interest-rate-cap-floor-valuation-quantlib-python.html</link><description>&lt;p&gt;
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;
 &lt;div class="prompt input_prompt"&gt;
 &lt;/div&gt;
@@ -820,7 +820,7 @@ on &lt;a href="https://leanpub.com/quantlibpythoncookbook"&gt;Leanpub&lt;/a&gt;.
 my blog posts &lt;a href="http://gouthamanbalaraman.com/blog/quantlib-python-tutorials-with-examples.html"&gt;tutorials on QuantLib python&lt;/a&gt;.&lt;/p&gt;
 &lt;p&gt;This book gives an introduction to various QuantLib concepts such as interest rate curve construction, calibration and
 simulation of interest and equity models, and finally valuation of bonds and equities. This book is meant to be a resource for the 
-QuantLib community at large.&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Goutham Balaraman</dc:creator><pubDate>Wed, 15 Jun 2016 00:00:00 -0700</pubDate><guid isPermaLink="false">tag:gouthamanbalaraman.com,2016-06-15:blog/quantlib-python-cookbook-announcement.html</guid><category>quantlib</category><category>python</category><category>finance</category></item><item><title>Modeling Volatility Smile and Heston Model Calibration Using QuantLib</title><link>http://gouthamanbalaraman.com/blog/volatility-smile-heston-model-calibration-quantlib-python.html</link><description>&lt;p&gt;
+QuantLib community at large.&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Goutham Balaraman</dc:creator><pubDate>Wed, 15 Jun 2016 00:00:00 -0700</pubDate><guid isPermaLink="false">tag:gouthamanbalaraman.com,2016-06-15:blog/quantlib-python-cookbook-announcement.html</guid><category>quantlib</category><category>python</category><category>finance</category></item><item><title>Modeling Volatility Smile and Heston Model Calibration Using QuantLib Python</title><link>http://gouthamanbalaraman.com/blog/volatility-smile-heston-model-calibration-quantlib-python.html</link><description>&lt;p&gt;
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;
 &lt;div class="prompt input_prompt"&gt;
 &lt;/div&gt;
@@ -3996,7 +3996,7 @@ Average Abs Error (%) : 2.440
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;&lt;/p&gt;
-&lt;p&gt;Click here to download the &lt;a href="/extra/notebooks/heston_model_calibration_smile.ipynb"&gt;ipython notebook&lt;/a&gt;.&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Goutham Balaraman</dc:creator><pubDate>Thu, 19 May 2016 00:00:00 -0700</pubDate><guid isPermaLink="false">tag:gouthamanbalaraman.com,2016-05-19:blog/volatility-smile-heston-model-calibration-quantlib-python.html</guid><category>quantlib</category><category>python</category><category>finance</category></item><item><title>Valuing Convertible Bonds Using QuantLib</title><link>http://gouthamanbalaraman.com/blog/value-convertible-bond-quantlib-python.html</link><description>&lt;p&gt;
+&lt;p&gt;Click here to download the &lt;a href="/extra/notebooks/heston_model_calibration_smile.ipynb"&gt;ipython notebook&lt;/a&gt;.&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Goutham Balaraman</dc:creator><pubDate>Thu, 19 May 2016 00:00:00 -0700</pubDate><guid isPermaLink="false">tag:gouthamanbalaraman.com,2016-05-19:blog/volatility-smile-heston-model-calibration-quantlib-python.html</guid><category>quantlib</category><category>python</category><category>finance</category></item><item><title>Valuing Convertible Bonds Using QuantLib Python</title><link>http://gouthamanbalaraman.com/blog/value-convertible-bond-quantlib-python.html</link><description>&lt;p&gt;
 &lt;div class="cell border-box-sizing code_cell rendered"&gt;
 &lt;div class="input"&gt;
 &lt;div class="prompt input_prompt"&gt;In&amp;nbsp;[1]:&lt;/div&gt;
@@ -4623,7 +4623,7 @@ $ pip install flask-blogging
 &lt;p&gt;Here I introduced the Flask-Blogging extension that can be used as
 a flask blog engine to your flask site.&lt;/p&gt;
 &lt;/div&gt;
-</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Goutham Balaraman</dc:creator><pubDate>Sat, 04 Jul 2015 00:00:00 -0700</pubDate><guid isPermaLink="false">tag:gouthamanbalaraman.com,2015-07-04:blog/flask-blogging-python-flask-blog-engine-extension.html</guid><category>python</category><category>flask</category><category>programming</category></item><item><title>An Introduction to Interest Rate Term Structure in QuantLib</title><link>http://gouthamanbalaraman.com/blog/quantlib-term-structure-bootstrap-yield-curve.html</link><description>&lt;p&gt;Term structure is pivotal to pricing securities. One would need a &lt;tt class="docutils literal"&gt;YieldTermStructure&lt;/tt&gt; object
+</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Goutham Balaraman</dc:creator><pubDate>Sat, 04 Jul 2015 00:00:00 -0700</pubDate><guid isPermaLink="false">tag:gouthamanbalaraman.com,2015-07-04:blog/flask-blogging-python-flask-blog-engine-extension.html</guid><category>python</category><category>flask</category><category>programming</category></item><item><title>An Introduction to Interest Rate Term Structure in QuantLib Python</title><link>http://gouthamanbalaraman.com/blog/quantlib-term-structure-bootstrap-yield-curve.html</link><description>&lt;p&gt;Term structure is pivotal to pricing securities. One would need a &lt;tt class="docutils literal"&gt;YieldTermStructure&lt;/tt&gt; object
 created in &lt;tt class="docutils literal"&gt;QuantLib&lt;/tt&gt; to use with pricing engines. In an earlier post on
 &lt;a class="reference external" href="/blog/quantlib-bond-modeling.html"&gt;modeling bonds using QuantLib&lt;/a&gt; we discussed how to use
 spot rates directly with bond pricing engine. Here in this post we will show how to
@@ -4828,7 +4828,7 @@ as the YTM.&lt;/p&gt;
 &lt;p&gt;In this post we showed how to bootstrap yield curve to get spot rates.&lt;/p&gt;
 &lt;p&gt;Download the &lt;a class="reference external" href="/extra/notebooks/term-structures.ipynb"&gt;bootstrap yield curve ipython notebook&lt;/a&gt;.&lt;/p&gt;
 &lt;/div&gt;
-</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Goutham Balaraman</dc:creator><pubDate>Wed, 08 Apr 2015 00:00:00 -0700</pubDate><guid isPermaLink="false">tag:gouthamanbalaraman.com,2015-04-08:blog/quantlib-term-structure-bootstrap-yield-curve.html</guid><category>python</category><category>finance</category><category>quantlib</category></item><item><title>Modeling Fixed Rate Bonds Using QuantLib</title><link>http://gouthamanbalaraman.com/blog/quantlib-bond-modeling.html</link><description>&lt;p&gt;Let's consider a hypothetical bond with a par value of 100, that pays 6% coupon
+</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Goutham Balaraman</dc:creator><pubDate>Wed, 08 Apr 2015 00:00:00 -0700</pubDate><guid isPermaLink="false">tag:gouthamanbalaraman.com,2015-04-08:blog/quantlib-term-structure-bootstrap-yield-curve.html</guid><category>python</category><category>finance</category><category>quantlib</category></item><item><title>Modeling Fixed Rate Bonds in QuantLib Python</title><link>http://gouthamanbalaraman.com/blog/quantlib-bond-modeling.html</link><description>&lt;p&gt;Let's consider a hypothetical bond with a par value of 100, that pays 6% coupon
 semi-annually issued on January 15th, 2015 and set to mature on January 15th, 2016.
 The bond will pay a coupon on July 15th, 2015 and January 15th, 2016. The par
 amount of 100 will also be paid on the January 15th, 2016.&lt;/p&gt;
@@ -4892,7 +4892,7 @@ Now lets construct the fixed rate bond.&lt;/p&gt;
 &lt;/pre&gt;
 &lt;p&gt;Voila!&lt;/p&gt;
 &lt;p&gt;Download the &lt;a class="reference external" href="/extra/notebooks/modeling-bonds.ipynb"&gt;modeling bonds ipython notebook&lt;/a&gt;.&lt;/p&gt;
-</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Goutham Balaraman</dc:creator><pubDate>Mon, 30 Mar 2015 00:00:00 -0700</pubDate><guid isPermaLink="false">tag:gouthamanbalaraman.com,2015-03-30:blog/quantlib-bond-modeling.html</guid><category>python</category><category>finance</category><category>quantlib</category></item><item><title>Introduction to QuantLib</title><link>http://gouthamanbalaraman.com/blog/quantlib-basics.html</link><description>&lt;p&gt;I installed the latest version of QuantLib (V1.5) and the python wrapper to QuantLib.
+</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Goutham Balaraman</dc:creator><pubDate>Mon, 30 Mar 2015 00:00:00 -0700</pubDate><guid isPermaLink="false">tag:gouthamanbalaraman.com,2015-03-30:blog/quantlib-bond-modeling.html</guid><category>python</category><category>finance</category><category>quantlib</category></item><item><title>Introduction to QuantLib Python</title><link>http://gouthamanbalaraman.com/blog/quantlib-basics.html</link><description>&lt;p&gt;I installed the latest version of QuantLib (V1.5) and the python wrapper to QuantLib.
 My experiments lately have been to get a feel for the QuantLib API. The library itself
 is so extensive, that it is rather hard for a new comer to get going. In this post
 we will look into some of the basic classes and functionality in QuantLib.&lt;/p&gt;
