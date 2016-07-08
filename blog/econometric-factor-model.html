@@ -15,6 +15,22 @@
         <link href="http://gouthamanbalaraman.com/feeds/widgets.atom.xml" type="application/atom+xml" rel="alternate" title="G B Categories Atom Feed" />
         <link href="http://gouthamanbalaraman.com/feeds/widgets.rss.xml" type="application/rss+xml" rel="alternate" title="G B Categories RSS Feed" />
         <link href="http://gouthamanbalaraman.com/theme/static/css/bootstrap.readable.min.css" rel="stylesheet" />
+
+	<!-- Google Analytics -->
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-46714334-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    /*Update Your Analytics Tracking Code to Support Display Advertising by uncommenting the following 
+    instead of the above line */    
+    /*ga.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'stats.g.doubleclick.net/dc.js';*/
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
     </head>
 
     <body>
@@ -247,10 +263,10 @@ for details.</p>
                 <a href="http://gouthamanbalaraman.com/blog/calculating-stock-beta.html">Calculating Stock Beta, Volatility, and More</a>
             </li>
             <li>
-                <a href="http://gouthamanbalaraman.com/blog/a-short-story-of-wall-street.html">A Short Story of Wall Street</a>
+                <a href="http://gouthamanbalaraman.com/blog/quantlib-bond-modeling.html">Modeling Fixed Rate Bonds in QuantLib Python</a>
             </li>
             <li>
-                <a href="http://gouthamanbalaraman.com/blog/option-model-handbook-part-II-introduction-to-binomial-trees.html">Option Model Handbook, Part II: Introduction to Binomial Trees</a>
+                <a href="http://gouthamanbalaraman.com/blog/understanding-interest-rate-risk.html">Understanding Interest Rate Risk</a>
             </li>
         </ul>
         <hr/>
@@ -311,22 +327,7 @@ for details.</p>
 	});
 	});
 	</script>
-	<!-- Google Analytics -->
-<script type="text/javascript">
-  var _gaq = _gaq || [];
-  _gaq.push(['_setAccount', 'UA-46714334-1']);
-  _gaq.push(['_trackPageview']);
-
-  (function() {
-    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-    /*Update Your Analytics Tracking Code to Support Display Advertising by uncommenting the following 
-    instead of the above line */    
-    /*ga.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'stats.g.doubleclick.net/dc.js';*/
-    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-  })();
-</script>
-        <!-- Using MathJax, with the delimiters $ -->
+	<!-- Using MathJax, with the delimiters $ -->
         <!-- Conflict with pygments for the .mo and .mi -->
         <script type="text/x-mathjax-config">
           MathJax.Hub.Config({
