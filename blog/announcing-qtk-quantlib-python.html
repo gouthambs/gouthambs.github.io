@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Announcing qtk for QuantLib Python - G B</title>
+        <!-- All the meta tags -->
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+        <meta property="og:type" content="article"/>
+        <meta property="og:title" content="Announcing qtk for QuantLib Python"/>
+        <meta property="og:url" content="http://gouthamanbalaraman.com/blog/announcing-qtk-quantlib-python.html"/>
+        <meta property="og:description" content="Announcing qtk, a new interface to interact with QuantLib Python"/>
+        
+        <link href="http://gouthamanbalaraman.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="G B Full Atom Feed" />
+        <link href="http://gouthamanbalaraman.com/feeds/all.rss.xml" type="application/rss+xml" rel="alternate" title="G B RSS Feed" />
+        <link href="http://gouthamanbalaraman.com/feeds/quantlib.atom.xml" type="application/atom+xml" rel="alternate" title="G B Categories Atom Feed" />
+        <link href="http://gouthamanbalaraman.com/feeds/quantlib.rss.xml" type="application/rss+xml" rel="alternate" title="G B Categories RSS Feed" />
+        <link href="http://gouthamanbalaraman.com/theme/static/css/bootstrap.readable.min.css" rel="stylesheet" />
+
+	<!-- Google Analytics -->
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-46714334-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    /*Update Your Analytics Tracking Code to Support Display Advertising by uncommenting the following 
+    instead of the above line */    
+    /*ga.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'stats.g.doubleclick.net/dc.js';*/
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+    </head>
+
+    <body>
+      <div class="navbar navbar-default navbar-fixed-top">
+          <div class="container">
+            <div class="navbar-header">
+              <a href="http://gouthamanbalaraman.com" class="navbar-brand">G B</a>
+              <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+            </div>
+            <div class="navbar-collapse collapse" id="navbar-main">
+              <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="http://gouthamanbalaraman.com/pages/about.html">About</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                <div class="col-md-10 col-md-offset-1">
+    <div class="page-header">
+        <h1>Announcing qtk for QuantLib Python</h1>
+     <!--span class="glyphicon glyphicon-calendar"></span-->
+     &nbsp;July 20, 2016
+     &nbsp;
+     <!--span class="glyphicon glyphicon-user"></span--> by  
+     <a class="url fn" href="http://gouthamanbalaraman.com/author/goutham-balaraman.html">&nbsp;Goutham Balaraman </a>
+
+        <p id="post-share-links">
+            &nbsp;Share on:
+            <a href="https://sharetodiaspora.github.io/?title=Announcing%20qtk%20for%20QuantLib%20Python&url=http%3A//gouthamanbalaraman.com/blog/announcing-qtk-quantlib-python.html" target="_blank" title="Share on Diaspora">Diaspora*</a>
+            /
+            <a href="http://twitter.com/home?status=Announcing%20qtk%20for%20QuantLib%20Python by @gsbalaraman%20http%3A//gouthamanbalaraman.com/blog/announcing-qtk-quantlib-python.html" target="_blank" title="Share on Twitter">Twitter</a>
+            /
+            <a href="http://www.facebook.com/sharer/sharer.php?s=100&amp;p%5Burl%5D=http%3A//gouthamanbalaraman.com/blog/announcing-qtk-quantlib-python.html" target="_blank" title="Share on Facebook">Facebook</a>
+            /
+            <a href="https://plus.google.com/share?url=http%3A//gouthamanbalaraman.com/blog/announcing-qtk-quantlib-python.html" target="_blank" title="Share on Google Plus">Google+</a>
+            /
+            <a href="mailto:?subject=Announcing%20qtk%20for%20QuantLib%20Python&amp;body=http%3A//gouthamanbalaraman.com/blog/announcing-qtk-quantlib-python.html" target="_blank" title="Share via Email">Email</a>
+            /
+            <a href="http://www.bloglovin.com/blog/14559547/?claim=cqravg9v4n2">Bloglovin</a>
+        </p>
+     </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-8 col-md-offset-2">
+
+<div class="bs-docs-section">
+    
+     <!-- article description -->
+         <p class="lead">Announcing qtk, a new interface to interact with QuantLib Python</p>
+      
+      
+      
+      <!-- article content -->
+     <p>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>I have blogged about using QuantLib Python in this tutorial series. Learning QuantLib Python involves a knowledge of the various syntax and paying a lot of attention to detail such as the various conventions. I have started to work on the package <code>qtk</code> that adds a layer on top of QuantLib python by making it data driven. What do I mean by that?</p>
+<p>The <code>qtk</code> package relies on data in the form of Python <code>dict</code> and then uses this data to form QuantLib objects behind the scenes. Lets take a look at a small example that replicates my example on <a href="http://gouthamanbalaraman.com/blog/quantlib-bond-modeling.html">bond modeling in QuantLib Python</a></p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[1]:</div>
+
+<div class="input_area box-flex1">
+<div class="highlight-ipynb"><pre class="ipynb"><span></span><span class="kn">from</span> <span class="nn">qtk</span> <span class="kn">import</span> <span class="n">Controller</span><span class="p">,</span> <span class="n">Field</span> <span class="k">as</span> <span class="n">F</span><span class="p">,</span> <span class="n">Template</span> <span class="k">as</span> <span class="n">T</span>
+</pre></div>
+
+</div>
+
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The <code>Template</code> class directly maps to the different kinds of QuantLib objects that are supported. For instance the <code>Template.TS_YIELD_ZERO</code> corresponds to the zero yield term structure. The <code>Field</code> class has all the properties that are needed by the various <code>Template</code>s. The <code>Controller</code> class is what does all the processing to create QuantLib objects behind the scenes. Let us look at a minimal example below, and then explain the different features in detail.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[2]:</div>
+
+<div class="input_area box-flex1">
+<div class="highlight-ipynb"><pre class="ipynb"><span></span><span class="n">data</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">{</span>
+        <span class="n">F</span><span class="o">.</span><span class="n">LIST_OF_DATES</span><span class="o">.</span><span class="n">id</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;1/15/2015&quot;</span><span class="p">,</span> <span class="s2">&quot;7/15/2015&quot;</span><span class="p">,</span> <span class="s2">&quot;1/15/2016&quot;</span><span class="p">],</span>
+        <span class="n">F</span><span class="o">.</span><span class="n">LIST_OF_ZERO_RATES</span><span class="o">.</span><span class="n">id</span><span class="p">:</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.005</span><span class="p">,</span> <span class="mf">0.007</span><span class="p">],</span>
+        <span class="n">F</span><span class="o">.</span><span class="n">DISCOUNT_BASIS</span><span class="o">.</span><span class="n">id</span><span class="p">:</span> <span class="s2">&quot;30/360&quot;</span><span class="p">,</span>
+        <span class="n">F</span><span class="o">.</span><span class="n">DISCOUNT_CALENDAR</span><span class="o">.</span><span class="n">id</span><span class="p">:</span> <span class="s2">&quot;UnitedStates&quot;</span><span class="p">,</span>
+        <span class="n">F</span><span class="o">.</span><span class="n">COMPOUNDING</span><span class="o">.</span><span class="n">id</span><span class="p">:</span> <span class="s2">&quot;Compounded&quot;</span><span class="p">,</span>
+        <span class="n">F</span><span class="o">.</span><span class="n">COMPOUNDING_FREQ</span><span class="o">.</span><span class="n">id</span><span class="p">:</span> <span class="s2">&quot;Annual&quot;</span><span class="p">,</span>
+        <span class="n">F</span><span class="o">.</span><span class="n">CURRENCY</span><span class="o">.</span><span class="n">id</span><span class="p">:</span> <span class="s2">&quot;USD&quot;</span><span class="p">,</span>
+        <span class="n">F</span><span class="o">.</span><span class="n">TEMPLATE</span><span class="o">.</span><span class="n">id</span><span class="p">:</span> <span class="n">T</span><span class="o">.</span><span class="n">TS_YIELD_ZERO</span><span class="o">.</span><span class="n">id</span><span class="p">,</span>
+        <span class="n">F</span><span class="o">.</span><span class="n">OBJECT_ID</span><span class="o">.</span><span class="n">id</span><span class="p">:</span> <span class="s2">&quot;USD.Zero.Curve&quot;</span><span class="p">},</span>
+    <span class="p">{</span>
+        <span class="n">F</span><span class="o">.</span><span class="n">OBJECT_ID</span><span class="o">.</span><span class="n">id</span><span class="p">:</span> <span class="s2">&quot;BondEngine&quot;</span><span class="p">,</span>
+        <span class="n">F</span><span class="o">.</span><span class="n">DISCOUNT_CURVE</span><span class="o">.</span><span class="n">id</span><span class="p">:</span> <span class="s2">&quot;-&gt;USD.Zero.Curve&quot;</span><span class="p">,</span>
+        <span class="n">F</span><span class="o">.</span><span class="n">TEMPLATE</span><span class="o">.</span><span class="n">id</span><span class="p">:</span> <span class="n">T</span><span class="o">.</span><span class="n">ENG_BOND_DISCOUNTING</span><span class="o">.</span><span class="n">id</span><span class="p">},</span>
+    <span class="p">{</span>
+        <span class="n">F</span><span class="o">.</span><span class="n">ASOF_DATE</span><span class="o">.</span><span class="n">id</span><span class="p">:</span> <span class="s1">&#39;2016-01-15&#39;</span><span class="p">,</span>
+        <span class="n">F</span><span class="o">.</span><span class="n">COUPON</span><span class="o">.</span><span class="n">id</span><span class="p">:</span> <span class="mf">0.06</span><span class="p">,</span>
+        <span class="n">F</span><span class="o">.</span><span class="n">COUPON_FREQ</span><span class="o">.</span><span class="n">id</span><span class="p">:</span> <span class="s2">&quot;Semiannual&quot;</span><span class="p">,</span>
+        <span class="n">F</span><span class="o">.</span><span class="n">CURRENCY</span><span class="o">.</span><span class="n">id</span><span class="p">:</span> <span class="s1">&#39;USD&#39;</span><span class="p">,</span>
+        <span class="n">F</span><span class="o">.</span><span class="n">PAYMENT_BASIS</span><span class="o">.</span><span class="n">id</span><span class="p">:</span> <span class="s1">&#39;30/360&#39;</span><span class="p">,</span>
+        <span class="n">F</span><span class="o">.</span><span class="n">ISSUE_DATE</span><span class="o">.</span><span class="n">id</span><span class="p">:</span> <span class="s1">&#39;2015-01-15&#39;</span><span class="p">,</span>
+        <span class="n">F</span><span class="o">.</span><span class="n">MATURITY_DATE</span><span class="o">.</span><span class="n">id</span><span class="p">:</span> <span class="s1">&#39;2016-01-15&#39;</span><span class="p">,</span>
+        <span class="n">F</span><span class="o">.</span><span class="n">ACCRUAL_CALENDAR</span><span class="o">.</span><span class="n">id</span><span class="p">:</span> <span class="s2">&quot;UnitedStates&quot;</span><span class="p">,</span>
+        <span class="n">F</span><span class="o">.</span><span class="n">ACCRUAL_DAY_CONVENTION</span><span class="o">.</span><span class="n">id</span><span class="p">:</span> <span class="s2">&quot;Unadjusted&quot;</span><span class="p">,</span>
+        <span class="n">F</span><span class="o">.</span><span class="n">DATE_GENERATION</span><span class="o">.</span><span class="n">id</span><span class="p">:</span> <span class="s2">&quot;Backward&quot;</span><span class="p">,</span>
+        <span class="n">F</span><span class="o">.</span><span class="n">END_OF_MONTH</span><span class="o">.</span><span class="n">id</span><span class="p">:</span> <span class="bp">False</span><span class="p">,</span>
+        <span class="n">F</span><span class="o">.</span><span class="n">OBJECT_ID</span><span class="o">.</span><span class="n">id</span><span class="p">:</span> <span class="s2">&quot;USD.TBond&quot;</span><span class="p">,</span>
+        <span class="n">F</span><span class="o">.</span><span class="n">PRICING_ENGINE</span><span class="o">.</span><span class="n">id</span><span class="p">:</span> <span class="s2">&quot;-&gt;BondEngine&quot;</span><span class="p">,</span>
+        <span class="n">F</span><span class="o">.</span><span class="n">TEMPLATE</span><span class="o">.</span><span class="n">id</span><span class="p">:</span> <span class="n">T</span><span class="o">.</span><span class="n">INST_BOND_TBOND</span><span class="o">.</span><span class="n">id</span><span class="p">}</span>
+<span class="p">]</span>
+
+<span class="n">res</span> <span class="o">=</span> <span class="n">Controller</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="n">asof_date</span> <span class="o">=</span> <span class="s2">&quot;1/15/2015&quot;</span>
+
+<span class="n">ret</span> <span class="o">=</span> <span class="n">res</span><span class="o">.</span><span class="n">process</span><span class="p">(</span><span class="n">asof_date</span><span class="p">)</span>
+<span class="n">tbond</span> <span class="o">=</span> <span class="n">res</span><span class="o">.</span><span class="n">object</span><span class="p">(</span><span class="s2">&quot;USD.TBond&quot;</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">tbond</span><span class="o">.</span><span class="n">NPV</span><span class="p">()</span>
+</pre></div>
+
+</div>
+
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="box-flex1 output_subarea output_stream output_stdout">
+<pre class="ipynb">105.276539925
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Now let us disect the code above to understand the specifics. The <code>Controller</code> class takes a <code>list</code> of <code>dict</code> as input, provided here by the variable <code>data</code>. In the above example, we have used qtk mnemonics such as <code>Field.TEMPLATE.id</code> instead of directly using the text &quot;Template&quot;. The content of data is as shown below:</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[3]:</div>
+
+<div class="input_area box-flex1">
+<div class="highlight-ipynb"><pre class="ipynb"><span></span><span class="n">data</span>
+</pre></div>
+
+</div>
+
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt output_prompt">Out[3]:</div>
+
+
+<pre class="ipynb">[{&apos;Compounding&apos;: &apos;Compounded&apos;,
+  &apos;CompoundingFrequency&apos;: &apos;Annual&apos;,
+  &apos;Currency&apos;: &apos;USD&apos;,
+  &apos;DiscountBasis&apos;: &apos;30/360&apos;,
+  &apos;DiscountCalendar&apos;: &apos;UnitedStates&apos;,
+  &apos;ListOfDate&apos;: [&apos;1/15/2015&apos;, &apos;7/15/2015&apos;, &apos;1/15/2016&apos;],
+  &apos;ListOfZeroRate&apos;: [0.0, 0.005, 0.007],
+  &apos;ObjectId&apos;: &apos;USD.Zero.Curve&apos;,
+  &apos;Template&apos;: &apos;TermStructure.Yield.ZeroCurve&apos;},
+ {&apos;DiscountCurve&apos;: &apos;-&gt;USD.Zero.Curve&apos;,
+  &apos;ObjectId&apos;: &apos;BondEngine&apos;,
+  &apos;Template&apos;: &apos;Engine.Bond.Discounting&apos;},
+ {&apos;AccrualCalendar&apos;: &apos;UnitedStates&apos;,
+  &apos;AccrualDayConvention&apos;: &apos;Unadjusted&apos;,
+  &apos;AsOfDate&apos;: &apos;2016-01-15&apos;,
+  &apos;Coupon&apos;: 0.06,
+  &apos;CouponFrequency&apos;: &apos;Semiannual&apos;,
+  &apos;Currency&apos;: &apos;USD&apos;,
+  &apos;DateGeneration&apos;: &apos;Backward&apos;,
+  &apos;EndOfMonth&apos;: False,
+  &apos;IssueDate&apos;: &apos;2015-01-15&apos;,
+  &apos;MaturityDate&apos;: &apos;2016-01-15&apos;,
+  &apos;ObjectId&apos;: &apos;USD.TBond&apos;,
+  &apos;PaymentBasis&apos;: &apos;30/360&apos;,
+  &apos;PricingEngine&apos;: &apos;-&gt;BondEngine&apos;,
+  &apos;Template&apos;: &apos;Instrument.Bond.TreasuryBond&apos;}]</pre>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Every <code>dict</code> corresponds to an object, with the key value pairs being the attributes required in the creation of that object. The value of the key <code>Template</code> denotes what object is created. So for instance, in the above example the value <code>Engine.Bond.Discounting</code> denotes 
+the <code>DiscountingBondEngine</code>. In the above data, every dict has a key <code>ObjectId</code> which is a unique name required for every object. Objects can be cross referenced by using the special prefix &quot;-&gt;&quot; along with the <code>ObjectId</code>. You can see this usage in the last <code>dict</code> where the <code>PricingEngine</code> references the <code>BondEngine</code> object, and the <code>BondEngine</code> object references the <code>USD.Zero.Curve</code> yield term structure.</p>
+<p>Once the data is prepared, the API call to process is extremely simple because <code>qtk</code> does the major brunt of interfacing with QuantLib.</p>
+</div>
+</div>
+</div>
+                res = Controller(data)
+asof_date = "1/15/2015"
+
+ret = res.process(asof_date)
+tbond = res.object("USD.TBond")
+print tbond.NPV()
+                
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The <code>Controller</code> accepts the <code>data</code> and the <code>process</code> method processes as of the calculation date. Once processed, the QuantLib objects can be accessed and queried for output.</p>
+<p>This project is alpha and has a few templates written as of now. Would love to hear your thoughts. Checkout the <a href="https://github.com/gouthambs/qtk-python">qtk project page</a> to get involved.</p>
+</div>
+</div>
+</div></p>
+     <br><br>
+				
+				<div class="row">
+					<div class="col-md-3">
+						<a href="https://leanpub.com/quantlibpythoncookbook">
+							<img alt="QuantLib Python Cookbook" 
+								 src="https://s3.amazonaws.com/titlepages.leanpub.com/quantlibpythoncookbook/medium?1465967986"
+								 title= "QuantLib Python Cookbook">
+						</a>
+					</div>
+					<div class="col-md-9">
+						<em>Updated posts from this blog and transcripts of Luigi's screencasts on YouTube is compiled 
+						into <a href="https://leanpub.com/quantlibpythoncookbook"> QuantLib Python Cookbook </a>. 
+						Visit here for other <a href ="http://gouthamanbalaraman.com/blog/quantlib-python-tutorials-with-examples.html">QuantLib Python examples</a>.
+						You can also help improve this blog series by answering this 
+						<a href="https://docs.google.com/forms/d/1iRI-YWgqCB-rUhxVsFf-s_y00yAB0vyb-b816q6oktk/viewform">one minute survey.</a></em>
+					</div>
+				</div>
+	            <br><br>
+	  <br>
+	 
+     <!-- article tags-->
+        <span class="glyphicon glyphicon-tags"></span>&nbsp;&nbsp;
+            <span class="label label-default"><a href="http://gouthamanbalaraman.com/tag/quantlib.html">quantlib</a></span>&nbsp;&nbsp;
+            <span class="label label-default"><a href="http://gouthamanbalaraman.com/tag/python.html">python</a></span>&nbsp;&nbsp;
+            <span class="label label-default"><a href="http://gouthamanbalaraman.com/tag/finance.html">finance</a></span>&nbsp;&nbsp;
+        <br>
+     <hr/>
+    
+    <strong>Related Post</strong>
+        <ul>
+            <li>
+                <a href="http://gouthamanbalaraman.com/blog/quantlib-bond-modeling.html">Modeling Fixed Rate Bonds in QuantLib Python</a>
+            </li>
+            <li>
+                <a href="http://gouthamanbalaraman.com/blog/interest-rate-swap-quantlib-python.html">Modeling Vanilla Interest Rate Swaps Using QuantLib Python</a>
+            </li>
+            <li>
+                <a href="http://gouthamanbalaraman.com/blog/value-convertible-bond-quantlib-python.html">Valuing Convertible Bonds Using QuantLib Python</a>
+            </li>
+            <li>
+                <a href="http://gouthamanbalaraman.com/blog/value-treasury-futures-quantlib-python.html">Valuing Treasury Futures Using QuantLib Python</a>
+            </li>
+            <li>
+                <a href="http://gouthamanbalaraman.com/blog/short-interest-rate-model-calibration-quantlib.html">Short Interest Rate Model Calibration in QuantLib Python</a>
+            </li>
+        </ul>
+        <hr/>
+
+     <!-- article comments -->
+    <div class="comment">
+        <div id="disqus_thread"></div> <!-- comment app container -->
+    </div>
+	<!-- Comment BEGIN -->
+    <script type="text/javascript">
+        var disqus_shortname = 'gouthamanbalaramancom'; // required: replace example with your forum shortname
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.min.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+     <!-- Comment END -->
+</div>    
+                </div>
+               
+            </div>
+            <div class="row">
+                <div class="col-md-10 col-md-offset-1">
+                </div>
+            </div>
+            <footer id="contentinfo" class="footer">
+                <address id="about" class="vcard body">
+                    &copy; <a href="http://gouthamanbalaraman.com">Goutham Balaraman</a> Proudly powered by <a href="http://getpelican.com/">Pelican</a>
+                    <div class="pull-right">
+                    	<!--a href="http://www.bloglovin.com/blog/14559547/?claim=cqravg9v4n2">Bloglovin</a-->
+			            <a href="http://gouthamanbalaraman.com/feeds/all.atom.xml">Atom</a>
+			        &nbsp
+			            <a href="http://gouthamanbalaraman.com/feeds/all.rss.xml">RSS</a>
+		            </div>
+                </address><!-- /#about -->
+            </footer>
+        </div><!-- container -->
+        <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
+        <link href="http://gouthamanbalaraman.com/theme/static/css/style.css" rel="stylesheet" />
+        
+        <script src="http://gouthamanbalaraman.com/theme/static/js/jquery.1.11.2.min.js"></script>
+        <script src="http://gouthamanbalaraman.com/theme/static/js/bootstrap.min.js"></script>
+        <script type="text/javascript">
+	jQuery(document).ready(function($) {
+	    $("div.collapseheader").click(function () {
+	    $header = $(this).children("span").first();
+	    $codearea = $(this).children(".input_area");
+	    console.log($(this).children());
+	    $codearea.slideToggle(500, function () {
+	        $header.text(function () {
+	            return $codearea.is(":visible") ? "Collapse Code" : "Expand Code";
+	        });
+	    });
+	});
+	});
+	</script>
+	<!-- Using MathJax, with the delimiters $ -->
+        <!-- Conflict with pygments for the .mo and .mi -->
+        <script type="text/x-mathjax-config">
+          MathJax.Hub.Config({
+          "HTML-CSS": {
+          styles: {
+          ".MathJax .mo, .MathJax .mi": {color: "black ! important"}}
+          },
+          tex2jax: {inlineMath: [['$','$'], ['\\\\(','\\\\)']],processEscapes: true}
+          });
+        </script>
+    </body>
+</html>

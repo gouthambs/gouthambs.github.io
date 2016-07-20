@@ -1,5 +1,190 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>G B</title><link href="http://gouthamanbalaraman.com/" rel="alternate"></link><link href="http://gouthamanbalaraman.com/feeds/quantlib.atom.xml" rel="self"></link><id>http://gouthamanbalaraman.com/</id><updated>2016-07-02T00:00:00-07:00</updated><entry><title>QuantLib Python Notebooks On Docker</title><link href="http://gouthamanbalaraman.com/blog/quantlib-python-notebook-docker.html" rel="alternate"></link><published>2016-07-02T00:00:00-07:00</published><author><name>Goutham Balaraman</name></author><id>tag:gouthamanbalaraman.com,2016-07-02:blog/quantlib-python-notebook-docker.html</id><summary type="html">&lt;p&gt;The typical way to get QuantLib python running in your computer
+<feed xmlns="http://www.w3.org/2005/Atom"><title>G B</title><link href="http://gouthamanbalaraman.com/" rel="alternate"></link><link href="http://gouthamanbalaraman.com/feeds/quantlib.atom.xml" rel="self"></link><id>http://gouthamanbalaraman.com/</id><updated>2016-07-20T00:00:00-07:00</updated><entry><title>Announcing qtk for QuantLib Python</title><link href="http://gouthamanbalaraman.com/blog/announcing-qtk-quantlib-python.html" rel="alternate"></link><published>2016-07-20T00:00:00-07:00</published><author><name>Goutham Balaraman</name></author><id>tag:gouthamanbalaraman.com,2016-07-20:blog/announcing-qtk-quantlib-python.html</id><summary type="html">&lt;p&gt;
+&lt;div class="cell border-box-sizing text_cell rendered"&gt;
+&lt;div class="prompt input_prompt"&gt;
+&lt;/div&gt;
+&lt;div class="inner_cell"&gt;
+&lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
+&lt;p&gt;I have blogged about using QuantLib Python in this tutorial series. Learning QuantLib Python involves a knowledge of the various syntax and paying a lot of attention to detail such as the various conventions. I have started to work on the package &lt;code&gt;qtk&lt;/code&gt; that adds a layer on top of QuantLib python by making it data driven. What do I mean by that?&lt;/p&gt;
+&lt;p&gt;The &lt;code&gt;qtk&lt;/code&gt; package relies on data in the form of Python &lt;code&gt;dict&lt;/code&gt; and then uses this data to form QuantLib objects behind the scenes. Lets take a look at a small example that replicates my example on &lt;a href="http://gouthamanbalaraman.com/blog/quantlib-bond-modeling.html"&gt;bond modeling in QuantLib Python&lt;/a&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="cell border-box-sizing code_cell rendered"&gt;
+&lt;div class="input"&gt;
+&lt;div class="prompt input_prompt"&gt;In&amp;nbsp;[1]:&lt;/div&gt;
+
+&lt;div class="input_area box-flex1"&gt;
+&lt;div class="highlight-ipynb"&gt;&lt;pre class="ipynb"&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;qtk&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;Controller&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;Field&lt;/span&gt; &lt;span class="k"&gt;as&lt;/span&gt; &lt;span class="n"&gt;F&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;Template&lt;/span&gt; &lt;span class="k"&gt;as&lt;/span&gt; &lt;span class="n"&gt;T&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+&lt;/div&gt;
+
+&lt;/div&gt;
+
+&lt;/div&gt;
+&lt;div class="cell border-box-sizing text_cell rendered"&gt;
+&lt;div class="prompt input_prompt"&gt;
+&lt;/div&gt;
+&lt;div class="inner_cell"&gt;
+&lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
+&lt;p&gt;The &lt;code&gt;Template&lt;/code&gt; class directly maps to the different kinds of QuantLib objects that are supported. For instance the &lt;code&gt;Template.TS_YIELD_ZERO&lt;/code&gt; corresponds to the zero yield term structure. The &lt;code&gt;Field&lt;/code&gt; class has all the properties that are needed by the various &lt;code&gt;Template&lt;/code&gt;s. The &lt;code&gt;Controller&lt;/code&gt; class is what does all the processing to create QuantLib objects behind the scenes. Let us look at a minimal example below, and then explain the different features in detail.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="cell border-box-sizing code_cell rendered"&gt;
+&lt;div class="input"&gt;
+&lt;div class="prompt input_prompt"&gt;In&amp;nbsp;[2]:&lt;/div&gt;
+
+&lt;div class="input_area box-flex1"&gt;
+&lt;div class="highlight-ipynb"&gt;&lt;pre class="ipynb"&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;data&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;
+    &lt;span class="p"&gt;{&lt;/span&gt;
+        &lt;span class="n"&gt;F&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;LIST_OF_DATES&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;id&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;1/15/2015&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;7/15/2015&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;1/15/2016&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt;
+        &lt;span class="n"&gt;F&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;LIST_OF_ZERO_RATES&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;id&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mf"&gt;0.0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mf"&gt;0.005&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mf"&gt;0.007&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt;
+        &lt;span class="n"&gt;F&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;DISCOUNT_BASIS&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;id&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;30/360&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+        &lt;span class="n"&gt;F&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;DISCOUNT_CALENDAR&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;id&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;UnitedStates&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+        &lt;span class="n"&gt;F&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;COMPOUNDING&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;id&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;Compounded&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+        &lt;span class="n"&gt;F&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;COMPOUNDING_FREQ&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;id&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;Annual&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+        &lt;span class="n"&gt;F&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;CURRENCY&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;id&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;USD&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+        &lt;span class="n"&gt;F&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;TEMPLATE&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;id&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;T&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;TS_YIELD_ZERO&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;id&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+        &lt;span class="n"&gt;F&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;OBJECT_ID&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;id&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;USD.Zero.Curve&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;},&lt;/span&gt;
+    &lt;span class="p"&gt;{&lt;/span&gt;
+        &lt;span class="n"&gt;F&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;OBJECT_ID&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;id&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;BondEngine&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+        &lt;span class="n"&gt;F&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;DISCOUNT_CURVE&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;id&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;-&amp;gt;USD.Zero.Curve&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+        &lt;span class="n"&gt;F&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;TEMPLATE&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;id&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;T&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;ENG_BOND_DISCOUNTING&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;id&lt;/span&gt;&lt;span class="p"&gt;},&lt;/span&gt;
+    &lt;span class="p"&gt;{&lt;/span&gt;
+        &lt;span class="n"&gt;F&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;ASOF_DATE&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;id&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;2016-01-15&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+        &lt;span class="n"&gt;F&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;COUPON&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;id&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mf"&gt;0.06&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+        &lt;span class="n"&gt;F&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;COUPON_FREQ&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;id&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;Semiannual&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+        &lt;span class="n"&gt;F&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;CURRENCY&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;id&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;USD&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+        &lt;span class="n"&gt;F&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;PAYMENT_BASIS&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;id&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;30/360&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+        &lt;span class="n"&gt;F&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;ISSUE_DATE&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;id&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;2015-01-15&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+        &lt;span class="n"&gt;F&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;MATURITY_DATE&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;id&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;2016-01-15&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+        &lt;span class="n"&gt;F&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;ACCRUAL_CALENDAR&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;id&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;UnitedStates&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+        &lt;span class="n"&gt;F&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;ACCRUAL_DAY_CONVENTION&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;id&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;Unadjusted&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+        &lt;span class="n"&gt;F&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;DATE_GENERATION&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;id&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;Backward&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+        &lt;span class="n"&gt;F&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;END_OF_MONTH&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;id&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="bp"&gt;False&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+        &lt;span class="n"&gt;F&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;OBJECT_ID&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;id&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;USD.TBond&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+        &lt;span class="n"&gt;F&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;PRICING_ENGINE&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;id&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;-&amp;gt;BondEngine&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+        &lt;span class="n"&gt;F&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;TEMPLATE&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;id&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;T&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;INST_BOND_TBOND&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;id&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="p"&gt;]&lt;/span&gt;
+
+&lt;span class="n"&gt;res&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;Controller&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;data&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;asof_date&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;1/15/2015&amp;quot;&lt;/span&gt;
+
+&lt;span class="n"&gt;ret&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;res&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;process&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;asof_date&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;tbond&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;res&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;object&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;USD.TBond&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="k"&gt;print&lt;/span&gt; &lt;span class="n"&gt;tbond&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;NPV&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+&lt;/div&gt;
+
+&lt;/div&gt;
+
+&lt;div class="output_wrapper"&gt;
+&lt;div class="output"&gt;
+
+
+&lt;div class="output_area"&gt;&lt;div class="prompt"&gt;&lt;/div&gt;
+&lt;div class="box-flex1 output_subarea output_stream output_stdout"&gt;
+&lt;pre class="ipynb"&gt;105.276539925
+&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;/div&gt;
+&lt;div class="cell border-box-sizing text_cell rendered"&gt;
+&lt;div class="prompt input_prompt"&gt;
+&lt;/div&gt;
+&lt;div class="inner_cell"&gt;
+&lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
+&lt;p&gt;Now let us disect the code above to understand the specifics. The &lt;code&gt;Controller&lt;/code&gt; class takes a &lt;code&gt;list&lt;/code&gt; of &lt;code&gt;dict&lt;/code&gt; as input, provided here by the variable &lt;code&gt;data&lt;/code&gt;. In the above example, we have used qtk mnemonics such as &lt;code&gt;Field.TEMPLATE.id&lt;/code&gt; instead of directly using the text &amp;quot;Template&amp;quot;. The content of data is as shown below:&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="cell border-box-sizing code_cell rendered"&gt;
+&lt;div class="input"&gt;
+&lt;div class="prompt input_prompt"&gt;In&amp;nbsp;[3]:&lt;/div&gt;
+
+&lt;div class="input_area box-flex1"&gt;
+&lt;div class="highlight-ipynb"&gt;&lt;pre class="ipynb"&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;data&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+&lt;/div&gt;
+
+&lt;/div&gt;
+
+&lt;div class="output_wrapper"&gt;
+&lt;div class="output"&gt;
+
+
+&lt;div class="output_area"&gt;&lt;div class="prompt output_prompt"&gt;Out[3]:&lt;/div&gt;
+
+
+&lt;pre class="ipynb"&gt;[{&amp;apos;Compounding&amp;apos;: &amp;apos;Compounded&amp;apos;,
+  &amp;apos;CompoundingFrequency&amp;apos;: &amp;apos;Annual&amp;apos;,
+  &amp;apos;Currency&amp;apos;: &amp;apos;USD&amp;apos;,
+  &amp;apos;DiscountBasis&amp;apos;: &amp;apos;30/360&amp;apos;,
+  &amp;apos;DiscountCalendar&amp;apos;: &amp;apos;UnitedStates&amp;apos;,
+  &amp;apos;ListOfDate&amp;apos;: [&amp;apos;1/15/2015&amp;apos;, &amp;apos;7/15/2015&amp;apos;, &amp;apos;1/15/2016&amp;apos;],
+  &amp;apos;ListOfZeroRate&amp;apos;: [0.0, 0.005, 0.007],
+  &amp;apos;ObjectId&amp;apos;: &amp;apos;USD.Zero.Curve&amp;apos;,
+  &amp;apos;Template&amp;apos;: &amp;apos;TermStructure.Yield.ZeroCurve&amp;apos;},
+ {&amp;apos;DiscountCurve&amp;apos;: &amp;apos;-&amp;gt;USD.Zero.Curve&amp;apos;,
+  &amp;apos;ObjectId&amp;apos;: &amp;apos;BondEngine&amp;apos;,
+  &amp;apos;Template&amp;apos;: &amp;apos;Engine.Bond.Discounting&amp;apos;},
+ {&amp;apos;AccrualCalendar&amp;apos;: &amp;apos;UnitedStates&amp;apos;,
+  &amp;apos;AccrualDayConvention&amp;apos;: &amp;apos;Unadjusted&amp;apos;,
+  &amp;apos;AsOfDate&amp;apos;: &amp;apos;2016-01-15&amp;apos;,
+  &amp;apos;Coupon&amp;apos;: 0.06,
+  &amp;apos;CouponFrequency&amp;apos;: &amp;apos;Semiannual&amp;apos;,
+  &amp;apos;Currency&amp;apos;: &amp;apos;USD&amp;apos;,
+  &amp;apos;DateGeneration&amp;apos;: &amp;apos;Backward&amp;apos;,
+  &amp;apos;EndOfMonth&amp;apos;: False,
+  &amp;apos;IssueDate&amp;apos;: &amp;apos;2015-01-15&amp;apos;,
+  &amp;apos;MaturityDate&amp;apos;: &amp;apos;2016-01-15&amp;apos;,
+  &amp;apos;ObjectId&amp;apos;: &amp;apos;USD.TBond&amp;apos;,
+  &amp;apos;PaymentBasis&amp;apos;: &amp;apos;30/360&amp;apos;,
+  &amp;apos;PricingEngine&amp;apos;: &amp;apos;-&amp;gt;BondEngine&amp;apos;,
+  &amp;apos;Template&amp;apos;: &amp;apos;Instrument.Bond.TreasuryBond&amp;apos;}]&lt;/pre&gt;
+
+&lt;/div&gt;
+
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;/div&gt;
+&lt;div class="cell border-box-sizing text_cell rendered"&gt;
+&lt;div class="prompt input_prompt"&gt;
+&lt;/div&gt;
+&lt;div class="inner_cell"&gt;
+&lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
+&lt;p&gt;Every &lt;code&gt;dict&lt;/code&gt; corresponds to an object, with the key value pairs being the attributes required in the creation of that object. The value of the key &lt;code&gt;Template&lt;/code&gt; denotes what object is created. So for instance, in the above example the value &lt;code&gt;Engine.Bond.Discounting&lt;/code&gt; denotes 
+the &lt;code&gt;DiscountingBondEngine&lt;/code&gt;. In the above data, every dict has a key &lt;code&gt;ObjectId&lt;/code&gt; which is a unique name required for every object. Objects can be cross referenced by using the special prefix &amp;quot;-&amp;gt;&amp;quot; along with the &lt;code&gt;ObjectId&lt;/code&gt;. You can see this usage in the last &lt;code&gt;dict&lt;/code&gt; where the &lt;code&gt;PricingEngine&lt;/code&gt; references the &lt;code&gt;BondEngine&lt;/code&gt; object, and the &lt;code&gt;BondEngine&lt;/code&gt; object references the &lt;code&gt;USD.Zero.Curve&lt;/code&gt; yield term structure.&lt;/p&gt;
+&lt;p&gt;Once the data is prepared, the API call to process is extremely simple because &lt;code&gt;qtk&lt;/code&gt; does the major brunt of interfacing with QuantLib.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+                res = Controller(data)
+asof_date = "1/15/2015"
+
+ret = res.process(asof_date)
+tbond = res.object("USD.TBond")
+print tbond.NPV()
+                
+&lt;div class="cell border-box-sizing text_cell rendered"&gt;
+&lt;div class="prompt input_prompt"&gt;
+&lt;/div&gt;
+&lt;div class="inner_cell"&gt;
+&lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
+&lt;p&gt;The &lt;code&gt;Controller&lt;/code&gt; accepts the &lt;code&gt;data&lt;/code&gt; and the &lt;code&gt;process&lt;/code&gt; method processes as of the calculation date. Once processed, the QuantLib objects can be accessed and queried for output.&lt;/p&gt;
+&lt;p&gt;This project is alpha and has a few templates written as of now. Would love to hear your thoughts. Checkout the &lt;a href="https://github.com/gouthambs/qtk-python"&gt;qtk project page&lt;/a&gt; to get involved.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;/p&gt;</summary><category term="quantlib"></category><category term="python"></category><category term="finance"></category></entry><entry><title>QuantLib Python Notebooks On Docker</title><link href="http://gouthamanbalaraman.com/blog/quantlib-python-notebook-docker.html" rel="alternate"></link><published>2016-07-02T00:00:00-07:00</published><author><name>Goutham Balaraman</name></author><id>tag:gouthamanbalaraman.com,2016-07-02:blog/quantlib-python-notebook-docker.html</id><summary type="html">&lt;p&gt;The typical way to get QuantLib python running in your computer
 is by compiling QuantLib and the SWIG bindings in your computer.
 I have heard from some of my blog readers that they run into issues
 with getting QuantLib-Python running in their system. Here I will show
