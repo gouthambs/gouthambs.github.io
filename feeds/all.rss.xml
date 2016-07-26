@@ -6251,7 +6251,7 @@ Forward YTM                    = 1.952%
             
                 
                     
-                    &lt;li&gt; &lt;b&gt;&lt;a href="/blog/bonds-with-spreads-quantlib-python.html"&gt;Valuing Bonds with Credit Spreads in QuantLib Python&lt;/a&gt;&lt;/b&gt;: Provides an example of valuing bonds with credit spreads &lt;/li&gt;
+                    &lt;li&gt; &lt;b&gt;&lt;a href="/blog/bonds-with-spreads-quantlib-python.html"&gt;Valuing Bonds with Credit Spreads in QuantLib Python&lt;/a&gt;&lt;/b&gt;: Provides an example of valuing bonds with credit spreads using QuantLib Python. This post walks through an example of shifting the yield term structure. &lt;/li&gt;
                     
                 
                     
