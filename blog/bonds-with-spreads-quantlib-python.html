@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Valuing Bonds with Credit Spreads in QuantLib Python - G B</title>
+        <!-- All the meta tags -->
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+        <meta property="og:type" content="article"/>
+        <meta property="og:title" content="Valuing Bonds with Credit Spreads in QuantLib Python"/>
+        <meta property="og:url" content="http://gouthamanbalaraman.com/blog/bonds-with-spreads-quantlib-python.html"/>
+        <meta property="og:description" content="Provides an example of valuing bonds with credit spreads"/>
+        
+        <link href="http://gouthamanbalaraman.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="G B Full Atom Feed" />
+        <link href="http://gouthamanbalaraman.com/feeds/all.rss.xml" type="application/rss+xml" rel="alternate" title="G B RSS Feed" />
+        <link href="http://gouthamanbalaraman.com/feeds/quantlib.atom.xml" type="application/atom+xml" rel="alternate" title="G B Categories Atom Feed" />
+        <link href="http://gouthamanbalaraman.com/feeds/quantlib.rss.xml" type="application/rss+xml" rel="alternate" title="G B Categories RSS Feed" />
+        <link href="http://gouthamanbalaraman.com/theme/static/css/bootstrap.readable.min.css" rel="stylesheet" />
+
+	<!-- Google Analytics -->
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-46714334-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    /*Update Your Analytics Tracking Code to Support Display Advertising by uncommenting the following 
+    instead of the above line */    
+    /*ga.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'stats.g.doubleclick.net/dc.js';*/
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+    </head>
+
+    <body>
+      <div class="navbar navbar-default navbar-fixed-top">
+          <div class="container">
+            <div class="navbar-header">
+              <a href="http://gouthamanbalaraman.com" class="navbar-brand">G B</a>
+              <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+            </div>
+            <div class="navbar-collapse collapse" id="navbar-main">
+              <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="http://gouthamanbalaraman.com/pages/about.html">About</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                <div class="col-md-10 col-md-offset-1">
+    <div class="page-header">
+        <h1>Valuing Bonds with Credit Spreads in QuantLib Python</h1>
+     <!--span class="glyphicon glyphicon-calendar"></span-->
+     &nbsp;July 26, 2016
+     &nbsp;
+     <!--span class="glyphicon glyphicon-user"></span--> by  
+     <a class="url fn" href="http://gouthamanbalaraman.com/author/goutham-balaraman.html">&nbsp;Goutham Balaraman </a>
+
+        <p id="post-share-links">
+            &nbsp;Share on:
+            <a href="https://sharetodiaspora.github.io/?title=Valuing%20Bonds%20with%20Credit%20Spreads%20in%20QuantLib%20Python&url=http%3A//gouthamanbalaraman.com/blog/bonds-with-spreads-quantlib-python.html" target="_blank" title="Share on Diaspora">Diaspora*</a>
+            /
+            <a href="http://twitter.com/home?status=Valuing%20Bonds%20with%20Credit%20Spreads%20in%20QuantLib%20Python by @gsbalaraman%20http%3A//gouthamanbalaraman.com/blog/bonds-with-spreads-quantlib-python.html" target="_blank" title="Share on Twitter">Twitter</a>
+            /
+            <a href="http://www.facebook.com/sharer/sharer.php?s=100&amp;p%5Burl%5D=http%3A//gouthamanbalaraman.com/blog/bonds-with-spreads-quantlib-python.html" target="_blank" title="Share on Facebook">Facebook</a>
+            /
+            <a href="https://plus.google.com/share?url=http%3A//gouthamanbalaraman.com/blog/bonds-with-spreads-quantlib-python.html" target="_blank" title="Share on Google Plus">Google+</a>
+            /
+            <a href="mailto:?subject=Valuing%20Bonds%20with%20Credit%20Spreads%20in%20QuantLib%20Python&amp;body=http%3A//gouthamanbalaraman.com/blog/bonds-with-spreads-quantlib-python.html" target="_blank" title="Share via Email">Email</a>
+            /
+            <a href="http://www.bloglovin.com/blog/14559547/?claim=cqravg9v4n2">Bloglovin</a>
+        </p>
+     </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-8 col-md-offset-2">
+
+<div class="bs-docs-section">
+    
+     <!-- article description -->
+         <p class="lead">Provides an example of valuing bonds with credit spreads</p>
+      
+      
+      
+      <!-- article content -->
+     <p>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>In an earlier example on <a href="http://gouthamanbalaraman.com/blog/quantlib-bond-modeling.html">pricing fixed rate bonds</a> I demonstrated how to construct and value bonds using the given yield curve. In this example, let us take a look at valuing bonds with credit spreads. We will show how to add credit spreads to the give yield curve using different approaches. </p>
+<p>As usual, let us start by importing the QuantLib library and pick a valuation date and set the calculation instance evaluation date.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[1]:</div>
+
+<div class="input_area box-flex1">
+<div class="highlight-ipynb"><pre class="ipynb"><span></span><span class="kn">import</span> <span class="nn">QuantLib</span> <span class="kn">as</span> <span class="nn">ql</span>
+<span class="n">calc_date</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">Date</span><span class="p">(</span><span class="mi">26</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">2016</span><span class="p">)</span>
+<span class="n">ql</span><span class="o">.</span><span class="n">Settings</span><span class="o">.</span><span class="n">instance</span><span class="p">()</span><span class="o">.</span><span class="n">evaluationDate</span> <span class="o">=</span> <span class="n">calc_date</span>
+</pre></div>
+
+</div>
+
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>For simplicity, let us imagine that the treasury yield curve is flat. This makes it easier to construct the yield curve easily. This also allows us to directly shock the yield curve, and provides a validation for the more general treatment of shocks on yield curve.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[2]:</div>
+
+<div class="input_area box-flex1">
+<div class="highlight-ipynb"><pre class="ipynb"><span></span><span class="n">flat_rate</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">SimpleQuote</span><span class="p">(</span><span class="mf">0.0015</span><span class="p">)</span>
+<span class="n">rate_handle</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">QuoteHandle</span><span class="p">(</span><span class="n">flat_rate</span><span class="p">)</span>
+<span class="n">day_count</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">Actual360</span><span class="p">()</span>
+<span class="n">calendar</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">UnitedStates</span><span class="p">()</span>
+<span class="n">ts_yield</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">FlatForward</span><span class="p">(</span><span class="n">calc_date</span><span class="p">,</span> <span class="n">rate_handle</span><span class="p">,</span> <span class="n">day_count</span><span class="p">)</span>
+<span class="n">ts_handle</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">YieldTermStructureHandle</span><span class="p">(</span><span class="n">ts_yield</span><span class="p">)</span>
+</pre></div>
+
+</div>
+
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Now let us construct the bond itself. We do that by first constructing the schedule, and then passing the schedule into the bond.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[3]:</div>
+
+<div class="input_area box-flex1">
+<div class="highlight-ipynb"><pre class="ipynb"><span></span><span class="n">issue_date</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">Date</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">2016</span><span class="p">)</span>
+<span class="n">maturity_date</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">Date</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">2021</span><span class="p">)</span>
+<span class="n">tenor</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">Period</span><span class="p">(</span><span class="n">ql</span><span class="o">.</span><span class="n">Semiannual</span><span class="p">)</span>
+<span class="n">calendar</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">UnitedStates</span><span class="p">()</span>
+<span class="n">bussiness_convention</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">Unadjusted</span>
+<span class="n">date_generation</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">DateGeneration</span><span class="o">.</span><span class="n">Backward</span>
+<span class="n">month_end</span> <span class="o">=</span> <span class="bp">False</span>
+<span class="n">schedule</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">Schedule</span> <span class="p">(</span><span class="n">issue_date</span><span class="p">,</span> <span class="n">maturity_date</span><span class="p">,</span> 
+                        <span class="n">tenor</span><span class="p">,</span> <span class="n">calendar</span><span class="p">,</span> 
+                        <span class="n">bussiness_convention</span><span class="p">,</span>
+                        <span class="n">bussiness_convention</span><span class="p">,</span> 
+                        <span class="n">date_generation</span><span class="p">,</span> 
+                        <span class="n">month_end</span><span class="p">)</span>
+</pre></div>
+
+</div>
+
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[4]:</div>
+
+<div class="input_area box-flex1">
+<div class="highlight-ipynb"><pre class="ipynb"><span></span><span class="n">settlement_days</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="n">day_count</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">Thirty360</span><span class="p">()</span>
+<span class="n">coupon_rate</span> <span class="o">=</span> <span class="o">.</span><span class="mo">03</span>
+<span class="n">coupons</span> <span class="o">=</span> <span class="p">[</span><span class="n">coupon_rate</span><span class="p">]</span>
+
+<span class="c1"># Now lets construct the FixedRateBond</span>
+<span class="n">settlement_days</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">face_value</span> <span class="o">=</span> <span class="mi">100</span>
+<span class="n">fixed_rate_bond</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">FixedRateBond</span><span class="p">(</span>
+    <span class="n">settlement_days</span><span class="p">,</span> 
+    <span class="n">face_value</span><span class="p">,</span> 
+    <span class="n">schedule</span><span class="p">,</span> 
+    <span class="n">coupons</span><span class="p">,</span> 
+    <span class="n">day_count</span><span class="p">)</span>
+</pre></div>
+
+</div>
+
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Now that we have the <code>fixed_rate_bond</code> object, we can create a <code>DiscountingBondEngine</code> and value the bond.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[5]:</div>
+
+<div class="input_area box-flex1">
+<div class="highlight-ipynb"><pre class="ipynb"><span></span><span class="n">bond_engine</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">DiscountingBondEngine</span><span class="p">(</span><span class="n">ts_handle</span><span class="p">)</span>
+<span class="n">fixed_rate_bond</span><span class="o">.</span><span class="n">setPricingEngine</span><span class="p">(</span><span class="n">bond_engine</span><span class="p">)</span>
+<span class="n">fixed_rate_bond</span><span class="o">.</span><span class="n">NPV</span><span class="p">()</span>
+</pre></div>
+
+</div>
+
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt output_prompt">Out[5]:</div>
+
+
+<pre class="ipynb">114.18461651948999</pre>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>So far, we have valued the bond under the treasury yield curve and have not incorporated the credit spreads. Let us assume that the market prices this bond with a <code>50BP</code> spread on top of the treasury yield curve. Now we can, in this case, directly shock the <code>flat_rate</code> used in the yield term structure. Let us see what the value is:</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[6]:</div>
+
+<div class="input_area box-flex1">
+<div class="highlight-ipynb"><pre class="ipynb"><span></span><span class="n">flat_rate</span><span class="o">.</span><span class="n">setValue</span><span class="p">(</span><span class="mf">0.0065</span><span class="p">)</span>
+<span class="n">fixed_rate_bond</span><span class="o">.</span><span class="n">NPV</span><span class="p">()</span>
+</pre></div>
+
+</div>
+
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt output_prompt">Out[6]:</div>
+
+
+<pre class="ipynb">111.5097766266561</pre>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Above we shocked the <code>flat_rate</code> and since the yield term structure is an <code>Observer</code> observing the <code>Observable</code> <code>flat_rate</code>, we could just shock the rate, and QuantLib behind the scenes recalculates all the <code>Observer</code>s. Though, this approach is not always viable, in cases such as a bootstrapped bond curve. So let us look at two different approaches that can be used. Before we do that, we need to reset the <code>flat_rate</code> back to what it was.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[7]:</div>
+
+<div class="input_area box-flex1">
+<div class="highlight-ipynb"><pre class="ipynb"><span></span><span class="n">flat_rate</span><span class="o">.</span><span class="n">setValue</span><span class="p">(</span><span class="mf">0.0015</span><span class="p">)</span>
+<span class="n">fixed_rate_bond</span><span class="o">.</span><span class="n">NPV</span><span class="p">()</span>
+</pre></div>
+
+</div>
+
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt output_prompt">Out[7]:</div>
+
+
+<pre class="ipynb">114.18461651948999</pre>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="parallel-shift-of-the-yield-curve">Parallel Shift of the Yield Curve</h4>
+<p>The whole yield curve can be shifted up and down, and the bond revalued with the help of the <code>ZeroSpreadedTermStructure</code>. The constructor takes the yield curve and the spread as argument.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[8]:</div>
+
+<div class="input_area box-flex1">
+<div class="highlight-ipynb"><pre class="ipynb"><span></span><span class="n">spread1</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">SimpleQuote</span><span class="p">(</span><span class="mf">0.0050</span><span class="p">)</span>
+<span class="n">spread_handle1</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">QuoteHandle</span><span class="p">(</span><span class="n">spread1</span><span class="p">)</span>
+<span class="n">ts_spreaded1</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">ZeroSpreadedTermStructure</span><span class="p">(</span><span class="n">ts_handle</span><span class="p">,</span> <span class="n">spread_handle1</span><span class="p">)</span>
+<span class="n">ts_spreaded_handle1</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">YieldTermStructureHandle</span><span class="p">(</span><span class="n">ts_spreaded1</span><span class="p">)</span>
+
+<span class="n">bond_engine</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">DiscountingBondEngine</span><span class="p">(</span><span class="n">ts_spreaded_handle1</span><span class="p">)</span>
+<span class="n">fixed_rate_bond</span><span class="o">.</span><span class="n">setPricingEngine</span><span class="p">(</span><span class="n">bond_engine</span><span class="p">)</span>
+
+<span class="c1"># Finally the price</span>
+<span class="n">fixed_rate_bond</span><span class="o">.</span><span class="n">NPV</span><span class="p">()</span>
+</pre></div>
+
+</div>
+
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt output_prompt">Out[8]:</div>
+
+
+<pre class="ipynb">111.50977662665609</pre>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Once we have constructed the spreaded term structure, it is rather easy to value for other spreads. All we need to do is change the <code>SimpleQuote</code> object <code>spread1</code> here.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[9]:</div>
+
+<div class="input_area box-flex1">
+<div class="highlight-ipynb"><pre class="ipynb"><span></span><span class="n">spread1</span><span class="o">.</span><span class="n">setValue</span><span class="p">(</span><span class="mf">0.01</span><span class="p">)</span>
+<span class="n">fixed_rate_bond</span><span class="o">.</span><span class="n">NPV</span><span class="p">()</span>
+</pre></div>
+
+</div>
+
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt output_prompt">Out[9]:</div>
+
+
+<pre class="ipynb">108.89999943320038</pre>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="non-parallel-shift-of-the-yield-curve">Non-Parallel Shift of the Yield Curve</h4>
+<p>The above method allows only for parallel shift of the yield curve. The <code>SpreadedLinearZeroInterpolatedTermStructure</code> class allows for non parallel shock. First, let us mimic a parallel shift using this class. For the constructor, we need to pass the yield term structure that we wish to shift, and the a list of spreads and a list of the corresponding dates.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[10]:</div>
+
+<div class="input_area box-flex1">
+<div class="highlight-ipynb"><pre class="ipynb"><span></span><span class="n">spread21</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">SimpleQuote</span><span class="p">(</span><span class="mf">0.0050</span><span class="p">)</span>
+<span class="n">spread22</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">SimpleQuote</span><span class="p">(</span><span class="mf">0.0050</span><span class="p">)</span>
+<span class="n">start_date</span> <span class="o">=</span> <span class="n">calc_date</span>
+<span class="n">end_date</span> <span class="o">=</span> <span class="n">calendar</span><span class="o">.</span><span class="n">advance</span><span class="p">(</span><span class="n">start_date</span><span class="p">,</span> <span class="n">ql</span><span class="o">.</span><span class="n">Period</span><span class="p">(</span><span class="mi">50</span><span class="p">,</span> <span class="n">ql</span><span class="o">.</span><span class="n">Years</span><span class="p">))</span>
+<span class="n">ts_spreaded2</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">SpreadedLinearZeroInterpolatedTermStructure</span><span class="p">(</span>
+    <span class="n">ts_handle</span><span class="p">,</span>
+    <span class="p">[</span><span class="n">ql</span><span class="o">.</span><span class="n">QuoteHandle</span><span class="p">(</span><span class="n">spread21</span><span class="p">),</span> <span class="n">ql</span><span class="o">.</span><span class="n">QuoteHandle</span><span class="p">(</span><span class="n">spread22</span><span class="p">)],</span>
+    <span class="p">[</span><span class="n">start_date</span><span class="p">,</span> <span class="n">end_date</span><span class="p">]</span>
+<span class="p">)</span>
+<span class="n">ts_spreaded_handle2</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">YieldTermStructureHandle</span><span class="p">(</span><span class="n">ts_spreaded2</span><span class="p">)</span>
+
+<span class="n">bond_engine</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">DiscountingBondEngine</span><span class="p">(</span><span class="n">ts_spreaded_handle2</span><span class="p">)</span>
+<span class="n">fixed_rate_bond</span><span class="o">.</span><span class="n">setPricingEngine</span><span class="p">(</span><span class="n">bond_engine</span><span class="p">)</span>
+
+<span class="c1"># Finally the price</span>
+<span class="n">fixed_rate_bond</span><span class="o">.</span><span class="n">NPV</span><span class="p">()</span>
+</pre></div>
+
+</div>
+
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt output_prompt">Out[10]:</div>
+
+
+<pre class="ipynb">111.50977662665609</pre>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Here, once again we can change the value of <code>spread2</code> to value for other shocks.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[11]:</div>
+
+<div class="input_area box-flex1">
+<div class="highlight-ipynb"><pre class="ipynb"><span></span><span class="n">spread21</span><span class="o">.</span><span class="n">setValue</span><span class="p">(</span><span class="mf">0.01</span><span class="p">)</span>
+<span class="n">spread22</span><span class="o">.</span><span class="n">setValue</span><span class="p">(</span><span class="mf">0.01</span><span class="p">)</span>
+<span class="n">fixed_rate_bond</span><span class="o">.</span><span class="n">NPV</span><span class="p">()</span>
+</pre></div>
+
+</div>
+
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt output_prompt">Out[11]:</div>
+
+
+<pre class="ipynb">108.89999943320038</pre>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>We can easily do non-parallel shifts just by shocking one end. </p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[12]:</div>
+
+<div class="input_area box-flex1">
+<div class="highlight-ipynb"><pre class="ipynb"><span></span><span class="n">spread21</span><span class="o">.</span><span class="n">setValue</span><span class="p">(</span><span class="mf">0.005</span><span class="p">)</span>
+<span class="n">spread22</span><span class="o">.</span><span class="n">setValue</span><span class="p">(</span><span class="mf">0.01</span><span class="p">)</span>
+<span class="n">fixed_rate_bond</span><span class="o">.</span><span class="n">NPV</span><span class="p">()</span>
+</pre></div>
+
+</div>
+
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt output_prompt">Out[12]:</div>
+
+
+<pre class="ipynb">111.25358792334083</pre>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The <code>SpreadedLinearZeroInterpolatedTermStructure</code> is a very powerful class and can be used to implement key-rate duration calculations.</p>
+</div>
+</div>
+</div></p>
+     <br><br>
+				
+				<div class="row">
+					<div class="col-md-3">
+						<a href="https://leanpub.com/quantlibpythoncookbook">
+							<img alt="QuantLib Python Cookbook" 
+								 src="https://s3.amazonaws.com/titlepages.leanpub.com/quantlibpythoncookbook/medium?1465967986"
+								 title= "QuantLib Python Cookbook">
+						</a>
+					</div>
+					<div class="col-md-9">
+						<em>Updated posts from this blog and transcripts of Luigi's screencasts on YouTube is compiled 
+						into <a href="https://leanpub.com/quantlibpythoncookbook"> QuantLib Python Cookbook </a>. 
+						Visit here for other <a href ="http://gouthamanbalaraman.com/blog/quantlib-python-tutorials-with-examples.html">QuantLib Python examples</a>.
+						You can also help improve this blog series by answering this 
+						<a href="https://docs.google.com/forms/d/1iRI-YWgqCB-rUhxVsFf-s_y00yAB0vyb-b816q6oktk/viewform">one minute survey.</a></em>
+					</div>
+				</div>
+	            <br><br>
+	  <br>
+	 
+     <!-- article tags-->
+        <span class="glyphicon glyphicon-tags"></span>&nbsp;&nbsp;
+            <span class="label label-default"><a href="http://gouthamanbalaraman.com/tag/quantlib.html">quantlib</a></span>&nbsp;&nbsp;
+            <span class="label label-default"><a href="http://gouthamanbalaraman.com/tag/python.html">python</a></span>&nbsp;&nbsp;
+            <span class="label label-default"><a href="http://gouthamanbalaraman.com/tag/finance.html">finance</a></span>&nbsp;&nbsp;
+        <br>
+     <hr/>
+    
+    <strong>Related Post</strong>
+        <ul>
+            <li>
+                <a href="http://gouthamanbalaraman.com/blog/european-option-binomial-tree-quantlib-python.html">Option Model Handbook, Part III: European Option Pricing With QuantLib Python</a>
+            </li>
+            <li>
+                <a href="http://gouthamanbalaraman.com/blog/hull-white-simulation-quantlib-python.html">Hull White Term Structure Simulations with QuantLib Python</a>
+            </li>
+            <li>
+                <a href="http://gouthamanbalaraman.com/blog/short-interest-rate-model-calibration-quantlib.html">Short Interest Rate Model Calibration in QuantLib Python</a>
+            </li>
+            <li>
+                <a href="http://gouthamanbalaraman.com/blog/valuing-european-option-heston-model-quantLib.html">Valuing European Option Using the Heston Model in QuantLib Python</a>
+            </li>
+            <li>
+                <a href="http://gouthamanbalaraman.com/blog/quantlib-basics.html">Introduction to QuantLib Python</a>
+            </li>
+        </ul>
+        <hr/>
+
+     <!-- article comments -->
+    <div class="comment">
+        <div id="disqus_thread"></div> <!-- comment app container -->
+    </div>
+	<!-- Comment BEGIN -->
+    <script type="text/javascript">
+        var disqus_shortname = 'gouthamanbalaramancom'; // required: replace example with your forum shortname
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.min.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+     <!-- Comment END -->
+</div>    
+                </div>
+               
+            </div>
+            <div class="row">
+                <div class="col-md-10 col-md-offset-1">
+                </div>
+            </div>
+            <footer id="contentinfo" class="footer">
+                <address id="about" class="vcard body">
+                    &copy; <a href="http://gouthamanbalaraman.com">Goutham Balaraman</a> Proudly powered by <a href="http://getpelican.com/">Pelican</a>
+                    <div class="pull-right">
+                    	<!--a href="http://www.bloglovin.com/blog/14559547/?claim=cqravg9v4n2">Bloglovin</a-->
+			            <a href="http://gouthamanbalaraman.com/feeds/all.atom.xml">Atom</a>
+			        &nbsp
+			            <a href="http://gouthamanbalaraman.com/feeds/all.rss.xml">RSS</a>
+		            </div>
+                </address><!-- /#about -->
+            </footer>
+        </div><!-- container -->
+        <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
+        <link href="http://gouthamanbalaraman.com/theme/static/css/style.css" rel="stylesheet" />
+        
+        <script src="http://gouthamanbalaraman.com/theme/static/js/jquery.1.11.2.min.js"></script>
+        <script src="http://gouthamanbalaraman.com/theme/static/js/bootstrap.min.js"></script>
+        <script type="text/javascript">
+	jQuery(document).ready(function($) {
+	    $("div.collapseheader").click(function () {
+	    $header = $(this).children("span").first();
+	    $codearea = $(this).children(".input_area");
+	    console.log($(this).children());
+	    $codearea.slideToggle(500, function () {
+	        $header.text(function () {
+	            return $codearea.is(":visible") ? "Collapse Code" : "Expand Code";
+	        });
+	    });
+	});
+	});
+	</script>
+	<!-- Using MathJax, with the delimiters $ -->
+        <!-- Conflict with pygments for the .mo and .mi -->
+        <script type="text/x-mathjax-config">
+          MathJax.Hub.Config({
+          "HTML-CSS": {
+          styles: {
+          ".MathJax .mo, .MathJax .mi": {color: "black ! important"}}
+          },
+          tex2jax: {inlineMath: [['$','$'], ['\\\\(','\\\\)']],processEscapes: true}
+          });
+        </script>
+    </body>
+</html>
