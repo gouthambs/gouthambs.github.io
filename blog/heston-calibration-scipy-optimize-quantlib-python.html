@@ -1,0 +1,1361 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Heston Model Calibration Using QuantLib Python and Scipy Optimize - G B</title>
+        <!-- All the meta tags -->
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+        <meta property="og:type" content="article"/>
+        <meta property="og:title" content="Heston Model Calibration Using QuantLib Python and Scipy Optimize"/>
+        <meta property="og:url" content="http://gouthamanbalaraman.com/blog/heston-calibration-scipy-optimize-quantlib-python.html"/>
+        <meta property="og:description" content="In this post we do a deep dive on calibration of Heston model using QuantLib Python and Scipy&#39;s Optimize package."/>
+        
+        <link href="http://gouthamanbalaraman.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="G B Full Atom Feed" />
+        <link href="http://gouthamanbalaraman.com/feeds/all.rss.xml" type="application/rss+xml" rel="alternate" title="G B RSS Feed" />
+        <link href="http://gouthamanbalaraman.com/feeds/quantlib.atom.xml" type="application/atom+xml" rel="alternate" title="G B Categories Atom Feed" />
+        <link href="http://gouthamanbalaraman.com/feeds/quantlib.rss.xml" type="application/rss+xml" rel="alternate" title="G B Categories RSS Feed" />
+        <link href="http://gouthamanbalaraman.com/theme/static/css/bootstrap.readable.min.css" rel="stylesheet" />
+
+	<!-- Google Analytics -->
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-46714334-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    /*Update Your Analytics Tracking Code to Support Display Advertising by uncommenting the following 
+    instead of the above line */    
+    /*ga.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'stats.g.doubleclick.net/dc.js';*/
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+    </head>
+
+    <body>
+      <div class="navbar navbar-default navbar-fixed-top">
+          <div class="container">
+            <div class="navbar-header">
+              <a href="http://gouthamanbalaraman.com" class="navbar-brand">G B</a>
+              <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+            </div>
+            <div class="navbar-collapse collapse" id="navbar-main">
+              <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="http://gouthamanbalaraman.com/pages/about.html">About</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                <div class="col-md-10 col-md-offset-1">
+    <div class="page-header">
+        <h1>Heston Model Calibration Using QuantLib Python and Scipy Optimize</h1>
+     <!--span class="glyphicon glyphicon-calendar"></span-->
+     &nbsp;July 31, 2016
+     &nbsp;
+     <!--span class="glyphicon glyphicon-user"></span--> by  
+     <a class="url fn" href="http://gouthamanbalaraman.com/author/goutham-balaraman.html">&nbsp;Goutham Balaraman </a>
+
+        <p id="post-share-links">
+            &nbsp;Share on:
+            <a href="https://sharetodiaspora.github.io/?title=Heston%20Model%20Calibration%20Using%20QuantLib%20Python%20and%20Scipy%20Optimize&url=http%3A//gouthamanbalaraman.com/blog/heston-calibration-scipy-optimize-quantlib-python.html" target="_blank" title="Share on Diaspora">Diaspora*</a>
+            /
+            <a href="http://twitter.com/home?status=Heston%20Model%20Calibration%20Using%20QuantLib%20Python%20and%20Scipy%20Optimize by @gsbalaraman%20http%3A//gouthamanbalaraman.com/blog/heston-calibration-scipy-optimize-quantlib-python.html" target="_blank" title="Share on Twitter">Twitter</a>
+            /
+            <a href="http://www.facebook.com/sharer/sharer.php?s=100&amp;p%5Burl%5D=http%3A//gouthamanbalaraman.com/blog/heston-calibration-scipy-optimize-quantlib-python.html" target="_blank" title="Share on Facebook">Facebook</a>
+            /
+            <a href="https://plus.google.com/share?url=http%3A//gouthamanbalaraman.com/blog/heston-calibration-scipy-optimize-quantlib-python.html" target="_blank" title="Share on Google Plus">Google+</a>
+            /
+            <a href="mailto:?subject=Heston%20Model%20Calibration%20Using%20QuantLib%20Python%20and%20Scipy%20Optimize&amp;body=http%3A//gouthamanbalaraman.com/blog/heston-calibration-scipy-optimize-quantlib-python.html" target="_blank" title="Share via Email">Email</a>
+            /
+            <a href="http://www.bloglovin.com/blog/14559547/?claim=cqravg9v4n2">Bloglovin</a>
+        </p>
+     </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-8 col-md-offset-2">
+
+<div class="bs-docs-section">
+    
+     <!-- article description -->
+         <p class="lead">In this post we do a deep dive on calibration of Heston model using QuantLib Python and Scipy's Optimize package.</p>
+      
+      
+      
+      <!-- article content -->
+     <p>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>I have discussed parameter calibration in a couple of my earlier posts. In this post I want to show how you can use QuantLib Python and Scipy to do parameter calibration. In order to run this, you will need to build the QuantLib github master and the latest SWIG code with <a href="https://github.com/lballabio/QuantLib-SWIG/pull/26">my pull request</a>. Alternately, this should get merged into version 1.9 and you should be able to use it when it is released. This pull request adds some of the moethods of the <code>CalibratedModel</code> such as <code>calibrationError</code> that we will use in calibrating models using Scipy. QuantLib&#39;s strength is all financial models. Scipy&#39;s strength is all the solvers and numerical methods. So here, I will show you how you can make the best of both worlds. We will start as usual by importing the modules.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[1]:</div>
+
+<div class="input_area box-flex1">
+<div class="highlight-ipynb"><pre class="ipynb"><span></span><span class="kn">import</span> <span class="nn">QuantLib</span> <span class="kn">as</span> <span class="nn">ql</span>
+<span class="kn">from</span> <span class="nn">math</span> <span class="kn">import</span> <span class="nb">pow</span><span class="p">,</span> <span class="n">sqrt</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">scipy.optimize</span> <span class="kn">import</span> <span class="n">root</span>
+</pre></div>
+
+</div>
+
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Let&#39;s construct some of the basic dependencies such as the yield and dividend term structures. </p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[2]:</div>
+
+<div class="input_area box-flex1">
+<div class="highlight-ipynb"><pre class="ipynb"><span></span><span class="n">day_count</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">Actual365Fixed</span><span class="p">()</span>
+<span class="n">calendar</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">UnitedStates</span><span class="p">()</span>
+<span class="n">calculation_date</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">Date</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">2015</span><span class="p">)</span>
+
+<span class="n">spot</span> <span class="o">=</span> <span class="mf">659.37</span>
+<span class="n">ql</span><span class="o">.</span><span class="n">Settings</span><span class="o">.</span><span class="n">instance</span><span class="p">()</span><span class="o">.</span><span class="n">evaluationDate</span> <span class="o">=</span> <span class="n">calculation_date</span>
+
+<span class="n">risk_free_rate</span> <span class="o">=</span> <span class="mf">0.01</span>
+<span class="n">dividend_rate</span> <span class="o">=</span> <span class="mf">0.0</span>
+<span class="n">yield_ts</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">YieldTermStructureHandle</span><span class="p">(</span>
+    <span class="n">ql</span><span class="o">.</span><span class="n">FlatForward</span><span class="p">(</span><span class="n">calculation_date</span><span class="p">,</span> <span class="n">risk_free_rate</span><span class="p">,</span> <span class="n">day_count</span><span class="p">))</span>
+<span class="n">dividend_ts</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">YieldTermStructureHandle</span><span class="p">(</span>
+    <span class="n">ql</span><span class="o">.</span><span class="n">FlatForward</span><span class="p">(</span><span class="n">calculation_date</span><span class="p">,</span> <span class="n">dividend_rate</span><span class="p">,</span> <span class="n">day_count</span><span class="p">))</span>
+</pre></div>
+
+</div>
+
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Following is a sample grid of volatilities for different expiration and strikes.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[3]:</div>
+
+<div class="input_area box-flex1">
+<div class="highlight-ipynb"><pre class="ipynb"><span></span><span class="n">expiration_dates</span> <span class="o">=</span> <span class="p">[</span><span class="n">ql</span><span class="o">.</span><span class="n">Date</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span><span class="mi">12</span><span class="p">,</span><span class="mi">2015</span><span class="p">),</span> <span class="n">ql</span><span class="o">.</span><span class="n">Date</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2016</span><span class="p">),</span> <span class="n">ql</span><span class="o">.</span><span class="n">Date</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2016</span><span class="p">),</span>
+                    <span class="n">ql</span><span class="o">.</span><span class="n">Date</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">2016</span><span class="p">),</span> <span class="n">ql</span><span class="o">.</span><span class="n">Date</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">2016</span><span class="p">),</span> <span class="n">ql</span><span class="o">.</span><span class="n">Date</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">2016</span><span class="p">),</span> 
+                    <span class="n">ql</span><span class="o">.</span><span class="n">Date</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">2016</span><span class="p">),</span> <span class="n">ql</span><span class="o">.</span><span class="n">Date</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">2016</span><span class="p">),</span> <span class="n">ql</span><span class="o">.</span><span class="n">Date</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">2016</span><span class="p">),</span>
+                    <span class="n">ql</span><span class="o">.</span><span class="n">Date</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span><span class="mi">9</span><span class="p">,</span><span class="mi">2016</span><span class="p">),</span> <span class="n">ql</span><span class="o">.</span><span class="n">Date</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="mi">2016</span><span class="p">),</span> <span class="n">ql</span><span class="o">.</span><span class="n">Date</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span><span class="mi">11</span><span class="p">,</span><span class="mi">2016</span><span class="p">),</span> 
+                    <span class="n">ql</span><span class="o">.</span><span class="n">Date</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span><span class="mi">12</span><span class="p">,</span><span class="mi">2016</span><span class="p">),</span> <span class="n">ql</span><span class="o">.</span><span class="n">Date</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2017</span><span class="p">),</span> <span class="n">ql</span><span class="o">.</span><span class="n">Date</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2017</span><span class="p">),</span>
+                    <span class="n">ql</span><span class="o">.</span><span class="n">Date</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">2017</span><span class="p">),</span> <span class="n">ql</span><span class="o">.</span><span class="n">Date</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">2017</span><span class="p">),</span> <span class="n">ql</span><span class="o">.</span><span class="n">Date</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">2017</span><span class="p">),</span> 
+                    <span class="n">ql</span><span class="o">.</span><span class="n">Date</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">2017</span><span class="p">),</span> <span class="n">ql</span><span class="o">.</span><span class="n">Date</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">2017</span><span class="p">),</span> <span class="n">ql</span><span class="o">.</span><span class="n">Date</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">2017</span><span class="p">),</span>
+                    <span class="n">ql</span><span class="o">.</span><span class="n">Date</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span><span class="mi">9</span><span class="p">,</span><span class="mi">2017</span><span class="p">),</span> <span class="n">ql</span><span class="o">.</span><span class="n">Date</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="mi">2017</span><span class="p">),</span> <span class="n">ql</span><span class="o">.</span><span class="n">Date</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span><span class="mi">11</span><span class="p">,</span><span class="mi">2017</span><span class="p">)]</span>
+<span class="n">strikes</span> <span class="o">=</span> <span class="p">[</span><span class="mf">527.50</span><span class="p">,</span> <span class="mf">560.46</span><span class="p">,</span> <span class="mf">593.43</span><span class="p">,</span> <span class="mf">626.40</span><span class="p">,</span> <span class="mf">659.37</span><span class="p">,</span> <span class="mf">692.34</span><span class="p">,</span> <span class="mf">725.31</span><span class="p">,</span> <span class="mf">758.28</span><span class="p">]</span>
+<span class="n">data</span> <span class="o">=</span> <span class="p">[</span>
+<span class="p">[</span><span class="mf">0.37819</span><span class="p">,</span> <span class="mf">0.34177</span><span class="p">,</span> <span class="mf">0.30394</span><span class="p">,</span> <span class="mf">0.27832</span><span class="p">,</span> <span class="mf">0.26453</span><span class="p">,</span> <span class="mf">0.25916</span><span class="p">,</span> <span class="mf">0.25941</span><span class="p">,</span> <span class="mf">0.26127</span><span class="p">],</span>
+<span class="p">[</span><span class="mf">0.3445</span><span class="p">,</span> <span class="mf">0.31769</span><span class="p">,</span> <span class="mf">0.2933</span><span class="p">,</span> <span class="mf">0.27614</span><span class="p">,</span> <span class="mf">0.26575</span><span class="p">,</span> <span class="mf">0.25729</span><span class="p">,</span> <span class="mf">0.25228</span><span class="p">,</span> <span class="mf">0.25202</span><span class="p">],</span>
+<span class="p">[</span><span class="mf">0.37419</span><span class="p">,</span> <span class="mf">0.35372</span><span class="p">,</span> <span class="mf">0.33729</span><span class="p">,</span> <span class="mf">0.32492</span><span class="p">,</span> <span class="mf">0.31601</span><span class="p">,</span> <span class="mf">0.30883</span><span class="p">,</span> <span class="mf">0.30036</span><span class="p">,</span> <span class="mf">0.29568</span><span class="p">],</span>
+<span class="p">[</span><span class="mf">0.37498</span><span class="p">,</span> <span class="mf">0.35847</span><span class="p">,</span> <span class="mf">0.34475</span><span class="p">,</span> <span class="mf">0.33399</span><span class="p">,</span> <span class="mf">0.32715</span><span class="p">,</span> <span class="mf">0.31943</span><span class="p">,</span> <span class="mf">0.31098</span><span class="p">,</span> <span class="mf">0.30506</span><span class="p">],</span>
+<span class="p">[</span><span class="mf">0.35941</span><span class="p">,</span> <span class="mf">0.34516</span><span class="p">,</span> <span class="mf">0.33296</span><span class="p">,</span> <span class="mf">0.32275</span><span class="p">,</span> <span class="mf">0.31867</span><span class="p">,</span> <span class="mf">0.30969</span><span class="p">,</span> <span class="mf">0.30239</span><span class="p">,</span> <span class="mf">0.29631</span><span class="p">],</span>
+<span class="p">[</span><span class="mf">0.35521</span><span class="p">,</span> <span class="mf">0.34242</span><span class="p">,</span> <span class="mf">0.33154</span><span class="p">,</span> <span class="mf">0.3219</span><span class="p">,</span> <span class="mf">0.31948</span><span class="p">,</span> <span class="mf">0.31096</span><span class="p">,</span> <span class="mf">0.30424</span><span class="p">,</span> <span class="mf">0.2984</span><span class="p">],</span>
+<span class="p">[</span><span class="mf">0.35442</span><span class="p">,</span> <span class="mf">0.34267</span><span class="p">,</span> <span class="mf">0.33288</span><span class="p">,</span> <span class="mf">0.32374</span><span class="p">,</span> <span class="mf">0.32245</span><span class="p">,</span> <span class="mf">0.31474</span><span class="p">,</span> <span class="mf">0.30838</span><span class="p">,</span> <span class="mf">0.30283</span><span class="p">],</span>
+<span class="p">[</span><span class="mf">0.35384</span><span class="p">,</span> <span class="mf">0.34286</span><span class="p">,</span> <span class="mf">0.33386</span><span class="p">,</span> <span class="mf">0.32507</span><span class="p">,</span> <span class="mf">0.3246</span><span class="p">,</span> <span class="mf">0.31745</span><span class="p">,</span> <span class="mf">0.31135</span><span class="p">,</span> <span class="mf">0.306</span><span class="p">],</span>
+<span class="p">[</span><span class="mf">0.35338</span><span class="p">,</span> <span class="mf">0.343</span><span class="p">,</span> <span class="mf">0.33464</span><span class="p">,</span> <span class="mf">0.32614</span><span class="p">,</span> <span class="mf">0.3263</span><span class="p">,</span> <span class="mf">0.31961</span><span class="p">,</span> <span class="mf">0.31371</span><span class="p">,</span> <span class="mf">0.30852</span><span class="p">],</span>
+<span class="p">[</span><span class="mf">0.35301</span><span class="p">,</span> <span class="mf">0.34312</span><span class="p">,</span> <span class="mf">0.33526</span><span class="p">,</span> <span class="mf">0.32698</span><span class="p">,</span> <span class="mf">0.32766</span><span class="p">,</span> <span class="mf">0.32132</span><span class="p">,</span> <span class="mf">0.31558</span><span class="p">,</span> <span class="mf">0.31052</span><span class="p">],</span>
+<span class="p">[</span><span class="mf">0.35272</span><span class="p">,</span> <span class="mf">0.34322</span><span class="p">,</span> <span class="mf">0.33574</span><span class="p">,</span> <span class="mf">0.32765</span><span class="p">,</span> <span class="mf">0.32873</span><span class="p">,</span> <span class="mf">0.32267</span><span class="p">,</span> <span class="mf">0.31705</span><span class="p">,</span> <span class="mf">0.31209</span><span class="p">],</span>
+<span class="p">[</span><span class="mf">0.35246</span><span class="p">,</span> <span class="mf">0.3433</span><span class="p">,</span> <span class="mf">0.33617</span><span class="p">,</span> <span class="mf">0.32822</span><span class="p">,</span> <span class="mf">0.32965</span><span class="p">,</span> <span class="mf">0.32383</span><span class="p">,</span> <span class="mf">0.31831</span><span class="p">,</span> <span class="mf">0.31344</span><span class="p">],</span>
+<span class="p">[</span><span class="mf">0.35226</span><span class="p">,</span> <span class="mf">0.34336</span><span class="p">,</span> <span class="mf">0.33651</span><span class="p">,</span> <span class="mf">0.32869</span><span class="p">,</span> <span class="mf">0.3304</span><span class="p">,</span> <span class="mf">0.32477</span><span class="p">,</span> <span class="mf">0.31934</span><span class="p">,</span> <span class="mf">0.31453</span><span class="p">],</span>
+<span class="p">[</span><span class="mf">0.35207</span><span class="p">,</span> <span class="mf">0.34342</span><span class="p">,</span> <span class="mf">0.33681</span><span class="p">,</span> <span class="mf">0.32911</span><span class="p">,</span> <span class="mf">0.33106</span><span class="p">,</span> <span class="mf">0.32561</span><span class="p">,</span> <span class="mf">0.32025</span><span class="p">,</span> <span class="mf">0.3155</span><span class="p">],</span>
+<span class="p">[</span><span class="mf">0.35171</span><span class="p">,</span> <span class="mf">0.34327</span><span class="p">,</span> <span class="mf">0.33679</span><span class="p">,</span> <span class="mf">0.32931</span><span class="p">,</span> <span class="mf">0.3319</span><span class="p">,</span> <span class="mf">0.32665</span><span class="p">,</span> <span class="mf">0.32139</span><span class="p">,</span> <span class="mf">0.31675</span><span class="p">],</span>
+<span class="p">[</span><span class="mf">0.35128</span><span class="p">,</span> <span class="mf">0.343</span><span class="p">,</span> <span class="mf">0.33658</span><span class="p">,</span> <span class="mf">0.32937</span><span class="p">,</span> <span class="mf">0.33276</span><span class="p">,</span> <span class="mf">0.32769</span><span class="p">,</span> <span class="mf">0.32255</span><span class="p">,</span> <span class="mf">0.31802</span><span class="p">],</span>
+<span class="p">[</span><span class="mf">0.35086</span><span class="p">,</span> <span class="mf">0.34274</span><span class="p">,</span> <span class="mf">0.33637</span><span class="p">,</span> <span class="mf">0.32943</span><span class="p">,</span> <span class="mf">0.3336</span><span class="p">,</span> <span class="mf">0.32872</span><span class="p">,</span> <span class="mf">0.32368</span><span class="p">,</span> <span class="mf">0.31927</span><span class="p">],</span>
+<span class="p">[</span><span class="mf">0.35049</span><span class="p">,</span> <span class="mf">0.34252</span><span class="p">,</span> <span class="mf">0.33618</span><span class="p">,</span> <span class="mf">0.32948</span><span class="p">,</span> <span class="mf">0.33432</span><span class="p">,</span> <span class="mf">0.32959</span><span class="p">,</span> <span class="mf">0.32465</span><span class="p">,</span> <span class="mf">0.32034</span><span class="p">],</span>
+<span class="p">[</span><span class="mf">0.35016</span><span class="p">,</span> <span class="mf">0.34231</span><span class="p">,</span> <span class="mf">0.33602</span><span class="p">,</span> <span class="mf">0.32953</span><span class="p">,</span> <span class="mf">0.33498</span><span class="p">,</span> <span class="mf">0.3304</span><span class="p">,</span> <span class="mf">0.32554</span><span class="p">,</span> <span class="mf">0.32132</span><span class="p">],</span>
+<span class="p">[</span><span class="mf">0.34986</span><span class="p">,</span> <span class="mf">0.34213</span><span class="p">,</span> <span class="mf">0.33587</span><span class="p">,</span> <span class="mf">0.32957</span><span class="p">,</span> <span class="mf">0.33556</span><span class="p">,</span> <span class="mf">0.3311</span><span class="p">,</span> <span class="mf">0.32631</span><span class="p">,</span> <span class="mf">0.32217</span><span class="p">],</span>
+<span class="p">[</span><span class="mf">0.34959</span><span class="p">,</span> <span class="mf">0.34196</span><span class="p">,</span> <span class="mf">0.33573</span><span class="p">,</span> <span class="mf">0.32961</span><span class="p">,</span> <span class="mf">0.3361</span><span class="p">,</span> <span class="mf">0.33176</span><span class="p">,</span> <span class="mf">0.32704</span><span class="p">,</span> <span class="mf">0.32296</span><span class="p">],</span>
+<span class="p">[</span><span class="mf">0.34934</span><span class="p">,</span> <span class="mf">0.34181</span><span class="p">,</span> <span class="mf">0.33561</span><span class="p">,</span> <span class="mf">0.32964</span><span class="p">,</span> <span class="mf">0.33658</span><span class="p">,</span> <span class="mf">0.33235</span><span class="p">,</span> <span class="mf">0.32769</span><span class="p">,</span> <span class="mf">0.32368</span><span class="p">],</span>
+<span class="p">[</span><span class="mf">0.34912</span><span class="p">,</span> <span class="mf">0.34167</span><span class="p">,</span> <span class="mf">0.3355</span><span class="p">,</span> <span class="mf">0.32967</span><span class="p">,</span> <span class="mf">0.33701</span><span class="p">,</span> <span class="mf">0.33288</span><span class="p">,</span> <span class="mf">0.32827</span><span class="p">,</span> <span class="mf">0.32432</span><span class="p">],</span>
+<span class="p">[</span><span class="mf">0.34891</span><span class="p">,</span> <span class="mf">0.34154</span><span class="p">,</span> <span class="mf">0.33539</span><span class="p">,</span> <span class="mf">0.3297</span><span class="p">,</span> <span class="mf">0.33742</span><span class="p">,</span> <span class="mf">0.33337</span><span class="p">,</span> <span class="mf">0.32881</span><span class="p">,</span> <span class="mf">0.32492</span><span class="p">]]</span>
+</pre></div>
+
+</div>
+
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>I have abstracted some of the repetitive methods into python functions. The function <code>setup_helpers</code> will construct the Heston model helpers and returns an array of these objects. The <code>cost_function_generator</code> is a method to set the cost function and will be used by the Scipy modules. The <code>calibration_report</code> lets us evaluate the quality of the fit. The <code>setup_model</code> method initializes the <code>HestonModel</code> and the <code>AnalyticHestonEngine</code> prior to calibration.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[4]:</div>
+
+<div class="input_area box-flex1">
+<div class="highlight-ipynb"><pre class="ipynb"><span></span><span class="k">def</span> <span class="nf">setup_helpers</span><span class="p">(</span><span class="n">engine</span><span class="p">,</span> <span class="n">expiration_dates</span><span class="p">,</span> <span class="n">strikes</span><span class="p">,</span> 
+                  <span class="n">data</span><span class="p">,</span> <span class="n">ref_date</span><span class="p">,</span> <span class="n">spot</span><span class="p">,</span> <span class="n">yield_ts</span><span class="p">,</span> 
+                  <span class="n">dividend_ts</span><span class="p">):</span>
+    <span class="n">heston_helpers</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">grid_data</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">date</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">expiration_dates</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">j</span><span class="p">,</span> <span class="n">s</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">strikes</span><span class="p">):</span>
+            <span class="n">t</span> <span class="o">=</span> <span class="p">(</span><span class="n">date</span> <span class="o">-</span> <span class="n">ref_date</span> <span class="p">)</span>
+            <span class="n">p</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">Period</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">ql</span><span class="o">.</span><span class="n">Days</span><span class="p">)</span>
+            <span class="n">vols</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span>
+            <span class="n">helper</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">HestonModelHelper</span><span class="p">(</span>
+                <span class="n">p</span><span class="p">,</span> <span class="n">calendar</span><span class="p">,</span> <span class="n">spot</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> 
+                <span class="n">ql</span><span class="o">.</span><span class="n">QuoteHandle</span><span class="p">(</span><span class="n">ql</span><span class="o">.</span><span class="n">SimpleQuote</span><span class="p">(</span><span class="n">vols</span><span class="p">)),</span>
+                <span class="n">yield_ts</span><span class="p">,</span> <span class="n">dividend_ts</span><span class="p">)</span>
+            <span class="n">helper</span><span class="o">.</span><span class="n">setPricingEngine</span><span class="p">(</span><span class="n">engine</span><span class="p">)</span>
+            <span class="n">heston_helpers</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">helper</span><span class="p">)</span>
+            <span class="n">grid_data</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">date</span><span class="p">,</span> <span class="n">s</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">heston_helpers</span><span class="p">,</span> <span class="n">grid_data</span>
+
+<span class="k">def</span> <span class="nf">cost_function_generator</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">helpers</span><span class="p">,</span><span class="n">norm</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">cost_function</span><span class="p">(</span><span class="n">params</span><span class="p">):</span>
+        <span class="n">params_</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">Array</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">params</span><span class="p">))</span>
+        <span class="n">model</span><span class="o">.</span><span class="n">setParams</span><span class="p">(</span><span class="n">params_</span><span class="p">)</span>
+        <span class="n">error</span> <span class="o">=</span> <span class="p">[</span><span class="n">h</span><span class="o">.</span><span class="n">calibrationError</span><span class="p">()</span> <span class="k">for</span> <span class="n">h</span> <span class="ow">in</span> <span class="n">helpers</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">norm</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">error</span><span class="p">)))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">error</span>
+    <span class="k">return</span> <span class="n">cost_function</span>
+
+<span class="k">def</span> <span class="nf">calibration_report</span><span class="p">(</span><span class="n">helpers</span><span class="p">,</span> <span class="n">grid_data</span><span class="p">,</span> <span class="n">detailed</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
+    <span class="n">avg</span> <span class="o">=</span> <span class="mf">0.0</span>
+    <span class="k">if</span> <span class="n">detailed</span><span class="p">:</span>
+        <span class="k">print</span> <span class="s2">&quot;</span><span class="si">%15s</span><span class="s2"> </span><span class="si">%25s</span><span class="s2"> </span><span class="si">%15s</span><span class="s2"> </span><span class="si">%15s</span><span class="s2"> </span><span class="si">%20s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span>
+            <span class="s2">&quot;Strikes&quot;</span><span class="p">,</span> <span class="s2">&quot;Expiry&quot;</span><span class="p">,</span> <span class="s2">&quot;Market Value&quot;</span><span class="p">,</span> 
+             <span class="s2">&quot;Model Value&quot;</span><span class="p">,</span> <span class="s2">&quot;Relative Error (%)&quot;</span><span class="p">)</span>
+        <span class="k">print</span> <span class="s2">&quot;=&quot;</span><span class="o">*</span><span class="mi">100</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">opt</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">helpers</span><span class="p">):</span>
+        <span class="n">err</span> <span class="o">=</span> <span class="p">(</span><span class="n">opt</span><span class="o">.</span><span class="n">modelValue</span><span class="p">()</span><span class="o">/</span><span class="n">opt</span><span class="o">.</span><span class="n">marketValue</span><span class="p">()</span> <span class="o">-</span> <span class="mf">1.0</span><span class="p">)</span>
+        <span class="n">date</span><span class="p">,</span><span class="n">strike</span> <span class="o">=</span> <span class="n">grid_data</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">detailed</span><span class="p">:</span>
+            <span class="k">print</span> <span class="s2">&quot;</span><span class="si">%15.2f</span><span class="s2"> </span><span class="si">%25s</span><span class="s2"> </span><span class="si">%14.5f</span><span class="s2"> </span><span class="si">%15.5f</span><span class="s2"> </span><span class="si">%20.7f</span><span class="s2"> &quot;</span> <span class="o">%</span> <span class="p">(</span>
+                <span class="n">strike</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">date</span><span class="p">),</span> <span class="n">opt</span><span class="o">.</span><span class="n">marketValue</span><span class="p">(),</span> 
+                <span class="n">opt</span><span class="o">.</span><span class="n">modelValue</span><span class="p">(),</span> 
+                <span class="mf">100.0</span><span class="o">*</span><span class="p">(</span><span class="n">opt</span><span class="o">.</span><span class="n">modelValue</span><span class="p">()</span><span class="o">/</span><span class="n">opt</span><span class="o">.</span><span class="n">marketValue</span><span class="p">()</span> <span class="o">-</span> <span class="mf">1.0</span><span class="p">))</span>
+        <span class="n">avg</span> <span class="o">+=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">err</span><span class="p">)</span>
+    <span class="n">avg</span> <span class="o">=</span> <span class="n">avg</span><span class="o">*</span><span class="mf">100.0</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">helpers</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">detailed</span><span class="p">:</span> <span class="k">print</span> <span class="s2">&quot;-&quot;</span><span class="o">*</span><span class="mi">100</span>
+    <span class="n">summary</span> <span class="o">=</span> <span class="s2">&quot;Average Abs Error (</span><span class="si">%%</span><span class="s2">) : </span><span class="si">%5.9f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">avg</span><span class="p">)</span>
+    <span class="k">print</span> <span class="n">summary</span>
+    <span class="k">return</span> <span class="n">avg</span>
+    
+<span class="k">def</span> <span class="nf">setup_model</span><span class="p">(</span><span class="n">_yield_ts</span><span class="p">,</span> <span class="n">_dividend_ts</span><span class="p">,</span> <span class="n">_spot</span><span class="p">,</span> 
+                <span class="n">init_condition</span><span class="o">=</span><span class="p">(</span><span class="mf">0.02</span><span class="p">,</span><span class="mf">0.2</span><span class="p">,</span><span class="mf">0.5</span><span class="p">,</span><span class="mf">0.1</span><span class="p">,</span><span class="mf">0.01</span><span class="p">)):</span>
+    <span class="n">theta</span><span class="p">,</span> <span class="n">kappa</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">rho</span><span class="p">,</span> <span class="n">v0</span> <span class="o">=</span> <span class="n">init_condition</span>
+    <span class="n">process</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">HestonProcess</span><span class="p">(</span><span class="n">_yield_ts</span><span class="p">,</span> <span class="n">_dividend_ts</span><span class="p">,</span> 
+                           <span class="n">ql</span><span class="o">.</span><span class="n">QuoteHandle</span><span class="p">(</span><span class="n">ql</span><span class="o">.</span><span class="n">SimpleQuote</span><span class="p">(</span><span class="n">_spot</span><span class="p">)),</span> 
+                           <span class="n">v0</span><span class="p">,</span> <span class="n">kappa</span><span class="p">,</span> <span class="n">theta</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">rho</span><span class="p">)</span>
+    <span class="n">model</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">HestonModel</span><span class="p">(</span><span class="n">process</span><span class="p">)</span>
+    <span class="n">engine</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">AnalyticHestonEngine</span><span class="p">(</span><span class="n">model</span><span class="p">)</span> 
+    <span class="k">return</span> <span class="n">model</span><span class="p">,</span> <span class="n">engine</span>
+<span class="n">summary</span><span class="o">=</span> <span class="p">[]</span>
+</pre></div>
+
+</div>
+
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="comparing-different-calibration-methods">Comparing Different Calibration Methods</h3>
+<p>Solvers such as Levenberg-Marquardt find local minimas and are very sensitive to the initial conditions. Depending on the starting conditions for your solver, you could end up with a good set of parameters with good convergence or not so good set of parameters. We will look at two initial conditions for different solvers and see how the local minima solvers perform. We will compare this with differential evolution that looks for global minima. </p>
+<p>We will setup the Heston model with two different initial conditions:</p>
+<pre><code>- theta, kappa, sigma, rho, v0 = (0.02, 0.2, 0.5, 0.1, 0.01)
+- theta, kappa, sigma, rho, v0 = (0.07, 0.5, 0.1, 0.1, 0.1)
+</code></pre>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="local-solvers">Local Solvers</h4>
+<h5 id="using-quantlib-levenberg-marquardt-solver">Using QuantLib Levenberg-Marquardt Solver</h5>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>As a first step, let&#39;s look at QuantLib&#39;s Levenberg-Marquardt solver. The initial condition considered is <code>theta, kappa, sigma, rho, v0 = (0.02,0.2,0.5,0.1,0.01)</code></p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[5]:</div>
+
+<div class="input_area box-flex1">
+<div class="highlight-ipynb"><pre class="ipynb"><span></span><span class="n">model1</span><span class="p">,</span> <span class="n">engine1</span> <span class="o">=</span> <span class="n">setup_model</span><span class="p">(</span>
+    <span class="n">yield_ts</span><span class="p">,</span> <span class="n">dividend_ts</span><span class="p">,</span> <span class="n">spot</span><span class="p">,</span> 
+    <span class="n">init_condition</span><span class="o">=</span><span class="p">(</span><span class="mf">0.02</span><span class="p">,</span><span class="mf">0.2</span><span class="p">,</span><span class="mf">0.5</span><span class="p">,</span><span class="mf">0.1</span><span class="p">,</span><span class="mf">0.01</span><span class="p">))</span>
+<span class="n">heston_helpers1</span><span class="p">,</span> <span class="n">grid_data1</span> <span class="o">=</span> <span class="n">setup_helpers</span><span class="p">(</span>
+    <span class="n">engine1</span><span class="p">,</span> <span class="n">expiration_dates</span><span class="p">,</span> <span class="n">strikes</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> 
+    <span class="n">calculation_date</span><span class="p">,</span> <span class="n">spot</span><span class="p">,</span> <span class="n">yield_ts</span><span class="p">,</span> <span class="n">dividend_ts</span>
+<span class="p">)</span>
+<span class="n">initial_condition</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">model1</span><span class="o">.</span><span class="n">params</span><span class="p">())</span>
+</pre></div>
+
+</div>
+
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[6]:</div>
+
+<div class="input_area box-flex1">
+<div class="highlight-ipynb"><pre class="ipynb"><span></span><span class="o">%%</span><span class="k">time</span>
+<span class="n">lm</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">LevenbergMarquardt</span><span class="p">(</span><span class="mf">1e-8</span><span class="p">,</span> <span class="mf">1e-8</span><span class="p">,</span> <span class="mf">1e-8</span><span class="p">)</span>
+<span class="n">model1</span><span class="o">.</span><span class="n">calibrate</span><span class="p">(</span><span class="n">heston_helpers1</span><span class="p">,</span> <span class="n">lm</span><span class="p">,</span> 
+                 <span class="n">ql</span><span class="o">.</span><span class="n">EndCriteria</span><span class="p">(</span><span class="mi">500</span><span class="p">,</span> <span class="mi">300</span><span class="p">,</span> <span class="mf">1.0e-8</span><span class="p">,</span><span class="mf">1.0e-8</span><span class="p">,</span> <span class="mf">1.0e-8</span><span class="p">))</span>
+<span class="n">theta</span><span class="p">,</span> <span class="n">kappa</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">rho</span><span class="p">,</span> <span class="n">v0</span> <span class="o">=</span> <span class="n">model1</span><span class="o">.</span><span class="n">params</span><span class="p">()</span>
+<span class="k">print</span> <span class="s2">&quot;theta = </span><span class="si">%f</span><span class="s2">, kappa = </span><span class="si">%f</span><span class="s2">, sigma = </span><span class="si">%f</span><span class="s2">, rho = </span><span class="si">%f</span><span class="s2">, v0 = </span><span class="si">%f</span><span class="s2">&quot;</span> <span class="o">%</span> \
+    <span class="p">(</span><span class="n">theta</span><span class="p">,</span> <span class="n">kappa</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">rho</span><span class="p">,</span> <span class="n">v0</span><span class="p">)</span>
+<span class="n">error</span> <span class="o">=</span> <span class="n">calibration_report</span><span class="p">(</span><span class="n">heston_helpers1</span><span class="p">,</span> <span class="n">grid_data1</span><span class="p">)</span>
+<span class="n">summary</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="s2">&quot;QL LM1&quot;</span><span class="p">,</span> <span class="n">error</span><span class="p">]</span> <span class="o">+</span> <span class="nb">list</span><span class="p">(</span><span class="n">model1</span><span class="o">.</span><span class="n">params</span><span class="p">()))</span>
+</pre></div>
+
+</div>
+
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="box-flex1 output_subarea output_stream output_stdout">
+<pre class="ipynb">theta = 0.125748, kappa = 7.915000, sigma = 1.887854, rho = -0.364942, v0 = 0.055397
+Average Abs Error (%) : 3.015268051
+CPU times: user 4.7 s, sys: 0 ns, total: 4.7 s
+Wall time: 4.7 s
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Methods like Levenberg-Marquardt solve for local minimas and do not search for global minimas. The solver is very sensitive to the initial conditions. Let&#39;s set a different set of initial conditions, and see what happens below. The initial condition considered is <code>theta, kappa, sigma, rho, v0 = (0.07,0.5,0.1,0.1,0.1)</code></p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[7]:</div>
+
+<div class="input_area box-flex1">
+<div class="highlight-ipynb"><pre class="ipynb"><span></span><span class="n">model1</span><span class="p">,</span> <span class="n">engine1</span> <span class="o">=</span> <span class="n">setup_model</span><span class="p">(</span>
+    <span class="n">yield_ts</span><span class="p">,</span> <span class="n">dividend_ts</span><span class="p">,</span> <span class="n">spot</span><span class="p">,</span> 
+    <span class="n">init_condition</span><span class="o">=</span><span class="p">(</span><span class="mf">0.07</span><span class="p">,</span><span class="mf">0.5</span><span class="p">,</span><span class="mf">0.1</span><span class="p">,</span><span class="mf">0.1</span><span class="p">,</span><span class="mf">0.1</span><span class="p">))</span>
+<span class="n">heston_helpers1</span><span class="p">,</span> <span class="n">grid_data1</span> <span class="o">=</span> <span class="n">setup_helpers</span><span class="p">(</span>
+    <span class="n">engine1</span><span class="p">,</span> <span class="n">expiration_dates</span><span class="p">,</span> <span class="n">strikes</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> 
+    <span class="n">calculation_date</span><span class="p">,</span> <span class="n">spot</span><span class="p">,</span> <span class="n">yield_ts</span><span class="p">,</span> <span class="n">dividend_ts</span>
+<span class="p">)</span>
+<span class="n">initial_condition</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">model1</span><span class="o">.</span><span class="n">params</span><span class="p">())</span>
+</pre></div>
+
+</div>
+
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[8]:</div>
+
+<div class="input_area box-flex1">
+<div class="highlight-ipynb"><pre class="ipynb"><span></span><span class="o">%%</span><span class="k">time</span>
+<span class="n">lm</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">LevenbergMarquardt</span><span class="p">(</span><span class="mf">1e-8</span><span class="p">,</span> <span class="mf">1e-8</span><span class="p">,</span> <span class="mf">1e-8</span><span class="p">)</span>
+<span class="n">model1</span><span class="o">.</span><span class="n">calibrate</span><span class="p">(</span><span class="n">heston_helpers1</span><span class="p">,</span> <span class="n">lm</span><span class="p">,</span> 
+                 <span class="n">ql</span><span class="o">.</span><span class="n">EndCriteria</span><span class="p">(</span><span class="mi">500</span><span class="p">,</span> <span class="mi">300</span><span class="p">,</span> <span class="mf">1.0e-8</span><span class="p">,</span><span class="mf">1.0e-8</span><span class="p">,</span> <span class="mf">1.0e-8</span><span class="p">))</span>
+<span class="n">theta</span><span class="p">,</span> <span class="n">kappa</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">rho</span><span class="p">,</span> <span class="n">v0</span> <span class="o">=</span> <span class="n">model1</span><span class="o">.</span><span class="n">params</span><span class="p">()</span>
+<span class="k">print</span> <span class="s2">&quot;theta = </span><span class="si">%f</span><span class="s2">, kappa = </span><span class="si">%f</span><span class="s2">, sigma = </span><span class="si">%f</span><span class="s2">, rho = </span><span class="si">%f</span><span class="s2">, v0 = </span><span class="si">%f</span><span class="s2">&quot;</span> <span class="o">%</span> \
+    <span class="p">(</span><span class="n">theta</span><span class="p">,</span> <span class="n">kappa</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">rho</span><span class="p">,</span> <span class="n">v0</span><span class="p">)</span>
+<span class="n">error</span> <span class="o">=</span> <span class="n">calibration_report</span><span class="p">(</span><span class="n">heston_helpers1</span><span class="p">,</span> <span class="n">grid_data1</span><span class="p">)</span>
+<span class="n">summary</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="s2">&quot;QL LM2&quot;</span><span class="p">,</span> <span class="n">error</span><span class="p">]</span> <span class="o">+</span> <span class="nb">list</span><span class="p">(</span><span class="n">model1</span><span class="o">.</span><span class="n">params</span><span class="p">()))</span>
+</pre></div>
+
+</div>
+
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="box-flex1 output_subarea output_stream output_stdout">
+<pre class="ipynb">theta = 0.084523, kappa = 0.000000, sigma = 0.132289, rho = -0.514278, v0 = 0.099928
+Average Abs Error (%) : 11.007433024
+CPU times: user 5.15 s, sys: 0 ns, total: 5.15 s
+Wall time: 5.15 s
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>We see that the solver produces a 11% average of absolute error. This is not particularly great.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h5 id="using-scipy-levenberg-marquardt-solver">Using Scipy Levenberg-Marquardt Solver</h5>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Here we are going to try the same exercise but using Scipy. Scipy has far more optimization, minimization and root finding algorithms that are very robust. So by leveraging Scipy, we can take advantage of this rich set of options at hand.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[9]:</div>
+
+<div class="input_area box-flex1">
+<div class="highlight-ipynb"><pre class="ipynb"><span></span><span class="n">model2</span><span class="p">,</span> <span class="n">engine2</span> <span class="o">=</span> <span class="n">setup_model</span><span class="p">(</span>
+    <span class="n">yield_ts</span><span class="p">,</span> <span class="n">dividend_ts</span><span class="p">,</span> <span class="n">spot</span><span class="p">,</span> 
+    <span class="n">init_condition</span><span class="o">=</span><span class="p">(</span><span class="mf">0.02</span><span class="p">,</span><span class="mf">0.2</span><span class="p">,</span><span class="mf">0.5</span><span class="p">,</span><span class="mf">0.1</span><span class="p">,</span><span class="mf">0.01</span><span class="p">))</span>
+<span class="n">heston_helpers2</span><span class="p">,</span> <span class="n">grid_data2</span> <span class="o">=</span> <span class="n">setup_helpers</span><span class="p">(</span>
+    <span class="n">engine2</span><span class="p">,</span> <span class="n">expiration_dates</span><span class="p">,</span> <span class="n">strikes</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span>
+    <span class="n">calculation_date</span><span class="p">,</span> <span class="n">spot</span><span class="p">,</span> <span class="n">yield_ts</span><span class="p">,</span> <span class="n">dividend_ts</span>
+<span class="p">)</span>
+<span class="n">initial_condition</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">model2</span><span class="o">.</span><span class="n">params</span><span class="p">())</span>
+</pre></div>
+
+</div>
+
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[10]:</div>
+
+<div class="input_area box-flex1">
+<div class="highlight-ipynb"><pre class="ipynb"><span></span><span class="o">%%</span><span class="k">time</span>
+<span class="n">cost_function</span> <span class="o">=</span> <span class="n">cost_function_generator</span><span class="p">(</span><span class="n">model2</span><span class="p">,</span> <span class="n">heston_helpers2</span><span class="p">)</span>
+<span class="n">sol</span> <span class="o">=</span> <span class="n">root</span><span class="p">(</span><span class="n">cost_function</span><span class="p">,</span> <span class="n">initial_condition</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;lm&#39;</span><span class="p">)</span>
+<span class="n">theta</span><span class="p">,</span> <span class="n">kappa</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">rho</span><span class="p">,</span> <span class="n">v0</span> <span class="o">=</span> <span class="n">model2</span><span class="o">.</span><span class="n">params</span><span class="p">()</span>
+<span class="k">print</span> <span class="s2">&quot;theta = </span><span class="si">%f</span><span class="s2">, kappa = </span><span class="si">%f</span><span class="s2">, sigma = </span><span class="si">%f</span><span class="s2">, rho = </span><span class="si">%f</span><span class="s2">, v0 = </span><span class="si">%f</span><span class="s2">&quot;</span> <span class="o">%</span> \
+    <span class="p">(</span><span class="n">theta</span><span class="p">,</span> <span class="n">kappa</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">rho</span><span class="p">,</span> <span class="n">v0</span><span class="p">)</span>
+<span class="n">error</span> <span class="o">=</span> <span class="n">calibration_report</span><span class="p">(</span><span class="n">heston_helpers2</span><span class="p">,</span> <span class="n">grid_data2</span><span class="p">)</span>
+<span class="n">summary</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="s2">&quot;Scipy LM1&quot;</span><span class="p">,</span> <span class="n">error</span><span class="p">]</span> <span class="o">+</span> <span class="nb">list</span><span class="p">(</span><span class="n">model2</span><span class="o">.</span><span class="n">params</span><span class="p">()))</span>
+</pre></div>
+
+</div>
+
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="box-flex1 output_subarea output_stream output_stdout">
+<pre class="ipynb">theta = 0.125747, kappa = 7.915687, sigma = 1.887934, rho = -0.364944, v0 = 0.055394
+Average Abs Error (%) : 3.015252651
+CPU times: user 4.58 s, sys: 36 ms, total: 4.61 s
+Wall time: 4.57 s
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The solution for this particular case seems to be fairly robust. Both solvers (QuantLib and Scipy) seem to have landed on more or less the same solution for this particular initial condition. Let&#39;s see how Scipy does for the second initial condition considered above -  <code>theta, kappa, sigma, rho, v0 = (0.07,0.5,0.1,0.1,0.1)</code></p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[11]:</div>
+
+<div class="input_area box-flex1">
+<div class="highlight-ipynb"><pre class="ipynb"><span></span><span class="n">model2</span><span class="p">,</span> <span class="n">engine2</span> <span class="o">=</span> <span class="n">setup_model</span><span class="p">(</span>
+    <span class="n">yield_ts</span><span class="p">,</span> <span class="n">dividend_ts</span><span class="p">,</span> <span class="n">spot</span><span class="p">,</span>
+    <span class="n">init_condition</span><span class="o">=</span><span class="p">(</span><span class="mf">0.07</span><span class="p">,</span><span class="mf">0.5</span><span class="p">,</span><span class="mf">0.1</span><span class="p">,</span><span class="mf">0.1</span><span class="p">,</span><span class="mf">0.1</span><span class="p">))</span>
+<span class="n">heston_helpers2</span><span class="p">,</span> <span class="n">grid_data2</span> <span class="o">=</span> <span class="n">setup_helpers</span><span class="p">(</span>
+    <span class="n">engine2</span><span class="p">,</span> <span class="n">expiration_dates</span><span class="p">,</span> <span class="n">strikes</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span>
+    <span class="n">calculation_date</span><span class="p">,</span> <span class="n">spot</span><span class="p">,</span> <span class="n">yield_ts</span><span class="p">,</span> <span class="n">dividend_ts</span>
+<span class="p">)</span>
+<span class="n">initial_condition</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">model2</span><span class="o">.</span><span class="n">params</span><span class="p">())</span>
+</pre></div>
+
+</div>
+
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[12]:</div>
+
+<div class="input_area box-flex1">
+<div class="highlight-ipynb"><pre class="ipynb"><span></span><span class="o">%%</span><span class="k">time</span>
+<span class="n">cost_function</span> <span class="o">=</span> <span class="n">cost_function_generator</span><span class="p">(</span><span class="n">model2</span><span class="p">,</span> <span class="n">heston_helpers2</span><span class="p">)</span>
+<span class="n">sol</span> <span class="o">=</span> <span class="n">root</span><span class="p">(</span><span class="n">cost_function</span><span class="p">,</span> <span class="n">initial_condition</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;lm&#39;</span><span class="p">)</span>
+<span class="n">theta</span><span class="p">,</span> <span class="n">kappa</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">rho</span><span class="p">,</span> <span class="n">v0</span> <span class="o">=</span> <span class="n">model2</span><span class="o">.</span><span class="n">params</span><span class="p">()</span>
+<span class="k">print</span> <span class="s2">&quot;theta = </span><span class="si">%f</span><span class="s2">, kappa = </span><span class="si">%f</span><span class="s2">, sigma = </span><span class="si">%f</span><span class="s2">, rho = </span><span class="si">%f</span><span class="s2">, v0 = </span><span class="si">%f</span><span class="s2">&quot;</span> <span class="o">%</span> \
+    <span class="p">(</span><span class="n">theta</span><span class="p">,</span> <span class="n">kappa</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">rho</span><span class="p">,</span> <span class="n">v0</span><span class="p">)</span>
+<span class="n">error</span> <span class="o">=</span> <span class="n">calibration_report</span><span class="p">(</span><span class="n">heston_helpers2</span><span class="p">,</span> <span class="n">grid_data2</span><span class="p">)</span>
+<span class="n">summary</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="s2">&quot;Scipy LM2&quot;</span><span class="p">,</span> <span class="n">error</span><span class="p">]</span> <span class="o">+</span> <span class="nb">list</span><span class="p">(</span><span class="n">model2</span><span class="o">.</span><span class="n">params</span><span class="p">()))</span>
+</pre></div>
+
+</div>
+
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="box-flex1 output_subarea output_stream output_stdout">
+<pre class="ipynb">theta = 0.048184, kappa = -0.548903, sigma = 0.197958, rho = -0.999547, v0 = 0.090571
+Average Abs Error (%) : 7.019499509
+CPU times: user 19.8 s, sys: 88 ms, total: 19.8 s
+Wall time: 19.5 s
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>For this particular case, Scipy solver has performed significantly better. It would be inappropriate to make loud claims about Scipy&#39;s superiority based on one observation. Perhaps this calls for a more detailed study for later.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h5 id="using-least-squares-method">Using Least Squares Method</h5>
+<p>If you want to use a simpler approach like least squares, you can do that with Scipy. Here is how you would use it.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[13]:</div>
+
+<div class="input_area box-flex1">
+<div class="highlight-ipynb"><pre class="ipynb"><span></span><span class="kn">from</span> <span class="nn">scipy.optimize</span> <span class="kn">import</span> <span class="n">least_squares</span>
+</pre></div>
+
+</div>
+
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[14]:</div>
+
+<div class="input_area box-flex1">
+<div class="highlight-ipynb"><pre class="ipynb"><span></span><span class="n">model3</span><span class="p">,</span> <span class="n">engine3</span> <span class="o">=</span> <span class="n">setup_model</span><span class="p">(</span>
+    <span class="n">yield_ts</span><span class="p">,</span> <span class="n">dividend_ts</span><span class="p">,</span> <span class="n">spot</span><span class="p">,</span> 
+    <span class="n">init_condition</span><span class="o">=</span><span class="p">(</span><span class="mf">0.02</span><span class="p">,</span><span class="mf">0.2</span><span class="p">,</span><span class="mf">0.5</span><span class="p">,</span><span class="mf">0.1</span><span class="p">,</span><span class="mf">0.01</span><span class="p">))</span>
+<span class="n">heston_helpers3</span><span class="p">,</span> <span class="n">grid_data3</span> <span class="o">=</span> <span class="n">setup_helpers</span><span class="p">(</span>
+    <span class="n">engine3</span><span class="p">,</span> <span class="n">expiration_dates</span><span class="p">,</span> <span class="n">strikes</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span>
+    <span class="n">calculation_date</span><span class="p">,</span> <span class="n">spot</span><span class="p">,</span> <span class="n">yield_ts</span><span class="p">,</span> <span class="n">dividend_ts</span>
+<span class="p">)</span>
+<span class="n">initial_condition</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">model3</span><span class="o">.</span><span class="n">params</span><span class="p">())</span>
+</pre></div>
+
+</div>
+
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[15]:</div>
+
+<div class="input_area box-flex1">
+<div class="highlight-ipynb"><pre class="ipynb"><span></span><span class="o">%%</span><span class="k">time</span>
+<span class="n">cost_function</span> <span class="o">=</span> <span class="n">cost_function_generator</span><span class="p">(</span><span class="n">model3</span><span class="p">,</span> <span class="n">heston_helpers3</span><span class="p">)</span>
+<span class="n">sol</span> <span class="o">=</span> <span class="n">least_squares</span><span class="p">(</span><span class="n">cost_function</span><span class="p">,</span> <span class="n">initial_condition</span><span class="p">)</span>
+<span class="n">theta</span><span class="p">,</span> <span class="n">kappa</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">rho</span><span class="p">,</span> <span class="n">v0</span> <span class="o">=</span> <span class="n">model3</span><span class="o">.</span><span class="n">params</span><span class="p">()</span>
+<span class="k">print</span> <span class="s2">&quot;theta = </span><span class="si">%f</span><span class="s2">, kappa = </span><span class="si">%f</span><span class="s2">, sigma = </span><span class="si">%f</span><span class="s2">, rho = </span><span class="si">%f</span><span class="s2">, v0 = </span><span class="si">%f</span><span class="s2">&quot;</span> <span class="o">%</span> \
+    <span class="p">(</span><span class="n">theta</span><span class="p">,</span> <span class="n">kappa</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">rho</span><span class="p">,</span> <span class="n">v0</span><span class="p">)</span>
+<span class="n">error</span> <span class="o">=</span> <span class="n">calibration_report</span><span class="p">(</span><span class="n">heston_helpers3</span><span class="p">,</span> <span class="n">grid_data3</span><span class="p">)</span>
+<span class="n">summary</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="s2">&quot;Scipy LS1&quot;</span><span class="p">,</span> <span class="n">error</span><span class="p">]</span> <span class="o">+</span> <span class="nb">list</span><span class="p">(</span><span class="n">model3</span><span class="o">.</span><span class="n">params</span><span class="p">()))</span>
+</pre></div>
+
+</div>
+
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="box-flex1 output_subarea output_stream output_stdout">
+<pre class="ipynb">theta = 0.125747, kappa = 7.915814, sigma = 1.887949, rho = -0.364944, v0 = 0.055394
+Average Abs Error (%) : 3.015251175
+CPU times: user 4.32 s, sys: 20 ms, total: 4.34 s
+Wall time: 4.32 s
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>With the second initial condition:</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[16]:</div>
+
+<div class="input_area box-flex1">
+<div class="highlight-ipynb"><pre class="ipynb"><span></span><span class="n">model3</span><span class="p">,</span> <span class="n">engine3</span> <span class="o">=</span> <span class="n">setup_model</span><span class="p">(</span>
+    <span class="n">yield_ts</span><span class="p">,</span> <span class="n">dividend_ts</span><span class="p">,</span> <span class="n">spot</span><span class="p">,</span> 
+    <span class="n">init_condition</span><span class="o">=</span><span class="p">(</span><span class="mf">0.07</span><span class="p">,</span><span class="mf">0.5</span><span class="p">,</span><span class="mf">0.1</span><span class="p">,</span><span class="mf">0.1</span><span class="p">,</span><span class="mf">0.1</span><span class="p">))</span>
+<span class="n">heston_helpers3</span><span class="p">,</span> <span class="n">grid_data3</span> <span class="o">=</span> <span class="n">setup_helpers</span><span class="p">(</span>
+    <span class="n">engine3</span><span class="p">,</span> <span class="n">expiration_dates</span><span class="p">,</span> <span class="n">strikes</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span>
+    <span class="n">calculation_date</span><span class="p">,</span> <span class="n">spot</span><span class="p">,</span> <span class="n">yield_ts</span><span class="p">,</span> <span class="n">dividend_ts</span>
+<span class="p">)</span>
+<span class="n">initial_condition</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">model3</span><span class="o">.</span><span class="n">params</span><span class="p">())</span>
+</pre></div>
+
+</div>
+
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[17]:</div>
+
+<div class="input_area box-flex1">
+<div class="highlight-ipynb"><pre class="ipynb"><span></span><span class="o">%%</span><span class="k">time</span>
+<span class="n">cost_function</span> <span class="o">=</span> <span class="n">cost_function_generator</span><span class="p">(</span><span class="n">model3</span><span class="p">,</span> <span class="n">heston_helpers3</span><span class="p">)</span>
+<span class="n">sol</span> <span class="o">=</span> <span class="n">least_squares</span><span class="p">(</span><span class="n">cost_function</span><span class="p">,</span> <span class="n">initial_condition</span><span class="p">)</span>
+<span class="n">theta</span><span class="p">,</span> <span class="n">kappa</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">rho</span><span class="p">,</span> <span class="n">v0</span> <span class="o">=</span> <span class="n">model3</span><span class="o">.</span><span class="n">params</span><span class="p">()</span>
+<span class="k">print</span> <span class="s2">&quot;theta = </span><span class="si">%f</span><span class="s2">, kappa = </span><span class="si">%f</span><span class="s2">, sigma = </span><span class="si">%f</span><span class="s2">, rho = </span><span class="si">%f</span><span class="s2">, v0 = </span><span class="si">%f</span><span class="s2">&quot;</span> <span class="o">%</span> \
+    <span class="p">(</span><span class="n">theta</span><span class="p">,</span> <span class="n">kappa</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">rho</span><span class="p">,</span> <span class="n">v0</span><span class="p">)</span>
+<span class="n">error</span> <span class="o">=</span> <span class="n">calibration_report</span><span class="p">(</span><span class="n">heston_helpers3</span><span class="p">,</span> <span class="n">grid_data3</span><span class="p">)</span>
+<span class="n">summary</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="s2">&quot;Scipy LS2&quot;</span><span class="p">,</span> <span class="n">error</span><span class="p">]</span> <span class="o">+</span> <span class="nb">list</span><span class="p">(</span><span class="n">model3</span><span class="o">.</span><span class="n">params</span><span class="p">()))</span>
+</pre></div>
+
+</div>
+
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="box-flex1 output_subarea output_stream output_stdout">
+<pre class="ipynb">theta = 3.136774, kappa = 0.000005, sigma = -0.000245, rho = -0.000010, v0 = 1.597904
+Average Abs Error (%) : 5.096414042
+CPU times: user 27.1 s, sys: 16 ms, total: 27.1 s
+Wall time: 27.1 s
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="global-solvers">Global Solvers</h4>
+<h5 id="using-differential-evolution">Using Differential Evolution</h5>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The above methods are more suited to finding local minimas. One method that makes an attempt at searching for global minima is the differential evolution. Both QuantLib and Scipy have implementations of this method. Scipy however has a lot more bells and whistles to tune and calibrate the methodology. Let&#39;s take a look at the Scipy&#39;s <code>differential_evolution</code> methodology.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[18]:</div>
+
+<div class="input_area box-flex1">
+<div class="highlight-ipynb"><pre class="ipynb"><span></span><span class="kn">from</span> <span class="nn">scipy.optimize</span> <span class="kn">import</span> <span class="n">differential_evolution</span>
+</pre></div>
+
+</div>
+
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[19]:</div>
+
+<div class="input_area box-flex1">
+<div class="highlight-ipynb"><pre class="ipynb"><span></span><span class="n">model4</span><span class="p">,</span> <span class="n">engine4</span> <span class="o">=</span> <span class="n">setup_model</span><span class="p">(</span><span class="n">yield_ts</span><span class="p">,</span> <span class="n">dividend_ts</span><span class="p">,</span> <span class="n">spot</span><span class="p">)</span>
+<span class="n">heston_helpers4</span><span class="p">,</span> <span class="n">grid_data4</span> <span class="o">=</span> <span class="n">setup_helpers</span><span class="p">(</span>
+    <span class="n">engine4</span><span class="p">,</span> <span class="n">expiration_dates</span><span class="p">,</span> <span class="n">strikes</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span>
+    <span class="n">calculation_date</span><span class="p">,</span> <span class="n">spot</span><span class="p">,</span> <span class="n">yield_ts</span><span class="p">,</span> <span class="n">dividend_ts</span>
+<span class="p">)</span>
+<span class="n">initial_condition</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">model4</span><span class="o">.</span><span class="n">params</span><span class="p">())</span>
+<span class="n">bounds</span> <span class="o">=</span> <span class="p">[(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">),(</span><span class="mf">0.01</span><span class="p">,</span><span class="mi">15</span><span class="p">),</span> <span class="p">(</span><span class="mf">0.01</span><span class="p">,</span><span class="mf">1.</span><span class="p">),</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mf">1.0</span><span class="p">)</span> <span class="p">]</span>
+</pre></div>
+
+</div>
+
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[20]:</div>
+
+<div class="input_area box-flex1">
+<div class="highlight-ipynb"><pre class="ipynb"><span></span><span class="o">%%</span><span class="k">time</span>
+<span class="n">cost_function</span> <span class="o">=</span> <span class="n">cost_function_generator</span><span class="p">(</span>
+    <span class="n">model4</span><span class="p">,</span> <span class="n">heston_helpers4</span><span class="p">,</span> <span class="n">norm</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">sol</span> <span class="o">=</span> <span class="n">differential_evolution</span><span class="p">(</span><span class="n">cost_function</span><span class="p">,</span> <span class="n">bounds</span><span class="p">,</span> <span class="n">maxiter</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+<span class="n">theta</span><span class="p">,</span> <span class="n">kappa</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">rho</span><span class="p">,</span> <span class="n">v0</span> <span class="o">=</span> <span class="n">model4</span><span class="o">.</span><span class="n">params</span><span class="p">()</span>
+<span class="k">print</span> <span class="s2">&quot;theta = </span><span class="si">%f</span><span class="s2">, kappa = </span><span class="si">%f</span><span class="s2">, sigma = </span><span class="si">%f</span><span class="s2">, rho = </span><span class="si">%f</span><span class="s2">, v0 = </span><span class="si">%f</span><span class="s2">&quot;</span> <span class="o">%</span> \
+    <span class="p">(</span><span class="n">theta</span><span class="p">,</span> <span class="n">kappa</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">rho</span><span class="p">,</span> <span class="n">v0</span><span class="p">)</span>
+<span class="n">error</span> <span class="o">=</span> <span class="n">calibration_report</span><span class="p">(</span><span class="n">heston_helpers4</span><span class="p">,</span> <span class="n">grid_data4</span><span class="p">)</span>
+<span class="n">summary</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="s2">&quot;Scipy DE1&quot;</span><span class="p">,</span> <span class="n">error</span><span class="p">]</span> <span class="o">+</span> <span class="nb">list</span><span class="p">(</span><span class="n">model4</span><span class="o">.</span><span class="n">params</span><span class="p">()))</span>
+</pre></div>
+
+</div>
+
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="box-flex1 output_subarea output_stream output_stdout">
+<pre class="ipynb">theta = 0.121969, kappa = 5.296890, sigma = 0.916644, rho = -0.616556, v0 = 0.079668
+Average Abs Error (%) : 2.874168106
+CPU times: user 1min 19s, sys: 164 ms, total: 1min 20s
+Wall time: 1min 19s
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>In the above example, I am setting the variable <code>maxiter</code> in order to limit the time taken. In production scenarios, you may want to try a larger number or not provide any value and default to 1000. This can help search a larger area of the parameter space.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[21]:</div>
+
+<div class="input_area box-flex1">
+<div class="highlight-ipynb"><pre class="ipynb"><span></span><span class="n">model4</span><span class="p">,</span> <span class="n">engine4</span> <span class="o">=</span> <span class="n">setup_model</span><span class="p">(</span><span class="n">yield_ts</span><span class="p">,</span> <span class="n">dividend_ts</span><span class="p">,</span> <span class="n">spot</span><span class="p">)</span>
+<span class="n">heston_helpers4</span><span class="p">,</span> <span class="n">grid_data4</span> <span class="o">=</span> <span class="n">setup_helpers</span><span class="p">(</span>
+    <span class="n">engine4</span><span class="p">,</span> <span class="n">expiration_dates</span><span class="p">,</span> <span class="n">strikes</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span>
+    <span class="n">calculation_date</span><span class="p">,</span> <span class="n">spot</span><span class="p">,</span> <span class="n">yield_ts</span><span class="p">,</span> <span class="n">dividend_ts</span>
+<span class="p">)</span>
+<span class="n">initial_condition</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">model4</span><span class="o">.</span><span class="n">params</span><span class="p">())</span>
+<span class="n">bounds</span> <span class="o">=</span> <span class="p">[(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">),(</span><span class="mf">0.01</span><span class="p">,</span><span class="mi">15</span><span class="p">),</span> <span class="p">(</span><span class="mf">0.01</span><span class="p">,</span><span class="mf">1.</span><span class="p">),</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mf">1.0</span><span class="p">)</span> <span class="p">]</span>
+</pre></div>
+
+</div>
+
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[22]:</div>
+
+<div class="input_area box-flex1">
+<div class="highlight-ipynb"><pre class="ipynb"><span></span><span class="o">%%</span><span class="k">time</span>
+<span class="n">cost_function</span> <span class="o">=</span> <span class="n">cost_function_generator</span><span class="p">(</span>
+    <span class="n">model4</span><span class="p">,</span> <span class="n">heston_helpers4</span><span class="p">,</span> <span class="n">norm</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">sol</span> <span class="o">=</span> <span class="n">differential_evolution</span><span class="p">(</span><span class="n">cost_function</span><span class="p">,</span> <span class="n">bounds</span><span class="p">,</span> <span class="n">maxiter</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+<span class="n">theta</span><span class="p">,</span> <span class="n">kappa</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">rho</span><span class="p">,</span> <span class="n">v0</span> <span class="o">=</span> <span class="n">model4</span><span class="o">.</span><span class="n">params</span><span class="p">()</span>
+<span class="k">print</span> <span class="s2">&quot;theta = </span><span class="si">%f</span><span class="s2">, kappa = </span><span class="si">%f</span><span class="s2">, sigma = </span><span class="si">%f</span><span class="s2">, rho = </span><span class="si">%f</span><span class="s2">, v0 = </span><span class="si">%f</span><span class="s2">&quot;</span> <span class="o">%</span> \
+    <span class="p">(</span><span class="n">theta</span><span class="p">,</span> <span class="n">kappa</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">rho</span><span class="p">,</span> <span class="n">v0</span><span class="p">)</span>
+<span class="n">error</span> <span class="o">=</span> <span class="n">calibration_report</span><span class="p">(</span><span class="n">heston_helpers4</span><span class="p">,</span> <span class="n">grid_data4</span><span class="p">)</span>
+<span class="n">summary</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="s2">&quot;Scipy DE2&quot;</span><span class="p">,</span> <span class="n">error</span><span class="p">]</span> <span class="o">+</span> <span class="nb">list</span><span class="p">(</span><span class="n">model4</span><span class="o">.</span><span class="n">params</span><span class="p">()))</span>
+</pre></div>
+
+</div>
+
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="box-flex1 output_subarea output_stream output_stdout">
+<pre class="ipynb">theta = 0.121055, kappa = 4.570230, sigma = 0.509309, rho = -0.987312, v0 = 0.078070
+Average Abs Error (%) : 2.938233064
+CPU times: user 1min 11s, sys: 172 ms, total: 1min 12s
+Wall time: 1min 11s
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h5 id="basin-hopping-algorithm">Basin Hopping Algorithm</h5>
+<p>Here we will use the Basin Hopping (annealing like) method to solve for the parameters. </p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[23]:</div>
+
+<div class="input_area box-flex1">
+<div class="highlight-ipynb"><pre class="ipynb"><span></span><span class="kn">from</span> <span class="nn">scipy.optimize</span> <span class="kn">import</span> <span class="n">basinhopping</span>
+</pre></div>
+
+</div>
+
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[24]:</div>
+
+<div class="input_area box-flex1">
+<div class="highlight-ipynb"><pre class="ipynb"><span></span><span class="k">class</span> <span class="nc">MyBounds</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">xmin</span><span class="o">=</span><span class="p">[</span><span class="mf">0.</span><span class="p">,</span><span class="mf">0.01</span><span class="p">,</span><span class="mf">0.01</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span> <span class="n">xmax</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">15</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mf">1.0</span><span class="p">]</span> <span class="p">):</span>
+         <span class="bp">self</span><span class="o">.</span><span class="n">xmax</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">xmax</span><span class="p">)</span>
+         <span class="bp">self</span><span class="o">.</span><span class="n">xmin</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">xmin</span><span class="p">)</span>
+     <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+         <span class="n">x</span> <span class="o">=</span> <span class="n">kwargs</span><span class="p">[</span><span class="s2">&quot;x_new&quot;</span><span class="p">]</span>
+         <span class="n">tmax</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">x</span> <span class="o">&lt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">xmax</span><span class="p">))</span>
+         <span class="n">tmin</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">x</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">xmin</span><span class="p">))</span>
+         <span class="k">return</span> <span class="n">tmax</span> <span class="ow">and</span> <span class="n">tmin</span>
+<span class="n">bounds</span> <span class="o">=</span> <span class="p">[(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">),(</span><span class="mf">0.01</span><span class="p">,</span><span class="mi">15</span><span class="p">),</span> <span class="p">(</span><span class="mf">0.01</span><span class="p">,</span><span class="mf">1.</span><span class="p">),</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mf">1.0</span><span class="p">)</span> <span class="p">]</span>
+</pre></div>
+
+</div>
+
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[25]:</div>
+
+<div class="input_area box-flex1">
+<div class="highlight-ipynb"><pre class="ipynb"><span></span><span class="n">model5</span><span class="p">,</span> <span class="n">engine5</span> <span class="o">=</span> <span class="n">setup_model</span><span class="p">(</span>
+    <span class="n">yield_ts</span><span class="p">,</span> <span class="n">dividend_ts</span><span class="p">,</span> <span class="n">spot</span><span class="p">,</span>
+    <span class="n">init_condition</span><span class="o">=</span><span class="p">(</span><span class="mf">0.02</span><span class="p">,</span><span class="mf">0.2</span><span class="p">,</span><span class="mf">0.5</span><span class="p">,</span><span class="mf">0.1</span><span class="p">,</span><span class="mf">0.01</span><span class="p">))</span>
+<span class="n">heston_helpers5</span><span class="p">,</span> <span class="n">grid_data5</span> <span class="o">=</span> <span class="n">setup_helpers</span><span class="p">(</span>
+    <span class="n">engine5</span><span class="p">,</span> <span class="n">expiration_dates</span><span class="p">,</span> <span class="n">strikes</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span>
+    <span class="n">calculation_date</span><span class="p">,</span> <span class="n">spot</span><span class="p">,</span> <span class="n">yield_ts</span><span class="p">,</span> <span class="n">dividend_ts</span>
+<span class="p">)</span>
+<span class="n">initial_condition</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">model5</span><span class="o">.</span><span class="n">params</span><span class="p">())</span>
+</pre></div>
+
+</div>
+
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[26]:</div>
+
+<div class="input_area box-flex1">
+<div class="highlight-ipynb"><pre class="ipynb"><span></span><span class="o">%%</span><span class="k">time</span>
+<span class="n">mybound</span> <span class="o">=</span> <span class="n">MyBounds</span><span class="p">()</span>
+<span class="n">minimizer_kwargs</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;method&quot;</span><span class="p">:</span> <span class="s2">&quot;L-BFGS-B&quot;</span><span class="p">,</span> <span class="s2">&quot;bounds&quot;</span><span class="p">:</span> <span class="n">bounds</span> <span class="p">}</span>
+<span class="n">cost_function</span> <span class="o">=</span> <span class="n">cost_function_generator</span><span class="p">(</span>
+    <span class="n">model5</span><span class="p">,</span> <span class="n">heston_helpers5</span><span class="p">,</span> <span class="n">norm</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">sol</span> <span class="o">=</span> <span class="n">basinhopping</span><span class="p">(</span><span class="n">cost_function</span><span class="p">,</span> <span class="n">initial_condition</span><span class="p">,</span> <span class="n">niter</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
+                   <span class="n">minimizer_kwargs</span><span class="o">=</span><span class="n">minimizer_kwargs</span><span class="p">,</span>
+                   <span class="n">stepsize</span><span class="o">=</span><span class="mf">0.005</span><span class="p">,</span>
+                   <span class="n">accept_test</span><span class="o">=</span><span class="n">mybound</span><span class="p">)</span>
+<span class="n">theta</span><span class="p">,</span> <span class="n">kappa</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">rho</span><span class="p">,</span> <span class="n">v0</span> <span class="o">=</span> <span class="n">model5</span><span class="o">.</span><span class="n">params</span><span class="p">()</span>
+<span class="k">print</span> <span class="s2">&quot;theta = </span><span class="si">%f</span><span class="s2">, kappa = </span><span class="si">%f</span><span class="s2">, sigma = </span><span class="si">%f</span><span class="s2">, rho = </span><span class="si">%f</span><span class="s2">, v0 = </span><span class="si">%f</span><span class="s2">&quot;</span> <span class="o">%</span> \
+    <span class="p">(</span><span class="n">theta</span><span class="p">,</span> <span class="n">kappa</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">rho</span><span class="p">,</span> <span class="n">v0</span><span class="p">)</span>
+<span class="n">error</span> <span class="o">=</span> <span class="n">calibration_report</span><span class="p">(</span><span class="n">heston_helpers5</span><span class="p">,</span> <span class="n">grid_data5</span><span class="p">)</span>
+<span class="n">summary</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="s2">&quot;Scipy BH1&quot;</span><span class="p">,</span> <span class="n">error</span><span class="p">]</span> <span class="o">+</span> <span class="nb">list</span><span class="p">(</span><span class="n">model5</span><span class="o">.</span><span class="n">params</span><span class="p">()))</span>
+</pre></div>
+
+</div>
+
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="box-flex1 output_subarea output_stream output_stdout">
+<pre class="ipynb">theta = 0.123393, kappa = 5.075286, sigma = 0.994216, rho = -0.566899, v0 = 0.079338
+Average Abs Error (%) : 2.851405010
+CPU times: user 1min 19s, sys: 284 ms, total: 1min 19s
+Wall time: 1min 18s
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[27]:</div>
+
+<div class="input_area box-flex1">
+<div class="highlight-ipynb"><pre class="ipynb"><span></span><span class="n">model5</span><span class="p">,</span> <span class="n">engine5</span> <span class="o">=</span> <span class="n">setup_model</span><span class="p">(</span>
+    <span class="n">yield_ts</span><span class="p">,</span> <span class="n">dividend_ts</span><span class="p">,</span> <span class="n">spot</span><span class="p">,</span>
+    <span class="n">init_condition</span><span class="o">=</span><span class="p">(</span><span class="mf">0.07</span><span class="p">,</span><span class="mf">0.5</span><span class="p">,</span><span class="mf">0.1</span><span class="p">,</span><span class="mf">0.1</span><span class="p">,</span><span class="mf">0.1</span><span class="p">))</span>
+<span class="n">heston_helpers5</span><span class="p">,</span> <span class="n">grid_data5</span> <span class="o">=</span> <span class="n">setup_helpers</span><span class="p">(</span>
+    <span class="n">engine5</span><span class="p">,</span> <span class="n">expiration_dates</span><span class="p">,</span> <span class="n">strikes</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span>
+    <span class="n">calculation_date</span><span class="p">,</span> <span class="n">spot</span><span class="p">,</span> <span class="n">yield_ts</span><span class="p">,</span> <span class="n">dividend_ts</span>
+<span class="p">)</span>
+<span class="n">initial_condition</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">model5</span><span class="o">.</span><span class="n">params</span><span class="p">())</span>
+</pre></div>
+
+</div>
+
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[28]:</div>
+
+<div class="input_area box-flex1">
+<div class="highlight-ipynb"><pre class="ipynb"><span></span><span class="o">%%</span><span class="k">time</span>
+<span class="n">mybound</span> <span class="o">=</span> <span class="n">MyBounds</span><span class="p">()</span>
+<span class="n">minimizer_kwargs</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;method&quot;</span><span class="p">:</span> <span class="s2">&quot;L-BFGS-B&quot;</span><span class="p">,</span> <span class="s2">&quot;bounds&quot;</span><span class="p">:</span> <span class="n">bounds</span><span class="p">}</span>
+<span class="n">cost_function</span> <span class="o">=</span> <span class="n">cost_function_generator</span><span class="p">(</span>
+    <span class="n">model5</span><span class="p">,</span> <span class="n">heston_helpers5</span><span class="p">,</span> <span class="n">norm</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">sol</span> <span class="o">=</span> <span class="n">basinhopping</span><span class="p">(</span><span class="n">cost_function</span><span class="p">,</span> <span class="n">initial_condition</span><span class="p">,</span> <span class="n">niter</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
+                   <span class="n">minimizer_kwargs</span><span class="o">=</span><span class="n">minimizer_kwargs</span><span class="p">,</span>
+                   <span class="n">stepsize</span><span class="o">=</span><span class="mf">0.005</span><span class="p">,</span>
+                   <span class="n">accept_test</span><span class="o">=</span><span class="n">mybound</span><span class="p">)</span>
+<span class="n">theta</span><span class="p">,</span> <span class="n">kappa</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">rho</span><span class="p">,</span> <span class="n">v0</span> <span class="o">=</span> <span class="n">model5</span><span class="o">.</span><span class="n">params</span><span class="p">()</span>
+<span class="k">print</span> <span class="s2">&quot;theta = </span><span class="si">%f</span><span class="s2">, kappa = </span><span class="si">%f</span><span class="s2">, sigma = </span><span class="si">%f</span><span class="s2">, rho = </span><span class="si">%f</span><span class="s2">, v0 = </span><span class="si">%f</span><span class="s2">&quot;</span> <span class="o">%</span> \
+    <span class="p">(</span><span class="n">theta</span><span class="p">,</span> <span class="n">kappa</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">rho</span><span class="p">,</span> <span class="n">v0</span><span class="p">)</span>
+<span class="n">error</span> <span class="o">=</span> <span class="n">calibration_report</span><span class="p">(</span><span class="n">heston_helpers5</span><span class="p">,</span> <span class="n">grid_data5</span><span class="p">)</span>
+<span class="n">summary</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="s2">&quot;Scipy BH2&quot;</span><span class="p">,</span> <span class="n">error</span><span class="p">]</span> <span class="o">+</span> <span class="nb">list</span><span class="p">(</span><span class="n">model5</span><span class="o">.</span><span class="n">params</span><span class="p">()))</span>
+</pre></div>
+
+</div>
+
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="box-flex1 output_subarea output_stream output_stdout">
+<pre class="ipynb">theta = 0.122777, kappa = 4.057845, sigma = 0.598006, rho = -0.792271, v0 = 0.079368
+Average Abs Error (%) : 2.897223702
+CPU times: user 1min 32s, sys: 304 ms, total: 1min 32s
+Wall time: 1min 31s
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="summary">Summary</h4>
+<p>Here is a summary of all the results with the calibration error overall, and the respective parameters. All the local minima methods give parameters that are very different based on the initial condition that we start with. This is different in contrary with the global minimization methods that all end up in more or less the same proximity of each other.</p>
+<p>The global solvers such as Differential Evolution and Basin Hopping are capable of finding the global minima and it is sometimes a question of computation resources. Here, I have lower &quot;iterations&quot; set for these routines for faster solving. Even with such a short threshold, we get fairly good solution set.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[29]:</div>
+
+<div class="input_area box-flex1">
+<div class="highlight-ipynb"><pre class="ipynb"><span></span><span class="kn">from</span> <span class="nn">pandas</span> <span class="kn">import</span> <span class="n">DataFrame</span>
+<span class="n">DataFrame</span><span class="p">(</span>
+    <span class="n">summary</span><span class="p">,</span>
+    <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;Name&quot;</span><span class="p">,</span> <span class="s2">&quot;Avg Abs Error&quot;</span><span class="p">,</span><span class="s2">&quot;Theta&quot;</span><span class="p">,</span> <span class="s2">&quot;Kappa&quot;</span><span class="p">,</span> <span class="s2">&quot;Sigma&quot;</span><span class="p">,</span> <span class="s2">&quot;Rho&quot;</span><span class="p">,</span> <span class="s2">&quot;V0&quot;</span><span class="p">],</span>
+    <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;&#39;</span><span class="p">]</span><span class="o">*</span><span class="nb">len</span><span class="p">(</span><span class="n">summary</span><span class="p">))</span>
+</pre></div>
+
+</div>
+
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt output_prompt">Out[29]:</div>
+
+<div class="output_html rendered_html output_subarea output_pyout">
+<div style="max-width:1500px;overflow:auto;">
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Name</th>
+      <th>Avg Abs Error</th>
+      <th>Theta</th>
+      <th>Kappa</th>
+      <th>Sigma</th>
+      <th>Rho</th>
+      <th>V0</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th></th>
+      <td>QL LM1</td>
+      <td>3.015268</td>
+      <td>0.125748</td>
+      <td>7.915000e+00</td>
+      <td>1.887854</td>
+      <td>-0.364942</td>
+      <td>0.055397</td>
+    </tr>
+    <tr>
+      <th></th>
+      <td>QL LM2</td>
+      <td>11.007433</td>
+      <td>0.084523</td>
+      <td>1.625740e-08</td>
+      <td>0.132289</td>
+      <td>-0.514278</td>
+      <td>0.099928</td>
+    </tr>
+    <tr>
+      <th></th>
+      <td>Scipy LM1</td>
+      <td>3.015253</td>
+      <td>0.125747</td>
+      <td>7.915687e+00</td>
+      <td>1.887934</td>
+      <td>-0.364944</td>
+      <td>0.055394</td>
+    </tr>
+    <tr>
+      <th></th>
+      <td>Scipy LM2</td>
+      <td>7.019500</td>
+      <td>0.048184</td>
+      <td>-5.489029e-01</td>
+      <td>0.197958</td>
+      <td>-0.999547</td>
+      <td>0.090571</td>
+    </tr>
+    <tr>
+      <th></th>
+      <td>Scipy LS1</td>
+      <td>3.015251</td>
+      <td>0.125747</td>
+      <td>7.915814e+00</td>
+      <td>1.887949</td>
+      <td>-0.364944</td>
+      <td>0.055394</td>
+    </tr>
+    <tr>
+      <th></th>
+      <td>Scipy LS2</td>
+      <td>5.096414</td>
+      <td>3.136774</td>
+      <td>4.896844e-06</td>
+      <td>-0.000245</td>
+      <td>-0.000010</td>
+      <td>1.597904</td>
+    </tr>
+    <tr>
+      <th></th>
+      <td>Scipy DE1</td>
+      <td>2.874168</td>
+      <td>0.121969</td>
+      <td>5.296890e+00</td>
+      <td>0.916644</td>
+      <td>-0.616556</td>
+      <td>0.079668</td>
+    </tr>
+    <tr>
+      <th></th>
+      <td>Scipy DE2</td>
+      <td>2.938233</td>
+      <td>0.121055</td>
+      <td>4.570230e+00</td>
+      <td>0.509309</td>
+      <td>-0.987312</td>
+      <td>0.078070</td>
+    </tr>
+    <tr>
+      <th></th>
+      <td>Scipy BH1</td>
+      <td>2.851405</td>
+      <td>0.123393</td>
+      <td>5.075286e+00</td>
+      <td>0.994216</td>
+      <td>-0.566899</td>
+      <td>0.079338</td>
+    </tr>
+    <tr>
+      <th></th>
+      <td>Scipy BH2</td>
+      <td>2.897224</td>
+      <td>0.122777</td>
+      <td>4.057845e+00</td>
+      <td>0.598006</td>
+      <td>-0.792271</td>
+      <td>0.079368</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div></p>
+     <br><br>
+				
+				<div class="row">
+					<div class="col-md-3">
+						<a href="https://leanpub.com/quantlibpythoncookbook">
+							<img alt="QuantLib Python Cookbook" 
+								 src="https://s3.amazonaws.com/titlepages.leanpub.com/quantlibpythoncookbook/medium?1465967986"
+								 title= "QuantLib Python Cookbook">
+						</a>
+					</div>
+					<div class="col-md-9">
+						<em>Updated posts from this blog and transcripts of Luigi's screencasts on YouTube is compiled 
+						into <a href="https://leanpub.com/quantlibpythoncookbook"> QuantLib Python Cookbook </a>. 
+						Visit here for other <a href ="http://gouthamanbalaraman.com/blog/quantlib-python-tutorials-with-examples.html">QuantLib Python examples</a>.
+						You can also help improve this blog series by answering this 
+						<a href="https://docs.google.com/forms/d/1iRI-YWgqCB-rUhxVsFf-s_y00yAB0vyb-b816q6oktk/viewform">one minute survey.</a></em>
+					</div>
+				</div>
+	            <br><br>
+	  <br>
+	 
+     <!-- article tags-->
+        <span class="glyphicon glyphicon-tags"></span>&nbsp;&nbsp;
+            <span class="label label-default"><a href="http://gouthamanbalaraman.com/tag/quantlib.html">quantlib</a></span>&nbsp;&nbsp;
+            <span class="label label-default"><a href="http://gouthamanbalaraman.com/tag/python.html">python</a></span>&nbsp;&nbsp;
+            <span class="label label-default"><a href="http://gouthamanbalaraman.com/tag/finance.html">finance</a></span>&nbsp;&nbsp;
+            <span class="label label-default"><a href="http://gouthamanbalaraman.com/tag/scipy.html">scipy</a></span>&nbsp;&nbsp;
+        <br>
+     <hr/>
+    
+    <strong>Related Post</strong>
+        <ul>
+            <li>
+                <a href="http://gouthamanbalaraman.com/blog/hull-white-simulation-quantlib-python.html">Hull White Term Structure Simulations with QuantLib Python</a>
+            </li>
+            <li>
+                <a href="http://gouthamanbalaraman.com/blog/interest-rate-swap-quantlib-python.html">Modeling Vanilla Interest Rate Swaps Using QuantLib Python</a>
+            </li>
+            <li>
+                <a href="http://gouthamanbalaraman.com/blog/hull-white-simulation-monte-carlo-convergence.html">On the Convergence of Hull White Monte Carlo Simulations</a>
+            </li>
+            <li>
+                <a href="http://gouthamanbalaraman.com/blog/announcing-qtk-quantlib-python.html">Announcing qtk for QuantLib Python</a>
+            </li>
+            <li>
+                <a href="http://gouthamanbalaraman.com/blog/quantlib-bond-modeling.html">Modeling Fixed Rate Bonds in QuantLib Python</a>
+            </li>
+        </ul>
+        <hr/>
+
+     <!-- article comments -->
+    <div class="comment">
+        <div id="disqus_thread"></div> <!-- comment app container -->
+    </div>
+	<!-- Comment BEGIN -->
+    <script type="text/javascript">
+        var disqus_shortname = 'gouthamanbalaramancom'; // required: replace example with your forum shortname
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.min.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+     <!-- Comment END -->
+</div>    
+                </div>
+               
+            </div>
+            <div class="row">
+                <div class="col-md-10 col-md-offset-1">
+                </div>
+            </div>
+            <footer id="contentinfo" class="footer">
+                <address id="about" class="vcard body">
+                    &copy; <a href="http://gouthamanbalaraman.com">Goutham Balaraman</a> Proudly powered by <a href="http://getpelican.com/">Pelican</a>
+                    <div class="pull-right">
+                    	<!--a href="http://www.bloglovin.com/blog/14559547/?claim=cqravg9v4n2">Bloglovin</a-->
+			            <a href="http://gouthamanbalaraman.com/feeds/all.atom.xml">Atom</a>
+			        &nbsp
+			            <a href="http://gouthamanbalaraman.com/feeds/all.rss.xml">RSS</a>
+		            </div>
+                </address><!-- /#about -->
+            </footer>
+        </div><!-- container -->
+        <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
+        <link href="http://gouthamanbalaraman.com/theme/static/css/style.css" rel="stylesheet" />
+        
+        <script src="http://gouthamanbalaraman.com/theme/static/js/jquery.1.11.2.min.js"></script>
+        <script src="http://gouthamanbalaraman.com/theme/static/js/bootstrap.min.js"></script>
+        <script type="text/javascript">
+	jQuery(document).ready(function($) {
+	    $("div.collapseheader").click(function () {
+	    $header = $(this).children("span").first();
+	    $codearea = $(this).children(".input_area");
+	    console.log($(this).children());
+	    $codearea.slideToggle(500, function () {
+	        $header.text(function () {
+	            return $codearea.is(":visible") ? "Collapse Code" : "Expand Code";
+	        });
+	    });
+	});
+	});
+	</script>
+	<!-- Using MathJax, with the delimiters $ -->
+        <!-- Conflict with pygments for the .mo and .mi -->
+        <script type="text/x-mathjax-config">
+          MathJax.Hub.Config({
+          "HTML-CSS": {
+          styles: {
+          ".MathJax .mo, .MathJax .mi": {color: "black ! important"}}
+          },
+          tex2jax: {inlineMath: [['$','$'], ['\\\\(','\\\\)']],processEscapes: true}
+          });
+        </script>
+    </body>
+</html>
