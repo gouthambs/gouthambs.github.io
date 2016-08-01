@@ -372,8 +372,8 @@
 <div class="box-flex1 output_subarea output_stream output_stdout">
 <pre class="ipynb">theta = 0.125748, kappa = 7.915000, sigma = 1.887854, rho = -0.364942, v0 = 0.055397
 Average Abs Error (%) : 3.015268051
-CPU times: user 4.7 s, sys: 0 ns, total: 4.7 s
-Wall time: 4.7 s
+CPU times: user 4.86 s, sys: 0 ns, total: 4.86 s
+Wall time: 4.86 s
 </pre>
 </div>
 </div>
@@ -439,8 +439,8 @@ Wall time: 4.7 s
 <div class="box-flex1 output_subarea output_stream output_stdout">
 <pre class="ipynb">theta = 0.084523, kappa = 0.000000, sigma = 0.132289, rho = -0.514278, v0 = 0.099928
 Average Abs Error (%) : 11.007433024
-CPU times: user 5.15 s, sys: 0 ns, total: 5.15 s
-Wall time: 5.15 s
+CPU times: user 4.97 s, sys: 0 ns, total: 4.97 s
+Wall time: 4.98 s
 </pre>
 </div>
 </div>
@@ -523,8 +523,8 @@ Wall time: 5.15 s
 <div class="box-flex1 output_subarea output_stream output_stdout">
 <pre class="ipynb">theta = 0.125747, kappa = 7.915687, sigma = 1.887934, rho = -0.364944, v0 = 0.055394
 Average Abs Error (%) : 3.015252651
-CPU times: user 4.58 s, sys: 36 ms, total: 4.61 s
-Wall time: 4.57 s
+CPU times: user 4.68 s, sys: 12 ms, total: 4.69 s
+Wall time: 4.65 s
 </pre>
 </div>
 </div>
@@ -589,8 +589,8 @@ Wall time: 4.57 s
 <div class="box-flex1 output_subarea output_stream output_stdout">
 <pre class="ipynb">theta = 0.048184, kappa = -0.548903, sigma = 0.197958, rho = -0.999547, v0 = 0.090571
 Average Abs Error (%) : 7.019499509
-CPU times: user 19.8 s, sys: 88 ms, total: 19.8 s
-Wall time: 19.5 s
+CPU times: user 20.7 s, sys: 56 ms, total: 20.7 s
+Wall time: 20.5 s
 </pre>
 </div>
 </div>
@@ -678,8 +678,8 @@ Wall time: 19.5 s
 <div class="box-flex1 output_subarea output_stream output_stdout">
 <pre class="ipynb">theta = 0.125747, kappa = 7.915814, sigma = 1.887949, rho = -0.364944, v0 = 0.055394
 Average Abs Error (%) : 3.015251175
-CPU times: user 4.32 s, sys: 20 ms, total: 4.34 s
-Wall time: 4.32 s
+CPU times: user 4.54 s, sys: 8 ms, total: 4.55 s
+Wall time: 4.55 s
 </pre>
 </div>
 </div>
@@ -744,8 +744,8 @@ Wall time: 4.32 s
 <div class="box-flex1 output_subarea output_stream output_stdout">
 <pre class="ipynb">theta = 3.136774, kappa = 0.000005, sigma = -0.000245, rho = -0.000010, v0 = 1.597904
 Average Abs Error (%) : 5.096414042
-CPU times: user 27.1 s, sys: 16 ms, total: 27.1 s
-Wall time: 27.1 s
+CPU times: user 28.1 s, sys: 16 ms, total: 28.2 s
+Wall time: 28.1 s
 </pre>
 </div>
 </div>
@@ -813,7 +813,7 @@ Wall time: 27.1 s
 <div class="highlight-ipynb"><pre class="ipynb"><span></span><span class="o">%%</span><span class="k">time</span>
 <span class="n">cost_function</span> <span class="o">=</span> <span class="n">cost_function_generator</span><span class="p">(</span>
     <span class="n">model4</span><span class="p">,</span> <span class="n">heston_helpers4</span><span class="p">,</span> <span class="n">norm</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
-<span class="n">sol</span> <span class="o">=</span> <span class="n">differential_evolution</span><span class="p">(</span><span class="n">cost_function</span><span class="p">,</span> <span class="n">bounds</span><span class="p">,</span> <span class="n">maxiter</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+<span class="n">sol</span> <span class="o">=</span> <span class="n">differential_evolution</span><span class="p">(</span><span class="n">cost_function</span><span class="p">,</span> <span class="n">bounds</span><span class="p">,</span> <span class="n">maxiter</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
 <span class="n">theta</span><span class="p">,</span> <span class="n">kappa</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">rho</span><span class="p">,</span> <span class="n">v0</span> <span class="o">=</span> <span class="n">model4</span><span class="o">.</span><span class="n">params</span><span class="p">()</span>
 <span class="k">print</span> <span class="s2">&quot;theta = </span><span class="si">%f</span><span class="s2">, kappa = </span><span class="si">%f</span><span class="s2">, sigma = </span><span class="si">%f</span><span class="s2">, rho = </span><span class="si">%f</span><span class="s2">, v0 = </span><span class="si">%f</span><span class="s2">&quot;</span> <span class="o">%</span> \
     <span class="p">(</span><span class="n">theta</span><span class="p">,</span> <span class="n">kappa</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">rho</span><span class="p">,</span> <span class="n">v0</span><span class="p">)</span>
@@ -831,10 +831,10 @@ Wall time: 27.1 s
 
 <div class="output_area"><div class="prompt"></div>
 <div class="box-flex1 output_subarea output_stream output_stdout">
-<pre class="ipynb">theta = 0.121969, kappa = 5.296890, sigma = 0.916644, rho = -0.616556, v0 = 0.079668
-Average Abs Error (%) : 2.874168106
-CPU times: user 1min 19s, sys: 164 ms, total: 1min 20s
-Wall time: 1min 19s
+<pre class="ipynb">theta = 0.123221, kappa = 5.012199, sigma = 0.950309, rho = -0.570340, v0 = 0.078440
+Average Abs Error (%) : 2.859113482
+CPU times: user 1min 39s, sys: 144 ms, total: 1min 39s
+Wall time: 1min 39s
 </pre>
 </div>
 </div>
@@ -879,7 +879,7 @@ Wall time: 1min 19s
 <div class="highlight-ipynb"><pre class="ipynb"><span></span><span class="o">%%</span><span class="k">time</span>
 <span class="n">cost_function</span> <span class="o">=</span> <span class="n">cost_function_generator</span><span class="p">(</span>
     <span class="n">model4</span><span class="p">,</span> <span class="n">heston_helpers4</span><span class="p">,</span> <span class="n">norm</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
-<span class="n">sol</span> <span class="o">=</span> <span class="n">differential_evolution</span><span class="p">(</span><span class="n">cost_function</span><span class="p">,</span> <span class="n">bounds</span><span class="p">,</span> <span class="n">maxiter</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+<span class="n">sol</span> <span class="o">=</span> <span class="n">differential_evolution</span><span class="p">(</span><span class="n">cost_function</span><span class="p">,</span> <span class="n">bounds</span><span class="p">,</span> <span class="n">maxiter</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
 <span class="n">theta</span><span class="p">,</span> <span class="n">kappa</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">rho</span><span class="p">,</span> <span class="n">v0</span> <span class="o">=</span> <span class="n">model4</span><span class="o">.</span><span class="n">params</span><span class="p">()</span>
 <span class="k">print</span> <span class="s2">&quot;theta = </span><span class="si">%f</span><span class="s2">, kappa = </span><span class="si">%f</span><span class="s2">, sigma = </span><span class="si">%f</span><span class="s2">, rho = </span><span class="si">%f</span><span class="s2">, v0 = </span><span class="si">%f</span><span class="s2">&quot;</span> <span class="o">%</span> \
     <span class="p">(</span><span class="n">theta</span><span class="p">,</span> <span class="n">kappa</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">rho</span><span class="p">,</span> <span class="n">v0</span><span class="p">)</span>
@@ -897,10 +897,10 @@ Wall time: 1min 19s
 
 <div class="output_area"><div class="prompt"></div>
 <div class="box-flex1 output_subarea output_stream output_stdout">
-<pre class="ipynb">theta = 0.121055, kappa = 4.570230, sigma = 0.509309, rho = -0.987312, v0 = 0.078070
-Average Abs Error (%) : 2.938233064
-CPU times: user 1min 11s, sys: 172 ms, total: 1min 12s
-Wall time: 1min 11s
+<pre class="ipynb">theta = 0.122251, kappa = 4.996804, sigma = 0.849266, rho = -0.637706, v0 = 0.079484
+Average Abs Error (%) : 2.876087363
+CPU times: user 1min 57s, sys: 200 ms, total: 1min 57s
+Wall time: 1min 57s
 </pre>
 </div>
 </div>
@@ -915,7 +915,8 @@ Wall time: 1min 11s
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h5 id="basin-hopping-algorithm">Basin Hopping Algorithm</h5>
-<p>Here we will use the Basin Hopping (annealing like) method to solve for the parameters. </p>
+<p>Here we will use the Basin Hopping (annealing like) method to solve for the parameters. A couple things to make note here. The Basin Hopping method works best when used wiht a minimizer. Here I played with various minimizers and finally decided to use something that supports bounds checking. Without bounds checking, I often ended with <code>nan</code> and did not have a meaningful solution in the end. </p>
+<p>I have chosen bounds based on a very basic reasoning. One needs careful reasoning to use appropriate bounds for the problem at hand.</p>
 </div>
 </div>
 </div>
@@ -984,10 +985,11 @@ Wall time: 1min 11s
 <span class="n">minimizer_kwargs</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;method&quot;</span><span class="p">:</span> <span class="s2">&quot;L-BFGS-B&quot;</span><span class="p">,</span> <span class="s2">&quot;bounds&quot;</span><span class="p">:</span> <span class="n">bounds</span> <span class="p">}</span>
 <span class="n">cost_function</span> <span class="o">=</span> <span class="n">cost_function_generator</span><span class="p">(</span>
     <span class="n">model5</span><span class="p">,</span> <span class="n">heston_helpers5</span><span class="p">,</span> <span class="n">norm</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
-<span class="n">sol</span> <span class="o">=</span> <span class="n">basinhopping</span><span class="p">(</span><span class="n">cost_function</span><span class="p">,</span> <span class="n">initial_condition</span><span class="p">,</span> <span class="n">niter</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
+<span class="n">sol</span> <span class="o">=</span> <span class="n">basinhopping</span><span class="p">(</span><span class="n">cost_function</span><span class="p">,</span> <span class="n">initial_condition</span><span class="p">,</span> <span class="n">niter</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
                    <span class="n">minimizer_kwargs</span><span class="o">=</span><span class="n">minimizer_kwargs</span><span class="p">,</span>
                    <span class="n">stepsize</span><span class="o">=</span><span class="mf">0.005</span><span class="p">,</span>
-                   <span class="n">accept_test</span><span class="o">=</span><span class="n">mybound</span><span class="p">)</span>
+                   <span class="n">accept_test</span><span class="o">=</span><span class="n">mybound</span><span class="p">,</span>
+                   <span class="n">interval</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
 <span class="n">theta</span><span class="p">,</span> <span class="n">kappa</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">rho</span><span class="p">,</span> <span class="n">v0</span> <span class="o">=</span> <span class="n">model5</span><span class="o">.</span><span class="n">params</span><span class="p">()</span>
 <span class="k">print</span> <span class="s2">&quot;theta = </span><span class="si">%f</span><span class="s2">, kappa = </span><span class="si">%f</span><span class="s2">, sigma = </span><span class="si">%f</span><span class="s2">, rho = </span><span class="si">%f</span><span class="s2">, v0 = </span><span class="si">%f</span><span class="s2">&quot;</span> <span class="o">%</span> \
     <span class="p">(</span><span class="n">theta</span><span class="p">,</span> <span class="n">kappa</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">rho</span><span class="p">,</span> <span class="n">v0</span><span class="p">)</span>
@@ -1005,10 +1007,10 @@ Wall time: 1min 11s
 
 <div class="output_area"><div class="prompt"></div>
 <div class="box-flex1 output_subarea output_stream output_stdout">
-<pre class="ipynb">theta = 0.123393, kappa = 5.075286, sigma = 0.994216, rho = -0.566899, v0 = 0.079338
-Average Abs Error (%) : 2.851405010
-CPU times: user 1min 19s, sys: 284 ms, total: 1min 19s
-Wall time: 1min 18s
+<pre class="ipynb">theta = 0.123455, kappa = 5.074067, sigma = 0.995095, rho = -0.562106, v0 = 0.079009
+Average Abs Error (%) : 2.850972273
+CPU times: user 2min 15s, sys: 456 ms, total: 2min 16s
+Wall time: 2min 14s
 </pre>
 </div>
 </div>
@@ -1047,10 +1049,11 @@ Wall time: 1min 18s
 <span class="n">minimizer_kwargs</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;method&quot;</span><span class="p">:</span> <span class="s2">&quot;L-BFGS-B&quot;</span><span class="p">,</span> <span class="s2">&quot;bounds&quot;</span><span class="p">:</span> <span class="n">bounds</span><span class="p">}</span>
 <span class="n">cost_function</span> <span class="o">=</span> <span class="n">cost_function_generator</span><span class="p">(</span>
     <span class="n">model5</span><span class="p">,</span> <span class="n">heston_helpers5</span><span class="p">,</span> <span class="n">norm</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
-<span class="n">sol</span> <span class="o">=</span> <span class="n">basinhopping</span><span class="p">(</span><span class="n">cost_function</span><span class="p">,</span> <span class="n">initial_condition</span><span class="p">,</span> <span class="n">niter</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
+<span class="n">sol</span> <span class="o">=</span> <span class="n">basinhopping</span><span class="p">(</span><span class="n">cost_function</span><span class="p">,</span> <span class="n">initial_condition</span><span class="p">,</span> <span class="n">niter</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
                    <span class="n">minimizer_kwargs</span><span class="o">=</span><span class="n">minimizer_kwargs</span><span class="p">,</span>
                    <span class="n">stepsize</span><span class="o">=</span><span class="mf">0.005</span><span class="p">,</span>
-                   <span class="n">accept_test</span><span class="o">=</span><span class="n">mybound</span><span class="p">)</span>
+                   <span class="n">accept_test</span><span class="o">=</span><span class="n">mybound</span><span class="p">,</span>
+                   <span class="n">interval</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
 <span class="n">theta</span><span class="p">,</span> <span class="n">kappa</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">rho</span><span class="p">,</span> <span class="n">v0</span> <span class="o">=</span> <span class="n">model5</span><span class="o">.</span><span class="n">params</span><span class="p">()</span>
 <span class="k">print</span> <span class="s2">&quot;theta = </span><span class="si">%f</span><span class="s2">, kappa = </span><span class="si">%f</span><span class="s2">, sigma = </span><span class="si">%f</span><span class="s2">, rho = </span><span class="si">%f</span><span class="s2">, v0 = </span><span class="si">%f</span><span class="s2">&quot;</span> <span class="o">%</span> \
     <span class="p">(</span><span class="n">theta</span><span class="p">,</span> <span class="n">kappa</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">rho</span><span class="p">,</span> <span class="n">v0</span><span class="p">)</span>
@@ -1068,10 +1071,10 @@ Wall time: 1min 18s
 
 <div class="output_area"><div class="prompt"></div>
 <div class="box-flex1 output_subarea output_stream output_stdout">
-<pre class="ipynb">theta = 0.122777, kappa = 4.057845, sigma = 0.598006, rho = -0.792271, v0 = 0.079368
-Average Abs Error (%) : 2.897223702
-CPU times: user 1min 32s, sys: 304 ms, total: 1min 32s
-Wall time: 1min 31s
+<pre class="ipynb">theta = 0.123403, kappa = 4.791319, sigma = 0.904397, rho = -0.593711, v0 = 0.079215
+Average Abs Error (%) : 2.863355647
+CPU times: user 1min 50s, sys: 332 ms, total: 1min 50s
+Wall time: 1min 49s
 </pre>
 </div>
 </div>
@@ -1087,7 +1090,8 @@ Wall time: 1min 31s
 <div class="text_cell_render border-box-sizing rendered_html">
 <h4 id="summary">Summary</h4>
 <p>Here is a summary of all the results with the calibration error overall, and the respective parameters. All the local minima methods give parameters that are very different based on the initial condition that we start with. This is different in contrary with the global minimization methods that all end up in more or less the same proximity of each other.</p>
-<p>The global solvers such as Differential Evolution and Basin Hopping are capable of finding the global minima and it is sometimes a question of computation resources. Here, I have lower &quot;iterations&quot; set for these routines for faster solving. Even with such a short threshold, we get fairly good solution set.</p>
+<p>The global solvers such as Differential Evolution and Basin Hopping are capable of finding the global minima and it is sometimes a question of computation resources. Here, I have lower &quot;iterations&quot; set for these routines for faster solving. Even with such a short threshold, we get fairly good solution set. I think it is premature to compare the effectiveness of different global solvers just based on the results here. The <a href="http://docs.scipy.org/doc/scipy/reference/optimize.html">scipy optimize</a> package has detailed documentation with various tuning parameters. I haven&#39;t exploited the nuances much, and is left as an exercise for the reader.</p>
+<p>Hope you find this useful!</p>
 </div>
 </div>
 </div>
@@ -1192,42 +1196,42 @@ Wall time: 1min 31s
     <tr>
       <th></th>
       <td>Scipy DE1</td>
-      <td>2.874168</td>
-      <td>0.121969</td>
-      <td>5.296890e+00</td>
-      <td>0.916644</td>
-      <td>-0.616556</td>
-      <td>0.079668</td>
+      <td>2.859113</td>
+      <td>0.123221</td>
+      <td>5.012199e+00</td>
+      <td>0.950309</td>
+      <td>-0.570340</td>
+      <td>0.078440</td>
     </tr>
     <tr>
       <th></th>
       <td>Scipy DE2</td>
-      <td>2.938233</td>
-      <td>0.121055</td>
-      <td>4.570230e+00</td>
-      <td>0.509309</td>
-      <td>-0.987312</td>
-      <td>0.078070</td>
+      <td>2.876087</td>
+      <td>0.122251</td>
+      <td>4.996804e+00</td>
+      <td>0.849266</td>
+      <td>-0.637706</td>
+      <td>0.079484</td>
     </tr>
     <tr>
       <th></th>
       <td>Scipy BH1</td>
-      <td>2.851405</td>
-      <td>0.123393</td>
-      <td>5.075286e+00</td>
-      <td>0.994216</td>
-      <td>-0.566899</td>
-      <td>0.079338</td>
+      <td>2.850972</td>
+      <td>0.123455</td>
+      <td>5.074067e+00</td>
+      <td>0.995095</td>
+      <td>-0.562106</td>
+      <td>0.079009</td>
     </tr>
     <tr>
       <th></th>
       <td>Scipy BH2</td>
-      <td>2.897224</td>
-      <td>0.122777</td>
-      <td>4.057845e+00</td>
-      <td>0.598006</td>
-      <td>-0.792271</td>
-      <td>0.079368</td>
+      <td>2.863356</td>
+      <td>0.123403</td>
+      <td>4.791319e+00</td>
+      <td>0.904397</td>
+      <td>-0.593711</td>
+      <td>0.079215</td>
     </tr>
   </tbody>
 </table>
@@ -1273,19 +1277,19 @@ Wall time: 1min 31s
     <strong>Related Post</strong>
         <ul>
             <li>
+                <a href="http://gouthamanbalaraman.com/blog/hull-white-simulation-monte-carlo-convergence.html">On the Convergence of Hull White Monte Carlo Simulations</a>
+            </li>
+            <li>
                 <a href="http://gouthamanbalaraman.com/blog/hull-white-simulation-quantlib-python.html">Hull White Term Structure Simulations with QuantLib Python</a>
             </li>
             <li>
                 <a href="http://gouthamanbalaraman.com/blog/interest-rate-swap-quantlib-python.html">Modeling Vanilla Interest Rate Swaps Using QuantLib Python</a>
             </li>
             <li>
-                <a href="http://gouthamanbalaraman.com/blog/hull-white-simulation-monte-carlo-convergence.html">On the Convergence of Hull White Monte Carlo Simulations</a>
-            </li>
-            <li>
                 <a href="http://gouthamanbalaraman.com/blog/announcing-qtk-quantlib-python.html">Announcing qtk for QuantLib Python</a>
             </li>
             <li>
-                <a href="http://gouthamanbalaraman.com/blog/quantlib-bond-modeling.html">Modeling Fixed Rate Bonds in QuantLib Python</a>
+                <a href="http://gouthamanbalaraman.com/blog/valuing-european-option-heston-model-quantLib.html">Valuing European Option Using the Heston Model in QuantLib Python</a>
             </li>
         </ul>
         <hr/>

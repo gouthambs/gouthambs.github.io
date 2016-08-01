@@ -278,8 +278,8 @@
 &lt;div class="box-flex1 output_subarea output_stream output_stdout"&gt;
 &lt;pre class="ipynb"&gt;theta = 0.125748, kappa = 7.915000, sigma = 1.887854, rho = -0.364942, v0 = 0.055397
 Average Abs Error (%) : 3.015268051
-CPU times: user 4.7 s, sys: 0 ns, total: 4.7 s
-Wall time: 4.7 s
+CPU times: user 4.86 s, sys: 0 ns, total: 4.86 s
+Wall time: 4.86 s
 &lt;/pre&gt;
 &lt;/div&gt;
 &lt;/div&gt;
@@ -345,8 +345,8 @@ Wall time: 4.7 s
 &lt;div class="box-flex1 output_subarea output_stream output_stdout"&gt;
 &lt;pre class="ipynb"&gt;theta = 0.084523, kappa = 0.000000, sigma = 0.132289, rho = -0.514278, v0 = 0.099928
 Average Abs Error (%) : 11.007433024
-CPU times: user 5.15 s, sys: 0 ns, total: 5.15 s
-Wall time: 5.15 s
+CPU times: user 4.97 s, sys: 0 ns, total: 4.97 s
+Wall time: 4.98 s
 &lt;/pre&gt;
 &lt;/div&gt;
 &lt;/div&gt;
@@ -429,8 +429,8 @@ Wall time: 5.15 s
 &lt;div class="box-flex1 output_subarea output_stream output_stdout"&gt;
 &lt;pre class="ipynb"&gt;theta = 0.125747, kappa = 7.915687, sigma = 1.887934, rho = -0.364944, v0 = 0.055394
 Average Abs Error (%) : 3.015252651
-CPU times: user 4.58 s, sys: 36 ms, total: 4.61 s
-Wall time: 4.57 s
+CPU times: user 4.68 s, sys: 12 ms, total: 4.69 s
+Wall time: 4.65 s
 &lt;/pre&gt;
 &lt;/div&gt;
 &lt;/div&gt;
@@ -495,8 +495,8 @@ Wall time: 4.57 s
 &lt;div class="box-flex1 output_subarea output_stream output_stdout"&gt;
 &lt;pre class="ipynb"&gt;theta = 0.048184, kappa = -0.548903, sigma = 0.197958, rho = -0.999547, v0 = 0.090571
 Average Abs Error (%) : 7.019499509
-CPU times: user 19.8 s, sys: 88 ms, total: 19.8 s
-Wall time: 19.5 s
+CPU times: user 20.7 s, sys: 56 ms, total: 20.7 s
+Wall time: 20.5 s
 &lt;/pre&gt;
 &lt;/div&gt;
 &lt;/div&gt;
@@ -584,8 +584,8 @@ Wall time: 19.5 s
 &lt;div class="box-flex1 output_subarea output_stream output_stdout"&gt;
 &lt;pre class="ipynb"&gt;theta = 0.125747, kappa = 7.915814, sigma = 1.887949, rho = -0.364944, v0 = 0.055394
 Average Abs Error (%) : 3.015251175
-CPU times: user 4.32 s, sys: 20 ms, total: 4.34 s
-Wall time: 4.32 s
+CPU times: user 4.54 s, sys: 8 ms, total: 4.55 s
+Wall time: 4.55 s
 &lt;/pre&gt;
 &lt;/div&gt;
 &lt;/div&gt;
@@ -650,8 +650,8 @@ Wall time: 4.32 s
 &lt;div class="box-flex1 output_subarea output_stream output_stdout"&gt;
 &lt;pre class="ipynb"&gt;theta = 3.136774, kappa = 0.000005, sigma = -0.000245, rho = -0.000010, v0 = 1.597904
 Average Abs Error (%) : 5.096414042
-CPU times: user 27.1 s, sys: 16 ms, total: 27.1 s
-Wall time: 27.1 s
+CPU times: user 28.1 s, sys: 16 ms, total: 28.2 s
+Wall time: 28.1 s
 &lt;/pre&gt;
 &lt;/div&gt;
 &lt;/div&gt;
@@ -719,7 +719,7 @@ Wall time: 27.1 s
 &lt;div class="highlight-ipynb"&gt;&lt;pre class="ipynb"&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="o"&gt;%%&lt;/span&gt;&lt;span class="k"&gt;time&lt;/span&gt;
 &lt;span class="n"&gt;cost_function&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;cost_function_generator&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;
     &lt;span class="n"&gt;model4&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;heston_helpers4&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;norm&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="bp"&gt;True&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;span class="n"&gt;sol&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;differential_evolution&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;cost_function&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;bounds&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;maxiter&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;20&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;sol&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;differential_evolution&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;cost_function&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;bounds&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;maxiter&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;100&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 &lt;span class="n"&gt;theta&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;kappa&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;sigma&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;rho&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;v0&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;model4&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;params&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
 &lt;span class="k"&gt;print&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;theta = &lt;/span&gt;&lt;span class="si"&gt;%f&lt;/span&gt;&lt;span class="s2"&gt;, kappa = &lt;/span&gt;&lt;span class="si"&gt;%f&lt;/span&gt;&lt;span class="s2"&gt;, sigma = &lt;/span&gt;&lt;span class="si"&gt;%f&lt;/span&gt;&lt;span class="s2"&gt;, rho = &lt;/span&gt;&lt;span class="si"&gt;%f&lt;/span&gt;&lt;span class="s2"&gt;, v0 = &lt;/span&gt;&lt;span class="si"&gt;%f&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;%&lt;/span&gt; \
     &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;theta&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;kappa&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;sigma&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;rho&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;v0&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
@@ -737,10 +737,10 @@ Wall time: 27.1 s
 
 &lt;div class="output_area"&gt;&lt;div class="prompt"&gt;&lt;/div&gt;
 &lt;div class="box-flex1 output_subarea output_stream output_stdout"&gt;
-&lt;pre class="ipynb"&gt;theta = 0.121969, kappa = 5.296890, sigma = 0.916644, rho = -0.616556, v0 = 0.079668
-Average Abs Error (%) : 2.874168106
-CPU times: user 1min 19s, sys: 164 ms, total: 1min 20s
-Wall time: 1min 19s
+&lt;pre class="ipynb"&gt;theta = 0.123221, kappa = 5.012199, sigma = 0.950309, rho = -0.570340, v0 = 0.078440
+Average Abs Error (%) : 2.859113482
+CPU times: user 1min 39s, sys: 144 ms, total: 1min 39s
+Wall time: 1min 39s
 &lt;/pre&gt;
 &lt;/div&gt;
 &lt;/div&gt;
@@ -785,7 +785,7 @@ Wall time: 1min 19s
 &lt;div class="highlight-ipynb"&gt;&lt;pre class="ipynb"&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="o"&gt;%%&lt;/span&gt;&lt;span class="k"&gt;time&lt;/span&gt;
 &lt;span class="n"&gt;cost_function&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;cost_function_generator&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;
     &lt;span class="n"&gt;model4&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;heston_helpers4&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;norm&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="bp"&gt;True&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;span class="n"&gt;sol&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;differential_evolution&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;cost_function&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;bounds&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;maxiter&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;20&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;sol&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;differential_evolution&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;cost_function&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;bounds&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;maxiter&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;100&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 &lt;span class="n"&gt;theta&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;kappa&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;sigma&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;rho&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;v0&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;model4&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;params&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
 &lt;span class="k"&gt;print&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;theta = &lt;/span&gt;&lt;span class="si"&gt;%f&lt;/span&gt;&lt;span class="s2"&gt;, kappa = &lt;/span&gt;&lt;span class="si"&gt;%f&lt;/span&gt;&lt;span class="s2"&gt;, sigma = &lt;/span&gt;&lt;span class="si"&gt;%f&lt;/span&gt;&lt;span class="s2"&gt;, rho = &lt;/span&gt;&lt;span class="si"&gt;%f&lt;/span&gt;&lt;span class="s2"&gt;, v0 = &lt;/span&gt;&lt;span class="si"&gt;%f&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;%&lt;/span&gt; \
     &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;theta&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;kappa&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;sigma&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;rho&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;v0&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
@@ -803,10 +803,10 @@ Wall time: 1min 19s
 
 &lt;div class="output_area"&gt;&lt;div class="prompt"&gt;&lt;/div&gt;
 &lt;div class="box-flex1 output_subarea output_stream output_stdout"&gt;
-&lt;pre class="ipynb"&gt;theta = 0.121055, kappa = 4.570230, sigma = 0.509309, rho = -0.987312, v0 = 0.078070
-Average Abs Error (%) : 2.938233064
-CPU times: user 1min 11s, sys: 172 ms, total: 1min 12s
-Wall time: 1min 11s
+&lt;pre class="ipynb"&gt;theta = 0.122251, kappa = 4.996804, sigma = 0.849266, rho = -0.637706, v0 = 0.079484
+Average Abs Error (%) : 2.876087363
+CPU times: user 1min 57s, sys: 200 ms, total: 1min 57s
+Wall time: 1min 57s
 &lt;/pre&gt;
 &lt;/div&gt;
 &lt;/div&gt;
@@ -821,7 +821,8 @@ Wall time: 1min 11s
 &lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
 &lt;h5 id="basin-hopping-algorithm"&gt;Basin Hopping Algorithm&lt;/h5&gt;
-&lt;p&gt;Here we will use the Basin Hopping (annealing like) method to solve for the parameters. &lt;/p&gt;
+&lt;p&gt;Here we will use the Basin Hopping (annealing like) method to solve for the parameters. A couple things to make note here. The Basin Hopping method works best when used wiht a minimizer. Here I played with various minimizers and finally decided to use something that supports bounds checking. Without bounds checking, I often ended with &lt;code&gt;nan&lt;/code&gt; and did not have a meaningful solution in the end. &lt;/p&gt;
+&lt;p&gt;I have chosen bounds based on a very basic reasoning. One needs careful reasoning to use appropriate bounds for the problem at hand.&lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
@@ -890,10 +891,11 @@ Wall time: 1min 11s
 &lt;span class="n"&gt;minimizer_kwargs&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;method&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;L-BFGS-B&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;bounds&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;bounds&lt;/span&gt; &lt;span class="p"&gt;}&lt;/span&gt;
 &lt;span class="n"&gt;cost_function&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;cost_function_generator&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;
     &lt;span class="n"&gt;model5&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;heston_helpers5&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;norm&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="bp"&gt;True&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;span class="n"&gt;sol&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;basinhopping&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;cost_function&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;initial_condition&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;niter&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;span class="n"&gt;sol&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;basinhopping&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;cost_function&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;initial_condition&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;niter&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;5&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
                    &lt;span class="n"&gt;minimizer_kwargs&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;minimizer_kwargs&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
                    &lt;span class="n"&gt;stepsize&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mf"&gt;0.005&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-                   &lt;span class="n"&gt;accept_test&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;mybound&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+                   &lt;span class="n"&gt;accept_test&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;mybound&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+                   &lt;span class="n"&gt;interval&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;10&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 &lt;span class="n"&gt;theta&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;kappa&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;sigma&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;rho&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;v0&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;model5&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;params&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
 &lt;span class="k"&gt;print&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;theta = &lt;/span&gt;&lt;span class="si"&gt;%f&lt;/span&gt;&lt;span class="s2"&gt;, kappa = &lt;/span&gt;&lt;span class="si"&gt;%f&lt;/span&gt;&lt;span class="s2"&gt;, sigma = &lt;/span&gt;&lt;span class="si"&gt;%f&lt;/span&gt;&lt;span class="s2"&gt;, rho = &lt;/span&gt;&lt;span class="si"&gt;%f&lt;/span&gt;&lt;span class="s2"&gt;, v0 = &lt;/span&gt;&lt;span class="si"&gt;%f&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;%&lt;/span&gt; \
     &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;theta&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;kappa&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;sigma&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;rho&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;v0&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
@@ -911,10 +913,10 @@ Wall time: 1min 11s
 
 &lt;div class="output_area"&gt;&lt;div class="prompt"&gt;&lt;/div&gt;
 &lt;div class="box-flex1 output_subarea output_stream output_stdout"&gt;
-&lt;pre class="ipynb"&gt;theta = 0.123393, kappa = 5.075286, sigma = 0.994216, rho = -0.566899, v0 = 0.079338
-Average Abs Error (%) : 2.851405010
-CPU times: user 1min 19s, sys: 284 ms, total: 1min 19s
-Wall time: 1min 18s
+&lt;pre class="ipynb"&gt;theta = 0.123455, kappa = 5.074067, sigma = 0.995095, rho = -0.562106, v0 = 0.079009
+Average Abs Error (%) : 2.850972273
+CPU times: user 2min 15s, sys: 456 ms, total: 2min 16s
+Wall time: 2min 14s
 &lt;/pre&gt;
 &lt;/div&gt;
 &lt;/div&gt;
@@ -953,10 +955,11 @@ Wall time: 1min 18s
 &lt;span class="n"&gt;minimizer_kwargs&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;method&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;L-BFGS-B&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;bounds&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;bounds&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
 &lt;span class="n"&gt;cost_function&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;cost_function_generator&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;
     &lt;span class="n"&gt;model5&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;heston_helpers5&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;norm&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="bp"&gt;True&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;span class="n"&gt;sol&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;basinhopping&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;cost_function&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;initial_condition&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;niter&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;span class="n"&gt;sol&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;basinhopping&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;cost_function&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;initial_condition&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;niter&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;5&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
                    &lt;span class="n"&gt;minimizer_kwargs&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;minimizer_kwargs&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
                    &lt;span class="n"&gt;stepsize&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mf"&gt;0.005&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-                   &lt;span class="n"&gt;accept_test&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;mybound&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+                   &lt;span class="n"&gt;accept_test&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;mybound&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+                   &lt;span class="n"&gt;interval&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;10&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 &lt;span class="n"&gt;theta&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;kappa&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;sigma&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;rho&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;v0&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;model5&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;params&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
 &lt;span class="k"&gt;print&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;theta = &lt;/span&gt;&lt;span class="si"&gt;%f&lt;/span&gt;&lt;span class="s2"&gt;, kappa = &lt;/span&gt;&lt;span class="si"&gt;%f&lt;/span&gt;&lt;span class="s2"&gt;, sigma = &lt;/span&gt;&lt;span class="si"&gt;%f&lt;/span&gt;&lt;span class="s2"&gt;, rho = &lt;/span&gt;&lt;span class="si"&gt;%f&lt;/span&gt;&lt;span class="s2"&gt;, v0 = &lt;/span&gt;&lt;span class="si"&gt;%f&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;%&lt;/span&gt; \
     &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;theta&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;kappa&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;sigma&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;rho&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;v0&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
@@ -974,10 +977,10 @@ Wall time: 1min 18s
 
 &lt;div class="output_area"&gt;&lt;div class="prompt"&gt;&lt;/div&gt;
 &lt;div class="box-flex1 output_subarea output_stream output_stdout"&gt;
-&lt;pre class="ipynb"&gt;theta = 0.122777, kappa = 4.057845, sigma = 0.598006, rho = -0.792271, v0 = 0.079368
-Average Abs Error (%) : 2.897223702
-CPU times: user 1min 32s, sys: 304 ms, total: 1min 32s
-Wall time: 1min 31s
+&lt;pre class="ipynb"&gt;theta = 0.123403, kappa = 4.791319, sigma = 0.904397, rho = -0.593711, v0 = 0.079215
+Average Abs Error (%) : 2.863355647
+CPU times: user 1min 50s, sys: 332 ms, total: 1min 50s
+Wall time: 1min 49s
 &lt;/pre&gt;
 &lt;/div&gt;
 &lt;/div&gt;
@@ -993,7 +996,8 @@ Wall time: 1min 31s
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
 &lt;h4 id="summary"&gt;Summary&lt;/h4&gt;
 &lt;p&gt;Here is a summary of all the results with the calibration error overall, and the respective parameters. All the local minima methods give parameters that are very different based on the initial condition that we start with. This is different in contrary with the global minimization methods that all end up in more or less the same proximity of each other.&lt;/p&gt;
-&lt;p&gt;The global solvers such as Differential Evolution and Basin Hopping are capable of finding the global minima and it is sometimes a question of computation resources. Here, I have lower &amp;quot;iterations&amp;quot; set for these routines for faster solving. Even with such a short threshold, we get fairly good solution set.&lt;/p&gt;
+&lt;p&gt;The global solvers such as Differential Evolution and Basin Hopping are capable of finding the global minima and it is sometimes a question of computation resources. Here, I have lower &amp;quot;iterations&amp;quot; set for these routines for faster solving. Even with such a short threshold, we get fairly good solution set. I think it is premature to compare the effectiveness of different global solvers just based on the results here. The &lt;a href="http://docs.scipy.org/doc/scipy/reference/optimize.html"&gt;scipy optimize&lt;/a&gt; package has detailed documentation with various tuning parameters. I haven&amp;#39;t exploited the nuances much, and is left as an exercise for the reader.&lt;/p&gt;
+&lt;p&gt;Hope you find this useful!&lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
@@ -1098,42 +1102,42 @@ Wall time: 1min 31s
     &lt;tr&gt;
       &lt;th&gt;&lt;/th&gt;
       &lt;td&gt;Scipy DE1&lt;/td&gt;
-      &lt;td&gt;2.874168&lt;/td&gt;
-      &lt;td&gt;0.121969&lt;/td&gt;
-      &lt;td&gt;5.296890e+00&lt;/td&gt;
-      &lt;td&gt;0.916644&lt;/td&gt;
-      &lt;td&gt;-0.616556&lt;/td&gt;
-      &lt;td&gt;0.079668&lt;/td&gt;
+      &lt;td&gt;2.859113&lt;/td&gt;
+      &lt;td&gt;0.123221&lt;/td&gt;
+      &lt;td&gt;5.012199e+00&lt;/td&gt;
+      &lt;td&gt;0.950309&lt;/td&gt;
+      &lt;td&gt;-0.570340&lt;/td&gt;
+      &lt;td&gt;0.078440&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
       &lt;th&gt;&lt;/th&gt;
       &lt;td&gt;Scipy DE2&lt;/td&gt;
-      &lt;td&gt;2.938233&lt;/td&gt;
-      &lt;td&gt;0.121055&lt;/td&gt;
-      &lt;td&gt;4.570230e+00&lt;/td&gt;
-      &lt;td&gt;0.509309&lt;/td&gt;
-      &lt;td&gt;-0.987312&lt;/td&gt;
-      &lt;td&gt;0.078070&lt;/td&gt;
+      &lt;td&gt;2.876087&lt;/td&gt;
+      &lt;td&gt;0.122251&lt;/td&gt;
+      &lt;td&gt;4.996804e+00&lt;/td&gt;
+      &lt;td&gt;0.849266&lt;/td&gt;
+      &lt;td&gt;-0.637706&lt;/td&gt;
+      &lt;td&gt;0.079484&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
       &lt;th&gt;&lt;/th&gt;
       &lt;td&gt;Scipy BH1&lt;/td&gt;
-      &lt;td&gt;2.851405&lt;/td&gt;
-      &lt;td&gt;0.123393&lt;/td&gt;
-      &lt;td&gt;5.075286e+00&lt;/td&gt;
-      &lt;td&gt;0.994216&lt;/td&gt;
-      &lt;td&gt;-0.566899&lt;/td&gt;
-      &lt;td&gt;0.079338&lt;/td&gt;
+      &lt;td&gt;2.850972&lt;/td&gt;
+      &lt;td&gt;0.123455&lt;/td&gt;
+      &lt;td&gt;5.074067e+00&lt;/td&gt;
+      &lt;td&gt;0.995095&lt;/td&gt;
+      &lt;td&gt;-0.562106&lt;/td&gt;
+      &lt;td&gt;0.079009&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
       &lt;th&gt;&lt;/th&gt;
       &lt;td&gt;Scipy BH2&lt;/td&gt;
-      &lt;td&gt;2.897224&lt;/td&gt;
-      &lt;td&gt;0.122777&lt;/td&gt;
-      &lt;td&gt;4.057845e+00&lt;/td&gt;
-      &lt;td&gt;0.598006&lt;/td&gt;
-      &lt;td&gt;-0.792271&lt;/td&gt;
-      &lt;td&gt;0.079368&lt;/td&gt;
+      &lt;td&gt;2.863356&lt;/td&gt;
+      &lt;td&gt;0.123403&lt;/td&gt;
+      &lt;td&gt;4.791319e+00&lt;/td&gt;
+      &lt;td&gt;0.904397&lt;/td&gt;
+      &lt;td&gt;-0.593711&lt;/td&gt;
+      &lt;td&gt;0.079215&lt;/td&gt;
     &lt;/tr&gt;
   &lt;/tbody&gt;
 &lt;/table&gt;
