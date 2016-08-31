@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Valuing Callable Bonds Using QuantLib Python - G B</title>
+        <!-- All the meta tags -->
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+        <meta property="og:type" content="article"/>
+        <meta property="og:title" content="Valuing Callable Bonds Using QuantLib Python"/>
+        <meta property="og:url" content="http://gouthamanbalaraman.com/blog/callable-bond-quantlib-python.html"/>
+        <meta property="og:description" content="In this post we look at valuing callable bonds using QuantLib Python"/>
+        
+        <link href="http://gouthamanbalaraman.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="G B Full Atom Feed" />
+        <link href="http://gouthamanbalaraman.com/feeds/all.rss.xml" type="application/rss+xml" rel="alternate" title="G B RSS Feed" />
+        <link href="http://gouthamanbalaraman.com/feeds/quantlib.atom.xml" type="application/atom+xml" rel="alternate" title="G B Categories Atom Feed" />
+        <link href="http://gouthamanbalaraman.com/feeds/quantlib.rss.xml" type="application/rss+xml" rel="alternate" title="G B Categories RSS Feed" />
+        <link href="http://gouthamanbalaraman.com/theme/static/css/bootstrap.readable.min.css" rel="stylesheet" />
+
+	<!-- Google Analytics -->
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-46714334-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    /*Update Your Analytics Tracking Code to Support Display Advertising by uncommenting the following 
+    instead of the above line */    
+    /*ga.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'stats.g.doubleclick.net/dc.js';*/
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+    </head>
+
+    <body>
+      <div class="navbar navbar-default navbar-fixed-top">
+          <div class="container">
+            <div class="navbar-header">
+              <a href="http://gouthamanbalaraman.com" class="navbar-brand">G B</a>
+              <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+            </div>
+            <div class="navbar-collapse collapse" id="navbar-main">
+              <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="http://gouthamanbalaraman.com/pages/about.html">About</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                <div class="col-md-10 col-md-offset-1">
+    <div class="page-header">
+        <h1>Valuing Callable Bonds Using QuantLib Python</h1>
+     <!--span class="glyphicon glyphicon-calendar"></span-->
+     &nbsp;August 30, 2016
+     &nbsp;
+     <!--span class="glyphicon glyphicon-user"></span--> by  
+     <a class="url fn" href="http://gouthamanbalaraman.com/author/goutham-balaraman.html">&nbsp;Goutham Balaraman </a>
+
+        <p id="post-share-links">
+            &nbsp;Share on:
+            <a href="https://sharetodiaspora.github.io/?title=Valuing%20Callable%20Bonds%20Using%20QuantLib%20Python&url=http%3A//gouthamanbalaraman.com/blog/callable-bond-quantlib-python.html" target="_blank" title="Share on Diaspora">Diaspora*</a>
+            /
+            <a href="http://twitter.com/home?status=Valuing%20Callable%20Bonds%20Using%20QuantLib%20Python by @gsbalaraman%20http%3A//gouthamanbalaraman.com/blog/callable-bond-quantlib-python.html" target="_blank" title="Share on Twitter">Twitter</a>
+            /
+            <a href="http://www.facebook.com/sharer/sharer.php?s=100&amp;p%5Burl%5D=http%3A//gouthamanbalaraman.com/blog/callable-bond-quantlib-python.html" target="_blank" title="Share on Facebook">Facebook</a>
+            /
+            <a href="https://plus.google.com/share?url=http%3A//gouthamanbalaraman.com/blog/callable-bond-quantlib-python.html" target="_blank" title="Share on Google Plus">Google+</a>
+            /
+            <a href="mailto:?subject=Valuing%20Callable%20Bonds%20Using%20QuantLib%20Python&amp;body=http%3A//gouthamanbalaraman.com/blog/callable-bond-quantlib-python.html" target="_blank" title="Share via Email">Email</a>
+            /
+            <a href="http://www.bloglovin.com/blog/14559547/?claim=cqravg9v4n2">Bloglovin</a>
+        </p>
+     </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-8 col-md-offset-2">
+
+<div class="bs-docs-section">
+    
+     <!-- article description -->
+         <p class="lead">In this post we look at valuing callable bonds using QuantLib Python</p>
+      
+      
+      
+      <!-- article content -->
+     <p>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>In this post, I will walk you through on how to value callable bonds in QuantLib Python. The approach to construct a callable bond is lot similar to <a href="http://gouthamanbalaraman.com/blog/quantlib-bond-modeling.html">creating a fixed rate bond in QuantLib</a>. The one additional input that we need to provide here is the details on the callable schedule. If you follow the fixed rate bond example already, this should be fairly straight forward.</p>
+<p>As always, we will start with some initializations and imports.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[1]:</div>
+
+<div class="input_area box-flex1">
+<div class="highlight-ipynb"><pre class="ipynb"><span></span><span class="kn">import</span> <span class="nn">QuantLib</span> <span class="kn">as</span> <span class="nn">ql</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
+<span class="o">%</span><span class="k">matplotlib</span> <span class="n">inline</span>
+<span class="n">calc_date</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">Date</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">2016</span><span class="p">)</span>
+<span class="n">ql</span><span class="o">.</span><span class="n">Settings</span><span class="o">.</span><span class="n">instance</span><span class="p">()</span><span class="o">.</span><span class="n">evaluationDate</span> <span class="o">=</span> <span class="n">calc_date</span>
+</pre></div>
+
+</div>
+
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>For simplicity, I am going to assume that the interest rate term structure is a flat yield curve at 3.5%.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[2]:</div>
+
+<div class="input_area box-flex1">
+<div class="highlight-ipynb"><pre class="ipynb"><span></span><span class="n">day_count</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">ActualActual</span><span class="p">(</span><span class="n">ql</span><span class="o">.</span><span class="n">ActualActual</span><span class="o">.</span><span class="n">Bond</span><span class="p">)</span>
+<span class="n">rate</span> <span class="o">=</span> <span class="mf">0.035</span>
+<span class="n">ts</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">FlatForward</span><span class="p">(</span><span class="n">calc_date</span><span class="p">,</span> 
+                    <span class="n">rate</span><span class="p">,</span> 
+                    <span class="n">day_count</span><span class="p">,</span> 
+                    <span class="n">ql</span><span class="o">.</span><span class="n">Compounded</span><span class="p">,</span> 
+                    <span class="n">ql</span><span class="o">.</span><span class="n">Semiannual</span><span class="p">)</span>
+<span class="n">ts_handle</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">YieldTermStructureHandle</span><span class="p">(</span><span class="n">ts</span><span class="p">)</span>
+</pre></div>
+
+</div>
+
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The call and put schedules for the callable bond is created as shown below. I create a container for holding all the call and put dates using the <code>CallabilitySchedule</code> class. You can add each call using <code>Callability</code> class and noting as <code>Callability.Call</code> or <code>Callability.Put</code> for either a call or put.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[3]:</div>
+
+<div class="input_area box-flex1">
+<div class="highlight-ipynb"><pre class="ipynb"><span></span><span class="n">callability_schedule</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">CallabilitySchedule</span><span class="p">()</span>
+<span class="n">call_price</span> <span class="o">=</span> <span class="mf">100.0</span>
+<span class="n">call_date</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">Date</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span><span class="n">ql</span><span class="o">.</span><span class="n">September</span><span class="p">,</span><span class="mi">2016</span><span class="p">);</span>
+<span class="n">null_calendar</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">NullCalendar</span><span class="p">();</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">24</span><span class="p">):</span>
+    <span class="n">callability_price</span>  <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">CallabilityPrice</span><span class="p">(</span>
+        <span class="n">call_price</span><span class="p">,</span> <span class="n">ql</span><span class="o">.</span><span class="n">CallabilityPrice</span><span class="o">.</span><span class="n">Clean</span><span class="p">)</span>
+    <span class="n">callability_schedule</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+            <span class="n">ql</span><span class="o">.</span><span class="n">Callability</span><span class="p">(</span><span class="n">callability_price</span><span class="p">,</span> 
+                           <span class="n">ql</span><span class="o">.</span><span class="n">Callability</span><span class="o">.</span><span class="n">Call</span><span class="p">,</span>
+                           <span class="n">call_date</span><span class="p">))</span>
+
+    <span class="n">call_date</span> <span class="o">=</span> <span class="n">null_calendar</span><span class="o">.</span><span class="n">advance</span><span class="p">(</span><span class="n">call_date</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">ql</span><span class="o">.</span><span class="n">Months</span><span class="p">);</span>
+</pre></div>
+
+</div>
+
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>What follows next is very similar to the <code>Schedule</code> that we created in the vanilla fixed rate bond valuation.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[4]:</div>
+
+<div class="input_area box-flex1">
+<div class="highlight-ipynb"><pre class="ipynb"><span></span><span class="n">issue_date</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">Date</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span><span class="n">ql</span><span class="o">.</span><span class="n">September</span><span class="p">,</span><span class="mi">2014</span><span class="p">)</span>        
+<span class="n">maturity_date</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">Date</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span><span class="n">ql</span><span class="o">.</span><span class="n">September</span><span class="p">,</span><span class="mi">2022</span><span class="p">)</span>
+<span class="n">calendar</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">UnitedStates</span><span class="p">(</span><span class="n">ql</span><span class="o">.</span><span class="n">UnitedStates</span><span class="o">.</span><span class="n">GovernmentBond</span><span class="p">)</span>
+<span class="n">tenor</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">Period</span><span class="p">(</span><span class="n">ql</span><span class="o">.</span><span class="n">Quarterly</span><span class="p">)</span>
+<span class="n">accrual_convention</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">Unadjusted</span>
+
+<span class="n">schedule</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">Schedule</span><span class="p">(</span><span class="n">issue_date</span><span class="p">,</span> <span class="n">maturity_date</span><span class="p">,</span> <span class="n">tenor</span><span class="p">,</span>
+                       <span class="n">calendar</span><span class="p">,</span> <span class="n">accrual_convention</span><span class="p">,</span> <span class="n">accrual_convention</span><span class="p">,</span>
+                       <span class="n">ql</span><span class="o">.</span><span class="n">DateGeneration</span><span class="o">.</span><span class="n">Backward</span><span class="p">,</span> <span class="bp">False</span><span class="p">)</span>
+</pre></div>
+
+</div>
+
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The callable bond is instantiated using the <code>CallableFixedRateBond</code> class, which accepts the bond inputs and the call / put schedule.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[5]:</div>
+
+<div class="input_area box-flex1">
+<div class="highlight-ipynb"><pre class="ipynb"><span></span><span class="n">settlement_days</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="n">face_amount</span> <span class="o">=</span> <span class="mi">100</span>
+<span class="n">accrual_daycount</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">ActualActual</span><span class="p">(</span><span class="n">ql</span><span class="o">.</span><span class="n">ActualActual</span><span class="o">.</span><span class="n">Bond</span><span class="p">)</span>
+<span class="n">coupon</span> <span class="o">=</span> <span class="mf">0.025</span>
+
+
+<span class="n">bond</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">CallableFixedRateBond</span><span class="p">(</span>
+    <span class="n">settlement_days</span><span class="p">,</span> <span class="n">face_amount</span><span class="p">,</span>
+    <span class="n">schedule</span><span class="p">,</span> <span class="p">[</span><span class="n">coupon</span><span class="p">],</span> <span class="n">accrual_daycount</span><span class="p">,</span>
+    <span class="n">ql</span><span class="o">.</span><span class="n">Following</span><span class="p">,</span> <span class="n">face_amount</span><span class="p">,</span> <span class="n">issue_date</span><span class="p">,</span>
+    <span class="n">callability_schedule</span><span class="p">)</span>
+</pre></div>
+
+</div>
+
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>In order to value the bond, we need an interest rate model to model the fact that the bond will get called or not in the future depending on where the future interest rates are at. The <code>TreeCallableFixedRateBondEngine</code> can be used to value the callable bond. Below, the <code>value_bond</code> function prices the callable bond based on the Hull-White model parameter for mean reversion and volatility.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[6]:</div>
+
+<div class="input_area box-flex1">
+<div class="highlight-ipynb"><pre class="ipynb"><span></span><span class="k">def</span> <span class="nf">value_bond</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="n">grid_points</span><span class="p">,</span> <span class="n">bond</span><span class="p">):</span>
+    <span class="n">model</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">HullWhite</span><span class="p">(</span><span class="n">ts_handle</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">s</span><span class="p">)</span>
+    <span class="n">engine</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">TreeCallableFixedRateBondEngine</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">grid_points</span><span class="p">)</span>
+    <span class="n">bond</span><span class="o">.</span><span class="n">setPricingEngine</span><span class="p">(</span><span class="n">engine</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">bond</span>
+</pre></div>
+
+</div>
+
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The callable bond value for a 3% mean reversion and 12% volatility is shown below.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[7]:</div>
+
+<div class="input_area box-flex1">
+<div class="highlight-ipynb"><pre class="ipynb"><span></span><span class="n">value_bond</span><span class="p">(</span><span class="mf">0.03</span><span class="p">,</span> <span class="mf">0.12</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="n">bond</span><span class="p">)</span>
+<span class="k">print</span> <span class="s2">&quot;Bond price: &quot;</span><span class="p">,</span><span class="n">bond</span><span class="o">.</span><span class="n">cleanPrice</span><span class="p">()</span>
+</pre></div>
+
+</div>
+
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="box-flex1 output_subarea output_stream output_stdout">
+<pre class="ipynb">Bond price:  68.3769646975
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The price sensitivity of callable bonds to that of volatility parameter is shown below. As volatility increases, there is a higher chance of it being callable. Hence the value of the bond decreases.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[8]:</div>
+
+<div class="input_area box-flex1">
+<div class="highlight-ipynb"><pre class="ipynb"><span></span><span class="n">sigmas</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mf">0.001</span><span class="p">,</span> <span class="mf">0.15</span><span class="p">,</span> <span class="mf">0.001</span><span class="p">)</span>
+<span class="n">prices</span> <span class="o">=</span> <span class="p">[</span><span class="n">value_bond</span><span class="p">(</span><span class="mf">0.03</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="n">bond</span><span class="p">)</span><span class="o">.</span><span class="n">cleanPrice</span><span class="p">()</span> 
+          <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">sigmas</span><span class="p">]</span>
+</pre></div>
+
+</div>
+
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[9]:</div>
+
+<div class="input_area box-flex1">
+<div class="highlight-ipynb"><pre class="ipynb"><span></span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">sigmas</span><span class="p">,</span> <span class="n">prices</span><span class="p">)</span>
+</pre></div>
+
+</div>
+
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt output_prompt">Out[9]:</div>
+
+
+<pre class="ipynb">[&lt;matplotlib.lines.Line2D at 0x7fa0abbdbd90&gt;]</pre>
+
+</div>
+
+<div class="output_area"><div class="prompt"></div>
+
+
+<div class="output_png output_subarea ">
+<img src="data:image/png;base64,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
+NFuGFvhxEQAAAABJRU5ErkJggg==
+"
+>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The static cashflows can be accessed using the <code>cashflows</code> accessor.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[10]:</div>
+
+<div class="input_area box-flex1">
+<div class="highlight-ipynb"><pre class="ipynb"><span></span><span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">bond</span><span class="o">.</span><span class="n">cashflows</span><span class="p">():</span>
+    <span class="k">print</span> <span class="n">c</span><span class="o">.</span><span class="n">date</span><span class="p">(),</span> <span class="s2">&quot;     &quot;</span><span class="p">,</span> <span class="n">c</span><span class="o">.</span><span class="n">amount</span><span class="p">()</span>
+</pre></div>
+
+</div>
+
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="box-flex1 output_subarea output_stream output_stdout">
+<pre class="ipynb">December 15th, 2,014       0.618131868132
+March 16th, 2,015       0.625
+June 15th, 2,015       0.625
+September 15th, 2,015       0.625
+December 15th, 2,015       0.625
+March 15th, 2,016       0.625
+June 15th, 2,016       0.625
+September 15th, 2,016       0.625
+December 15th, 2,016       0.625
+March 15th, 2,017       0.625
+June 15th, 2,017       0.625
+September 15th, 2,017       0.625
+December 15th, 2,017       0.625
+March 15th, 2,018       0.625
+June 15th, 2,018       0.625
+September 17th, 2,018       0.625
+December 17th, 2,018       0.625
+March 15th, 2,019       0.625
+June 17th, 2,019       0.625
+September 16th, 2,019       0.625
+December 16th, 2,019       0.625
+March 16th, 2,020       0.625
+June 15th, 2,020       0.625
+September 15th, 2,020       0.625
+December 15th, 2,020       0.625
+March 15th, 2,021       0.625
+June 15th, 2,021       0.625
+September 15th, 2,021       0.625
+December 15th, 2,021       0.625
+March 15th, 2,022       0.625
+June 15th, 2,022       0.625
+September 15th, 2,022       0.625
+September 15th, 2,022       100.0
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="conclusion">Conclusion</h4>
+<p>Here we explored a minimal example on pricing a callable bond.</p>
+</div>
+</div>
+</div></p>
+     <br><br>
+				
+				<div class="row">
+					<div class="col-md-3">
+						<a href="https://leanpub.com/quantlibpythoncookbook">
+							<img alt="QuantLib Python Cookbook" 
+								 src="https://s3.amazonaws.com/titlepages.leanpub.com/quantlibpythoncookbook/medium?1465967986"
+								 title= "QuantLib Python Cookbook">
+						</a>
+					</div>
+					<div class="col-md-9">
+						<em>Updated posts from this blog and transcripts of Luigi's screencasts on YouTube is compiled 
+						into <a href="https://leanpub.com/quantlibpythoncookbook"> QuantLib Python Cookbook </a>. 
+						Visit here for other <a href ="http://gouthamanbalaraman.com/blog/quantlib-python-tutorials-with-examples.html">QuantLib Python examples</a>.
+						You can also help improve this blog series by answering this 
+						<a href="https://docs.google.com/forms/d/1iRI-YWgqCB-rUhxVsFf-s_y00yAB0vyb-b816q6oktk/viewform">one minute survey.</a></em>
+					</div>
+				</div>
+	            <br><br>
+	  <br>
+	 
+     <!-- article tags-->
+        <span class="glyphicon glyphicon-tags"></span>&nbsp;&nbsp;
+            <span class="label label-default"><a href="http://gouthamanbalaraman.com/tag/quantlib.html">quantlib</a></span>&nbsp;&nbsp;
+            <span class="label label-default"><a href="http://gouthamanbalaraman.com/tag/python.html">python</a></span>&nbsp;&nbsp;
+            <span class="label label-default"><a href="http://gouthamanbalaraman.com/tag/finance.html">finance</a></span>&nbsp;&nbsp;
+        <br>
+     <hr/>
+    
+    <strong>Related Post</strong>
+        <ul>
+            <li>
+                <a href="http://gouthamanbalaraman.com/blog/value-convertible-bond-quantlib-python.html">Valuing Convertible Bonds Using QuantLib Python</a>
+            </li>
+            <li>
+                <a href="http://gouthamanbalaraman.com/blog/interest-rate-cap-floor-valuation-quantlib-python.html">Valuing Interest Rate Caps and Floors Using QuantLib Python</a>
+            </li>
+            <li>
+                <a href="http://gouthamanbalaraman.com/blog/european-option-binomial-tree-quantlib-python.html">Option Model Handbook, Part III: European Option Pricing With QuantLib Python</a>
+            </li>
+            <li>
+                <a href="http://gouthamanbalaraman.com/blog/quantlib-python-cookbook-announcement.html">QuantLib Python Cookbook Announcement</a>
+            </li>
+            <li>
+                <a href="http://gouthamanbalaraman.com/blog/quantlib-python-notebook-docker.html">QuantLib Python Notebooks On Docker</a>
+            </li>
+        </ul>
+        <hr/>
+
+     <!-- article comments -->
+    <div class="comment">
+        <div id="disqus_thread"></div> <!-- comment app container -->
+    </div>
+	<!-- Comment BEGIN -->
+    <script type="text/javascript">
+        var disqus_shortname = 'gouthamanbalaramancom'; // required: replace example with your forum shortname
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.min.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+     <!-- Comment END -->
+</div>    
+                </div>
+               
+            </div>
+            <div class="row">
+                <div class="col-md-10 col-md-offset-1">
+                </div>
+            </div>
+            <footer id="contentinfo" class="footer">
+                <address id="about" class="vcard body">
+                    &copy; <a href="http://gouthamanbalaraman.com">Goutham Balaraman</a> Proudly powered by <a href="http://getpelican.com/">Pelican</a>
+                    <div class="pull-right">
+                    	<!--a href="http://www.bloglovin.com/blog/14559547/?claim=cqravg9v4n2">Bloglovin</a-->
+			            <a href="http://gouthamanbalaraman.com/feeds/all.atom.xml">Atom</a>
+			        &nbsp
+			            <a href="http://gouthamanbalaraman.com/feeds/all.rss.xml">RSS</a>
+		            </div>
+                </address><!-- /#about -->
+            </footer>
+        </div><!-- container -->
+        <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
+        <link href="http://gouthamanbalaraman.com/theme/static/css/style.css" rel="stylesheet" />
+        
+        <script src="http://gouthamanbalaraman.com/theme/static/js/jquery.1.11.2.min.js"></script>
+        <script src="http://gouthamanbalaraman.com/theme/static/js/bootstrap.min.js"></script>
+        <script type="text/javascript">
+	jQuery(document).ready(function($) {
+	    $("div.collapseheader").click(function () {
+	    $header = $(this).children("span").first();
+	    $codearea = $(this).children(".input_area");
+	    console.log($(this).children());
+	    $codearea.slideToggle(500, function () {
+	        $header.text(function () {
+	            return $codearea.is(":visible") ? "Collapse Code" : "Expand Code";
+	        });
+	    });
+	});
+	});
+	</script>
+	<!-- Change table styles -->
+	<script type="text/javascript">
+    	   jQuery(document).ready(function($) {
+    	      $("body table").addClass("table table-sm table-hover");
+    	      $("body table").attr("border",0);
+  	   });
+        </script>
+	<!-- Using MathJax, with the delimiters $ -->
+        <!-- Conflict with pygments for the .mo and .mi -->
+        <script type="text/x-mathjax-config">
+          MathJax.Hub.Config({
+          "HTML-CSS": {
+          styles: {
+          ".MathJax .mo, .MathJax .mi": {color: "black ! important"}}
+          },
+          tex2jax: {inlineMath: [['$','$'], ['\\\\(','\\\\)']],processEscapes: true}
+          });
+        </script>
+    </body>
+</html>
