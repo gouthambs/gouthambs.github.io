@@ -6644,7 +6644,7 @@ liquidity and do not have credit risk associated.&lt;/p&gt;
 &lt;h2&gt;Conclusion&lt;/h2&gt;
 &lt;p&gt;In this blog post, I provided an introduction to interest rate risk and how it can be managed. At a later
 post, I will drill into some of the specifics of how certain derivatives can help hedge interest rate risk.&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Goutham Balaraman</dc:creator><pubDate>Wed, 09 Mar 2016 00:00:00 -0800</pubDate><guid isPermaLink="false">tag:gouthamanbalaraman.com,2016-03-09:blog/understanding-interest-rate-risk.html</guid><category>hedging</category><category>finance</category><category>risk management</category></item><item><title>An Introduction to the Fundamental Review of the Trading Book (FRTB)</title><link>http://gouthamanbalaraman.com/blog/introduction-fundamental-review-of-the-trading-book-frtb.html</link><description>&lt;p&gt;Basel Committee on Banking Supervision (BCBS) released a consultative document 
-titled, "The Fundamental Review of the Trading Book" (FRTB) in 2012 &lt;a href="www.bis.org/publ/bcbs219.htm"&gt;1&lt;/a&gt;. 
+titled, "The Fundamental Review of the Trading Book" (FRTB) in 2012 &lt;a href="http://www.bis.org/publ/bcbs219.htm"&gt;1&lt;/a&gt;. 
 The intent of this document and the subsequent discussions and studies was to address the shortcomings of the 
 existing market risk capital framework, and reduce the variability in the minimum capital standard
 for market risk across different jurisdictions.&lt;/p&gt;
@@ -7727,7 +7727,7 @@ you can incorporate it into your workflow as shown below:&lt;/p&gt;
 &lt;span class="n"&gt;lgr&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;info&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;Test Message&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 &lt;/pre&gt;
 &lt;p&gt;And that completes the MSMQ logger using python. Now all your logs will be pushed to the KaruthQueue
-that we created. You can use the example shown &lt;a class="reference external" href="/blog/sending-msmq-messages-python.rst"&gt;here&lt;/a&gt; to read the messages in a seperate application
+that we created. You can use the example shown &lt;a class="reference external" href="{filename}/sending-msmq-messages-python.rst"&gt;here&lt;/a&gt; to read the messages in a seperate application
 and store any way you chose, files, database etc.&lt;/p&gt;
 </description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Goutham Balaraman</dc:creator><pubDate>Fri, 21 Feb 2014 00:00:00 -0800</pubDate><guid isPermaLink="false">tag:gouthamanbalaraman.com,2014-02-21:blog/asynchronous-python-logging-using-msmq.html</guid><category>python</category><category>programming</category></item><item><title>Sending MSMQ Messages Using Python</title><link>http://gouthamanbalaraman.com/blog/sending-msmq-messages-python.html</link><description>&lt;p&gt;MSMQ is a message queue in the Windows environment, very much like
 RabbitMQ. MSMQ can be used as a task queue or for communicating
