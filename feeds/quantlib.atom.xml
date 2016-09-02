@@ -2299,7 +2299,7 @@ the &lt;code&gt;DiscountingBondEngine&lt;/code&gt;. In the above data, every dic
 &lt;p&gt;This project is alpha and has a few templates written as of now. Would love to hear your thoughts. Checkout the &lt;a href="https://github.com/gouthambs/qtk-python"&gt;qtk project page&lt;/a&gt; to get involved.&lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;/p&gt;</summary><category term="quantlib"></category><category term="python"></category><category term="finance"></category></entry><entry><title>QuantLib Python Notebooks On Docker</title><link href="http://gouthamanbalaraman.com/blog/quantlib-python-notebook-docker.html" rel="alternate"></link><published>2016-07-02T00:00:00-07:00</published><author><name>Goutham Balaraman</name></author><id>tag:gouthamanbalaraman.com,2016-07-02:blog/quantlib-python-notebook-docker.html</id><summary type="html">&lt;p&gt;The typical way to get QuantLib python running in your computer
+&lt;/div&gt;&lt;/p&gt;</summary><category term="quantlib"></category><category term="python"></category><category term="finance"></category><category term="qtk"></category></entry><entry><title>QuantLib Python Notebooks On Docker</title><link href="http://gouthamanbalaraman.com/blog/quantlib-python-notebook-docker.html" rel="alternate"></link><published>2016-07-02T00:00:00-07:00</published><author><name>Goutham Balaraman</name></author><id>tag:gouthamanbalaraman.com,2016-07-02:blog/quantlib-python-notebook-docker.html</id><summary type="html">&lt;p&gt;The typical way to get QuantLib python running in your computer
 is by compiling QuantLib and the SWIG bindings in your computer.
 I have heard from some of my blog readers that they run into issues
 with getting QuantLib-Python running in their system. Here I will show

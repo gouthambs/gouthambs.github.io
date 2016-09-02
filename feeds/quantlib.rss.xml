@@ -2299,7 +2299,7 @@ the &lt;code&gt;DiscountingBondEngine&lt;/code&gt;. In the above data, every dic
 &lt;p&gt;This project is alpha and has a few templates written as of now. Would love to hear your thoughts. Checkout the &lt;a href="https://github.com/gouthambs/qtk-python"&gt;qtk project page&lt;/a&gt; to get involved.&lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Goutham Balaraman</dc:creator><pubDate>Wed, 20 Jul 2016 00:00:00 -0700</pubDate><guid isPermaLink="false">tag:gouthamanbalaraman.com,2016-07-20:blog/announcing-qtk-quantlib-python.html</guid><category>quantlib</category><category>python</category><category>finance</category></item><item><title>QuantLib Python Notebooks On Docker</title><link>http://gouthamanbalaraman.com/blog/quantlib-python-notebook-docker.html</link><description>&lt;p&gt;The typical way to get QuantLib python running in your computer
+&lt;/div&gt;&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Goutham Balaraman</dc:creator><pubDate>Wed, 20 Jul 2016 00:00:00 -0700</pubDate><guid isPermaLink="false">tag:gouthamanbalaraman.com,2016-07-20:blog/announcing-qtk-quantlib-python.html</guid><category>quantlib</category><category>python</category><category>finance</category><category>qtk</category></item><item><title>QuantLib Python Notebooks On Docker</title><link>http://gouthamanbalaraman.com/blog/quantlib-python-notebook-docker.html</link><description>&lt;p&gt;The typical way to get QuantLib python running in your computer
 is by compiling QuantLib and the SWIG bindings in your computer.
 I have heard from some of my blog readers that they run into issues
 with getting QuantLib-Python running in their system. Here I will show
