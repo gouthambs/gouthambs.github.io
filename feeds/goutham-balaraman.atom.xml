@@ -7727,7 +7727,7 @@ you can incorporate it into your workflow as shown below:&lt;/p&gt;
 &lt;span class="n"&gt;lgr&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;info&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;Test Message&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 &lt;/pre&gt;
 &lt;p&gt;And that completes the MSMQ logger using python. Now all your logs will be pushed to the KaruthQueue
-that we created. You can use the example shown &lt;a class="reference external" href="{filename}/sending-msmq-messages-python.rst"&gt;here&lt;/a&gt; to read the messages in a seperate application
+that we created. You can use the example shown &lt;a class="reference external" href="http://gouthamanbalaraman.com/blog/sending-msmq-messages-python.html"&gt;here&lt;/a&gt; to read the messages in a seperate application
 and store any way you chose, files, database etc.&lt;/p&gt;
 </summary><category term="python"></category><category term="programming"></category></entry><entry><title>Sending MSMQ Messages Using Python</title><link href="http://gouthamanbalaraman.com/blog/sending-msmq-messages-python.html" rel="alternate"></link><published>2014-02-21T00:00:00-08:00</published><author><name>Goutham Balaraman</name></author><id>tag:gouthamanbalaraman.com,2014-02-21:blog/sending-msmq-messages-python.html</id><summary type="html">&lt;p&gt;MSMQ is a message queue in the Windows environment, very much like
 RabbitMQ. MSMQ can be used as a task queue or for communicating
