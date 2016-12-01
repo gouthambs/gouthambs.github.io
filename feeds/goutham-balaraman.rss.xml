@@ -7822,6 +7822,9 @@ snippet from above.&lt;/p&gt;
 &lt;p&gt;The code snippet above should be fairly self explanatory. The idea here is to
 &lt;em&gt;asynchronously&lt;/em&gt; process chunk of data by pushing it into a multiprocessing pool queue.
 Each process in pool will work on the task, and return the result.&lt;/p&gt;
+&lt;p&gt;Note, it is important to create the &lt;tt class="docutils literal"&gt;Pool&lt;/tt&gt; inside the &lt;tt class="docutils literal"&gt;__main__&lt;/tt&gt; block. That is
+because, only one main process should create the pool and distribute asynchronously
+amongst different processes.&lt;/p&gt;
 &lt;/div&gt;
 </description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Goutham Balaraman</dc:creator><pubDate>Wed, 19 Nov 2014 00:00:00 -0800</pubDate><guid isPermaLink="false">tag:gouthamanbalaraman.com,2014-11-19:blog/distributed-processing-pandas.html</guid><category>python</category><category>programming</category><category>pandas</category></item><item><title>Minimal Example of Calling Lua Functions from C++</title><link>http://gouthamanbalaraman.com/blog/minimal-example-lua-function-cpp.html</link><description>&lt;p&gt;If you want to extend and customize the capabilities of a C++ application
 without requiring a full recompilation, then using a embedded scripting language
