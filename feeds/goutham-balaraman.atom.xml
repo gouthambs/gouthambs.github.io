@@ -1,5 +1,98 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>G B</title><link href="http://gouthamanbalaraman.com/" rel="alternate"></link><link href="http://gouthamanbalaraman.com/feeds/goutham-balaraman.atom.xml" rel="self"></link><id>http://gouthamanbalaraman.com/</id><updated>2016-09-01T00:00:00-07:00</updated><entry><title>Introducting Introspection in QTK</title><link href="http://gouthamanbalaraman.com/blog/introspection-in-qtk-python.html" rel="alternate"></link><published>2016-09-01T00:00:00-07:00</published><updated>2016-09-01T00:00:00-07:00</updated><author><name>Goutham Balaraman</name></author><id>tag:gouthamanbalaraman.com,2016-09-01:blog/introspection-in-qtk-python.html</id><summary type="html">&lt;p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>G B</title><link href="http://gouthamanbalaraman.com/" rel="alternate"></link><link href="http://gouthamanbalaraman.com/feeds/goutham-balaraman.atom.xml" rel="self"></link><id>http://gouthamanbalaraman.com/</id><updated>2017-03-02T00:00:00-08:00</updated><entry><title>Profiling Python Code in Jupyter Notebooks</title><link href="http://gouthamanbalaraman.com/blog/profiling-python-jupyter-notebooks.html" rel="alternate"></link><published>2017-03-02T00:00:00-08:00</published><updated>2017-03-02T00:00:00-08:00</updated><author><name>Goutham Balaraman</name></author><id>tag:gouthamanbalaraman.com,2017-03-02:blog/profiling-python-jupyter-notebooks.html</id><summary type="html">&lt;p&gt;Sometimes you want to quickly identify performance bottlenecks in your code. You can use some of these recipes while
+using the Jupyter notebook environment. Jupyter allows a few magic commands that are great for timing and profiling a line of
+code or a block of code. Let us take a look at a really simple example with these functions:&lt;/p&gt;
+&lt;pre class="code python literal-block"&gt;
+&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;numpy&lt;/span&gt; &lt;span class="kn"&gt;as&lt;/span&gt; &lt;span class="nn"&gt;np&lt;/span&gt;
+
+&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;func&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;n&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;a&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+  &lt;span class="n"&gt;y&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;np&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;arange&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;n&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+  &lt;span class="n"&gt;y&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;np&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;exp&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;y&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;a&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+  &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;y&lt;/span&gt;
+
+&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;gunc&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;n&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;a&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+  &lt;span class="n"&gt;y&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;np&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;exp&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;n&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;a&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+  &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;y&lt;/span&gt;
+
+&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;hunc&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;n&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;a&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+  &lt;span class="n"&gt;y1&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;func&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;n&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;a&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+  &lt;span class="n"&gt;y2&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;gunc&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;n&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;a&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+  &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;y1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;y2&lt;/span&gt;
+&lt;/pre&gt;
+&lt;p&gt;&lt;strong&gt;timeit&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Now to see which one of these is faster, you can use the &lt;tt class="docutils literal"&gt;%timeit&lt;/tt&gt; magic command:&lt;/p&gt;
+&lt;pre class="code python literal-block"&gt;
+&lt;span class="o"&gt;%&lt;/span&gt;&lt;span class="n"&gt;timeit&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;n&lt;/span&gt; &lt;span class="mi"&gt;3&lt;/span&gt; &lt;span class="n"&gt;func&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;10&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mf"&gt;0.5&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;
+&lt;p&gt;&lt;tt class="docutils literal"&gt;3 loops, best of 3: 14.1 µs per loop&lt;/tt&gt;&lt;/p&gt;
+&lt;p&gt;Here the &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;-n&lt;/span&gt; 3&lt;/tt&gt; denotes the number of loops to execute. The default is 100000 loops. Now let's say you have
+both &lt;tt class="docutils literal"&gt;func&lt;/tt&gt; and &lt;tt class="docutils literal"&gt;gunc&lt;/tt&gt; in a cell, and you want to measure the time taken, then you can use &lt;tt class="docutils literal"&gt;%%timeit&lt;/tt&gt; in the
+block. Notice the double percentage sign:&lt;/p&gt;
+&lt;pre class="code python literal-block"&gt;
+&lt;span class="o"&gt;%%&lt;/span&gt;&lt;span class="n"&gt;timeit&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;n&lt;/span&gt; &lt;span class="mi"&gt;3&lt;/span&gt;
+&lt;span class="n"&gt;func&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;10&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mf"&gt;0.5&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;gunc&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;10&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mf"&gt;0.5&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;
+&lt;p&gt;&lt;tt class="docutils literal"&gt;3 loops, best of 3: 18.2 µs per loop&lt;/tt&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;time&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;On some occasions, you can get the time taken using the &lt;tt class="docutils literal"&gt;%time&lt;/tt&gt; magic command for the line or &lt;tt class="docutils literal"&gt;%%time&lt;/tt&gt; for the cell block.:&lt;/p&gt;
+&lt;pre class="code python literal-block"&gt;
+&lt;span class="o"&gt;%%&lt;/span&gt;&lt;span class="n"&gt;time&lt;/span&gt;
+&lt;span class="n"&gt;func&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;60000&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mf"&gt;0.5&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;gunc&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;10&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mf"&gt;0.5&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;
+&lt;p&gt;&lt;tt class="docutils literal"&gt;Wall time: 10 ms&lt;/tt&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;prun&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;The above recipes are more of timing code than profiling code. There is a profiler magic command &lt;tt class="docutils literal"&gt;%prun&lt;/tt&gt; and &lt;tt class="docutils literal"&gt;%%prun&lt;/tt&gt; that
+does function level code profiling. For example&lt;/p&gt;
+&lt;pre class="code python literal-block"&gt;
+&lt;span class="o"&gt;%&lt;/span&gt;&lt;span class="n"&gt;prun&lt;/span&gt; &lt;span class="n"&gt;hunc&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;50000&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mf"&gt;0.5&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;
+&lt;pre class="literal-block"&gt;
+7 function calls in 0.010 seconds
+
+ Ordered by: internal time
+
+ ncalls  tottime  percall  cumtime  percall filename:lineno(function)
+      1    0.009    0.009    0.009    0.009 &amp;lt;ipython-input-23-5c434cf7f3ad&amp;gt;:3(func)
+      1    0.001    0.001    0.001    0.001 {built-in method numpy.core.multiarray.arange}
+      1    0.000    0.000    0.010    0.010 &amp;lt;string&amp;gt;:1(&amp;lt;module&amp;gt;)
+      1    0.000    0.000    0.010    0.010 {built-in method builtins.exec}
+      1    0.000    0.000    0.000    0.000 &amp;lt;ipython-input-23-5c434cf7f3ad&amp;gt;:8(gunc)
+      1    0.000    0.000    0.009    0.009 &amp;lt;ipython-input-23-5c434cf7f3ad&amp;gt;:12(hunc)
+      1    0.000    0.000    0.000    0.000 {method 'disable' of '_lsprof.Profiler' objects}
+&lt;/pre&gt;
+&lt;p&gt;&lt;strong&gt;lprun&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Lastly, you can install the &lt;tt class="docutils literal"&gt;line_profiler&lt;/tt&gt; if you want to dig a little deep to understand what line in the code is slow.
+You can install as:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+pip install line_profiler
+&lt;/pre&gt;
+&lt;p&gt;This extension  be loaded as:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+%load_ext line_profiler
+&lt;/pre&gt;
+&lt;p&gt;Let's say we have a hunch that the &lt;tt class="docutils literal"&gt;func&lt;/tt&gt; call in &lt;tt class="docutils literal"&gt;hunc&lt;/tt&gt; is the bottleneck, but we are wondering which line in &lt;tt class="docutils literal"&gt;func&lt;/tt&gt; is
+the culprit, then here is how &lt;tt class="docutils literal"&gt;%lprun&lt;/tt&gt; can help.&lt;/p&gt;
+&lt;pre class="code python literal-block"&gt;
+&lt;span class="o"&gt;%&lt;/span&gt;&lt;span class="n"&gt;lprun&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;f&lt;/span&gt; &lt;span class="n"&gt;func&lt;/span&gt; &lt;span class="n"&gt;hunc&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;50000&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mf"&gt;0.5&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;
+&lt;pre class="literal-block"&gt;
+Timer unit: 3.00459e-07 s
+
+Total time: 0.00950652 s
+File: &amp;lt;ipython-input-23-5c434cf7f3ad&amp;gt;
+Function: func at line 3
+
+Line #      Hits         Time  Per Hit   % Time  Line Contents
+==============================================================
+     3                                           def func(n, a):
+     4         1         1288   1288.0      4.1      y = np.arange(n)
+     5         1        30340  30340.0     95.9      y = np.exp(-y*a)
+     6         1           12     12.0      0.0      return yTimer unit: 3.00459e-07 s
+&lt;/pre&gt;
+&lt;p&gt;If you need to profile some function in a python package, then import that function and stick it after &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;-f&lt;/span&gt;&lt;/tt&gt; flag. Happy profiling!&lt;/p&gt;
+</summary><category term="Python"></category><category term="Jupyter"></category><category term="Programming"></category></entry><entry><title>Introducting Introspection in QTK</title><link href="http://gouthamanbalaraman.com/blog/introspection-in-qtk-python.html" rel="alternate"></link><published>2016-09-01T00:00:00-07:00</published><updated>2016-09-01T00:00:00-07:00</updated><author><name>Goutham Balaraman</name></author><id>tag:gouthamanbalaraman.com,2016-09-01:blog/introspection-in-qtk-python.html</id><summary type="html">&lt;p&gt;
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;
 &lt;div class="prompt input_prompt"&gt;
 &lt;/div&gt;
