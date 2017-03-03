@@ -106,8 +106,8 @@ with the logging module in python. Here is the <tt class="docutils literal">MSMQ
 <span class="kn">import</span> <span class="nn">logging</span>
 
 <span class="k">class</span> <span class="nc">MSMQHandler</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">Handler</span><span class="p">):</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">queue_name</span><span class="p">,</span><span class="n">label_name</span><span class="p">,</span><span class="n">dest_computer</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
-        <span class="n">logging</span><span class="o">.</span><span class="n">Handler</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">queue_name</span><span class="p">,</span><span class="n">label_name</span><span class="p">,</span><span class="n">dest_computer</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">Handler</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
         <span class="kn">import</span> <span class="nn">os</span>
         <span class="kn">import</span> <span class="nn">win32com.client</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">queue_name</span> <span class="o">=</span> <span class="n">queue_name</span>
@@ -169,19 +169,19 @@ and store any way you chose, files, database etc.</p>
     <strong>Related Post</strong>
         <ul>
             <li>
-                <a href="http://gouthamanbalaraman.com/blog/building-luigi-task-pipeline.html">Building Task Pipelines Using Luigi</a>
+                <a href="http://gouthamanbalaraman.com/blog/zeo-as-a-windows-service.html">Running ZEO as a Windows Service</a>
             </li>
             <li>
-                <a href="http://gouthamanbalaraman.com/blog/python-multiprocessing-as-a-task-queue.html">Python Multiprocessing as a Task Queue</a>
+                <a href="http://gouthamanbalaraman.com/blog/sending-msmq-messages-python.html">Sending MSMQ Messages Using Python</a>
+            </li>
+            <li>
+                <a href="http://gouthamanbalaraman.com/blog/quantlib-python-notebook-docker.html">QuantLib Python Notebooks On Docker</a>
             </li>
             <li>
                 <a href="http://gouthamanbalaraman.com/blog/sqlalchemy-luigi-workflow-pipeline.html">Using SQLAlchemy in Luigi Workflow Pipeline</a>
             </li>
             <li>
-                <a href="http://gouthamanbalaraman.com/blog/adding-caching-to-python-flask-blogging-extension.html">Adding Caching to Python Flask-Blogging Engine</a>
-            </li>
-            <li>
-                <a href="http://gouthamanbalaraman.com/blog/distributed-processing-pandas.html">Multi-Processing With Pandas</a>
+                <a href="http://gouthamanbalaraman.com/blog/flask-app-directory-structure.html">Flask App Directory Structure</a>
             </li>
         </ul>
         <hr/>

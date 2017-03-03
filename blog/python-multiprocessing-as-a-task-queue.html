@@ -105,7 +105,7 @@ is to use multiprocessing as a task queue.</p>
 <span class="k">def</span> <span class="nf">expensive_function</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
         <span class="c1"># do your expensive time consuming process</span>
         <span class="k">return</span> <span class="n">x</span><span class="o">*</span><span class="n">x</span>
-<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s1">'__main__'</span><span class="p">:</span>
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">'__main__'</span><span class="p">:</span>
         <span class="c1"># start 4 worker processes</span>
         <span class="n">pool</span> <span class="o">=</span> <span class="n">Pool</span><span class="p">(</span><span class="n">processes</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
         <span class="c1"># evaluate &quot;f(10)&quot; asynchronously</span>
@@ -120,7 +120,7 @@ evaluate the <tt class="docutils literal">expensive_function</tt>.</p>
 <span class="kn">from</span> <span class="nn">multiprocessing</span> <span class="kn">import</span> <span class="n">Pool</span>
 <span class="kn">from</span> <span class="nn">flask</span> <span class="kn">import</span> <span class="n">Flask</span>
 
-<span class="n">app</span> <span class="o">=</span> <span class="n">Flask</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
+<span class="n">app</span> <span class="o">=</span> <span class="n">Flask</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
 <span class="n">_pool</span> <span class="o">=</span> <span class="bp">None</span>
 
 <span class="k">def</span> <span class="nf">expensive_function</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
@@ -134,7 +134,7 @@ evaluate the <tt class="docutils literal">expensive_function</tt>.</p>
         <span class="n">r</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">timeout</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
         <span class="k">return</span> <span class="s1">'Result is </span><span class="si">%d</span><span class="s1">'</span><span class="o">%</span><span class="n">r</span>
 
-<span class="k">if</span> <span class="n">__name__</span><span class="o">==</span><span class="s1">'__main__'</span><span class="p">:</span>
+<span class="k">if</span> <span class="vm">__name__</span><span class="o">==</span><span class="s1">'__main__'</span><span class="p">:</span>
         <span class="n">_pool</span> <span class="o">=</span> <span class="n">Pool</span><span class="p">(</span><span class="n">processes</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
         <span class="k">try</span><span class="p">:</span>
                 <span class="c1"># insert production server deployment code</span>
@@ -157,19 +157,19 @@ evaluate the <tt class="docutils literal">expensive_function</tt>.</p>
     <strong>Related Post</strong>
         <ul>
             <li>
-                <a href="http://gouthamanbalaraman.com/blog/building-luigi-task-pipeline.html">Building Task Pipelines Using Luigi</a>
+                <a href="http://gouthamanbalaraman.com/blog/zeo-as-a-windows-service.html">Running ZEO as a Windows Service</a>
+            </li>
+            <li>
+                <a href="http://gouthamanbalaraman.com/blog/sending-msmq-messages-python.html">Sending MSMQ Messages Using Python</a>
+            </li>
+            <li>
+                <a href="http://gouthamanbalaraman.com/blog/quantlib-python-notebook-docker.html">QuantLib Python Notebooks On Docker</a>
             </li>
             <li>
                 <a href="http://gouthamanbalaraman.com/blog/sqlalchemy-luigi-workflow-pipeline.html">Using SQLAlchemy in Luigi Workflow Pipeline</a>
             </li>
             <li>
-                <a href="http://gouthamanbalaraman.com/blog/adding-caching-to-python-flask-blogging-extension.html">Adding Caching to Python Flask-Blogging Engine</a>
-            </li>
-            <li>
                 <a href="http://gouthamanbalaraman.com/blog/asynchronous-python-logging-using-msmq.html">Asynchronous Python Logging Using MSMQ</a>
-            </li>
-            <li>
-                <a href="http://gouthamanbalaraman.com/blog/distributed-processing-pandas.html">Multi-Processing With Pandas</a>
             </li>
         </ul>
         <hr/>

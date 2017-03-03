@@ -122,7 +122,7 @@ while reading a file. This means that you can process individual <tt class="docu
         <span class="c1"># process data frame</span>
         <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
 
-<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s1">'__main__'</span><span class="p">:</span>
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">'__main__'</span><span class="p">:</span>
         <span class="n">reader</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_table</span><span class="p">(</span><span class="n">LARGE_FILE</span><span class="p">,</span> <span class="n">chunksize</span><span class="o">=</span><span class="n">CHUNKSIZE</span><span class="p">)</span>
 
         <span class="n">result</span> <span class="o">=</span> <span class="mi">0</span>
@@ -147,7 +147,7 @@ snippet from above.</p>
         <span class="c1"># process data frame</span>
         <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
 
-<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s1">'__main__'</span><span class="p">:</span>
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">'__main__'</span><span class="p">:</span>
         <span class="n">reader</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_table</span><span class="p">(</span><span class="n">LARGE_FILE</span><span class="p">,</span> <span class="n">chunksize</span><span class="o">=</span><span class="n">CHUNKSIZE</span><span class="p">)</span>
         <span class="n">pool</span> <span class="o">=</span> <span class="n">mp</span><span class="o">.</span><span class="n">Pool</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span> <span class="c1"># use 4 processes</span>
 
@@ -185,19 +185,19 @@ amongst different processes.</p>
     <strong>Related Post</strong>
         <ul>
             <li>
-                <a href="http://gouthamanbalaraman.com/blog/building-luigi-task-pipeline.html">Building Task Pipelines Using Luigi</a>
+                <a href="http://gouthamanbalaraman.com/blog/zeo-as-a-windows-service.html">Running ZEO as a Windows Service</a>
             </li>
             <li>
-                <a href="http://gouthamanbalaraman.com/blog/python-multiprocessing-as-a-task-queue.html">Python Multiprocessing as a Task Queue</a>
+                <a href="http://gouthamanbalaraman.com/blog/sending-msmq-messages-python.html">Sending MSMQ Messages Using Python</a>
+            </li>
+            <li>
+                <a href="http://gouthamanbalaraman.com/blog/profiling-python-jupyter-notebooks.html">Profiling Python Code in Jupyter Notebooks</a>
             </li>
             <li>
                 <a href="http://gouthamanbalaraman.com/blog/sqlalchemy-luigi-workflow-pipeline.html">Using SQLAlchemy in Luigi Workflow Pipeline</a>
             </li>
             <li>
-                <a href="http://gouthamanbalaraman.com/blog/adding-caching-to-python-flask-blogging-extension.html">Adding Caching to Python Flask-Blogging Engine</a>
-            </li>
-            <li>
-                <a href="http://gouthamanbalaraman.com/blog/flask-app-directory-structure.html">Flask App Directory Structure</a>
+                <a href="http://gouthamanbalaraman.com/blog/flask-track-usage.html">Flask Track Usage Primer</a>
             </li>
         </ul>
         <hr/>
