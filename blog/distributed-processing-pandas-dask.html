@@ -177,190 +177,6 @@
 </div>
 
 </div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[4]:</div>
-
-<div class="input_area box-flex1">
-<div class="highlight-ipynb"><pre class="ipynb"><span></span><span class="n">df</span>
-</pre></div>
-
-</div>
-
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area"><div class="prompt output_prompt">Out[4]:</div>
-
-<div class="output_html rendered_html output_subarea output_pyout">
-<div><strong>Dask DataFrame Structure:</strong></div>
-<div>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>vendor_name</th>
-      <th>Trip_Pickup_DateTime</th>
-      <th>Trip_Dropoff_DateTime</th>
-      <th>Passenger_Count</th>
-      <th>Trip_Distance</th>
-      <th>Start_Lon</th>
-      <th>Start_Lat</th>
-      <th>Rate_Code</th>
-      <th>store_and_forward</th>
-      <th>End_Lon</th>
-      <th>End_Lat</th>
-      <th>Payment_Type</th>
-      <th>Fare_Amt</th>
-      <th>surcharge</th>
-      <th>mta_tax</th>
-      <th>Tip_Amt</th>
-      <th>Tolls_Amt</th>
-      <th>Total_Amt</th>
-    </tr>
-    <tr>
-      <th>npartitions=40</th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>None</th>
-      <td>object</td>
-      <td>object</td>
-      <td>object</td>
-      <td>int64</td>
-      <td>float64</td>
-      <td>float64</td>
-      <td>float64</td>
-      <td>float64</td>
-      <td>float64</td>
-      <td>float64</td>
-      <td>float64</td>
-      <td>object</td>
-      <td>float64</td>
-      <td>float64</td>
-      <td>float64</td>
-      <td>float64</td>
-      <td>float64</td>
-      <td>float64</td>
-    </tr>
-    <tr>
-      <th>None</th>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-    </tr>
-    <tr>
-      <th>...</th>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-    </tr>
-    <tr>
-      <th>None</th>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-    </tr>
-    <tr>
-      <th>None</th>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-    </tr>
-  </tbody>
-</table>
-</div>
-<div>Dask Name: from-delayed, 120 tasks</div>
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
 <div class="cell border-box-sizing text_cell rendered">
 <div class="prompt input_prompt">
 </div>
@@ -372,7 +188,7 @@
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[5]:</div>
+<div class="prompt input_prompt">In&nbsp;[4]:</div>
 
 <div class="input_area box-flex1">
 <div class="highlight-ipynb"><pre class="ipynb"><span></span><span class="n">df</span><span class="o">.</span><span class="n">columns</span>
@@ -386,7 +202,7 @@
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[5]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[4]:</div>
 
 
 <pre class="ipynb">Index([&apos;vendor_name&apos;, &apos;Trip_Pickup_DateTime&apos;, &apos;Trip_Dropoff_DateTime&apos;,
@@ -404,7 +220,7 @@
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[6]:</div>
+<div class="prompt input_prompt">In&nbsp;[5]:</div>
 
 <div class="input_area box-flex1">
 <div class="highlight-ipynb"><pre class="ipynb"><span></span><span class="n">df</span><span class="o">.</span><span class="n">dtypes</span>
@@ -418,7 +234,7 @@
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[6]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[5]:</div>
 
 
 <pre class="ipynb">vendor_name               object
@@ -458,7 +274,7 @@ dtype: object</pre>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[7]:</div>
+<div class="prompt input_prompt">In&nbsp;[6]:</div>
 
 <div class="input_area box-flex1">
 <div class="highlight-ipynb"><pre class="ipynb"><span></span><span class="n">size</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">size</span>
@@ -473,7 +289,7 @@ dtype: object</pre>
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[7]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[6]:</div>
 
 
 <pre class="ipynb">(dd.Scalar&lt;size-ag..., dtype=int32&gt;, dask.dataframe.core.Scalar)</pre>
@@ -495,7 +311,7 @@ dtype: object</pre>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[8]:</div>
+<div class="prompt input_prompt">In&nbsp;[7]:</div>
 
 <div class="input_area box-flex1">
 <div class="highlight-ipynb"><pre class="ipynb"><span></span><span class="o">%%</span><span class="k">time</span>
@@ -512,12 +328,12 @@ dtype: object</pre>
 
 <div class="output_area"><div class="prompt"></div>
 <div class="box-flex1 output_subarea output_stream output_stdout">
-<pre class="ipynb">Wall time: 51.8 s
+<pre class="ipynb">Wall time: 48 s
 </pre>
 </div>
 </div>
 
-<div class="output_area"><div class="prompt output_prompt">Out[8]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[7]:</div>
 
 
 <pre class="ipynb">253663434</pre>
@@ -544,7 +360,7 @@ dtype: object</pre>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[9]:</div>
+<div class="prompt input_prompt">In&nbsp;[8]:</div>
 
 <div class="input_area box-flex1">
 <div class="highlight-ipynb"><pre class="ipynb"><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">persist</span><span class="p">()</span>
@@ -566,7 +382,7 @@ dtype: object</pre>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[10]:</div>
+<div class="prompt input_prompt">In&nbsp;[9]:</div>
 
 <div class="input_area box-flex1">
 <div class="highlight-ipynb"><pre class="ipynb"><span></span><span class="o">%%</span><span class="k">time</span>
@@ -583,12 +399,12 @@ dtype: object</pre>
 
 <div class="output_area"><div class="prompt"></div>
 <div class="box-flex1 output_subarea output_stream output_stdout">
-<pre class="ipynb">Wall time: 52 ms
+<pre class="ipynb">Wall time: 35 ms
 </pre>
 </div>
 </div>
 
-<div class="output_area"><div class="prompt output_prompt">Out[10]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[9]:</div>
 
 
 <pre class="ipynb">253663434</pre>
@@ -633,7 +449,7 @@ dtype: object</pre>
                 <a href="http://gouthamanbalaraman.com/blog/minimal-flask-login-example.html">Minimal Flask-Login Example</a>
             </li>
             <li>
-                <a href="http://gouthamanbalaraman.com/blog/python-multiprocessing-as-a-task-queue.html">Python Multiprocessing as a Task Queue</a>
+                <a href="http://gouthamanbalaraman.com/blog/building-luigi-task-pipeline.html">Building Task Pipelines Using Luigi</a>
             </li>
             <li>
                 <a href="http://gouthamanbalaraman.com/blog/flask-app-directory-structure.html">Flask App Directory Structure</a>
