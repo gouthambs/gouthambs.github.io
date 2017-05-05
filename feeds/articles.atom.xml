@@ -358,7 +358,13 @@ simple as well.&lt;/p&gt;
 &lt;/pre&gt;
 &lt;p&gt;The above code will get the &lt;tt class="docutils literal"&gt;credential&lt;/tt&gt; corresponding to the user which can then be checked against what is
 stored in the database.&lt;/p&gt;
-</summary><category term="Programming"></category><category term="Python"></category><category term="Flask"></category><category term="Authentication"></category></entry><entry><title>Multi-Processing With Pandas</title><link href="http://gouthamanbalaraman.com/blog/distributed-processing-pandas.html" rel="alternate"></link><published>2014-11-19T00:00:00-08:00</published><updated>2014-11-19T00:00:00-08:00</updated><author><name>Goutham Balaraman</name></author><id>tag:gouthamanbalaraman.com,2014-11-19:blog/distributed-processing-pandas.html</id><summary type="html">&lt;p&gt;&lt;strong&gt;NOTE&lt;/strong&gt;: There are better ways to do this now (2017). Please refer to an updated post using &lt;a class="reference external" href="http://gouthamanbalaraman.com/blog/distributed-processing-pandas-dask.html"&gt;dask&lt;/a&gt;.&lt;/p&gt;
+</summary><category term="Programming"></category><category term="Python"></category><category term="Flask"></category><category term="Authentication"></category></entry><entry><title>Multi-Processing With Pandas</title><link href="http://gouthamanbalaraman.com/blog/distributed-processing-pandas.html" rel="alternate"></link><published>2014-11-19T00:00:00-08:00</published><updated>2014-11-19T00:00:00-08:00</updated><author><name>Goutham Balaraman</name></author><id>tag:gouthamanbalaraman.com,2014-11-19:blog/distributed-processing-pandas.html</id><summary type="html">&lt;div class="line-block"&gt;
+&lt;div class="line"&gt;&lt;br /&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;&lt;strong&gt;NOTE&lt;/strong&gt;: &lt;em&gt;There are better ways to do distributed processing with pandas now (2017).&lt;/em&gt; Please refer to an &lt;a class="reference external" href="http://gouthamanbalaraman.com/blog/distributed-processing-pandas-dask.html"&gt;updated post using dask&lt;/a&gt;.&lt;/p&gt;
+&lt;div class="line-block"&gt;
+&lt;div class="line"&gt;&lt;br /&gt;&lt;/div&gt;
+&lt;/div&gt;
 &lt;p&gt;If you have used &lt;tt class="docutils literal"&gt;pandas&lt;/tt&gt;, you must be familiar with the awesome functionality and tools that
 it brings to data processing. I have used &lt;tt class="docutils literal"&gt;pandas&lt;/tt&gt; as a tool to read data files and transform
 them into various summaries of interest. My usual process pipeline would start with
