@@ -2,6 +2,12 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
   <url>
+    <loc>http://gouthamanbalaraman.com/blog/american-option-pricing-quantlib-python.html</loc>
+    <priority>0.8</priority>
+    
+  </url>
+
+  <url>
     <loc>http://gouthamanbalaraman.com/blog/variance-reduction-hull-white-quantlib.html</loc>
     <priority>0.8</priority>
     
