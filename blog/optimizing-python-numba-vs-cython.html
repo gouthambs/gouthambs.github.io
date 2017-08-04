@@ -1,0 +1,809 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Optimizing Python Code: Numba vs Cython - G B</title>
+        <!-- All the meta tags -->
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+        <meta property="og:type" content="article"/>
+        <meta property="og:title" content="Optimizing Python Code: Numba vs Cython"/>
+        <meta property="og:url" content="http://gouthamanbalaraman.com/blog/optimizing-python-numba-vs-cython.html"/>
+        <meta property="og:description" content="Python examples demonstrating performance improvements using cython and numba"/>
+        
+        <link href="http://gouthamanbalaraman.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="G B Full Atom Feed" />
+        <link href="http://gouthamanbalaraman.com/feeds/all.rss.xml" type="application/rss+xml" rel="alternate" title="G B RSS Feed" />
+        <link href="http://gouthamanbalaraman.com/feeds/programming-python.atom.xml" type="application/atom+xml" rel="alternate" title="G B Categories Atom Feed" />
+        <link href="http://gouthamanbalaraman.com/feeds/programming-python.rss.xml" type="application/rss+xml" rel="alternate" title="G B Categories RSS Feed" />
+        <link href="http://gouthamanbalaraman.com/theme/static/css/bootstrap.readable.min.css" rel="stylesheet" />
+
+	<!-- Google Analytics -->
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-46714334-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    /*Update Your Analytics Tracking Code to Support Display Advertising by uncommenting the following 
+    instead of the above line */    
+    /*ga.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'stats.g.doubleclick.net/dc.js';*/
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+    </head>
+
+    <body>
+      <div class="navbar navbar-default navbar-fixed-top">
+          <div class="container">
+            <div class="navbar-header">
+              <a href="http://gouthamanbalaraman.com" class="navbar-brand">G B</a>
+              <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+            </div>
+            <div class="navbar-collapse collapse" id="navbar-main">
+              <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="http://gouthamanbalaraman.com/pages/about.html">About</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                <div class="col-md-10 col-md-offset-1">
+    <div class="page-header">
+        <h1>Optimizing Python Code: Numba vs Cython</h1>
+     <!--span class="glyphicon glyphicon-calendar"></span-->
+     &nbsp;August 03, 2017
+     &nbsp;
+     <!--span class="glyphicon glyphicon-user"></span--> by  
+     <a class="url fn" href="http://gouthamanbalaraman.com/author/goutham-balaraman.html">&nbsp;Goutham Balaraman </a>
+
+        <p id="post-share-links">
+            &nbsp;Share on:
+            <a href="https://sharetodiaspora.github.io/?title=Optimizing%20Python%20Code%3A%20Numba%20vs%20Cython&url=http%3A//gouthamanbalaraman.com/blog/optimizing-python-numba-vs-cython.html" target="_blank" title="Share on Diaspora">Diaspora*</a>
+            /
+            <a href="http://twitter.com/home?status=Optimizing%20Python%20Code%3A%20Numba%20vs%20Cython%20http%3A//gouthamanbalaraman.com/blog/optimizing-python-numba-vs-cython.html" target="_blank" title="Share on Twitter">Twitter</a>
+            /
+            <a href="http://www.facebook.com/sharer/sharer.php?u=http%3A//gouthamanbalaraman.com/blog/optimizing-python-numba-vs-cython.html" target="_blank" title="Share on Facebook">Facebook</a>
+            /
+            <a href="https://plus.google.com/share?url=http%3A//gouthamanbalaraman.com/blog/optimizing-python-numba-vs-cython.html" target="_blank" title="Share on Google Plus">Google+</a>
+            /
+            <a href="mailto:?subject=Optimizing%20Python%20Code%3A%20Numba%20vs%20Cython&amp;body=http%3A//gouthamanbalaraman.com/blog/optimizing-python-numba-vs-cython.html" target="_blank" title="Share via Email">Email</a>
+            /
+            <a href="http://www.bloglovin.com/blog/14559547/?claim=cqravg9v4n2">Bloglovin</a>
+        </p>
+     </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-8 col-md-offset-2">
+
+<div class="bs-docs-section">
+    
+     <!-- article description -->
+         <p class="lead">Python examples demonstrating performance improvements using cython and numba</p>
+      
+      
+      
+      <!-- article content -->
+     <p>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>I came across an old post by jakevdp on <a href="http://jakevdp.github.io/blog/2013/06/15/numba-vs-cython-take-2/">Numba vs Cython</a>. I thought I will revisit this topic because both Numba and Cython has matured significantly over this time period. In this post I am going to do two examples:</p>
+<ol>
+<li>Pairwise distance estimation example that Jake discusses. The intention is to see how the maturity of these projects has contributed to improvements.</li>
+<li>A simple cashflow payment calculation of an amortizing bond or mortgage payments. This a calculation that cannot be vectorized in a numpy sense. So the speedups would have to come from optimizing loops using tools like Numba or Cython.</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[1]:</div>
+
+<div class="input_area box-flex1">
+<div class="highlight-ipynb"><pre class="ipynb"><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">numba</span> 
+<span class="kn">import</span> <span class="nn">cython</span>
+<span class="o">%</span><span class="k">load_ext</span> <span class="n">cython</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="kn">as</span> <span class="nn">pd</span>
+
+<span class="n">numba</span><span class="o">.</span><span class="n">__version__</span><span class="p">,</span> <span class="n">cython</span><span class="o">.</span><span class="n">__version__</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">__version__</span>
+</pre></div>
+
+</div>
+
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt output_prompt">Out[1]:</div>
+
+
+<pre class="ipynb">(&apos;0.31.0&apos;, &apos;0.24.1&apos;, &apos;1.11.3&apos;)</pre>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Pairwise-Distance-Estimation">Pairwise Distance Estimation<a class="anchor-link" href="#Pairwise-Distance-Estimation">&#182;</a></h2>
+</div>
+</div>
+</div>
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[2]:</div>
+
+<div class="input_area box-flex1">
+<div class="highlight-ipynb"><pre class="ipynb"><span></span><span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">((</span><span class="mi">1000</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+</pre></div>
+
+</div>
+
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[3]:</div>
+
+<div class="input_area box-flex1">
+<div class="highlight-ipynb"><pre class="ipynb"><span></span><span class="k">def</span> <span class="nf">pairwise_python</span><span class="p">(</span><span class="n">X</span><span class="p">):</span>
+    <span class="n">M</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">N</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">D</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="n">M</span><span class="p">,</span> <span class="n">M</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">M</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">M</span><span class="p">):</span>
+            <span class="n">d</span> <span class="o">=</span> <span class="mf">0.0</span>
+            <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">):</span>
+                <span class="n">tmp</span> <span class="o">=</span> <span class="n">X</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">k</span><span class="p">]</span> <span class="o">-</span> <span class="n">X</span><span class="p">[</span><span class="n">j</span><span class="p">,</span> <span class="n">k</span><span class="p">]</span>
+                <span class="n">d</span> <span class="o">+=</span> <span class="n">tmp</span> <span class="o">*</span> <span class="n">tmp</span>
+            <span class="n">D</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">D</span>
+
+<span class="o">%</span><span class="k">timeit</span> <span class="o">-</span><span class="n">n10</span> <span class="n">pairwise_python</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+</pre></div>
+
+</div>
+
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="box-flex1 output_subarea output_stream output_stdout">
+<pre class="ipynb">10 loops, best of 3: 2.47 s per loop
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[4]:</div>
+
+<div class="input_area box-flex1">
+<div class="highlight-ipynb"><pre class="ipynb"><span></span><span class="k">def</span> <span class="nf">pairwise_numpy</span><span class="p">(</span><span class="n">X</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(((</span><span class="n">X</span><span class="p">[:,</span> <span class="bp">None</span><span class="p">,</span> <span class="p">:]</span> <span class="o">-</span> <span class="n">X</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">))</span>
+
+<span class="o">%</span><span class="k">timeit</span> <span class="o">-</span><span class="n">n10</span> <span class="n">pairwise_numpy</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+</pre></div>
+
+</div>
+
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="box-flex1 output_subarea output_stream output_stdout">
+<pre class="ipynb">10 loops, best of 3: 38.3 ms per loop
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[5]:</div>
+
+<div class="input_area box-flex1">
+<div class="highlight-ipynb"><pre class="ipynb"><span></span><span class="n">pairwise_numba</span> <span class="o">=</span> <span class="n">numba</span><span class="o">.</span><span class="n">jit</span><span class="p">(</span><span class="n">pairwise_python</span><span class="p">)</span>
+
+<span class="o">%</span><span class="k">timeit</span> <span class="o">-</span><span class="n">n10</span> <span class="n">pairwise_numba</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+</pre></div>
+
+</div>
+
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="box-flex1 output_subarea output_stream output_stdout">
+<pre class="ipynb">The slowest run took 13.98 times longer than the fastest. This could mean that an intermediate result is being cached.
+10 loops, best of 3: 4.04 ms per loop
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[6]:</div>
+
+<div class="input_area box-flex1">
+<div class="highlight-ipynb"><pre class="ipynb"><span></span><span class="o">%%</span><span class="k">cython</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="n">cimport</span> <span class="n">cython</span>
+<span class="kn">from</span> <span class="nn">libc.math</span> <span class="nn">cimport</span> <span class="nn">sqrt</span>
+
+<span class="nd">@cython.boundscheck</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span>
+<span class="nd">@cython.wraparound</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">pairwise_cython</span><span class="p">(</span><span class="n">double</span><span class="p">[:,</span> <span class="p">::</span><span class="mi">1</span><span class="p">]</span> <span class="n">X</span><span class="p">):</span>
+    <span class="n">cdef</span> <span class="nb">int</span> <span class="n">M</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">cdef</span> <span class="nb">int</span> <span class="n">N</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">cdef</span> <span class="n">double</span> <span class="n">tmp</span><span class="p">,</span> <span class="n">d</span>
+    <span class="n">cdef</span> <span class="n">double</span><span class="p">[:,</span> <span class="p">::</span><span class="mi">1</span><span class="p">]</span> <span class="n">D</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="n">M</span><span class="p">,</span> <span class="n">M</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">M</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">M</span><span class="p">):</span>
+            <span class="n">d</span> <span class="o">=</span> <span class="mf">0.0</span>
+            <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">):</span>
+                <span class="n">tmp</span> <span class="o">=</span> <span class="n">X</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">k</span><span class="p">]</span> <span class="o">-</span> <span class="n">X</span><span class="p">[</span><span class="n">j</span><span class="p">,</span> <span class="n">k</span><span class="p">]</span>
+                <span class="n">d</span> <span class="o">+=</span> <span class="n">tmp</span> <span class="o">*</span> <span class="n">tmp</span>
+            <span class="n">D</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">sqrt</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">D</span><span class="p">)</span>
+</pre></div>
+
+</div>
+
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[7]:</div>
+
+<div class="input_area box-flex1">
+<div class="highlight-ipynb"><pre class="ipynb"><span></span><span class="o">%</span><span class="k">timeit</span> <span class="o">-</span><span class="n">n10</span> <span class="n">pairwise_cython</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+</pre></div>
+
+</div>
+
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="box-flex1 output_subarea output_stream output_stdout">
+<pre class="ipynb">10 loops, best of 3: 6.6 ms per loop
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The timiing for the results in Jake&#39;s post (2013) and the results from this post (2017) are summarized below. </p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[8]:</div>
+
+<div class="input_area box-flex1">
+<div class="highlight-ipynb"><pre class="ipynb"><span></span><span class="n">df1</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s2">&quot;Time (ms)&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">13400</span><span class="p">,</span><span class="mi">111</span><span class="p">,</span> <span class="mf">9.12</span><span class="p">,</span> <span class="mf">9.87</span><span class="p">],</span> <span class="s2">&quot;Speedup&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">121</span><span class="p">,</span> <span class="mi">1469</span><span class="p">,</span> <span class="mi">1357</span><span class="p">]},</span> 
+             <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;Python&quot;</span><span class="p">,</span> <span class="s2">&quot;Numpy&quot;</span><span class="p">,</span> <span class="s2">&quot;Numba&quot;</span><span class="p">,</span> <span class="s2">&quot;Cython&quot;</span><span class="p">])</span>
+<span class="n">df2</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s2">&quot;Time (ms)&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">2470</span><span class="p">,</span> <span class="mf">38.3</span><span class="p">,</span> <span class="mf">4.04</span><span class="p">,</span> <span class="mf">6.6</span><span class="p">],</span> <span class="s2">&quot;Speedup&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">65</span><span class="p">,</span> <span class="mi">611</span><span class="p">,</span> <span class="mi">374</span><span class="p">]},</span> 
+             <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;Python&quot;</span><span class="p">,</span> <span class="s2">&quot;Numpy&quot;</span><span class="p">,</span> <span class="s2">&quot;Numba&quot;</span><span class="p">,</span> <span class="s2">&quot;Cython&quot;</span><span class="p">])</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">df1</span><span class="p">,</span> <span class="n">df2</span><span class="p">],</span> <span class="n">axis</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">keys</span><span class="o">=</span><span class="p">([</span><span class="s2">&quot;2013&quot;</span><span class="p">,</span> <span class="s2">&quot;2017&quot;</span><span class="p">]))</span>
+<span class="n">df</span>
+</pre></div>
+
+</div>
+
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt output_prompt">Out[8]:</div>
+
+<div class="output_html rendered_html output_subarea output_pyout">
+<div>
+<table border="1" class="dataframe">
+  <thead>
+    <tr>
+      <th></th>
+      <th colspan="2" halign="left">2013</th>
+      <th colspan="2" halign="left">2017</th>
+    </tr>
+    <tr>
+      <th></th>
+      <th>Speedup</th>
+      <th>Time (ms)</th>
+      <th>Speedup</th>
+      <th>Time (ms)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Python</th>
+      <td>1</td>
+      <td>13400.00</td>
+      <td>1</td>
+      <td>2470.00</td>
+    </tr>
+    <tr>
+      <th>Numpy</th>
+      <td>121</td>
+      <td>111.00</td>
+      <td>65</td>
+      <td>38.30</td>
+    </tr>
+    <tr>
+      <th>Numba</th>
+      <td>1469</td>
+      <td>9.12</td>
+      <td>611</td>
+      <td>4.04</td>
+    </tr>
+    <tr>
+      <th>Cython</th>
+      <td>1357</td>
+      <td>9.87</td>
+      <td>374</td>
+      <td>6.60</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The timings are speedup number for the 2013 and 2017 runs are very different due to differences in versions and perhaps even the python version. This post is using Py35 running in Windows. The take away here is that the numpy is atleast 2 orders of magnitude faster than python. And the numba and cython snippets are about an order of magnitude faster than numpy in both the benchmarks.</p>
+<p>I will not rush to make any claims on numba vs cython. It is unclear what kinds of optimizations is used in the <code>cython</code> magic. I would expect the <code>cython</code> code to be as fast as C and perhaps some tweaking will help us get there. It is really interesting how easy it is to get performance boost from <code>numba</code>. From an ease of use point of view, <code>numba</code> is hands down winner in this simple example.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="amortizing-payments">Amortizing Payments</h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Here lets look at one more example. This is an amortizing payment calculation, such as in mortgage payments.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[9]:</div>
+
+<div class="input_area box-flex1">
+<div class="highlight-ipynb"><pre class="ipynb"><span></span><span class="k">def</span> <span class="nf">amortize_payments_py</span><span class="p">(</span><span class="n">B0</span><span class="p">,</span> <span class="n">R</span><span class="p">,</span> <span class="n">term</span><span class="p">,</span> <span class="n">cpr</span><span class="o">=</span><span class="mf">0.0</span><span class="p">):</span>
+    <span class="n">smm</span> <span class="o">=</span> <span class="mf">1.</span> <span class="o">-</span> <span class="nb">pow</span><span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">cpr</span><span class="o">/</span><span class="mf">100.</span><span class="p">,</span> <span class="mi">1</span><span class="o">/</span><span class="mf">12.</span><span class="p">)</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="n">R</span><span class="o">/</span><span class="mf">1200.</span>
+    <span class="n">S</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">term</span><span class="p">)</span>
+    <span class="n">P</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">term</span><span class="p">)</span>
+    <span class="n">I</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">term</span><span class="p">)</span>
+    <span class="n">B</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">term</span><span class="p">)</span>
+    <span class="n">Pr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">term</span><span class="p">)</span>
+    <span class="n">Bt</span> <span class="o">=</span> <span class="n">B0</span>
+    <span class="n">pow_term</span> <span class="o">=</span> <span class="nb">pow</span><span class="p">(</span><span class="mi">1</span><span class="o">+</span><span class="n">r</span><span class="p">,</span> <span class="n">term</span><span class="p">)</span>
+    <span class="n">A</span> <span class="o">=</span> <span class="n">Bt</span><span class="o">*</span><span class="n">r</span><span class="o">*</span><span class="n">pow_term</span><span class="o">/</span><span class="p">(</span><span class="n">pow_term</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">term</span><span class="p">):</span>
+        <span class="n">n</span> <span class="o">=</span> <span class="n">term</span><span class="o">-</span><span class="n">i</span>
+        
+        <span class="n">I</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">Bt</span> <span class="o">*</span> <span class="n">r</span>
+        <span class="n">Pr</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">smm</span><span class="o">*</span><span class="n">Bt</span>
+        <span class="n">S</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">A</span><span class="o">-</span><span class="n">I</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">if</span> <span class="n">Bt</span><span class="o">&gt;</span><span class="mf">1e-2</span> <span class="k">else</span> <span class="mf">0.</span>
+        <span class="n">P</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">S</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="n">Pr</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+        <span class="n">Bt</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">Bt</span> <span class="o">-</span> <span class="n">P</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="mf">0.0</span><span class="p">)</span>
+        
+        <span class="n">B</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">Bt</span>
+    <span class="k">return</span> <span class="n">S</span><span class="p">,</span><span class="n">I</span><span class="p">,</span> <span class="n">Pr</span><span class="p">,</span><span class="n">P</span><span class="p">,</span> <span class="n">B</span>
+</pre></div>
+
+</div>
+
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Here is the equivalent Cython function.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[10]:</div>
+
+<div class="input_area box-flex1">
+<div class="highlight-ipynb"><pre class="ipynb"><span></span><span class="o">%%</span><span class="k">cython</span>
+<span class="n">cimport</span> <span class="n">cython</span> 
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">libc.math</span> <span class="nn">cimport</span> <span class="nn">pow</span>
+
+<span class="nd">@cython.boundscheck</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span>
+<span class="nd">@cython.wraparound</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">amortize_payments_cy</span><span class="p">(</span><span class="n">double</span> <span class="n">B0</span><span class="p">,</span><span class="n">double</span> <span class="n">R</span><span class="p">,</span><span class="nb">int</span> <span class="n">term</span><span class="p">,</span><span class="n">double</span> <span class="n">cpr</span><span class="o">=</span><span class="mf">0.0</span><span class="p">):</span>
+    <span class="n">cdef</span> <span class="n">double</span> <span class="n">smm</span> <span class="o">=</span> <span class="mf">1.</span> <span class="o">-</span> <span class="nb">pow</span><span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">cpr</span><span class="o">/</span><span class="mf">100.</span><span class="p">,</span> <span class="mi">1</span><span class="o">/</span><span class="mf">12.</span><span class="p">)</span>
+    <span class="n">cdef</span> <span class="n">double</span> <span class="n">r</span> <span class="o">=</span> <span class="n">R</span><span class="o">/</span><span class="mf">1200.</span>
+    <span class="n">cdef</span> <span class="n">double</span><span class="p">[:]</span> <span class="n">D</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="n">term</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
+    <span class="n">cdef</span> <span class="n">double</span><span class="p">[:]</span> <span class="n">S</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="n">term</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
+    <span class="n">cdef</span> <span class="n">double</span><span class="p">[:]</span> <span class="n">P</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="n">term</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
+    <span class="n">cdef</span> <span class="n">double</span><span class="p">[:]</span> <span class="n">I</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="n">term</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
+    <span class="n">cdef</span> <span class="n">double</span><span class="p">[:]</span> <span class="n">B</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="n">term</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
+    <span class="n">cdef</span> <span class="n">double</span><span class="p">[:]</span> <span class="n">Pr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="n">term</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
+    <span class="n">cdef</span> <span class="n">double</span> <span class="n">Bt</span> <span class="o">=</span> <span class="n">B0</span>
+    <span class="n">cdef</span> <span class="n">double</span> <span class="n">pow_term</span> <span class="o">=</span> <span class="nb">pow</span><span class="p">(</span><span class="mi">1</span><span class="o">+</span><span class="n">r</span><span class="p">,</span> <span class="n">term</span><span class="p">)</span>
+    <span class="n">cdef</span> <span class="n">double</span> <span class="n">A</span> <span class="o">=</span> <span class="n">Bt</span><span class="o">*</span><span class="n">r</span><span class="o">*</span><span class="n">pow_term</span><span class="o">/</span><span class="p">(</span><span class="n">pow_term</span> <span class="o">-</span> <span class="mf">1.</span><span class="p">)</span>
+    <span class="n">cdef</span> <span class="n">double</span> <span class="n">n</span> <span class="o">=</span> <span class="n">term</span>
+    <span class="n">cdef</span> <span class="nb">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">term</span><span class="p">):</span>
+        <span class="n">n</span> <span class="o">=</span> <span class="n">term</span><span class="o">-</span><span class="n">i</span>       
+        <span class="n">I</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">Bt</span> <span class="o">*</span> <span class="n">r</span>
+        <span class="n">Pr</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">smm</span><span class="o">*</span><span class="n">Bt</span>
+        <span class="n">S</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">A</span><span class="o">-</span><span class="n">I</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">if</span> <span class="n">Bt</span><span class="o">&gt;</span><span class="mf">1e-2</span> <span class="k">else</span> <span class="mf">0.</span>
+        <span class="n">P</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">S</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="n">Pr</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+        <span class="n">Bt</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">Bt</span> <span class="o">-</span> <span class="n">P</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="mf">0.0</span><span class="p">)</span>        
+        <span class="n">B</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">Bt</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">S</span><span class="p">),</span><span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">I</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">Pr</span><span class="p">),</span><span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">P</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">B</span><span class="p">)</span>
+</pre></div>
+
+</div>
+
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Here is the Numba version</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[11]:</div>
+
+<div class="input_area box-flex1">
+<div class="highlight-ipynb"><pre class="ipynb"><span></span><span class="n">amortize_payments_nb</span> <span class="o">=</span> <span class="n">numba</span><span class="o">.</span><span class="n">njit</span><span class="p">(</span><span class="n">cache</span><span class="o">=</span><span class="bp">True</span><span class="p">)(</span><span class="n">amortize_payments_py</span><span class="p">)</span>
+</pre></div>
+
+</div>
+
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Let&#39;s compare the performance of the three function types.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[12]:</div>
+
+<div class="input_area box-flex1">
+<div class="highlight-ipynb"><pre class="ipynb"><span></span><span class="n">B0</span> <span class="o">=</span> <span class="mf">500000.</span>
+<span class="n">R</span> <span class="o">=</span> <span class="mf">4.0</span>
+<span class="n">term</span> <span class="o">=</span> <span class="mi">360</span>
+</pre></div>
+
+</div>
+
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><strong> Python</strong></p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[17]:</div>
+
+<div class="input_area box-flex1">
+<div class="highlight-ipynb"><pre class="ipynb"><span></span><span class="o">%</span><span class="k">timeit</span> <span class="o">-</span><span class="n">n1000</span> <span class="n">S</span><span class="p">,</span><span class="n">I</span><span class="p">,</span> <span class="n">Pr</span><span class="p">,</span><span class="n">P</span><span class="p">,</span> <span class="n">B</span> <span class="o">=</span> <span class="n">amortize_payments_py</span><span class="p">(</span><span class="n">B0</span><span class="p">,</span> <span class="n">R</span><span class="p">,</span> <span class="n">term</span><span class="p">,</span> <span class="n">cpr</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+</pre></div>
+
+</div>
+
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="box-flex1 output_subarea output_stream output_stdout">
+<pre class="ipynb">1000 loops, best of 3: 369 µs per loop
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><strong> Numba </strong></p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[18]:</div>
+
+<div class="input_area box-flex1">
+<div class="highlight-ipynb"><pre class="ipynb"><span></span><span class="o">%</span><span class="k">timeit</span> <span class="o">-</span><span class="n">n1000</span> <span class="n">S</span><span class="p">,</span><span class="n">I</span><span class="p">,</span> <span class="n">Pr</span><span class="p">,</span><span class="n">P</span><span class="p">,</span> <span class="n">B</span> <span class="o">=</span> <span class="n">amortize_payments_nb</span><span class="p">(</span><span class="n">B0</span><span class="p">,</span> <span class="n">R</span><span class="p">,</span> <span class="n">term</span><span class="p">,</span> <span class="n">cpr</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+</pre></div>
+
+</div>
+
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="box-flex1 output_subarea output_stream output_stdout">
+<pre class="ipynb">1000 loops, best of 3: 8.64 µs per loop
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><strong> Cython </strong></p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[19]:</div>
+
+<div class="input_area box-flex1">
+<div class="highlight-ipynb"><pre class="ipynb"><span></span><span class="o">%</span><span class="k">timeit</span> <span class="o">-</span><span class="n">n1000</span> <span class="n">S</span><span class="p">,</span><span class="n">I</span><span class="p">,</span> <span class="n">Pr</span><span class="p">,</span><span class="n">P</span><span class="p">,</span> <span class="n">B</span> <span class="o">=</span> <span class="n">amortize_payments_cy</span><span class="p">(</span><span class="n">B0</span><span class="p">,</span> <span class="n">R</span><span class="p">,</span> <span class="n">term</span><span class="p">,</span> <span class="n">cpr</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+</pre></div>
+
+</div>
+
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="box-flex1 output_subarea output_stream output_stdout">
+<pre class="ipynb">1000 loops, best of 3: 28.7 µs per loop
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Once again we see that <code>cython</code> and <code>numba</code> methods are orders of magnitude (roughly 15X) faster than python version. The <code>numba</code> version is almost 3X faster than Cython. There are probably some performance cython tweaks that I am missing perhaps. </p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="conclusion">Conclusion</h2>
+<p>In this post, I have redone Jake&#39;s pairwise distance example to see how the same code performs 3 years forward. I also discuss a common finance example of amortizing cashflow generation. The <code>numba</code> and <code>cython</code> snippets are orders of magnitude faster than a pure python version. Surprisingly, <code>numba</code> is 20% to 300% faster than <code>cython</code> on these examples. There may very well be some <code>cython</code> tweaks I might be missing. But nevertheless these examples show how one can easily get performance boost using <code>numba</code> module. </p>
+</div>
+</div>
+</div></p>
+     <br><br>
+	  <br>
+	 
+     <!-- article tags-->
+        <span class="glyphicon glyphicon-tags"></span>&nbsp;&nbsp;
+            <span class="label label-default"><a href="http://gouthamanbalaraman.com/tag/python.html">python</a></span>&nbsp;&nbsp;
+            <span class="label label-default"><a href="http://gouthamanbalaraman.com/tag/programming.html">programming</a></span>&nbsp;&nbsp;
+            <span class="label label-default"><a href="http://gouthamanbalaraman.com/tag/development.html">development</a></span>&nbsp;&nbsp;
+            <span class="label label-default"><a href="http://gouthamanbalaraman.com/tag/pandas.html">pandas</a></span>&nbsp;&nbsp;
+            <span class="label label-default"><a href="http://gouthamanbalaraman.com/tag/numpy.html">numpy</a></span>&nbsp;&nbsp;
+            <span class="label label-default"><a href="http://gouthamanbalaraman.com/tag/numba.html">numba</a></span>&nbsp;&nbsp;
+        <br>
+     <hr/>
+    
+    <strong>Related Post</strong>
+        <ul>
+            <li>
+                <a href="http://gouthamanbalaraman.com/blog/numpy-vs-pandas-comparison.html">Numpy Vs Pandas Performance Comparison</a>
+            </li>
+            <li>
+                <a href="http://gouthamanbalaraman.com/blog/distributed-processing-pandas-dask.html">Multi-Processing with Pandas and Dask</a>
+            </li>
+            <li>
+                <a href="http://gouthamanbalaraman.com/blog/distributed-processing-pandas.html">Multi-Processing With Pandas</a>
+            </li>
+            <li>
+                <a href="http://gouthamanbalaraman.com/blog/zeo-as-a-windows-service.html">Running ZEO as a Windows Service</a>
+            </li>
+            <li>
+                <a href="http://gouthamanbalaraman.com/blog/securing-authentication-tokens.html">Securing Authentication Tokens</a>
+            </li>
+        </ul>
+        <hr/>
+
+     <!-- article comments -->
+    <div class="comment">
+        <div id="disqus_thread"></div> <!-- comment app container -->
+    </div>
+	<!-- Comment BEGIN -->
+    <script type="text/javascript">
+        var disqus_shortname = 'gouthamanbalaramancom'; // required: replace example with your forum shortname
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.min.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+     <!-- Comment END -->
+</div>    
+                </div>
+               
+            </div>
+            <div class="row">
+                <div class="col-md-10 col-md-offset-1">
+                </div>
+            </div>
+            <footer id="contentinfo" class="footer">
+                <address id="about" class="vcard body">
+                    &copy; <a href="http://gouthamanbalaraman.com">Goutham Balaraman</a> Proudly powered by <a href="http://getpelican.com/">Pelican</a>
+                    <div class="pull-right">
+                    	<!--a href="http://www.bloglovin.com/blog/14559547/?claim=cqravg9v4n2">Bloglovin</a-->
+			            <a href="http://gouthamanbalaraman.com/feeds/all.atom.xml">Atom</a>
+			        &nbsp
+			            <a href="http://gouthamanbalaraman.com/feeds/all.rss.xml">RSS</a>
+		            </div>
+                </address><!-- /#about -->
+            </footer>
+        </div><!-- container -->
+        <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
+        <link href="http://gouthamanbalaraman.com/theme/static/css/style.css" rel="stylesheet" />
+        
+        <script src="http://gouthamanbalaraman.com/theme/static/js/jquery.1.11.2.min.js"></script>
+        <script src="http://gouthamanbalaraman.com/theme/static/js/bootstrap.min.js"></script>
+        <script type="text/javascript">
+	jQuery(document).ready(function($) {
+	    $("div.collapseheader").click(function () {
+	    $header = $(this).children("span").first();
+	    $codearea = $(this).children(".input_area");
+	    console.log($(this).children());
+	    $codearea.slideToggle(500, function () {
+	        $header.text(function () {
+	            return $codearea.is(":visible") ? "Collapse Code" : "Expand Code";
+	        });
+	    });
+	});
+	});
+	</script>
+	<!-- Change table styles -->
+	<script type="text/javascript">
+    	   jQuery(document).ready(function($) {
+    	      $("body table").addClass("table table-sm table-hover");
+    	      $("body table").attr("border",0);
+  	   });
+        </script>
+	<!-- Using MathJax, with the delimiters $ -->
+        <!-- Conflict with pygments for the .mo and .mi -->
+        <script type="text/x-mathjax-config">
+          MathJax.Hub.Config({
+          "HTML-CSS": {
+          styles: {
+          ".MathJax .mo, .MathJax .mi": {color: "black ! important"}}
+          },
+          tex2jax: {inlineMath: [['$','$'], ['\\\\(','\\\\)']],processEscapes: true}
+          });
+        </script>
+    </body>
+</html>
