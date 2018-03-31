@@ -12515,8 +12515,11 @@ folder on the container. So in all it would look like:&lt;/p&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;Those using older docker versions, you had to do this:
-    docker run -d -p 8888:8888 -v &lt;your notebook folder&gt;:/home/notebooks/ --name ql_notebook gbalaraman/quantlib-notebook &lt;/p&gt;
+&lt;p&gt;Those using older docker versions, you had to do this:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;docker run -d -p 8888:8888 -v &amp;lt;your notebook folder&amp;gt;:/home/notebooks/ --name ql_notebook gbalaraman/quantlib-notebook
+&lt;/pre&gt;&lt;/div&gt;
+
+
 &lt;p&gt;The above command runs the image "gbalaraman/quantlib-notebook" as a daemon (-d) and
 will forward the port 8888 in the container to the port 8888 in localhost (-p 8888:8888).
 We are calling the container where this image runs as ql_notebook (--name ql_notebook). 
