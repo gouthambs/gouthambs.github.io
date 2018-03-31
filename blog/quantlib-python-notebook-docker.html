@@ -126,11 +126,19 @@ on a shell:</p>
 
 <p>This is going to pull the quantlib-notebook image from Docker Hub. This process takes a few 
 seconds. Think of this as the same as downloading an installer for a software.</p>
-<p>Once you have the image downloaded, you can run quantlib-python notebooks by donig the following:</p>
-<div class="highlight"><pre><span></span>docker run -d -p 8888:8888 -v &lt;your notebook folder&gt;:/home/notebooks/ --name ql_notebook gbalaraman/quantlib-notebook
+<p>Once you have the image downloaded, you can run quantlib-python notebooks by doing the following:</p>
+<div class="highlight"><pre><span></span>docker run -d -p 8888:8888 --mount src=&lt;your notebook folder&gt;,target=/home/notebooks,type=bind --name ql_notebook gbalaraman/quantlib-notebook
 </pre></div>
 
 
+<p>If you are using latest docker images published by Luigi, you should mount to <code>/notebooks</code>
+folder on the container. So in all it would look like:</p>
+<div class="highlight"><pre><span></span>docker run -d -p 8888:8888 --mount src=&lt;your notebook folder&gt;,target=/notebooks,type=bind --name ql_notebook2 lballabio/quantlib-notebook
+</pre></div>
+
+
+<p>Those using older docker versions, you had to do this:
+    docker run -d -p 8888:8888 -v <your notebook folder>:/home/notebooks/ --name ql_notebook gbalaraman/quantlib-notebook </p>
 <p>The above command runs the image "gbalaraman/quantlib-notebook" as a daemon (-d) and
 will forward the port 8888 in the container to the port 8888 in localhost (-p 8888:8888).
 We are calling the container where this image runs as ql_notebook (--name ql_notebook). 
@@ -171,19 +179,19 @@ this subject.</p>
     <strong>Related Post</strong>
         <ul>
             <li>
-                <a href="http://gouthamanbalaraman.com/blog/valuing-european-option-heston-model-quantLib.html">Valuing European Option Using the Heston Model in QuantLib Python</a>
-            </li>
-            <li>
                 <a href="http://gouthamanbalaraman.com/blog/european-option-binomial-tree-quantlib-python.html">Option Model Handbook, Part III: European Option Pricing With QuantLib Python</a>
             </li>
             <li>
-                <a href="http://gouthamanbalaraman.com/blog/announcing-qtk-quantlib-python.html">Announcing qtk for QuantLib Python</a>
-            </li>
-            <li>
-                <a href="http://gouthamanbalaraman.com/blog/quantlib-python-cookbook-announcement.html">QuantLib Python Cookbook Announcement</a>
+                <a href="http://gouthamanbalaraman.com/blog/volatility-smile-heston-model-calibration-quantlib-python.html">Modeling Volatility Smile and Heston Model Calibration Using QuantLib Python</a>
             </li>
             <li>
                 <a href="http://gouthamanbalaraman.com/blog/value-options-commodity-futures-black-formula-quantlib-python.html">Valuing Options on Commodity Futures Using QuantLib Python</a>
+            </li>
+            <li>
+                <a href="http://gouthamanbalaraman.com/blog/callable-bond-quantlib-python.html">Valuing Callable Bonds Using QuantLib Python</a>
+            </li>
+            <li>
+                <a href="http://gouthamanbalaraman.com/blog/heston-calibration-scipy-optimize-quantlib-python.html">Heston Model Calibration Using QuantLib Python and Scipy Optimize</a>
             </li>
         </ul>
         <hr/>

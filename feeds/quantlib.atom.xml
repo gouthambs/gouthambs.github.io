@@ -2327,11 +2327,19 @@ on a shell:&lt;/p&gt;
 
 &lt;p&gt;This is going to pull the quantlib-notebook image from Docker Hub. This process takes a few 
 seconds. Think of this as the same as downloading an installer for a software.&lt;/p&gt;
-&lt;p&gt;Once you have the image downloaded, you can run quantlib-python notebooks by donig the following:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;docker run -d -p 8888:8888 -v &amp;lt;your notebook folder&amp;gt;:/home/notebooks/ --name ql_notebook gbalaraman/quantlib-notebook
+&lt;p&gt;Once you have the image downloaded, you can run quantlib-python notebooks by doing the following:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;docker run -d -p 8888:8888 --mount src=&amp;lt;your notebook folder&amp;gt;,target=/home/notebooks,type=bind --name ql_notebook gbalaraman/quantlib-notebook
 &lt;/pre&gt;&lt;/div&gt;
 
 
+&lt;p&gt;If you are using latest docker images published by Luigi, you should mount to &lt;code&gt;/notebooks&lt;/code&gt;
+folder on the container. So in all it would look like:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;docker run -d -p 8888:8888 --mount src=&amp;lt;your notebook folder&amp;gt;,target=/notebooks,type=bind --name ql_notebook2 lballabio/quantlib-notebook
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Those using older docker versions, you had to do this:
+    docker run -d -p 8888:8888 -v &lt;your notebook folder&gt;:/home/notebooks/ --name ql_notebook gbalaraman/quantlib-notebook &lt;/p&gt;
 &lt;p&gt;The above command runs the image "gbalaraman/quantlib-notebook" as a daemon (-d) and
 will forward the port 8888 in the container to the port 8888 in localhost (-p 8888:8888).
 We are calling the container where this image runs as ql_notebook (--name ql_notebook). 
