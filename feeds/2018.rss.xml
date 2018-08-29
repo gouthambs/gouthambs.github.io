@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0"><channel><title>G B</title><link>http://gouthamanbalaraman.com/</link><description></description><lastBuildDate>Mon, 27 Aug 2018 00:00:00 -0700</lastBuildDate><item><title>QuantLib Python CookBook Is Almost Done</title><link>http://gouthamanbalaraman.com/blog/quantlib-python-cookbook-almost-done.html</link><description>&lt;p&gt;More than a year ago, Luigi Ballabio and I made an initial release of the QuantLib Python Cookbook. Now we are mostly
+finished with the content of the book. The &lt;a class="reference external" href="https://leanpub.com/quantlibpythoncookbook"&gt;new version of the book&lt;/a&gt; is
+out, and those who bought a previous version can now log into LeanPub to download the new version of the book and the
+accompanying python code in the form of notebooks.&lt;/p&gt;
+&lt;p&gt;This version includes some content update and preliminary support for Python 3. We are working to convert
+IPython notebooks into Jupyter notebooks and that will be the next release milestone for the book. You
+should expect to hear from us in about a month or so.&lt;/p&gt;
+</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Goutham Balaraman</dc:creator><pubDate>Mon, 27 Aug 2018 00:00:00 -0700</pubDate><guid isPermaLink="false">tag:gouthamanbalaraman.com,2018-08-27:blog/quantlib-python-cookbook-almost-done.html</guid><category>Python</category><category>QuantLib</category><category>Python</category><category>Programming</category></item></channel></rss>
